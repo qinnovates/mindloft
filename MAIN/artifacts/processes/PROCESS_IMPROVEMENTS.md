@@ -7,7 +7,7 @@
 2. **Naming conventions** - Consistent `Medium-*` and `TechDoc-*` patterns across all 10 publications
 3. **Templates exist** - APA, Medium (v2), and INDEX templates provide comprehensive formatting guidance
 4. **CLAUDE.md** - Comprehensive AI instructions with file trees, workflows, and quality checklists
-5. **ONI_NEXUS.md** - Cross-reference registry with dependency maps and publication matrix
+5. **ONI_WIKI.md** - Cross-reference registry with dependency maps and publication matrix
 6. **Research Pipeline** - Automated research monitoring via `keywords.json` and `research_monitor.py`
 7. **YAML front-matter** - Implemented on all publications with title, date, URL, and tags
 
@@ -15,7 +15,7 @@
 1. ~~No automated validation of file naming~~ → Checklist documented, automation pending
 2. ~~README.md updates are manual and error-prone~~ → Process documented in CLAUDE.md
 3. ~~No version tracking for individual documents~~ → Partial (front-matter on publications)
-4. ~~Cross-references between papers not systematically maintained~~ → **RESOLVED: ONI_NEXUS.md**
+4. ~~Cross-references between papers not systematically maintained~~ → **RESOLVED: ONI_WIKI.md**
 5. No content calendar or publishing schedule tracking
 6. INDEX.md only deployed to 1 of 5 topic folders
 7. No CHANGELOG.md at repository root
@@ -230,7 +230,7 @@ After editing any paper:
 ONI/
 ├── README.md
 ├── CLAUDE.md                       # ✓ AI instructions (was README.AI.md)
-├── ONI_NEXUS.md                    # ✓ Cross-reference registry
+├── ONI_WIKI.md                    # ✓ Cross-reference registry
 ├── ABOUT.md
 ├── CHANGELOG.md                    # ✗ PENDING
 ├── CONTRIBUTING.md
@@ -301,7 +301,7 @@ ONI/
 - [ ] Create Research Note template file
 
 ### Phase 3 (Future) — 🔄 PARTIALLY COMPLETE
-- [x] Build cross-reference registry → **ONI_NEXUS.md with dependency map & matrix**
+- [x] Build cross-reference registry → **ONI_WIKI.md with dependency map & matrix**
 - [x] Document pre-commit checklist → **In CLAUDE.md (lines 239-256)**
 - [ ] Automate pre-commit checklist as `.git/hooks/pre-commit`
 - [x] Add document metadata to publications → **YAML front-matter on all 10 publications**

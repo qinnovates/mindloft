@@ -8,7 +8,7 @@
 
 | Resource | Location | Purpose |
 |----------|----------|---------|
-| **ONI Nexus** | `ONI_NEXUS.md` | **Central hub - start here for navigation** |
+| **ONI Wiki** | `ONI_WIKI.md` | **Central hub - start here for navigation** |
 | Topic INDEX Template | `MAIN/artifacts/templates/INDEX_TEMPLATE.md` | Template for topic-level indexes |
 | APA Template | `MAIN/artifacts/templates/TECHDOC_TEMPLATE_APA.md` | Formatting for technical documents |
 | Medium Template | `MAIN/artifacts/templates/MEDIUM_TEMPLATE.md` | Formatting for Medium posts |
@@ -24,7 +24,7 @@
 ```
 ONI/
 ├── README.md                           # Public entry point
-├── ONI_NEXUS.md                        # Central hub - all topics, dependencies, navigation
+├── ONI_WIKI.md                        # Central hub - all topics, dependencies, navigation
 ├── CLAUDE.md                           # Claude AI instructions (this file)
 ├── ABOUT.md                            # Author bio
 ├── CONTRIBUTING.md                     # Contribution guidelines
@@ -186,7 +186,7 @@ Options:
 > **CRITICAL:** README.md is the public face of the repository. Update it for ANY major change:
 > - New topics or publications
 > - Structural changes (new folders, renamed files)
-> - New navigation features (like ONI_NEXUS.md)
+> - New navigation features (like ONI_WIKI.md)
 > - Changes to key concepts or framework components
 
 **After every commit that adds or modifies content, update README.md:**
@@ -215,7 +215,7 @@ If adding new navigation features or structural changes:
 
 | Start Here | Purpose |
 |------------|---------|
-| **[ONI_NEXUS.md](ONI_NEXUS.md)** | Central hub — dependency map, cross-references, reading order, roadmap |
+| **[ONI_WIKI.md](ONI_WIKI.md)** | Central hub — dependency map, cross-references, reading order, roadmap |
 | **This README** | Public overview — key concepts, quick reference, document list |
 ```
 
@@ -284,7 +284,7 @@ Before committing, verify:
 - [ ] Document count updated in README.md footer
 - [ ] Date updated in README.md footer
 - [ ] **Topic INDEX.md created** (for new topics)
-- [ ] **ONI_NEXUS.md updated** (dependency map, tables, metrics)
+- [ ] **ONI_WIKI.md updated** (dependency map, tables, metrics)
 
 ---
 
@@ -318,7 +318,7 @@ mkdir MAIN/publications/[topic-name]/
 **Step 2: Create topic INDEX.md**
 - Copy from `MAIN/artifacts/templates/INDEX_TEMPLATE.md`
 - Fill in: summary, dependencies, key concepts, related topics
-- Link back to `ONI_NEXUS.md`
+- Link back to `ONI_WIKI.md`
 
 **Step 3: Create publications**
 - `Medium-[Topic_Name].md` — Accessible narrative
@@ -326,7 +326,7 @@ mkdir MAIN/publications/[topic-name]/
 
 **Step 4: Extract keywords and update keywords.json**
 
-**Step 5: Update ONI_NEXUS.md**
+**Step 5: Update ONI_WIKI.md**
 - Add topic to appropriate section table
 - Update dependency map (if new dependencies)
 - Update cross-reference matrix
@@ -357,7 +357,7 @@ mkdir MAIN/publications/[topic-name]/
 1. **Wrong location:** Don't put templates or instructions in `publications/` - use `artifacts/`
 2. **Wrong naming:** Don't use dates in publication filenames (use `Medium-*` or `TechDoc-*` prefix)
 3. **Missing README updates:** Always update README.md after ANY major change (topics, structure, navigation)
-4. **Missing NEXUS updates:** Always update ONI_NEXUS.md when adding topics or changing dependencies
+4. **Missing WIKI updates:** Always update ONI_WIKI.md when adding topics or changing dependencies
 5. **Missing keywords:** Always extract and add keywords to keywords.json
 6. **Inconsistent formatting:** Always check template before writing
 7. **Broken links:** Use relative paths from repository root

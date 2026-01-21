@@ -1,4 +1,4 @@
-# ONI Framework Nexus
+# ONI Framework Wiki
 
 > **The central connection point for all ONI Framework research, publications, and development.**
 
@@ -10,7 +10,7 @@
 
 ## Framework Overview
 
-The **Organic Neural Interface (ONI) Framework** extends the OSI networking model into biological neural systems, creating a unified architecture for brain-computer interface security. This nexus document connects all research topics, maps dependencies, and provides navigation paths for readers and contributors.
+The **Organic Neural Interface (ONI) Framework** extends the OSI networking model into biological neural systems, creating a unified architecture for brain-computer interface security. This wiki connects all research topics, maps dependencies, and provides navigation paths for readers and contributors.
 
 ---
 
@@ -145,7 +145,7 @@ Use the [INDEX template](MAIN/artifacts/templates/INDEX_TEMPLATE.md) with:
 - `Medium-[Topic_Name].md` — Accessible narrative
 - `TechDoc-[Topic_Name].md` — Academic depth
 
-### 4. Update This Nexus
+### 4. Update This Wiki
 - Add topic to appropriate section table
 - Update dependency map if needed
 - Add to cross-reference matrix
@@ -196,4 +196,4 @@ Apache 2.0 — See [LICENSE](LICENSE)
 
 ---
 
-*This nexus is a living document. It evolves as the framework grows.*
+*This wiki is a living document. It evolves as the framework grows.*
