@@ -66,9 +66,9 @@ Signal validation mathematics, trust scoring algorithms, and biological plausibi
 
 | Document | Summary |
 |----------|----------|
-| [Your Brain Has a Spam Filter. Can We Reverse-Engin...](docs/coherence-metric/2026-01-16%20-%20Your%20Brain%20Has%20a%20Spam%20Filter.%20Can%20We%20Reverse-Engineer%20It.md) | ** _Inside the math that could protect your mind from neural hackers._** |
-| [Coherence_Metric_Detailed_Paper](docs/coherence-metric/Coherence_Metric_Detailed_Paper.md) | *A Mathematical Framework for Quantifying Trustworthiness in |
-| [Week1_Coherence_Metric_Medium](docs/coherence-metric/Week1_Coherence_Metric_Medium.md) | *Inside the math that could protect your mind from neural hackers.* |
+| [Your Brain Has a Spam Filter. Can We Reverse-Engineer It?](publications/coherence-metric/2026-01-16%20-%20Your%20Brain%20Has%20a%20Spam%20Filter.%20Can%20We%20Reverse-Engineer%20It.md) | *Inside the math that could protect your mind from neural hackers.* |
+| [Coherence Metric Detailed Paper](publications/coherence-metric/Coherence_Metric_Detailed_Paper.md) | *A Mathematical Framework for Quantifying Trustworthiness.* |
+| [Coherence Metric Medium](publications/coherence-metric/Coherence_Metric_Medium.md) | *Inside the math that could protect your mind from neural hackers.* |
 
 ### 🛡️ Neural Firewall
 
@@ -76,7 +76,8 @@ Hardware and software firewall design for neural interfaces, signal filtering, a
 
 | Document | Summary |
 |----------|----------|
-| [Your Brain Needs a Firewall — Here’s What It Would...](docs/neural-firewall/2026-01-16%20-%20Your%20Brain%20Needs%20a%20Firewall%20%E2%80%94%20Here%E2%80%99s%20What%20It%20Would%20Look%20Like.md) | In 2024, a man with a Neuralink implant controlled a computer cursor with his th... |
+| [Your Brain Needs a Firewall — Here's What It Would Look Like](publications/neural-firewall/2026-01-16%20-%20Your%20Brain%20Needs%20a%20Firewall%20—%20Here's%20What%20It%20Would%20Look%20Like.md) | *In 2024, a man with a Neuralink implant controlled a computer cursor with his thoughts.* |
+| [Neural Firewall Architecture Paper](publications/neural-firewall/Neural_Firewall_Architecture_Paper.md) | *Hardware and software firewall design for neural interfaces.* |
 
 ### 🔓 Neural Ransomware
 
@@ -84,9 +85,9 @@ Threat analysis, attack vectors, kill chains, and defensive architectures.
 
 | Document | Summary |
 |----------|----------|
-| [Neural Ransomware Isn’t Science Fiction](docs/neural-ransomware/2026-01-17%20-%20Neural%20Ransomware%20Isn%E2%80%99t%20Science%20Fiction.md) | ** _The technical threat model for holding a brain implant hostage — and why we ... |
-| [Week2_Neural_Ransomware_Medium](docs/neural-ransomware/Week2_Neural_Ransomware_Medium.md) | *The technical kill chain for holding a brain implant hostage — and why |
-| [Week2_Neural_Ransomware_Paper](docs/neural-ransomware/Week2_Neural_Ransomware_Paper.md) | *Attack Vectors and Defensive Architectures for Brain-Computer |
+| [Neural Ransomware Isn't Science Fiction](publications/neural-ransomware/2026-01-17%20-%20Neural%20Ransomware%20Isn't%20Science%20Fiction.md) | *The technical threat model for holding a brain implant hostage.* |
+| [Neural Ransomware Medium](publications/neural-ransomware/Neural_Ransomware_Medium.md) | *The technical kill chain for holding a brain implant hostage.* |
+| [Neural Ransomware Paper](publications/neural-ransomware/Neural_Ransomware_Paper.md) | *Attack Vectors and Defensive Architectures for Brain-Computer Interfaces.* |
 
 ### 🏗️ ONI Framework
 
@@ -94,9 +95,9 @@ Core ONI architecture, 14-layer model extending OSI into biological territory.
 
 | Document | Summary |
 |----------|----------|
-| [The OSI of Mind: Securing Human-AI Interfaces](docs/oni-framework/2026-01-15%20-%20The%20OSI%20of%20Mind%20Securing%20Human-AI%20Interfaces.md) | If you’ve worked in IT, you know the OSI model — seven layers that standardize h... |
-| [ONI_Medium_Post](docs/oni-framework/ONI_Medium_Post.md) | Neuralink has implanted its first human patients. Synchron is in FDA |
-| [The Organic Network Interface (ONI) Framework](docs/oni-framework/The%20Organic%20Network%20Interface%20%28ONI%29%20Framework.md) | *A Unified Neuro-Computational Stack for Secure Bio-Digital Integration* |
+| [The OSI of Mind: Securing Human-AI Interfaces](publications/oni-framework/2026-01-15%20-%20The%20OSI%20of%20Mind%20Securing%20Human-AI%20Interfaces.md) | *If you've worked in IT, you know the OSI model.* |
+| [ONI Medium Post](publications/oni-framework/ONI_Medium_Post.md) | *Neuralink has implanted its first human patients.* |
+| [The Organic Network Interface (ONI) Framework](publications/oni-framework/The%20Organic%20Network%20Interface%20%28ONI%29%20Framework.md) | *A Unified Neuro-Computational Stack for Secure Bio-Digital Integration.* |
 
 ### 🔬 Scale-Frequency
 
@@ -104,8 +105,8 @@ Cross-scale neural patterns, frequency invariants, and information compression.
 
 | Document | Summary |
 |----------|----------|
-| [Week3_Scale_Frequency_Medium](docs/scale-frequency/Week3_Scale_Frequency_Medium.md) | *From millisecond spikes to lifetime memories, one relationship holds: f |
-| [Week3_Scale_Frequency_Paper](docs/scale-frequency/Week3_Scale_Frequency_Paper.md) | *Mathematical Foundations for Hierarchical Neural Processing in the ONI |
+| [Scale Frequency Medium](publications/scale-frequency/Scale_Frequency_Medium.md) | *From millisecond spikes to lifetime memories.* |
+| [Scale Frequency Paper](publications/scale-frequency/Scale_Frequency_Paper.md) | *Mathematical Foundations for Hierarchical Neural Processing in the ONI Framework.* |
 
 ---
 
