@@ -52,11 +52,11 @@ ONI/
     └── artifacts/               # Non-content (infrastructure)
         ├── templates/           # Formatting templates
         ├── processes/           # Workflow documentation
-        └── CICD-Pipeline/       # Research pipeline
-            ├── keywords.json    # Publication keywords for research
+        └── cicd-pipeline/       # Research pipeline
             ├── incoming/        # New discoveries
             ├── processed/       # Reviewed research
-            └── scripts/         # Automation (research monitor)
+            └── continuous-research-delivery/
+                └── scripts/     # Automation (research monitor, keywords.json)
 ```
 
 ---

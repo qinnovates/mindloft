@@ -44,10 +44,10 @@ import xml.etree.ElementTree as ET
 
 # Configuration
 SCRIPT_DIR = Path(__file__).parent.resolve()
-PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent  # Up to ONI/
-CICD_DIR = PROJECT_ROOT / "MAIN" / "artifacts" / "CICD"
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent  # Up to ONI/
+CICD_DIR = PROJECT_ROOT / "MAIN" / "artifacts" / "cicd-pipeline"
 CICD_INCOMING = CICD_DIR / "incoming"
-KEYWORDS_FILE = CICD_DIR / "keywords.json"
+KEYWORDS_FILE = SCRIPT_DIR / "keywords.json"  # Same directory as script
 
 
 class KeywordManager:
@@ -465,7 +465,7 @@ class ResearchMonitor:
         return self.results
 
     def save_results(self) -> List[str]:
-        """Save results to CICD/incoming folder."""
+        """Save results to cicd-pipeline/incoming folder."""
         saved_files = []
 
         CICD_INCOMING.mkdir(parents=True, exist_ok=True)
@@ -641,8 +641,8 @@ def main():
     print(monitor.generate_summary())
 
     print("-" * 60)
-    print("Monitor complete. Review papers in CICD/incoming/ folder.")
-    print("Move reviewed papers to CICD/processed/ when done.")
+    print("Monitor complete. Review papers in cicd-pipeline/incoming/ folder.")
+    print("Move reviewed papers to cicd-pipeline/processed/ when done.")
 
 
 if __name__ == '__main__':
