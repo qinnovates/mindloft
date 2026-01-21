@@ -27,7 +27,7 @@ Before making changes, open an issue to discuss:
 | **Neuroscience** | Validation of biological assumptions, empirical references |
 | **Security** | Attack vector analysis, penetration testing perspectives |
 | **Hardware** | BCI implementation constraints, power/latency tradeoffs |
-| **Ethics** | Governance frameworks, regulatory alignment |
+| **Ethicists/Enthusiasts** | Address governance gaps and policy recommendations |
 | **Math** | Formal proofs, statistical validation |
 
 ### Code of Conduct

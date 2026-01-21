@@ -1,3 +1,5 @@
+# Welcome To The ONI Project
+
 # ONI Framework
 
 > An extensible framework for monitoring and securing neural communications, designed for transparency and interoperability across bio-digital systems.
@@ -182,6 +184,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ## License
 
 Apache License 2.0 - See [LICENSE](LICENSE)
+
+*This license is subject to change as the ONI project evolves to support agile development and implementation.*
 
 ---
 
