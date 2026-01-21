@@ -132,6 +132,12 @@ Cross-scale neural patterns, frequency invariants, and information compression.
 
 ---
 
+## About the Author
+
+See [ABOUT.md](ABOUT.md) to learn more about the researcher behind this project.
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
