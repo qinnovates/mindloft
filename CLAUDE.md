@@ -8,6 +8,8 @@
 
 | Resource | Location | Purpose |
 |----------|----------|---------|
+| **ONI Nexus** | `ONI_NEXUS.md` | **Central hub - start here for navigation** |
+| Topic INDEX Template | `MAIN/artifacts/templates/INDEX_TEMPLATE.md` | Template for topic-level indexes |
 | APA Template | `MAIN/artifacts/templates/TECHDOC_TEMPLATE_APA.md` | Formatting for technical documents |
 | Medium Template | `MAIN/artifacts/templates/MEDIUM_TEMPLATE.md` | Formatting for Medium posts |
 | Publishing Instructions | `MAIN/artifacts/processes/PUBLISHING_INSTRUCTIONS.md` | Step-by-step publishing workflow |
@@ -21,7 +23,8 @@
 
 ```
 ONI/
-├── README.md                           # Main repository documentation
+├── README.md                           # Public entry point
+├── ONI_NEXUS.md                        # Central hub - all topics, dependencies, navigation
 ├── CLAUDE.md                           # Claude AI instructions (this file)
 ├── ABOUT.md                            # Author bio
 ├── CONTRIBUTING.md                     # Contribution guidelines
@@ -30,15 +33,21 @@ ONI/
 └── MAIN/
     ├── publications/                   # CONTENT ONLY
     │   ├── 0-oni-framework/            # Base/foundational content (sorted first)
+    │   │   ├── INDEX.md                # Topic index (each topic has one)
     │   │   ├── Medium-ONI_Framework.md
     │   │   └── TechDoc-ONI_Framework.md
     │   ├── coherence-metric/
+    │   │   └── INDEX.md
     │   ├── neural-firewall/
+    │   │   └── INDEX.md
     │   ├── neural-ransomware/
+    │   │   └── INDEX.md
     │   └── scale-frequency/
+    │       └── INDEX.md
     │
     └── artifacts/                      # NON-CONTENT (infrastructure)
         ├── templates/                  # Formatting templates
+        │   ├── INDEX_TEMPLATE.md       # Template for topic indexes
         │   ├── TECHDOC_TEMPLATE_APA.md
         │   └── MEDIUM_TEMPLATE.md
         │
@@ -254,6 +263,8 @@ Before committing, verify:
 - [ ] README.md updated with new links
 - [ ] Document count updated in README.md footer
 - [ ] Date updated in README.md footer
+- [ ] **Topic INDEX.md created** (for new topics)
+- [ ] **ONI_NEXUS.md updated** (dependency map, tables, metrics)
 
 ---
 
@@ -277,13 +288,33 @@ Before committing, verify:
 6. Add standard Acknowledgments
 7. **Extract keywords and update keywords.json**
 
-### Add New Topic
-1. Create folder: `MAIN/publications/[topic-name]/`
-2. Create Medium file: `Medium-[Topic_Name].md`
-3. Create TechDoc file: `TechDoc-[Topic_Name].md`
-4. **Extract keywords and update keywords.json**
-5. Add section to README.md Topics & Documents
-6. Update document count
+### Add New Topic (Full Expansion Workflow)
+
+**Step 1: Create topic folder**
+```bash
+mkdir MAIN/publications/[topic-name]/
+```
+
+**Step 2: Create topic INDEX.md**
+- Copy from `MAIN/artifacts/templates/INDEX_TEMPLATE.md`
+- Fill in: summary, dependencies, key concepts, related topics
+- Link back to `ONI_NEXUS.md`
+
+**Step 3: Create publications**
+- `Medium-[Topic_Name].md` — Accessible narrative
+- `TechDoc-[Topic_Name].md` — Academic depth
+
+**Step 4: Extract keywords and update keywords.json**
+
+**Step 5: Update ONI_NEXUS.md**
+- Add topic to appropriate section table
+- Update dependency map (if new dependencies)
+- Update cross-reference matrix
+- Update metrics (topic/document counts)
+
+**Step 6: Update README.md**
+- Add section to Topics & Documents
+- Update document count in footer
 
 ### Process CICD Incoming Research
 1. Review files in `MAIN/artifacts/cicd-pipeline/incoming/`
@@ -318,6 +349,6 @@ Before committing, verify:
 
 ---
 
-*Version: 3.0*
+*Version: 3.1*
 *Last Updated: January 2026*
 *For: Claude AI Assistant*
