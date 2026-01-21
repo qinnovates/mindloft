@@ -4,6 +4,40 @@
 
 > An extensible framework for monitoring and securing neural communications, designed for transparency and interoperability across bio-digital systems.
 
+---
+
+## Repository Structure
+
+All research, publications, and supporting infrastructure live in the `MAIN/` directory. Navigate there to explore the full body of work.
+
+```
+ONI/
+├── README.md                    # Main documentation
+├── CLAUDE.md                    # Claude AI instructions
+├── ABOUT.md                     # Author bio
+├── CONTRIBUTING.md              # Contribution guidelines
+├── LICENSE                      # Apache 2.0
+│
+└── MAIN/
+    ├── publications/            # Content only
+    │   ├── 0-oni-framework/     # Base/foundational content (sorted first)
+    │   ├── coherence-metric/
+    │   ├── neural-firewall/
+    │   ├── neural-ransomware/
+    │   └── scale-frequency/
+    │
+    └── artifacts/               # Non-content (infrastructure)
+        ├── templates/           # Formatting templates
+        ├── processes/           # Workflow documentation
+        ├── scripts/             # Automation (research monitor)
+        └── CICD/                # Research pipeline
+            ├── keywords.json    # Publication keywords for research
+            ├── incoming/        # New discoveries
+            └── processed/       # Reviewed research
+```
+
+---
+
 ## Objective
 
 Brain-computer interfaces are being implanted in humans today, yet we lack standardized security frameworks for protecting neural communications. This project aims to:
@@ -129,36 +163,6 @@ Cross-scale neural patterns, frequency invariants, and information compression.
 | Latency | <1ms required | Real-time validation needed |
 | Electrodes | 1,024 channels | High-bandwidth monitoring |
 | Form factor | ~1mm² | Minimal silicon for security |
-
----
-
-## Repository Structure
-
-```
-ONI/
-├── README.md                    # Main documentation
-├── CLAUDE.md                    # Claude AI instructions
-├── ABOUT.md                     # Author bio
-├── CONTRIBUTING.md              # Contribution guidelines
-├── LICENSE                      # Apache 2.0
-│
-└── MAIN/
-    ├── publications/            # Content only
-    │   ├── 0-oni-framework/     # Base/foundational content (sorted first)
-    │   ├── coherence-metric/
-    │   ├── neural-firewall/
-    │   ├── neural-ransomware/
-    │   └── scale-frequency/
-    │
-    └── artifacts/               # Non-content (infrastructure)
-        ├── templates/           # Formatting templates
-        ├── processes/           # Workflow documentation
-        ├── scripts/             # Automation (research monitor)
-        └── CICD/                # Research pipeline
-            ├── keywords.json    # Publication keywords for research
-            ├── incoming/        # New discoveries
-            └── processed/       # Reviewed research
-```
 
 ---
 
