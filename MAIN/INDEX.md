@@ -27,6 +27,25 @@ The **Organic Neural Interface (ONI) Framework** extends the OSI networking mode
 
 ---
 
+## Python Library
+
+The ONI Framework concepts are implemented in a pip-installable Python package.
+
+```bash
+pip install oni-framework
+```
+
+| Module | Purpose | Key Functions |
+|--------|---------|---------------|
+| [oni.coherence](oni-framework/oni/coherence.py) | Cₛ calculation | `CoherenceMetric`, `calculate_cs()` |
+| [oni.layers](oni-framework/oni/layers.py) | 14-layer model | `ONIStack`, `Layer` |
+| [oni.firewall](oni-framework/oni/firewall.py) | Signal filtering | `NeuralFirewall`, `Signal` |
+| [oni.scale_freq](oni-framework/oni/scale_freq.py) | f × S ≈ k invariant | `ScaleFrequencyInvariant` |
+
+**Full documentation:** [oni-framework/README.md](oni-framework/README.md)
+
+---
+
 ## Reading Order
 
 **Recommended path through the framework:**
@@ -217,6 +236,16 @@ Planned research areas for framework expansion:
 ```
 MAIN/
 ├── INDEX.md                    # This file (central hub)
+│
+├── oni-framework/              # Python library (pip install oni-framework)
+│   ├── oni/                    # Source modules
+│   │   ├── coherence.py        # Cₛ calculation
+│   │   ├── layers.py           # 14-layer model
+│   │   ├── firewall.py         # Neural Firewall
+│   │   └── scale_freq.py       # f × S ≈ k
+│   ├── tests/                  # Unit tests (77 tests)
+│   └── pyproject.toml          # Package config
+│
 ├── publications/               # Research content
 │   ├── 0-oni-framework/
 │   ├── coherence-metric/
@@ -224,14 +253,11 @@ MAIN/
 │   ├── neural-ransomware/
 │   ├── quantum-encryption/
 │   └── scale-frequency/
-├── oni-visualizations/         # Interactive demos
+│
 └── resources/                  # Templates, processes, tools
     ├── templates/
     ├── processes/
     └── pipeline/
-        ├── scripts/
-        ├── incoming/
-        └── processed/
 ```
 
 ---
@@ -244,7 +270,8 @@ MAIN/
 | Published Documents | 14 |
 | Blog Posts | 8 |
 | Technical Documents | 6 |
-| Visualizations | 1 |
+| Python Package | v0.1.0 |
+| Unit Tests | 77 |
 | Planned Topics | 5 |
 
 ---

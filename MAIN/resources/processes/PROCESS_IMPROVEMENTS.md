@@ -365,6 +365,22 @@ ONI/
 
 ## Recent Additions Log
 
+### 2026-01-22 (oni-framework release)
+- **oni-framework Python package v0.1.0** released:
+  - `oni.coherence` - Cₛ calculation with phase, transport, gain variance
+  - `oni.layers` - 14-layer ONI model with attack surfaces and defenses
+  - `oni.firewall` - Zero-trust Neural Firewall with decision matrix
+  - `oni.scale_freq` - Scale-Frequency Invariant (f × S ≈ k) validation
+  - 77 unit tests, all passing
+  - Published to PyPI: `pip install oni-framework`
+  - GitHub Release: v0.1.0
+  - GitHub Actions CI/CD for tests and publishing
+- **All documentation updated:**
+  - README.md: Added Python Library section with quick start
+  - MAIN/INDEX.md: Added oni-framework section with module table
+  - CLAUDE.md: Updated file tree with oni-framework structure
+  - Repository structure diagrams updated throughout
+
 ### 2026-01-22 (continued)
 - **Quantum Keys** publication added:
   - Blog post converted from .pages file (Nobel Prize QKD topic)
@@ -433,7 +449,7 @@ ONI/
 #### Phase 1: Credibility (1-3 months)
 - [ ] Validate Cₛ formula against public BCI dataset (BCI Competition)
 - [ ] Submit one paper to peer-reviewed venue (Journal of Neural Engineering, Frontiers)
-- [ ] Create working Python package `oni-framework`
+- [x] Create working Python package `oni-framework` ✓ **COMPLETED v0.1.0**
 - [ ] Post preprint to arXiv (cs.CR or q-bio.NC)
 
 #### Phase 2: Visibility (3-6 months)
@@ -450,13 +466,13 @@ ONI/
 
 ### High-Impact Actions (Prioritized)
 
-| Action | Effort | Impact | Rationale |
-|--------|--------|--------|-----------|
-| Validate Cₛ on BCI Competition data | Medium | High | Transforms theory → evidence |
-| Python package `oni-framework` | Medium | High | Lets people use it today |
-| arXiv preprint of TechDoc-ONI_Framework | Low | Medium | Citeable, discoverable |
-| FDA pre-submission meeting request | Low | High | Signals regulatory seriousness |
-| Neuralink security researcher outreach | Low | Variable | Direct industry connection |
+| Action | Effort | Impact | Status |
+|--------|--------|--------|--------|
+| Validate Cₛ on BCI Competition data | Medium | High | Pending |
+| ~~Python package `oni-framework`~~ | ~~Medium~~ | ~~High~~ | **DONE v0.1.0** |
+| arXiv preprint of TechDoc-ONI_Framework | Low | Medium | Pending |
+| FDA pre-submission meeting request | Low | High | Pending |
+| Neuralink security researcher outreach | Low | Variable | Pending |
 
 ### Target Stakeholders
 
@@ -492,6 +508,6 @@ oni/
 
 ---
 
-*Strategy Version: 3.2*
+*Strategy Version: 3.3*
 *Last Updated: January 22, 2026*
 *Author: Kevin L. Qi with Claude (Anthropic)*

@@ -9,6 +9,7 @@
 | Resource | Location | Purpose |
 |----------|----------|---------|
 | **INDEX** | `MAIN/INDEX.md` | **Central hub - navigation, dependencies, cross-references** |
+| **Python Package** | `MAIN/oni-framework/` | **pip install oni-framework** |
 | Topic INDEX Template | `MAIN/resources/templates/INDEX_TEMPLATE.md` | Template for topic-level indexes |
 | APA Template | `MAIN/resources/templates/TECHDOC_TEMPLATE_APA.md` | Formatting for technical documents |
 | Blog Template | `MAIN/resources/templates/BLOG_TEMPLATE.md` | Formatting for blog posts |
@@ -31,6 +32,18 @@ ONI/
 │
 └── MAIN/
     ├── INDEX.md                        # Central hub - navigation, dependencies, cross-references
+    │
+    ├── oni-framework/                  # Python library (pip install oni-framework)
+    │   ├── oni/                        # Source code
+    │   │   ├── __init__.py
+    │   │   ├── coherence.py            # Cₛ calculation
+    │   │   ├── layers.py               # 14-layer model
+    │   │   ├── firewall.py             # Neural Firewall
+    │   │   └── scale_freq.py           # f × S ≈ k invariant
+    │   ├── tests/                      # Unit tests (77 tests)
+    │   ├── pyproject.toml              # Package configuration
+    │   └── README.md                   # Library documentation
+    │
     ├── publications/                   # CONTENT ONLY
     │   ├── 0-oni-framework/            # Base/foundational content (sorted first)
     │   │   ├── INDEX.md                # Topic index (each topic has one)
@@ -41,8 +54,6 @@ ONI/
     │   ├── neural-ransomware/
     │   ├── quantum-encryption/         # Consolidated: quantum security, keys, TTT
     │   └── scale-frequency/
-    │
-    ├── oni-visualizations/             # Interactive demos
     │
     └── resources/                      # NON-CONTENT (infrastructure)
         ├── templates/                  # Formatting templates
@@ -68,6 +79,7 @@ ONI/
 
 | Folder | Purpose | What Goes Here |
 |--------|---------|----------------|
+| `oni-framework/` | **Python library** | Source code, tests, package config (pip installable) |
 | `publications/0-oni-framework/` | **Base content** | Foundational ONI Framework publications |
 | `publications/` | **Content only** | Blog posts, technical documents |
 | `resources/templates/` | Formatting templates | APA template, Blog template |
