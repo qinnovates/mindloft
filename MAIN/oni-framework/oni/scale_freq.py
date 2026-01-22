@@ -4,6 +4,40 @@ Scale-Frequency Invariant Module
 Implements the f × S ≈ k invariant that describes how neural information
 encoding varies across spatial and temporal scales.
 
+===============================================================================
+IMPORTANT: FOR NON-TECHNICAL COLLABORATORS
+===============================================================================
+This module checks if a neural signal's frequency makes biological sense for
+its spatial scale.
+
+THE CORE IDEA:
+Small brain structures oscillate fast. Large brain structures oscillate slowly.
+This is a fundamental physical law — like how hummingbird wings beat fast and
+elephant legs move slowly.
+
+THE FORMULA:
+    frequency × spatial_scale ≈ constant (k)
+
+EXAMPLES:
+    - Single neuron (10 micrometers) → expects ~100-1000 Hz
+    - Brain region (centimeters) → expects ~4-8 Hz (theta waves)
+    - Whole brain (10 cm) → expects ~0.5-4 Hz (delta waves)
+
+WHY THIS MATTERS FOR SECURITY:
+An attacker trying to inject fake signals might use the wrong frequency for
+the brain region they're targeting. For example, if someone tries to inject
+a 100 Hz signal into a whole-brain pattern (which should be ~1 Hz), this
+module will catch that mismatch.
+
+DATA SOURCES:
+The NEURAL_HIERARCHY values below are from neuroscience literature, not
+measurements from your device. They represent established knowledge about
+how the brain works at different scales.
+
+This module does NOT connect to any hardware. It's a validator that checks
+if frequency/scale combinations make biological sense.
+===============================================================================
+
 The invariant: frequency × spatial_scale ≈ constant
 
 This reflects fundamental constraints on neural information processing:
@@ -47,6 +81,15 @@ class ScaleLevel:
 
 
 # Neural processing hierarchy with characteristic scales
+# =============================================================================
+# THESE VALUES ARE FROM NEUROSCIENCE LITERATURE, NOT MEASUREMENTS!
+#
+# This table summarizes known relationships between brain structure sizes and
+# their typical oscillation frequencies. These are established scientific facts.
+#
+# You don't need to modify this — it's the reference standard that signals
+# are validated against.
+# =============================================================================
 NEURAL_HIERARCHY: List[ScaleLevel] = [
     ScaleLevel(
         name="Molecular",

@@ -9,6 +9,36 @@
 
 > **Research Status:** This library implements theoretical frameworks for BCI security that have not yet been empirically validated. It is intended for research, experimentation, and to provide shared vocabulary for the emerging field of neural interface security. The mathematical models (Cₛ coherence metric, f × S ≈ k invariant) are derived from neuroscience literature but require experimental validation against real BCI data. Contributions and validation efforts are welcome.
 
+---
+
+## Important: What This Library Is (and Isn't)
+
+**This is a framework, not a measurement tool.**
+
+The ONI Framework provides mathematical formulas and models for evaluating neural signal trustworthiness. It does NOT:
+- Connect to any hardware
+- Measure signals from your computer or any device
+- Collect real data
+
+**All examples use sample data.** When you see code like:
+```python
+arrival_times = [0.0, 0.025, 0.050, 0.075]
+amplitudes = [100, 98, 102, 99]
+```
+These are **made-up numbers for demonstration**. In a real application, this data would come from:
+- A BCI device (like Neuralink, OpenBCI, etc.)
+- Neural signal processing software
+- Research lab equipment
+
+**Some values are theoretical defaults.** The transport reliability factors (synaptic transmission = 0.85, etc.) are based on neuroscience literature, not live measurements. In a real BCI system, you would measure these from your specific hardware and tissue interface.
+
+**Think of this library as:**
+- A calculator that can process neural signal data (once you have it)
+- A shared vocabulary for discussing BCI security concepts
+- A starting point for building real security systems
+
+---
+
 ## Overview
 
 The ONI Framework provides tools for validating and securing neural signals at the brain-computer interface boundary. It implements:
@@ -37,13 +67,21 @@ pip install -e ".[dev]"
 
 ### Calculate Coherence Score
 
+**What it does:** Calculates a "trust score" (0 to 1) for a neural signal based on timing consistency, pathway reliability, and amplitude stability.
+
+**What the data means:**
+- `arrival_times` — When each signal pulse arrived (in seconds). In a real BCI, this would come from your device's timestamp data.
+- `amplitudes` — How strong each pulse was (in microvolts). In a real BCI, this would be the measured voltage at each electrode.
+- `reference_freq` — The expected brain oscillation frequency. 40 Hz (gamma waves) is used for cognitive processing signals.
+
 ```python
 from oni import CoherenceMetric, calculate_cs
 
 # Create metric with 40 Hz gamma reference
 metric = CoherenceMetric(reference_freq=40.0)
 
-# Sample signal data
+# SAMPLE DATA (not real measurements!)
+# In a real application, these would come from your BCI device
 arrival_times = [0.0, 0.025, 0.050, 0.075, 0.100]  # seconds
 amplitudes = [100, 98, 102, 99, 101]  # μV
 
@@ -56,10 +94,26 @@ level, description = metric.interpret(cs)
 print(f"{level}: {description}")
 ```
 
+**What the score means:**
+- **0.8 - 1.0:** High coherence — signal is consistent and trustworthy
+- **0.5 - 0.8:** Medium coherence — some variance, may need verification
+- **0.0 - 0.5:** Low coherence — signal is inconsistent, possibly tampered or noisy
+
 ### Use the Neural Firewall
 
+**What it does:** Acts like a security guard for neural signals. It evaluates each signal and decides whether to ACCEPT, FLAG, or REJECT it based on coherence score and authentication status.
+
+**Real-world analogy:** Like a firewall on your computer that blocks suspicious network traffic, this would block suspicious neural signals before they reach the brain or the computer interpreting brain signals.
+
+**What the parameters mean:**
+- `threshold_high` (0.6) — Signals above this coherence score are considered trustworthy
+- `threshold_low` (0.3) — Signals below this are automatically rejected
+- `amplitude_bounds` — Acceptable voltage range; anything outside is rejected (prevents over-powered attacks)
+- `authenticated` — Whether the signal source has been verified (like a password check for the device)
+
 ```python
-from oni import NeuralFirewall, Signal
+from oni import NeuralFirewall
+from oni.firewall import Signal
 
 # Create firewall with default thresholds
 firewall = NeuralFirewall(
@@ -68,23 +122,35 @@ firewall = NeuralFirewall(
     amplitude_bounds=(0, 500),  # μV limits
 )
 
-# Create a signal to validate
+# SAMPLE DATA (not real measurements!)
+# In a real application, this would come from your BCI device
 signal = Signal(
     arrival_times=[0.0, 0.025, 0.050],
     amplitudes=[100, 98, 102],
-    authenticated=True,
+    authenticated=True,  # Device identity verified
 )
 
 # Filter the signal
 result = firewall.filter(signal)
 
-print(f"Decision: {result.decision.name}")
+print(f"Decision: {result.decision.name}")  # ACCEPT, ACCEPT_FLAG, or REJECT
 print(f"Coherence: {result.coherence:.3f}")
 print(f"Alert Level: {result.alert_level.name}")
 print(f"Reason: {result.reason}")
 ```
 
+**Possible decisions:**
+- **ACCEPT** — Signal is trusted, allow it through
+- **ACCEPT_FLAG** — Signal is borderline, allow but log for review
+- **REJECT** — Signal is untrusted or suspicious, block it
+
 ### Explore the 14-Layer Model
+
+**What it does:** Provides a conceptual map of how information flows between the brain and a computer. Think of it like a building with 14 floors — signals travel up and down through each layer.
+
+**Why 14 layers?** The traditional OSI network model has 7 layers. ONI extends this with 7 biological layers (brain side) + 1 bridge layer (where brain meets device) + 6 silicon layers (computer side) = 14 total.
+
+**This is a reference model, not code that processes signals.** It helps researchers and engineers speak the same language when discussing where attacks might happen or where defenses should be placed.
 
 ```python
 from oni import ONIStack
@@ -95,40 +161,62 @@ stack = ONIStack()
 print(stack.ascii_diagram())
 
 # Access specific layers
-gateway = stack.layer(8)  # Neural Gateway
+gateway = stack.layer(8)  # Neural Gateway — where brain meets device
 print(f"Layer 8: {gateway.name}")
 print(f"Function: {gateway.function}")
 print(f"Attack surfaces: {gateway.attack_surfaces}")
 
-# Iterate through biological layers
+# Iterate through biological layers (L1-L7, brain side)
 for layer in stack.biological_layers():
     print(f"L{layer.number}: {layer.name}")
 ```
 
+**Layer summary:**
+- **L1-L7 (Biological):** From molecules to behavior — the brain's processing
+- **L8 (Neural Gateway):** The critical boundary where electrodes meet neurons — this is where the firewall operates
+- **L9-L14 (Silicon):** From signal processing to applications — the computer's processing
+
 ### Validate Scale-Frequency Relationship
+
+**What it does:** Checks if a signal's frequency makes sense for its spatial scale. The brain follows a pattern: small structures (neurons) oscillate fast, large structures (brain regions) oscillate slowly.
+
+**Real-world analogy:** A hummingbird's wings beat fast (small), an elephant's legs move slowly (large). If you saw an elephant moving its legs 100 times per second, you'd know something was wrong. This module catches similar "impossible" neural signals.
+
+**The formula:** `frequency × spatial_scale ≈ constant (k)`
+
+**Why this matters for security:** An attacker injecting fake signals might use the wrong frequency for the brain region they're targeting. This check catches that mismatch.
 
 ```python
 from oni import ScaleFrequencyInvariant
 
 sfi = ScaleFrequencyInvariant()
 
-# Check if 40 Hz at 100 μm scale is valid
-frequency = 40  # Hz
-spatial_scale = 1e-4  # meters (100 μm)
+# SAMPLE CHECK (not a real measurement!)
+# Ask: "Does a 40 Hz signal at 100 μm scale make biological sense?"
+frequency = 40  # Hz (gamma wave)
+spatial_scale = 1e-4  # meters (100 μm = size of a small neural cluster)
 
 is_valid = sfi.validate(frequency, spatial_scale)
 deviation = sfi.deviation(frequency, spatial_scale)
 
 print(f"Valid: {is_valid}")
-print(f"Deviation from k: {deviation:.1%}")
+print(f"Deviation from expected: {deviation:.1%}")
 
-# Get expected frequency for a scale
-expected_f = sfi.expected_frequency(spatial_scale=1e-3)
-print(f"Expected frequency at 1mm: {expected_f:.1f} Hz")
+# What frequency SHOULD we see at a given scale?
+expected_f = sfi.expected_frequency(spatial_scale=1e-3)  # 1mm
+print(f"Expected frequency at 1mm scale: {expected_f:.1f} Hz")
 
-# Print hierarchy report
+# Print the full hierarchy of scales and expected frequencies
 print(sfi.hierarchy_report())
 ```
+
+**What the hierarchy shows:**
+| Scale | Size | Expected Frequency | Example |
+|-------|------|-------------------|---------|
+| Molecular | ~10 nm | Very fast | Ion channels |
+| Cellular | ~10 μm | ~100-1000 Hz | Single neurons |
+| Regional | ~10 mm | ~1-10 Hz | Brain regions |
+| Whole-Brain | ~100 mm | <1 Hz | Global states |
 
 ## Core Concepts
 
@@ -136,12 +224,26 @@ print(sfi.hierarchy_report())
 
 ```
 Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
-
-Where:
-- σ²φ = phase variance (timing jitter)
-- σ²τ = transport variance (pathway integrity)
-- σ²γ = gain variance (amplitude stability)
 ```
+
+**In plain English:** The coherence score is calculated from three types of "variance" (inconsistency). More variance = lower score = less trustworthy.
+
+| Component | Symbol | What It Measures | Data Source |
+|-----------|--------|------------------|-------------|
+| **Phase variance** | σ²φ | Timing jitter — are pulses arriving when expected? | **Measured from signal** — compares arrival times to reference frequency |
+| **Transport variance** | σ²τ | Pathway reliability — how lossy is the signal path? | **Model defaults** — based on neuroscience literature (can be overridden) |
+| **Gain variance** | σ²γ | Amplitude stability — is signal strength consistent? | **Measured from signal** — compares each amplitude to the mean |
+
+**Important:** Transport variance uses **hardcoded default values** from neuroscience research:
+```python
+DEFAULT_TRANSPORT_FACTORS = {
+    'myelinated_axon': 0.999,       # Very reliable (insulated nerve fibers)
+    'unmyelinated_axon': 0.97,      # Slightly less reliable
+    'synaptic_transmission': 0.85,  # Synapses sometimes fail to fire
+    'dendritic_integration': 0.90,  # Some signal loss in dendrites
+}
+```
+In a real BCI system, you would measure these from your specific hardware and replace the defaults.
 
 ### Firewall Decision Matrix
 

@@ -4,12 +4,37 @@ Neural Firewall Module
 Implements signal filtering based on coherence scores at the Neural Gateway (L8).
 Provides zero-trust security validation for brain-computer interface signals.
 
-Decision Matrix:
-- HIGH coherence (>0.6) + valid auth → ACCEPT
-- HIGH coherence + invalid auth → REJECT + alert
-- MEDIUM coherence (0.3-0.6) + valid auth → ACCEPT + flag
-- MEDIUM coherence + invalid auth → REJECT + alert
-- LOW coherence (<0.3) + any → REJECT + critical alert
+===============================================================================
+IMPORTANT: FOR NON-TECHNICAL COLLABORATORS
+===============================================================================
+This module acts like a security guard for neural signals.
+
+WHAT IT DOES:
+- Takes a signal (timing data + amplitudes + whether source is verified)
+- Calculates a coherence/trust score
+- Decides: ACCEPT (let it through), ACCEPT_FLAG (let through but log), or REJECT
+
+REAL-WORLD ANALOGY:
+Like a firewall on your computer that blocks suspicious network traffic, this
+would block suspicious neural signals before they reach the brain or before
+fake brain signals are processed by a computer.
+
+THIS IS A SIMULATION/FRAMEWORK:
+- It does NOT connect to any hardware
+- The "signals" are data YOU provide (from a real BCI device, if you have one)
+- It demonstrates the logic that WOULD be used in a real security system
+
+DECISION MATRIX (how it decides):
+┌────────────────┬──────────────┬─────────────────────┐
+│ Coherence Score│ Authenticated│ Decision            │
+├────────────────┼──────────────┼─────────────────────┤
+│ High (>0.6)    │ Yes          │ ACCEPT              │
+│ High (>0.6)    │ No           │ REJECT + alert      │
+│ Medium (0.3-0.6│ Yes          │ ACCEPT + flag       │
+│ Medium         │ No           │ REJECT + alert      │
+│ Low (<0.3)     │ Any          │ REJECT + critical   │
+└────────────────┴──────────────┴─────────────────────┘
+===============================================================================
 
 Reference: TechDoc-Neural_Firewall_Architecture.md
 """

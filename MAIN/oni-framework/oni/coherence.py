@@ -3,6 +3,29 @@ Coherence Metric Module
 
 Implements the Cₛ (Coherence Score) calculation for neural signal validation.
 
+===============================================================================
+IMPORTANT: FOR NON-TECHNICAL COLLABORATORS
+===============================================================================
+This module calculates a "trust score" (0 to 1) for neural signals.
+
+- Score near 1.0 = Signal is consistent and trustworthy
+- Score near 0.0 = Signal is inconsistent and should be rejected
+
+HOW IT WORKS:
+The score is based on three types of "variance" (inconsistency):
+1. Phase variance    — Are pulses arriving at expected times?
+2. Transport variance — How reliable is the signal pathway?
+3. Gain variance     — Is the signal strength consistent?
+
+WHAT'S SAMPLE DATA VS REAL MEASUREMENT:
+- arrival_times and amplitudes: YOU provide these (from a BCI device)
+- transport_factors: DEFAULT values from neuroscience literature (can override)
+- reference_freq: YOU choose this based on which brain waves you're analyzing
+
+This module does NOT connect to any hardware. It's a calculator that processes
+data you give it.
+===============================================================================
+
 Formula: Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
 
 Where:
@@ -58,11 +81,21 @@ class CoherenceMetric:
     }
 
     # Default transport reliability factors
+    # =========================================================================
+    # THESE ARE THEORETICAL DEFAULTS, NOT MEASUREMENTS FROM YOUR DEVICE!
+    #
+    # These values come from neuroscience literature estimates. In a real BCI
+    # system, you would measure actual reliability from your hardware/tissue
+    # interface and pass custom values to override these defaults.
+    #
+    # Example: If your electrode has 95% signal fidelity, you might use:
+    #   metric = CoherenceMetric(transport_factors={'electrode': 0.95})
+    # =========================================================================
     DEFAULT_TRANSPORT_FACTORS = {
-        'myelinated_axon': 0.999,
-        'unmyelinated_axon': 0.97,
-        'synaptic_transmission': 0.85,
-        'dendritic_integration': 0.90,
+        'myelinated_axon': 0.999,        # Insulated nerve fibers (very reliable)
+        'unmyelinated_axon': 0.97,       # Uninsulated fibers (slightly less reliable)
+        'synaptic_transmission': 0.85,   # Synapses sometimes fail to fire
+        'dendritic_integration': 0.90,   # Some signal loss in dendrite branches
     }
 
     def __init__(

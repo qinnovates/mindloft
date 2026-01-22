@@ -4,6 +4,36 @@ ONI Framework Layer Model
 Implements the 14-layer Organic Neural Interface model that extends
 the OSI networking model into biological neural systems.
 
+===============================================================================
+IMPORTANT: FOR NON-TECHNICAL COLLABORATORS
+===============================================================================
+This module defines a conceptual MODEL — think of it as a map or blueprint.
+
+WHAT IT IS:
+A way to organize and talk about the different "layers" between a brain and
+a computer. Just like a building has floors, the ONI Framework has 14 layers.
+
+WHY 14 LAYERS?
+The traditional OSI network model (used in internet/networking) has 7 layers.
+ONI extends this with:
+- 7 biological layers (brain side: molecules → cells → behavior)
+- 1 bridge layer (where electrodes meet neurons)
+- 6 silicon layers (computer side: signals → applications)
+
+THIS IS A REFERENCE MODEL, NOT SIGNAL PROCESSING:
+This module doesn't calculate anything about signals. It's a vocabulary tool
+that helps researchers and engineers agree on terminology:
+- "The attack happened at Layer 8" = the electrode interface
+- "We need defenses at Layer 3" = local neural circuits
+
+HOW TO USE IT:
+- Explore the model with stack.ascii_diagram()
+- Look up attack surfaces for each layer
+- Use as a framework for discussing BCI security
+
+Nothing here connects to hardware. It's purely educational and organizational.
+===============================================================================
+
 Layers 1-7:  Biological domain (molecular to behavioral)
 Layer 8:     Neural Gateway (bio-digital boundary, firewall location)
 Layers 9-14: Silicon domain (signal processing to application)
