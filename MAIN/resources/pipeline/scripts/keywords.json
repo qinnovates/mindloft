@@ -207,15 +207,24 @@
         "self-similarity neural"
       ]
     },
-    "quantum-security": {
-      "title": "Quantum Security",
+    "quantum-encryption": {
+      "title": "Quantum Encryption",
       "primary_keywords": [
+        "quantum encryption",
         "quantum security",
         "post-quantum cryptography",
         "quantum computing threats",
         "HNDL attack",
         "harvest now decrypt later",
-        "quantum cryptanalysis"
+        "quantum cryptanalysis",
+        "quantum key distribution",
+        "QKD",
+        "macroscopic quantum tunneling",
+        "observer effect security",
+        "tunneling traversal time",
+        "liminal phase security",
+        "QPUF",
+        "quantum physical unclonable function"
       ],
       "technical_terms": [
         "Shor's algorithm",
@@ -229,7 +238,20 @@
         "quantum decoherence",
         "fault-tolerant quantum",
         "no-communication theorem",
-        "no-cloning theorem"
+        "no-cloning theorem",
+        "Josephson junction",
+        "Cooper pairs",
+        "BB84 protocol",
+        "E91 protocol",
+        "QSDC",
+        "quantum secure direct communication",
+        "QRNG",
+        "quantum barrier",
+        "transmission probability",
+        "UBR",
+        "under-the-barrier recollision",
+        "attoclock",
+        "quantum authentication"
       ],
       "scientific_terms": [
         "quantum entanglement",
@@ -237,7 +259,14 @@
         "quantum superposition",
         "quantum coherence",
         "quantum measurement",
-        "quantum state collapse"
+        "quantum state collapse",
+        "observer effect",
+        "decoherence",
+        "liminal phase",
+        "wave-particle duality",
+        "Schrödinger equation",
+        "potential barrier",
+        "macroscopic quantum effects"
       ],
       "security_terms": [
         "side-channel attack quantum",
@@ -247,7 +276,17 @@
         "decoherence attack",
         "quantum random number generator",
         "cryptographic migration",
-        "quantum-safe encryption"
+        "quantum-safe encryption",
+        "quantum-resistant cryptography",
+        "coherence breach defense",
+        "quantum repeater",
+        "space-based QKD",
+        "liminal authentication",
+        "tunneling-based security",
+        "quantum temporal signature",
+        "observer-based detection",
+        "quantum anomaly detection",
+        "neural quantum interface"
       ],
       "threat_terms": [
         "nation-state quantum",
@@ -255,86 +294,6 @@
         "data harvesting quantum",
         "retroactive decryption",
         "quantum attack timeline"
-      ]
-    },
-    "quantum-keys": {
-      "title": "Quantum Keys",
-      "primary_keywords": [
-        "quantum key distribution",
-        "QKD",
-        "quantum tunneling VPN",
-        "macroscopic quantum tunneling",
-        "quantum cryptography BCI",
-        "observer effect security"
-      ],
-      "technical_terms": [
-        "Josephson junction",
-        "Cooper pairs",
-        "BB84 protocol",
-        "E91 protocol",
-        "QSDC",
-        "quantum secure direct communication",
-        "post-quantum VPN",
-        "quantum random number generator",
-        "QRNG",
-        "lattice cryptography",
-        "CRYSTALS-Kyber"
-      ],
-      "scientific_terms": [
-        "no-cloning theorem",
-        "observer effect",
-        "superposition",
-        "entanglement",
-        "quantum coherence",
-        "decoherence",
-        "tunneling traversal time",
-        "liminal phase"
-      ],
-      "security_terms": [
-        "HNDL attack",
-        "harvest now decrypt later",
-        "quantum-resistant cryptography",
-        "quantum-safe encryption",
-        "coherence breach defense",
-        "quantum repeater",
-        "space-based QKD"
-      ]
-    },
-    "tunneling-traversal-time": {
-      "title": "Tunneling Traversal Time",
-      "primary_keywords": [
-        "tunneling traversal time",
-        "quantum tunneling BCI",
-        "liminal phase security",
-        "QPUF",
-        "quantum physical unclonable function"
-      ],
-      "technical_terms": [
-        "quantum barrier",
-        "transmission probability",
-        "tunneling probability",
-        "universal background radiation",
-        "UBR",
-        "quantum decoherence detector",
-        "quantum authentication",
-        "quantum entropy source",
-        "quantum-biological hybrid"
-      ],
-      "scientific_terms": [
-        "wave-particle duality",
-        "Schrödinger equation",
-        "potential barrier",
-        "quantum uncertainty",
-        "quantum collapse",
-        "macroscopic quantum effects"
-      ],
-      "security_terms": [
-        "liminal authentication",
-        "tunneling-based security",
-        "quantum temporal signature",
-        "observer-based detection",
-        "quantum anomaly detection",
-        "neural quantum interface"
       ]
     }
   },

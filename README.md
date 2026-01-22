@@ -23,10 +23,8 @@
   - [Neural Firewall](#️-neural-firewall)
   - [Neural Ransomware](#-neural-ransomware)
   - [ONI Framework (Base)](#️-oni-framework-base)
-  - [Quantum Keys](#-quantum-keys)
-  - [Quantum Security](#-quantum-security)
+  - [Quantum Encryption](#-quantum-encryption)
   - [Scale-Frequency](#-scale-frequency)
-  - [Tunneling Traversal Time](#-tunneling-traversal-time)
 - [About the Author](#about-the-author)
 - [Contributing](#contributing)
 - [License](#license)
@@ -64,10 +62,8 @@ ONI/
     │   ├── coherence-metric/
     │   ├── neural-firewall/
     │   ├── neural-ransomware/
-    │   ├── quantum-keys/
-    │   ├── quantum-security/
-    │   ├── scale-frequency/
-    │   └── tunneling-traversal-time/
+    │   ├── quantum-encryption/
+    │   └── scale-frequency/
     │
     ├── prototypes/              # Interactive demos
     │   └── oni-visualizations/
@@ -199,21 +195,17 @@ Core ONI architecture, 14-layer model extending OSI into biological territory. *
 | [Blog-ONI_Framework](MAIN/publications/0-oni-framework/Blog-ONI_Framework.md) | *If you've worked in IT, you know the OSI model.* |
 | [TechDoc-ONI_Framework](MAIN/publications/0-oni-framework/TechDoc-ONI_Framework.md) | *A Unified Neuro-Computational Stack for Secure Bio-Digital Integration.* |
 
-### 🔑 Quantum Keys — [INDEX](MAIN/publications/quantum-keys/INDEX.md)
+### ⚛️ Quantum Encryption — [INDEX](MAIN/publications/quantum-encryption/INDEX.md)
 
-Quantum Key Distribution (QKD) for neural interface security, bridging quantum tunneling physics to practical network security.
-
-| Document | Summary |
-|----------|----------|
-| [Blog-Quantum_Keys](MAIN/publications/quantum-keys/Blog-Quantum_Keys.md) | *From Macroscopic Quantum Tunneling to Quantum Keys: How the Nobel Prize Will Secure BCIs.* |
-
-### ⚛️ Quantum Security — [INDEX](MAIN/publications/quantum-security/INDEX.md)
-
-Quantum computing threats to cryptography, HNDL attacks, physical quantum vulnerabilities, and post-quantum defenses.
+Comprehensive coverage of quantum computing threats, quantum key distribution (QKD), tunneling traversal time, and quantum-enhanced security for brain-computer interfaces.
 
 | Document | Summary |
 |----------|----------|
-| [Blog-Quantum_Security](MAIN/publications/quantum-security/Blog-Quantum_Security.md) | *The real quantum threat isn't about transcending spacetime—it's about transcending computational complexity.* |
+| [Blog-Quantum_Security](MAIN/publications/quantum-encryption/Blog-Quantum_Security.md) | *The real quantum threat isn't about transcending spacetime—it's about transcending computational complexity.* |
+| [Blog-Quantum_Keys](MAIN/publications/quantum-encryption/Blog-Quantum_Keys.md) | *From Macroscopic Quantum Tunneling to Quantum Keys: How the Nobel Prize Will Secure BCIs.* |
+| [Blog-Tunneling_Traversal_Time](MAIN/publications/quantum-encryption/Blog-Tunneling_Traversal_Time.md) | *The Liminal Phase: How Quantum Tunneling Time Could Secure Your Brain.* |
+| [TechDoc-Quantum_Encryption](MAIN/publications/quantum-encryption/TechDoc-Quantum_Encryption.md) | *A Framework for Post-Quantum BCI Protection.* |
+| [TechDoc-Tunneling_Traversal_Time](MAIN/publications/quantum-encryption/TechDoc-Tunneling_Traversal_Time.md) | *Tunneling Traversal Time as a Security Primitive for Brain-Computer Interfaces.* |
 
 ### 🔬 Scale-Frequency — [INDEX](MAIN/publications/scale-frequency/INDEX.md)
 
@@ -223,15 +215,6 @@ Cross-scale neural patterns, frequency invariants, and information compression.
 |----------|----------|
 | [Blog-Scale_Frequency](MAIN/publications/scale-frequency/Blog-Scale_Frequency.md) | *From millisecond spikes to lifetime memories.* |
 | [TechDoc-Scale_Frequency](MAIN/publications/scale-frequency/TechDoc-Scale_Frequency.md) | *Mathematical Foundations for Hierarchical Neural Processing in the ONI Framework.* |
-
-### ⏱️ Tunneling Traversal Time — [INDEX](MAIN/publications/tunneling-traversal-time/INDEX.md)
-
-Quantum tunneling traversal time as a security primitive for BCIs, liminal phase security model, QPUFs.
-
-| Document | Summary |
-|----------|----------|
-| [Blog-Tunneling_Traversal_Time](MAIN/publications/tunneling-traversal-time/Blog-Tunneling_Traversal_Time.md) | *The Liminal Phase: How Quantum Tunneling Time Could Secure Your Brain.* |
-| [TechDoc-Tunneling_Traversal_Time](MAIN/publications/tunneling-traversal-time/TechDoc-Tunneling_Traversal_Time.md) | *Tunneling Traversal Time as a Security Primitive for Brain-Computer Interfaces.* |
 
 ---
 
@@ -263,4 +246,4 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 
 *Auto-published from research pipeline*
 *Last update: 2026-01-22*
-*Documents: 14 | Topics: 8 | Topic Indexes: 8*
+*Documents: 14 | Topics: 6 | Topic Indexes: 6*

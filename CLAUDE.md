@@ -39,10 +39,8 @@ ONI/
     │   ├── coherence-metric/
     │   ├── neural-firewall/
     │   ├── neural-ransomware/
-    │   ├── quantum-keys/
-    │   ├── quantum-security/
-    │   ├── scale-frequency/
-    │   └── tunneling-traversal-time/
+    │   ├── quantum-encryption/         # Consolidated: quantum security, keys, TTT
+    │   └── scale-frequency/
     │
     ├── prototypes/                     # Interactive demos
     │   └── oni-visualizations/

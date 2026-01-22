@@ -88,13 +88,11 @@ Maintained in MAIN/INDEX.md. Current state (as of January 2026):
 | Document | References | Referenced By |
 |----------|------------|---------------|
 | ONI Framework | - | All other papers |
-| Coherence Metric | ONI Framework | Neural Firewall, Neural Ransomware, TTT, Quantum Keys |
-| Scale-Frequency | ONI Framework | Quantum Security, TTT, Quantum Keys |
-| Neural Firewall | ONI Framework, Coherence Metric | Neural Ransomware, TTT |
+| Coherence Metric | ONI Framework | Neural Firewall, Neural Ransomware, Quantum Encryption |
+| Scale-Frequency | ONI Framework | Quantum Encryption |
+| Neural Firewall | ONI Framework, Coherence Metric | Neural Ransomware |
 | Neural Ransomware | ONI Framework, Coherence Metric, Neural Firewall | - |
-| Quantum Security | ONI Framework, Scale-Frequency, Coherence Metric | TTT, Quantum Keys |
-| Tunneling Traversal Time | ONI Framework, Scale-Frequency, Quantum Security, Coherence Metric | - |
-| Quantum Keys | ONI Framework, Scale-Frequency, Quantum Security, Coherence Metric | - |
+| Quantum Encryption | ONI Framework, Scale-Frequency, Coherence Metric | - |
 
 ### 4. Version Changelog
 
@@ -290,21 +288,13 @@ ONI/
     │   │   ├── Blog-Scale_Frequency.md
     │   │   └── TechDoc-Scale_Frequency.md
     │   │
-    │   ├── quantum-keys/
-    │   │   ├── INDEX.md              # COMPLETE
-    │   │   └── Blog-Quantum_Keys.md
-    │   │
-    │   ├── quantum-security/
-    │   │   ├── INDEX.md              # COMPLETE
-    │   │   ├── Blog-Quantum_Security.md
-    │   │   └── TechDoc-Quantum_Security.md
-    │   │
-    │   └── tunneling-traversal-time/
+    │   └── quantum-encryption/        # Consolidated quantum topics
     │       ├── INDEX.md              # COMPLETE
+    │       ├── Blog-Quantum_Security.md
+    │       ├── Blog-Quantum_Keys.md
     │       ├── Blog-Tunneling_Traversal_Time.md
-    │       ├── Blog-Tunneling_Traversal_Time.docx
-    │       ├── TechDoc-Tunneling_Traversal_Time.md
-    │       └── TechDoc-Tunneling_Traversal_Time.docx
+    │       ├── TechDoc-Quantum_Encryption.md
+    │       └── TechDoc-Tunneling_Traversal_Time.md
     │
     └── prototypes/
         └── oni-visualizations/
@@ -345,11 +335,11 @@ ONI/
 
 | Metric | Count | Last Updated |
 |--------|-------|--------------|
-| Total Topics | 8 | 2026-01-22 |
+| Total Topics | 6 | 2026-01-22 |
 | Published Documents | 14 | 2026-01-22 |
 | Blog Posts | 8 | 2026-01-22 |
 | Technical Documents | 6 | 2026-01-22 |
-| Topic INDEX.md Files | 8 | 2026-01-22 |
+| Topic INDEX.md Files | 6 | 2026-01-22 |
 | Prototypes | 1 | 2026-01-21 |
 | Templates | 3 | 2026-01-21 |
 | Planned Topics | 5 | 2026-01-21 |

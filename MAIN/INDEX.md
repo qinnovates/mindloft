@@ -23,9 +23,7 @@ The **Organic Neural Interface (ONI) Framework** extends the OSI networking mode
 | [Scale-Frequency](publications/scale-frequency/INDEX.md) | Cross-scale invariants (f × S ≈ k) | [Blog](publications/scale-frequency/Blog-Scale_Frequency.md) · [TechDoc](publications/scale-frequency/TechDoc-Scale_Frequency.md) |
 | [Neural Firewall](publications/neural-firewall/INDEX.md) | Zero-trust security at L8 | [Blog](publications/neural-firewall/Blog-Neural_Firewall.md) · [TechDoc](publications/neural-firewall/TechDoc-Neural_Firewall_Architecture.md) |
 | [Neural Ransomware](publications/neural-ransomware/INDEX.md) | Threat analysis & defense | [Blog](publications/neural-ransomware/Blog-Neural_Ransomware.md) · [TechDoc](publications/neural-ransomware/TechDoc-Neural_Ransomware.md) |
-| [Quantum Security](publications/quantum-security/INDEX.md) | HNDL attacks & post-quantum crypto | [Blog](publications/quantum-security/Blog-Quantum_Security.md) |
-| [Tunneling Traversal Time](publications/tunneling-traversal-time/INDEX.md) | Liminal phase security for BCIs | [Blog](publications/tunneling-traversal-time/Blog-Tunneling_Traversal_Time.md) · [TechDoc](publications/tunneling-traversal-time/TechDoc-Tunneling_Traversal_Time.md) |
-| [Quantum Keys](publications/quantum-keys/INDEX.md) | QKD for BCI security | [Blog](publications/quantum-keys/Blog-Quantum_Keys.md) |
+| [Quantum Encryption](publications/quantum-encryption/INDEX.md) | Quantum threats, QKD, TTT, QPUFs | [Blog-QSec](publications/quantum-encryption/Blog-Quantum_Security.md) · [Blog-QKeys](publications/quantum-encryption/Blog-Quantum_Keys.md) · [Blog-TTT](publications/quantum-encryption/Blog-Tunneling_Traversal_Time.md) · [TechDoc-QEnc](publications/quantum-encryption/TechDoc-Quantum_Encryption.md) · [TechDoc-TTT](publications/quantum-encryption/TechDoc-Tunneling_Traversal_Time.md) |
 
 ---
 
@@ -38,9 +36,7 @@ The **Organic Neural Interface (ONI) Framework** extends the OSI networking mode
 3. **Coherence Metric** → Signal validation (Cₛ formula)
 4. **Neural Firewall** → Security architecture (zero-trust at L8)
 5. **Neural Ransomware** → Threat landscape
-6. **Quantum Security** → Cryptographic threats & defenses
-7. **Tunneling Traversal Time** → Quantum-enhanced BCI security (liminal phase)
-8. **Quantum Keys** → QKD principles for neural interface security
+6. **Quantum Encryption** → Quantum threats, QKD, liminal phase security, QPUFs
 
 ---
 
@@ -63,18 +59,10 @@ The **Organic Neural Interface (ONI) Framework** extends the OSI networking mode
             │                     └──────────┬───────────┘
             │                                │
             ▼                                ▼
-   ┌─────────────────┐            ┌─────────────────────┐
-   │QUANTUM SECURITY │            │  NEURAL RANSOMWARE  │
-   │ HNDL, PQC, f×S≈k│            │   Threat modeling   │
-   └────────┬────────┘            └─────────────────────┘
-            │
-            ├───────────────────────────┐
-            │                           │
-            ▼                           ▼
-   ┌─────────────────────────┐ ┌─────────────────────┐
-   │ TUNNELING TRAVERSAL TIME│ │    QUANTUM KEYS     │
-   │ Liminal phase, QPUF, UBR│ │ QKD, Observer effect│
-   └─────────────────────────┘ └─────────────────────┘
+   ┌─────────────────────────┐    ┌─────────────────────┐
+   │   QUANTUM ENCRYPTION    │    │  NEURAL RANSOMWARE  │
+   │ HNDL, QKD, TTT, QPUFs   │    │   Threat modeling   │
+   └─────────────────────────┘    └─────────────────────┘
 ```
 
 ---
@@ -100,9 +88,7 @@ The **Organic Neural Interface (ONI) Framework** extends the OSI networking mode
 |-------|---------|-----------|--------|
 | [Neural Firewall](publications/neural-firewall/INDEX.md) | Zero-trust security at the neural gateway (L8) | [Blog](publications/neural-firewall/Blog-Neural_Firewall.md) · [TechDoc](publications/neural-firewall/TechDoc-Neural_Firewall_Architecture.md) | Published |
 | [Neural Ransomware](publications/neural-ransomware/INDEX.md) | Threat analysis and defensive architectures | [Blog](publications/neural-ransomware/Blog-Neural_Ransomware.md) · [TechDoc](publications/neural-ransomware/TechDoc-Neural_Ransomware.md) | Published |
-| [Quantum Security](publications/quantum-security/INDEX.md) | Quantum threats, HNDL attacks, post-quantum cryptography | [Blog](publications/quantum-security/Blog-Quantum_Security.md) | Published |
-| [Tunneling Traversal Time](publications/tunneling-traversal-time/INDEX.md) | Liminal phase security, QPUFs for BCI authentication | [Blog](publications/tunneling-traversal-time/Blog-Tunneling_Traversal_Time.md) · [TechDoc](publications/tunneling-traversal-time/TechDoc-Tunneling_Traversal_Time.md) | Published |
-| [Quantum Keys](publications/quantum-keys/INDEX.md) | QKD principles for neural interface security | [Blog](publications/quantum-keys/Blog-Quantum_Keys.md) | Published |
+| [Quantum Encryption](publications/quantum-encryption/INDEX.md) | Quantum threats, QKD, liminal phase security, QPUFs | [Blog-QSec](publications/quantum-encryption/Blog-Quantum_Security.md) · [Blog-QKeys](publications/quantum-encryption/Blog-Quantum_Keys.md) · [Blog-TTT](publications/quantum-encryption/Blog-Tunneling_Traversal_Time.md) · [TechDoc-QEnc](publications/quantum-encryption/TechDoc-Quantum_Encryption.md) · [TechDoc-TTT](publications/quantum-encryption/TechDoc-Tunneling_Traversal_Time.md) | Published |
 
 ---
 
@@ -110,16 +96,14 @@ The **Organic Neural Interface (ONI) Framework** extends the OSI networking mode
 
 Shows which topics reference which. Use this to understand conceptual dependencies.
 
-|                    | ONI Framework | Coherence | Scale-Freq | Firewall | Ransomware | Quantum | TTT | QKeys |
-|--------------------|:-------------:|:---------:|:----------:|:--------:|:----------:|:-------:|:---:|:-----:|
-| **ONI Framework**  | —             | ●         | ●          | ●        | ●          | ●       | ●   | ●     |
-| **Coherence**      | ◄             | —         | ○          | ●        | ●          | ○       | ○   | ●     |
-| **Scale-Frequency**| ◄             | ○         | —          | ○        | ○          | ●       | ●   | ●     |
-| **Firewall**       | ◄             | ◄         | ○          | —        | ●          | ○       | ○   | ○     |
-| **Ransomware**     | ◄             | ◄         | ○          | ◄        | —          | ○       | ○   | ○     |
-| **Quantum**        | ◄             | ◄         | ◄          | ○        | ○          | —       | ●   | ●     |
-| **TTT**            | ◄             | ◄         | ◄          | ○        | ○          | ◄       | —   | ○     |
-| **QKeys**          | ◄             | ◄         | ◄          | ○        | ○          | ◄       | ○   | —     |
+|                    | ONI Framework | Coherence | Scale-Freq | Firewall | Ransomware | Quantum Enc |
+|--------------------|:-------------:|:---------:|:----------:|:--------:|:----------:|:-----------:|
+| **ONI Framework**  | —             | ●         | ●          | ●        | ●          | ●           |
+| **Coherence**      | ◄             | —         | ○          | ●        | ●          | ●           |
+| **Scale-Frequency**| ◄             | ○         | —          | ○        | ○          | ●           |
+| **Firewall**       | ◄             | ◄         | ○          | —        | ●          | ○           |
+| **Ransomware**     | ◄             | ◄         | ○          | ◄        | —          | ○           |
+| **Quantum Enc**    | ◄             | ◄         | ◄          | ○        | ○          | —           |
 
 **Legend:** ● = references this topic | ◄ = referenced by this topic | ○ = related concept
 
@@ -238,10 +222,8 @@ MAIN/
 │   ├── coherence-metric/
 │   ├── neural-firewall/
 │   ├── neural-ransomware/
-│   ├── quantum-keys/
-│   ├── quantum-security/
-│   ├── scale-frequency/
-│   └── tunneling-traversal-time/
+│   ├── quantum-encryption/
+│   └── scale-frequency/
 ├── prototypes/                 # Interactive demos
 │   └── oni-visualizations/
 └── resources/                  # Templates, processes, tools
@@ -259,7 +241,7 @@ MAIN/
 
 | Metric | Count |
 |--------|-------|
-| Total Topics | 8 |
+| Total Topics | 6 |
 | Published Documents | 14 |
 | Blog Posts | 8 |
 | Technical Documents | 6 |
