@@ -2,8 +2,12 @@
 
 **Organic Neural Interface Framework** - A Python library for brain-computer interface security.
 
+[![PyPI version](https://badge.fury.io/py/oni-framework.svg)](https://badge.fury.io/py/oni-framework)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Tests](https://github.com/qikevinl/ONI/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/tests.yml)
+
+> **Research Status:** This library implements theoretical frameworks for BCI security that have not yet been empirically validated. It is intended for research, experimentation, and to provide shared vocabulary for the emerging field of neural interface security. The mathematical models (Cₛ coherence metric, f × S ≈ k invariant) are derived from neuroscience literature but require experimental validation against real BCI data. Contributions and validation efforts are welcome.
 
 ## Overview
 
@@ -17,16 +21,16 @@ The ONI Framework provides tools for validating and securing neural signals at t
 ## Installation
 
 ```bash
-# From source
-git clone https://github.com/qikevinl/ONI.git
-cd ONI/MAIN/oni-framework
-pip install -e .
-
-# With development dependencies
-pip install -e ".[dev]"
+# From PyPI (recommended)
+pip install oni-framework
 
 # With visualization support
-pip install -e ".[viz]"
+pip install oni-framework[viz]
+
+# From source (for development)
+git clone https://github.com/qikevinl/ONI.git
+cd ONI/MAIN/oni-framework
+pip install -e ".[dev]"
 ```
 
 ## Quick Start
