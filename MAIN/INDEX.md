@@ -181,7 +181,7 @@ The ONI Framework maintains Responsible AI standards and documents alignment wit
 
 | Document | Purpose |
 |----------|---------|
-| [TRANSPARENCY.md](../TRANSPARENCY.md) | Human-AI collaboration audit trail — cognitive boundary documentation, HITL methodology |
+| [TRANSPARENCY.md](TRANSPARENCY.md) | Human-AI collaboration audit trail — cognitive boundary documentation, HITL methodology |
 | [NEUROETHICS_ALIGNMENT.md](NEUROETHICS_ALIGNMENT.md) | Maps framework components to cognitive liberty, mental privacy, mental integrity principles |
 | [RELATED_WORK.md](RELATED_WORK.md) | Prior BCI security research — acknowledges foundational work, positions ONI's contribution |
 

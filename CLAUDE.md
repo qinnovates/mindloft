@@ -10,7 +10,7 @@
 |----------|----------|---------|
 | **Main Wiki (INDEX)** | `MAIN/INDEX.md` | **Central hub - navigation, dependencies, cross-references** |
 | **Python Package** | `MAIN/oni-framework/` | **pip install oni-framework** |
-| **Transparency Statement** | `TRANSPARENCY.md` | **Human-AI collaboration audit trail** |
+| **Transparency Statement** | `MAIN/TRANSPARENCY.md` | **Human-AI collaboration audit trail** |
 | **Neuroethics Alignment** | `MAIN/NEUROETHICS_ALIGNMENT.md` | **Framework-to-ethics principle mapping** |
 | Topic README Template | `MAIN/resources/templates/README_TEMPLATE.md` | Template for topic-level overviews |
 | APA Template | `MAIN/resources/templates/TECHDOC_TEMPLATE_APA.md` | Formatting for technical documents |
@@ -42,31 +42,43 @@ ONI/
 ├── CLAUDE.md                           # Claude AI instructions (this file)
 ├── AGENTS.md                           # Ralph Loop learnings (read at session start)
 ├── prd.json                            # Task tracker with exit conditions
-├── TRANSPARENCY.md                     # Human-AI collaboration audit trail
 ├── ABOUT.md                            # Author bio
 ├── CONTRIBUTING.md                     # Contribution guidelines
 ├── LICENSE                             # Apache 2.0 License
 │
+├── .github/
+│   ├── workflows/                      # CI/CD pipelines (tests, publish, security)
+│   └── security-audit/                 # Security scanning tools
+│
 └── MAIN/
     ├── INDEX.md                        # MAIN WIKI — navigation, dependencies, cross-references
+    ├── TRANSPARENCY.md                 # Human-AI collaboration audit trail
     ├── NEUROETHICS_ALIGNMENT.md        # Framework-to-ethics principle mapping
+    ├── RELATED_WORK.md                 # Prior BCI security research
+    ├── ONI_LAYERS.md                   # Authoritative 14-layer reference
     │
     ├── oni-framework/                  # Python library (pip install oni-framework)
     │   ├── oni/                        # Source code
-    │   │   ├── __init__.py
     │   │   ├── coherence.py            # Cₛ calculation
     │   │   ├── layers.py               # 14-layer model
     │   │   ├── firewall.py             # Neural Firewall
-    │   │   └── scale_freq.py           # f × S ≈ k invariant
-    │   ├── tests/                      # Unit tests (77 tests)
-    │   ├── pyproject.toml              # Package configuration
+    │   │   ├── scale_freq.py           # f × S ≈ k invariant
+    │   │   └── neurosecurity/          # Kohno threat model + BCI Anonymizer
+    │   ├── tests/                      # Unit tests
     │   └── README.md                   # Library documentation
     │
+    ├── tara/                           # Neural Security Platform (pip install oni-tara)
+    │   ├── core/                       # ONI security primitives
+    │   ├── simulation/                 # Neural network simulation
+    │   ├── attacks/                    # Attack testing & scenarios
+    │   ├── nsam/                       # Neural Signal Assurance Monitoring
+    │   ├── neurosecurity/              # Kohno rules integration
+    │   ├── visualization/              # Real-time dashboards
+    │   ├── ui/                         # Streamlit web interface
+    │   └── README.md                   # Platform documentation
+    │
     ├── publications/                   # CONTENT ONLY
-    │   ├── 0-oni-framework/            # Base/foundational content (sorted first)
-    │   │   ├── README.md               # Topic overview (auto-rendered by GitHub)
-    │   │   ├── Blog-ONI_Framework.md
-    │   │   └── TechDoc-ONI_Framework.md
+    │   ├── 0-oni-framework/            # Base/foundational content
     │   ├── coherence-metric/
     │   ├── neural-firewall/
     │   ├── neural-ransomware/
@@ -74,27 +86,17 @@ ONI/
     │   └── scale-frequency/
     │
     └── resources/                      # NON-CONTENT (infrastructure)
+        ├── agents/                     # PM Agent instructions
+        ├── editor/                     # Editor Agent (quality & sync)
+        │   ├── EDITOR_AGENT.md
+        │   └── checks/
         ├── templates/                  # Formatting templates
-        │   ├── README_TEMPLATE.md      # Template for topic README files
-        │   ├── TECHDOC_TEMPLATE_APA.md
-        │   └── BLOG_TEMPLATE.md
-        │
         ├── processes/                  # Workflow documentation
-        │   ├── PUBLISHING_INSTRUCTIONS.md
-        │   └── PROCESS_IMPROVEMENTS.md
-        │
         ├── pipeline/                   # Research pipeline
-        │   ├── scripts/                # Automation scripts
-        │   │   ├── research_monitor.py
-        │   │   └── keywords.json
-        │   ├── incoming/               # New research discoveries
-        │   └── processed/              # Reviewed and integrated
-        │
-        └── editor/                     # Editor Agent (quality & sync)
-            ├── EDITOR_AGENT.md         # Main instructions
-            └── checks/                 # Validation sub-instructions
-                ├── layer_validation.md
-                ├── sync_rules.md
+        │   ├── scripts/
+        │   ├── incoming/
+        │   └── processed/
+        └── images/                     # ONI diagrams
                 ├── naming_rules.md
                 └── format_rules.md
 ```
@@ -456,7 +458,7 @@ Use this text in all technical documents:
 
 | Document | Location | Purpose |
 |----------|----------|---------|
-| `TRANSPARENCY.md` | Repository root | Audit trail of Human-AI cognitive boundary |
+| `TRANSPARENCY.md` | `MAIN/` | Audit trail of Human-AI cognitive boundary |
 | `NEUROETHICS_ALIGNMENT.md` | `MAIN/` | Maps framework components to ethical principles |
 
 ### When to Update TRANSPARENCY.md

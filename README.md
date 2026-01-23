@@ -63,7 +63,7 @@ The framework provides security without requiring surveillance. Signal integrity
 
 | Document | Purpose |
 |----------|---------|
-| **[TRANSPARENCY.md](TRANSPARENCY.md)** | Human-AI collaboration audit trail — documents cognitive boundary, HITL methodology |
+| **[TRANSPARENCY.md](MAIN/TRANSPARENCY.md)** | Human-AI collaboration audit trail — documents cognitive boundary, HITL methodology |
 | **[NEUROETHICS_ALIGNMENT.md](MAIN/NEUROETHICS_ALIGNMENT.md)** | Maps framework components to neuroethics principles |
 | **[RELATED_WORK.md](MAIN/RELATED_WORK.md)** | Prior BCI security research — acknowledges foundational work, positions ONI contribution |
 
@@ -142,7 +142,6 @@ All research, publications, and supporting infrastructure live in the `MAIN/` di
 ```
 ONI/
 ├── README.md                    # Public overview (you are here)
-├── TRANSPARENCY.md              # Human-AI collaboration audit trail
 ├── CLAUDE.md                    # Claude AI instructions
 ├── AGENTS.md                    # Ralph Loop learnings (knowledge compounding)
 ├── prd.json                     # Task tracker with exit conditions
@@ -150,24 +149,32 @@ ONI/
 ├── CONTRIBUTING.md              # Contribution guidelines
 ├── LICENSE                      # Apache 2.0
 │
+├── .github/
+│   ├── workflows/               # CI/CD pipelines
+│   └── security-audit/          # Security scanning tools
+│
 └── MAIN/
     ├── INDEX.md                 # Central hub — navigation, dependencies, cross-references
     ├── ONI_LAYERS.md            # **Authoritative 14-layer reference**
+    ├── TRANSPARENCY.md          # Human-AI collaboration audit trail
     ├── NEUROETHICS_ALIGNMENT.md # Framework-to-ethics principle mapping
+    ├── RELATED_WORK.md          # Prior BCI security research
     │
     ├── oni-framework/           # Python library (pip install oni-framework)
     │   ├── oni/                 # Source code
     │   │   ├── coherence.py     # Cₛ calculation
     │   │   ├── layers.py        # 14-layer model
     │   │   ├── firewall.py      # Neural Firewall
-    │   │   └── scale_freq.py    # f × S ≈ k invariant
-    │   └── tests/               # Unit tests (77 tests)
+    │   │   ├── scale_freq.py    # f × S ≈ k invariant
+    │   │   └── neurosecurity/   # Kohno threat model + BCI Anonymizer
+    │   └── tests/               # Unit tests
     │
-    ├── tara/                    # Neural Security Platform
+    ├── tara/                    # Neural Security Platform (pip install oni-tara)
     │   ├── core/                # ONI security primitives
     │   ├── simulation/          # Neural network simulation
     │   ├── attacks/             # Attack testing & scenarios
-    │   ├── nsam/                # Neural Signal Assurance Monitoring (NSAM)
+    │   ├── nsam/                # Neural Signal Assurance Monitoring
+    │   ├── neurosecurity/       # Kohno rules integration
     │   ├── visualization/       # Real-time dashboards
     │   └── ui/                  # Streamlit web interface
     │
@@ -180,12 +187,12 @@ ONI/
     │   └── scale-frequency/
     │
     └── resources/               # Infrastructure
-        ├── agents/              # PM Agent, Editor Agent instructions
+        ├── agents/              # PM Agent instructions
+        ├── editor/              # Editor Agent (quality & sync)
         ├── images/              # ONI diagrams and visualizations
         ├── templates/           # Formatting templates
         ├── processes/           # Workflow documentation
-        ├── pipeline/            # Research pipeline
-        └── editor/              # Editor Agent (quality & sync)
+        └── pipeline/            # Research pipeline
 ```
 
 ---

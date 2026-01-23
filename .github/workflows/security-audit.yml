@@ -57,8 +57,8 @@ jobs:
         id: audit-pr
         run: |
           echo "Scanning changed files in PR..."
-          python security-audit-pipeline/scripts/audit.py \
-            --config security-audit-pipeline/patterns/secrets.json \
+          python .github/security-audit/scripts/audit.py \
+            --config .github/security-audit/patterns/secrets.json \
             --format text \
             --severity ${{ inputs.severity || 'low' }} \
             --fail-on high \
@@ -71,9 +71,9 @@ jobs:
         id: audit-full
         run: |
           echo "Scanning all tracked files..."
-          python security-audit-pipeline/scripts/audit.py \
+          python .github/security-audit/scripts/audit.py \
             --all \
-            --config security-audit-pipeline/patterns/secrets.json \
+            --config .github/security-audit/patterns/secrets.json \
             --format text \
             --severity ${{ inputs.severity || 'low' }} \
             --fail-on high \
@@ -83,9 +83,9 @@ jobs:
       - name: Generate SARIF report
         if: always()
         run: |
-          python security-audit-pipeline/scripts/audit.py \
+          python .github/security-audit/scripts/audit.py \
             --all \
-            --config security-audit-pipeline/patterns/secrets.json \
+            --config .github/security-audit/patterns/secrets.json \
             --format sarif \
             --severity low \
             > security-results.sarif 2>/dev/null || echo '{"runs":[]}' > security-results.sarif
@@ -95,7 +95,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: security-results.sarif
-          category: security-audit-pipeline
+          category: .github/security-audit
         continue-on-error: true
 
       - name: Comment on PR with results

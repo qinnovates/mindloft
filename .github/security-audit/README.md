@@ -29,7 +29,7 @@ Automated security scanning for secrets, credentials, PII, and sensitive data.
 
 ```bash
 # From repository root
-./security-audit-pipeline/install.sh
+./.github/security-audit/install.sh
 ```
 
 This installs a git pre-commit hook that automatically scans staged files before each commit.
@@ -49,28 +49,28 @@ No additional setup required if the workflow file is present.
 
 ```bash
 # Scan staged files (default)
-python security-audit-pipeline/scripts/audit.py --staged
+python .github/security-audit/scripts/audit.py --staged
 
 # Scan all tracked files
-python security-audit-pipeline/scripts/audit.py --all
+python .github/security-audit/scripts/audit.py --all
 
 # Scan specific files
-python security-audit-pipeline/scripts/audit.py file1.py file2.js
+python .github/security-audit/scripts/audit.py file1.py file2.js
 
 # Set minimum severity
-python security-audit-pipeline/scripts/audit.py --severity high
+python .github/security-audit/scripts/audit.py --severity high
 
 # Output as JSON
-python security-audit-pipeline/scripts/audit.py --format json
+python .github/security-audit/scripts/audit.py --format json
 
 # Output as SARIF (for GitHub Security)
-python security-audit-pipeline/scripts/audit.py --format sarif
+python .github/security-audit/scripts/audit.py --format sarif
 
 # Verbose output with match details
-python security-audit-pipeline/scripts/audit.py --verbose
+python .github/security-audit/scripts/audit.py --verbose
 
 # Fail only on critical findings
-python security-audit-pipeline/scripts/audit.py --fail-on critical
+python .github/security-audit/scripts/audit.py --fail-on critical
 ```
 
 ### Options
@@ -149,7 +149,7 @@ Add to the `allowlist` section:
 ## Directory Structure
 
 ```
-security-audit-pipeline/
+.github/security-audit/
 ├── README.md                 # This file
 ├── install.sh                # Installation script
 ├── hooks/
@@ -203,7 +203,7 @@ git commit --no-verify
 ls -la .git/hooks/pre-commit
 
 # Reinstall
-./security-audit-pipeline/install.sh --force
+./.github/security-audit/install.sh --force
 ```
 
 ### False positives
@@ -237,7 +237,7 @@ repos:
     hooks:
       - id: security-audit
         name: Security Audit
-        entry: python security-audit-pipeline/scripts/audit.py --staged --fail-on high
+        entry: python .github/security-audit/scripts/audit.py --staged --fail-on high
         language: python
         pass_filenames: false
 ```
@@ -246,10 +246,10 @@ repos:
 
 ```bash
 # GitLab CI
-python security-audit-pipeline/scripts/audit.py --all --format json > audit.json
+python .github/security-audit/scripts/audit.py --all --format json > audit.json
 
 # Jenkins
-python security-audit-pipeline/scripts/audit.py --all --fail-on high
+python .github/security-audit/scripts/audit.py --all --fail-on high
 ```
 
 ## Contributing
