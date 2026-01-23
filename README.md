@@ -1,14 +1,31 @@
-# 🛡️ Welcome To The ONI Project 🛡️
-"The OSI of Mind"
-
 # ONI Framework
+*"The OSI of Mind"*
 
-> An extensible framework for monitoring and securing neural communications, designed for transparency and interoperability across brain-computer interfaces (BCIs).
+> **ONI**: Organic Neurocomputing Interface — A 14-layer framework extending OSI for brain-computer interface (BCI) security.
+
+An extensible framework for monitoring and securing neural communications, designed for transparency and interoperability across brain-computer interfaces (BCIs).
+
+---
+
+## Privacy & Ethics Statement
+
+**ONI is NOT a surveillance framework.**
+
+The ONI Framework exists to **protect** neural privacy and ensure the **integrity** of brain-computer interfaces. Its purpose is:
+
+- **Defense** against malicious attacks (nation-state actors, cybercriminals, ransomware)
+- **Protection** from accidental risks (MRI exposure, electromagnetic interference, device malfunction)
+- **Privacy preservation** ensuring neural data remains confidential
+- **Availability** maintaining BCI functionality when users depend on it
+- **Human sovereignty** keeping humans in control of their own neural interfaces
+
+The framework provides security without requiring surveillance. Signal integrity can be validated without reading thoughts. Attacks can be detected without decoding intent. The goal is to implement BCI security that preserves confidentiality, integrity, and availability — the same principles that protect all other computing systems.
 
 ---
 
 ## Table of Contents
 
+- [Privacy & Ethics Statement](#privacy--ethics-statement)
 - [Navigation](#navigation)
   - [Transparency & Ethics](#transparency--ethics)
 - [Python Library](#python-library)
@@ -120,6 +137,7 @@ ONI/
 │
 └── MAIN/
     ├── INDEX.md                 # Central hub — navigation, dependencies, cross-references
+    ├── ONI_LAYERS.md            # **Authoritative 14-layer reference**
     ├── NEUROETHICS_ALIGNMENT.md # Framework-to-ethics principle mapping
     │
     ├── oni-framework/           # Python library (pip install oni-framework)
@@ -130,6 +148,14 @@ ONI/
     │   │   └── scale_freq.py    # f × S ≈ k invariant
     │   └── tests/               # Unit tests (77 tests)
     │
+    ├── tara/                    # Neural Security Platform
+    │   ├── core/                # ONI security primitives
+    │   ├── simulation/          # Neural network simulation
+    │   ├── attacks/             # Attack testing & scenarios
+    │   ├── siem/                # Neural Signal Assurance Monitoring (NSAM)
+    │   ├── visualization/       # Real-time dashboards
+    │   └── ui/                  # Streamlit web interface
+    │
     ├── publications/            # Research content
     │   ├── 0-oni-framework/     # Base/foundational content
     │   ├── coherence-metric/
@@ -139,6 +165,8 @@ ONI/
     │   └── scale-frequency/
     │
     └── resources/               # Infrastructure
+        ├── agents/              # PM Agent, Editor Agent instructions
+        ├── images/              # ONI diagrams and visualizations
         ├── templates/           # Formatting templates
         ├── processes/           # Workflow documentation
         ├── pipeline/            # Research pipeline
@@ -167,13 +195,23 @@ Brain-computer interfaces are being implanted in humans today, yet we lack stand
 
 ### The 14-Layer ONI Model
 
-Extends the traditional OSI model into biological territory:
+Extends the classical OSI networking model with 7 additional layers for neural and cognitive systems:
 
 | Layers | Domain | Description |
 |--------|--------|-------------|
-| 1-7 | Traditional OSI | Physical → Application (standard networking) |
-| 8-10 | Neural Interface | Electrodes, local field potentials, oscillatory patterns |
-| 11-14 | Cognitive | Working memory, attention, executive function, identity |
+| **L1-L7** | OSI Networking | Physical → Application (standard networking) |
+| **L8** | Neural Gateway | **THE FIREWALL** — Bridge between silicon and biology |
+| **L9-L10** | Signal Processing | Neural filtering, digitization, protocol encoding |
+| **L11-L12** | Cognitive Transport | Session management, state tracking, reliable delivery |
+| **L13-L14** | Semantic/Identity | Intent interpretation, ethics, continuity of self |
+
+**Key Principle:**
+- **OSI (L1-L7)** answers: *How does data move?*
+- **ONI (L8-L14)** answers: *Should it move, can it be trusted, and what does it mean — especially when the endpoint is a human brain?*
+
+**L8 (Neural Gateway) is the critical boundary** — most attacked, least standardized, most dangerous layer.
+
+For complete layer definitions, see [ONI_LAYERS.md](MAIN/ONI_LAYERS.md) — the authoritative reference.
 
 ### The Coherence Metric
 
@@ -207,13 +245,18 @@ Physiology-first defense framework with checkpoints:
 
 ### Attack Surfaces by Layer
 
-| Layer | Attack Surface | Example Threat |
-|-------|---------------|----------------|
-| L1-2 | RF/Bluetooth | BlueBorne-style exploits |
-| L3-4 | Protocol | Packet injection, replay attacks |
-| L8 | Electrode | Signal injection at hardware |
-| L9-10 | Neural | Phase-locked malicious stimulation |
-| L11-14 | Cognitive | Memory manipulation, identity attacks |
+| Layer | Domain | Attack Surface | Example Threat |
+|-------|--------|---------------|----------------|
+| L1-L4 | OSI | Network infrastructure | MitM, DDoS, BlueBorne-style exploits |
+| L5-L7 | OSI | Application protocols | Packet injection, API exploits |
+| **L8** | **Gateway** | **Neural boundary** | **Bypass attacks, unauthorized write access** |
+| L9 | Signal | Hardware/DSP | Signal injection, jamming, impedance manipulation |
+| L10-L11 | Protocol | Neural encoding | Protocol manipulation, session hijacking |
+| L12-L13 | Cognitive | State/Intent | Context corruption, semantic attacks |
+| L14 | Identity | Self-model | Long-term manipulation, identity attacks |
+
+**External Physical Threats** (documented in [ONI_LAYERS.md](MAIN/ONI_LAYERS.md)):
+- MRI exposure, electromagnetic interference, physical trauma, intentional jamming, proximity attacks (ProxMark-style)
 
 ### Hardware Constraints (Neuralink N1 Reference)
 
@@ -317,4 +360,4 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 
 *Auto-published from research pipeline*
 *Last update: 2026-01-22*
-*Documents: 14 | Topics: 6 | Python Package: v0.1.0*
+*Documents: 14 | Topics: 6 | Python Package: v0.3.0*

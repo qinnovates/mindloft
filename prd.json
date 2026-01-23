@@ -1,11 +1,11 @@
 {
   "project": "ONI Framework",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "last_updated": "2026-01-22",
-  "loop_iteration": 1,
+  "loop_iteration": 3,
 
   "exit_conditions": {
-    "global": "All tasks complete, Editor Agent passes with 0 critical issues",
+    "global": "All tasks complete, Editor Agent passes with 0 critical issues, ONI layers correct across all docs",
     "max_iterations": 10
   },
 
@@ -27,76 +27,157 @@
       "learnings": "Sub-instruction files allow modular expansion"
     },
     {
-      "id": "claude-md-integration",
-      "description": "CLAUDE.md updated to v6.0 with Editor Agent workflow",
+      "id": "pm-agent-implementation",
+      "description": "PM Agent for task tracking and process improvement",
       "status": "complete",
-      "exit_condition": "CLAUDE.md contains Editor Agent section and references",
+      "exit_condition": "PM_AGENT.md exists in MAIN/resources/agents/",
       "completed_at": "2026-01-22",
-      "learnings": "Quick Reference table is key entry point for agents"
+      "learnings": "PM Agent provides structure for documentation alignment checks"
     },
     {
-      "id": "documentation-sync",
-      "description": "README.md, INDEX.md, PROCESS_IMPROVEMENTS.md all updated",
+      "id": "oni-layer-correction",
+      "description": "Correct ONI layers: L1-L7 = OSI networking, L8 = Neural Gateway bridge, L9-L14 = Neural/Cognitive",
       "status": "complete",
-      "exit_condition": "All docs reference editor/ folder",
+      "exit_condition": "grep for 'L1.*Molecular' or 'L1.*Biology' returns 0 results; grep for 'L1.*Physical.*OSI' returns matches",
       "completed_at": "2026-01-22",
-      "learnings": "Multiple files need sync - Editor Agent sync_rules.md handles this"
+      "priority": "critical",
+      "learnings": "Updated README.md, INDEX.md, TARA CLAUDE.md with corrected model. Key principle: OSI = how data moves; ONI = how meaning, trust, and control are enforced"
     },
     {
-      "id": "ralph-loop-integration",
-      "description": "Implement Ralph Loop with AGENTS.md and prd.json",
+      "id": "siem-to-nsam-rename",
+      "description": "Rename 'siem' directory to 'nsam' in TARA codebase",
       "status": "complete",
-      "exit_condition": "AGENTS.md and prd.json exist, CLAUDE.md documents workflow",
+      "exit_condition": "No directory named 'siem' exists in MAIN/tara/",
       "completed_at": "2026-01-22",
-      "learnings": "Knowledge compounding via AGENTS.md accelerates future iterations"
+      "priority": "high",
+      "learnings": "Updated imports in __init__.py, cli.py, README.md, CLAUDE.md"
+    },
+    {
+      "id": "oni-layers-reference",
+      "description": "Create ONI_LAYERS.md as authoritative layer reference",
+      "status": "complete",
+      "exit_condition": "MAIN/ONI_LAYERS.md exists with complete 14-layer definitions",
+      "completed_at": "2026-01-22",
+      "priority": "high",
+      "learnings": "Comprehensive reference with visual diagram, threat landscape, coherence score, external physical threats"
+    },
+    {
+      "id": "nsam-external-threats",
+      "description": "Document external BCI threats: MRI, magnets, trauma, EMP, RF interference",
+      "status": "complete",
+      "exit_condition": "External threat signatures documented in NSAM docs",
+      "completed_at": "2026-01-22",
+      "priority": "medium",
+      "learnings": "Documented in ONI_LAYERS.md External Physical Threats section: MRI, EMI, trauma, jamming, ProxMark attacks, ESD"
+    },
+    {
+      "id": "images-organization",
+      "description": "Copy images to MAIN/resources/images/ and reference in READMEs",
+      "status": "complete",
+      "exit_condition": "Images exist in git and are displayed in README",
+      "completed_at": "2026-01-22",
+      "priority": "medium",
+      "learnings": "Images copied: coherence-metric-*, neural-ransomware-kill-chain, oni-threat-defense-framework, scale-frequency-invariant, oni-logo"
+    },
+    {
+      "id": "readme-privacy-statement",
+      "description": "Add privacy/ethics statement to main README (NOT surveillance, FOR protection)",
+      "status": "complete",
+      "exit_condition": "README contains 'Privacy & Ethics' section with clear NOT surveillance statement",
+      "completed_at": "2026-01-22",
+      "priority": "critical",
+      "learnings": "Added prominent Privacy & Ethics Statement section at top of README emphasizing: defense, protection, privacy preservation, availability, human sovereignty"
+    },
+    {
+      "id": "hourglass-diagram-prompt",
+      "description": "Create ChatGPT prompt for ONI hourglass visualization",
+      "status": "complete",
+      "exit_condition": "Prompt text documented for user to generate diagram",
+      "completed_at": "2026-01-22",
+      "priority": "low",
+      "learnings": "Created MAIN/resources/images/CHATGPT_HOURGLASS_PROMPT.md with detailed prompts for image generation"
     },
     {
       "id": "changelog-creation",
       "description": "Create CHANGELOG.md at repository root",
       "status": "pending",
       "exit_condition": "CHANGELOG.md exists with semantic versioning",
-      "priority": "high"
-    },
-    {
-      "id": "docx-generation",
-      "description": "Generate docx files for all publications",
-      "status": "pending",
-      "exit_condition": "Every Blog-*.md and TechDoc-*.md has corresponding .docx",
       "priority": "medium"
-    },
-    {
-      "id": "formula-validation",
-      "description": "Add formula regex validation to Editor Agent",
-      "status": "pending",
-      "exit_condition": "checks/formula_validation.md exists and catches formula mismatches",
-      "priority": "medium"
-    },
-    {
-      "id": "git-hooks",
-      "description": "Create pre-commit hook that invokes Editor Agent",
-      "status": "pending",
-      "exit_condition": ".git/hooks/pre-commit exists and runs validation",
-      "priority": "low"
     },
     {
       "id": "python-code-sync",
-      "description": "Verify oni-framework/oni/layers.py matches TechDoc",
+      "description": "Verify oni-framework/oni/layers.py matches corrected ONI model",
       "status": "pending",
-      "exit_condition": "Layer definitions in Python match TechDoc exactly",
+      "exit_condition": "Layer definitions in Python match corrected ONI (L1-L7 OSI, L8-L14 Neural)",
       "priority": "high"
     }
   ],
 
-  "metrics": {
-    "total_tasks": 10,
-    "completed": 5,
-    "pending": 5,
-    "completion_rate": "50%"
-  },
+  "future_work": [
+    {
+      "id": "future-ai-attack-prediction",
+      "title": "AI-Based Attack Vector Prediction",
+      "description": "Train AI models to predict future BCI attack vectors using ONI framework, biology, physics data",
+      "rationale": "Proactive defense requires anticipating attacks before they occur",
+      "feasibility": "research-needed",
+      "prerequisites": [
+        "Comprehensive attack pattern database",
+        "Historical BCI incident data (FDA MAUDE, published research)",
+        "Biological signal baseline datasets",
+        "Physics models of neural interface behavior"
+      ],
+      "research_questions": [
+        "What data points are needed for training?",
+        "Can models self-iterate to discover new attack patterns?",
+        "What's theoretical vs practical with current ML?",
+        "How to validate predictions ethically?"
+      ],
+      "limitations": [
+        "Limited real-world BCI attack data",
+        "Ethical constraints on testing",
+        "Hardware-specific vulnerabilities vary",
+        "BCI technology evolving rapidly"
+      ],
+      "estimated_effort": "large"
+    },
+    {
+      "id": "future-blog-paper-updates",
+      "title": "Update Existing Blogs and Papers",
+      "description": "Go back and update all existing blog posts and technical papers with corrected ONI layer model",
+      "documents_to_update": [
+        "MAIN/publications/0-oni-framework/",
+        "MAIN/publications/coherence-metric/",
+        "MAIN/publications/neural-firewall/",
+        "MAIN/publications/neural-ransomware/",
+        "Medium blog posts (external)"
+      ],
+      "feasibility": "practical",
+      "estimated_effort": "medium"
+    }
+  ],
 
-  "next_iteration": {
-    "focus": ["changelog-creation", "python-code-sync"],
-    "blocked_by": [],
-    "estimated_tasks": 2
+  "process_improvements": [
+    {
+      "id": "improvement-oni-consistency",
+      "observation": "ONI layer model was inconsistent - biology was leaking into OSI layers",
+      "improvement": "Create ONI_LAYERS.md as single source of truth, validate with grep",
+      "status": "implemented",
+      "impact": "critical"
+    },
+    {
+      "id": "improvement-pm-agent",
+      "observation": "No structured task tracking existed",
+      "improvement": "Created PM Agent and enhanced prd.json",
+      "status": "implemented",
+      "impact": "high"
+    }
+  ],
+
+  "metrics": {
+    "total_tasks": 12,
+    "completed": 10,
+    "in_progress": 0,
+    "pending": 2,
+    "completion_rate": "83%"
   }
 }

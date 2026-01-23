@@ -50,7 +50,7 @@ tara/
 │   ├── scenarios.py       # Multi-stage attack scenarios
 │   └── simulator.py       # Attack execution engine
 │
-├── siem/                  # Neural Signal Assurance Monitoring (NSAM)
+├── nsam/                  # Neural Signal Assurance Monitoring (NSAM)
 │   ├── events.py          # Event storage
 │   ├── rules.py           # Detection rules engine
 │   ├── detector.py        # Anomaly detection
@@ -90,41 +90,47 @@ tara/
 TARA is fully aligned with the ONI 14-layer model:
 
 ```
-BIOLOGICAL DOMAIN (L1-L7):
-  L1:  Molecular         - Ion channels, neurotransmitters
-  L2:  Cellular          - Action potentials, synaptic transmission
-  L3:  Microcircuit      - Local neural computation
-  L4:  Regional          - Brain region specialization
-  L5:  Systems           - Distributed network integration
-  L6:  Whole-Brain       - Global coordination, consciousness
-  L7:  Behavioral        - Motor output, observable behavior
+OSI NETWORKING (L1-L7):
+  L1:  Physical          - Transmission of raw bits over medium
+  L2:  Data Link         - Framing, MAC addressing
+  L3:  Network           - Logical addressing and routing
+  L4:  Transport         - End-to-end delivery, flow control
+  L5:  Session           - Connection lifecycle management
+  L6:  Presentation      - Encoding, encryption, compression
+  L7:  Application       - User-facing network services
 
 BRIDGE (L8):
-  L8:  Neural Gateway    - FIREWALL LOCATION (bio-digital boundary)
+  L8:  Neural Gateway    - FIREWALL LOCATION (silicon-biology boundary)
 
-SILICON DOMAIN (L9-L14):
-  L9:  Signal Processing - ADC, filtering, amplification
-  L10: Protocol          - Data formatting, transmission rules
-  L11: Transport         - Encryption, reliable delivery
-  L12: Session           - Connection management, state tracking
-  L13: Presentation      - Data interpretation, motor intention
-  L14: Application       - End-user interfaces, identity & ethics
+NEURAL/COGNITIVE (L9-L14):
+  L9:  Signal Processing - Filtering, amplification, digitization
+  L10: Neural Protocol   - Neural data formatting, codecs
+  L11: Cognitive Transport - Reliable neural data delivery
+  L12: Cognitive Session - Context persistence, working memory
+  L13: Semantic          - Meaning construction, intent decoding
+  L14: Identity          - Self-model, ethics, continuity of self
 ```
+
+**Key Principle:**
+- **OSI (L1-L7)** answers: *How does data move?*
+- **ONI (L8-L14)** answers: *Should it move, can it be trusted, and what does it mean?*
+
+**Authoritative Reference:** See `MAIN/ONI_LAYERS.md` for complete definitions.
 
 ### Brain Regions → ONI Layer Mapping
 
 | Region | Full Name | ONI Layer | Domain |
 |--------|-----------|-----------|--------|
-| M1 | Primary Motor Cortex | L13 | Presentation |
-| S1 | Primary Somatosensory | L12 | Session |
-| PMC | Premotor Cortex | L13 | Presentation |
-| SMA | Supplementary Motor | L13 | Presentation |
-| PFC | Prefrontal Cortex | L14 | Application |
-| BROCA | Broca's Area | L14 | Application |
-| WERNICKE | Wernicke's Area | L14 | Application |
-| V1 | Primary Visual | L12 | Session |
-| A1 | Primary Auditory | L12 | Session |
-| HIPP | Hippocampus | L11 | Transport |
+| M1 | Primary Motor Cortex | L13 | Semantic |
+| S1 | Primary Somatosensory | L12 | Cognitive Session |
+| PMC | Premotor Cortex | L13 | Semantic |
+| SMA | Supplementary Motor | L13 | Semantic |
+| PFC | Prefrontal Cortex | L14 | Identity |
+| BROCA | Broca's Area | L14 | Identity |
+| WERNICKE | Wernicke's Area | L14 | Identity |
+| V1 | Primary Visual | L12 | Cognitive Session |
+| A1 | Primary Auditory | L12 | Cognitive Session |
+| HIPP | Hippocampus | L11 | Cognitive Transport |
 
 ### Key Formulas
 

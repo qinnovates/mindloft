@@ -186,7 +186,7 @@ tara/
 │   ├── scenarios.py       # Multi-stage attack scenarios
 │   └── simulator.py       # Attack execution engine
 │
-├── siem/                  # Neural Signal Assurance Monitoring (NSAM)
+├── nsam/                  # Neural Signal Assurance Monitoring (NSAM)
 │   ├── events.py          # Event storage and management
 │   ├── rules.py           # Detection rules engine
 │   ├── detector.py        # Anomaly detection algorithms

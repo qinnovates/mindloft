@@ -293,7 +293,7 @@ def cmd_monitor(args):
     print("Starting TARA neural monitor...")
 
     try:
-        from tara.siem import NeuralMonitor
+        from tara.nsam import NeuralMonitor
 
         monitor = NeuralMonitor(name="TARA")
 
@@ -374,7 +374,7 @@ def cmd_list(args):
             print()
 
     elif args.resource == "rules":
-        from tara.siem.rules import list_rules, PREDEFINED_RULES
+        from tara.nsam.rules import list_rules, PREDEFINED_RULES
         print("Available Detection Rules:")
         print("-" * 40)
         for rule_id in list_rules():

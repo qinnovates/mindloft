@@ -63,7 +63,7 @@ from .attacks import (
 )
 
 # Neural Signal Assurance Monitoring (NSAM)
-from .siem import (
+from .nsam import (
     NeuralMonitor as NeuralNSAM,
     NeuralMonitor,
     Alert,

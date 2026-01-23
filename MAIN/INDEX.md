@@ -10,7 +10,14 @@
 
 ## Overview
 
-The **Organic Neural Interface (ONI) Framework** extends the OSI networking model into biological neural systems, creating a unified architecture for brain-computer interface security. This index connects all research topics, maps dependencies, and provides navigation paths for readers and contributors.
+The **Organic Neurocomputing Interface (ONI) Framework** extends the classical OSI networking model (L1-L7) with 7 additional layers (L8-L14) for neural and cognitive systems, creating a unified architecture for brain-computer interface security.
+
+**Key Distinction:**
+- **L1-L7 (OSI):** Standard networking — how data moves
+- **L8 (Neural Gateway):** The critical boundary — THE FIREWALL (most attacked, least standardized)
+- **L9-L14 (Neural/Cognitive):** Neural signal processing, cognition, identity — what data means
+
+This index connects all research topics, maps dependencies, and provides navigation paths for readers and contributors.
 
 ---
 
@@ -130,24 +137,30 @@ Shows which topics reference which. Use this to understand conceptual dependenci
 
 ## Layer Quick Reference
 
-The ONI Framework extends OSI's 7 layers to 14, bridging silicon and biology:
+The ONI Framework extends the classical OSI model with 7 additional layers for neural and cognitive systems:
 
 | Layer | Name | Domain | Function |
 |:-----:|------|--------|----------|
-| L1 | Molecular | Biology | Ion channels, neurotransmitters |
-| L2 | Cellular | Biology | Action potentials, synaptic transmission |
-| L3 | Microcircuit | Biology | Local neural computation |
-| L4 | Regional | Biology | Brain region specialization |
-| L5 | Systems | Biology | Distributed neural networks |
-| L6 | Whole-Brain | Biology | Global integration patterns |
-| L7 | Behavioral | Biology | Observable outputs, motor commands |
-| **L8** | **Neural Gateway** | **Bridge** | **BCI hardware boundary (Firewall lives here)** |
-| L9 | Signal Processing | Silicon | Filtering, amplification, digitization |
-| L10 | Protocol | Silicon | Data formatting, transmission rules |
-| L11 | Transport | Silicon | Reliable data delivery |
-| L12 | Session | Silicon | Connection management |
-| L13 | Presentation | Silicon | Data interpretation |
-| L14 | Application | Silicon | End-user interfaces |
+| L1 | Physical | OSI | Transmission of raw bits over medium |
+| L2 | Data Link | OSI | Framing, MAC addressing, local delivery |
+| L3 | Network | OSI | Logical addressing and routing |
+| L4 | Transport | OSI | End-to-end delivery, flow control |
+| L5 | Session | OSI | Connection lifecycle management |
+| L6 | Presentation | OSI | Encoding, encryption, compression |
+| L7 | Application | OSI | User-facing network services |
+| **L8** | **Neural Gateway** | **Bridge** | **BCI hardware boundary (FIREWALL lives here)** |
+| L9 | Signal Processing | Neural | Filtering, amplification, digitization |
+| L10 | Neural Protocol | Neural | Neural data formatting, codecs |
+| L11 | Cognitive Transport | Neural | Reliable neural data delivery |
+| L12 | Cognitive Session | Neural | Context persistence, working memory |
+| L13 | Semantic | Cognitive | Meaning construction, intent decoding |
+| L14 | Identity | Cognitive | Self-model, ethics, continuity of self |
+
+**Key Principle:**
+- **OSI (L1-L7)** answers: *How does data move?*
+- **ONI (L8-L14)** answers: *Should it move, can it be trusted, and what does it mean?*
+
+**Authoritative Reference:** [ONI_LAYERS.md](ONI_LAYERS.md)
 
 ---
 
@@ -263,6 +276,7 @@ Planned research areas for framework expansion:
 ```
 MAIN/
 ├── INDEX.md                    # This file (central hub)
+├── ONI_LAYERS.md               # **Authoritative 14-layer reference**
 ├── NEUROETHICS_ALIGNMENT.md    # Framework-to-ethics principle mapping
 │
 ├── oni-framework/              # Python library (pip install oni-framework)
@@ -274,6 +288,14 @@ MAIN/
 │   ├── tests/                  # Unit tests (77 tests)
 │   └── pyproject.toml          # Package config
 │
+├── tara/                       # Neural Security Platform (TARA)
+│   ├── core/                   # ONI security primitives
+│   ├── simulation/             # Neural network simulation
+│   ├── attacks/                # Attack testing & scenarios
+│   ├── siem/                   # Neural Signal Assurance Monitoring (NSAM)
+│   ├── visualization/          # Real-time dashboards
+│   └── ui/                     # Streamlit web interface
+│
 ├── publications/               # Research content
 │   ├── 0-oni-framework/
 │   ├── coherence-metric/
@@ -283,9 +305,12 @@ MAIN/
 │   └── scale-frequency/
 │
 └── resources/                  # Templates, processes, tools
+    ├── agents/                 # PM Agent, Editor Agent instructions
+    ├── images/                 # ONI diagrams and visualizations
     ├── templates/
     ├── processes/
-    └── pipeline/
+    ├── pipeline/
+    └── editor/                 # Editor Agent checks
 ```
 
 ---
@@ -298,7 +323,7 @@ MAIN/
 | Published Documents | 14 |
 | Blog Posts | 8 |
 | Technical Documents | 6 |
-| Python Package | v0.1.0 |
+| Python Package | v0.3.0 |
 | Unit Tests | 77 |
 | Planned Topics | 5 |
 
