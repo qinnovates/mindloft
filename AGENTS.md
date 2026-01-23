@@ -2,8 +2,8 @@
 
 > **Purpose:** Persistent learnings from Ralph Loop iterations. AI agents read this file at the start of each session to benefit from discovered patterns, gotchas, and conventions.
 
-**Last Updated:** 2026-01-22
-**Loop Iterations:** 1
+**Last Updated:** 2026-01-23
+**Loop Iterations:** 2
 
 ---
 
@@ -16,6 +16,9 @@
 | 2026-01-22 | 14-layer table in README.md was completely inverted (Biology/Silicon domains swapped) | Created `layer_validation.md` check — always cross-reference against TechDoc |
 | 2026-01-22 | Topic folders use `README.md`, main wiki uses `INDEX.md` | Documented in naming conventions |
 | 2026-01-22 | Truth hierarchy: TechDoc > Python code > INDEX.md > README.md | Lower priority files must match higher priority sources |
+| 2026-01-23 | BCI Anonymizer patent (US20140228701A1) was ABANDONED, never granted | Academic concepts freely implementable — added notes to neurosecurity module |
+| 2026-01-23 | Kohno (2009) threat taxonomy maps perfectly to ONI layers: Alteration→L8-9, Blocking→L8-9, Eavesdropping→L13-14 | Implemented in oni.neurosecurity module with 12 detection rules |
+| 2026-01-23 | PyPI trusted publishing via GitHub Actions is more secure than storing tokens | No secrets in config, OIDC-based authentication |
 
 ### Patterns Established
 
@@ -28,6 +31,65 @@
 - Never trust layer tables in README.md without cross-checking TechDoc
 - The old model had L1-L7 as Biology — this is WRONG. Correct: L1-L7 = Silicon
 - README.md files don't auto-update when TechDoc changes — Editor Agent sync_rules.md handles this
+
+---
+
+## Neurosecurity Implementation Learnings
+
+### Key Discoveries
+
+| Date | Discovery | Implementation |
+|------|-----------|----------------|
+| 2026-01-23 | Kohno (2009) defines 3 threat categories: Alteration, Blocking, Eavesdropping | Maps to CIA triad: Integrity, Availability, Confidentiality |
+| 2026-01-23 | Bonaci (2015) BCI privacy filtering uses ERP component stripping | Implemented P300, N170, N400, ERN, LRP, CNV filters with sensitivity levels |
+| 2026-01-23 | Privacy Score = weighted ERP sensitivity across signal components | PrivacyScoreCalculator with configurable weights |
+
+### Module Structure
+
+```
+oni-framework/oni/neurosecurity/
+├── __init__.py       # Exports, patent status note
+├── firewall.py       # NeurosecurityFirewall (Kohno CIA triad)
+├── anonymizer.py     # BCIAnonymizer (ERP filtering)
+├── threats.py        # ThreatType enum, KohnoThreatModel
+└── privacy_score.py  # PrivacyScoreCalculator
+```
+
+### TARA Integration
+
+Created `tara/neurosecurity/integration.py` with 12 Kohno-based detection rules:
+- Signal injection, neural DoS, cognitive leakage (base threats)
+- Amplitude bounds, frequency analysis, spatial filtering (validation)
+- Cross-layer correlation, behavioral deviation, cognitive fingerprinting (advanced)
+
+---
+
+## PyPI Publishing Learnings
+
+### GitHub Actions Trusted Publishing
+
+| Step | Action | Notes |
+|------|--------|-------|
+| 1 | Create PyPI project (or pending publisher) | Project name must match pyproject.toml |
+| 2 | Configure trusted publisher on PyPI | Repository, workflow file, environment name |
+| 3 | Use `pypa/gh-action-pypi-publish` action | `id-token: write` permission required |
+| 4 | Configure environment in workflow | `environment: name: pypi` |
+
+### Package Naming
+
+- `oni-framework` — Core library (PyPI)
+- `oni-tara` — TARA neural security platform (PyPI)
+- Renamed from `tara-neural` to `oni-tara` for brand consistency
+
+### Workflow Configuration
+
+```yaml
+permissions:
+  id-token: write  # Required for trusted publishing
+environment:
+  name: pypi
+  url: https://pypi.org/p/package-name
+```
 
 ---
 
@@ -154,10 +216,10 @@ L14: Identity & Ethics         (Biology)
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 1 |
-| Learnings Captured | 12 |
-| Gotchas Documented | 4 |
-| Patterns Established | 8 |
+| Total Iterations | 2 |
+| Learnings Captured | 21 |
+| Gotchas Documented | 5 |
+| Patterns Established | 12 |
 
 ---
 

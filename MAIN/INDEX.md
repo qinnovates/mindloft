@@ -48,8 +48,11 @@ pip install oni-framework
 | [oni.layers](oni-framework/oni/layers.py) | 14-layer model | `ONIStack`, `Layer` |
 | [oni.firewall](oni-framework/oni/firewall.py) | Signal filtering | `NeuralFirewall`, `Signal` |
 | [oni.scale_freq](oni-framework/oni/scale_freq.py) | f × S ≈ k invariant | `ScaleFrequencyInvariant` |
+| [oni.neurosecurity](oni-framework/oni/neurosecurity/) | Kohno CIA + BCI Anonymizer | `NeurosecurityFirewall`, `BCIAnonymizer` |
 
 **Full documentation:** [oni-framework/README.md](oni-framework/README.md)
+
+**Neurosecurity Implementation:** [NEUROSECURITY_IMPLEMENTATION.md](NEUROSECURITY_IMPLEMENTATION.md) — Integrates Kohno (2009) and BCI Anonymizer patent
 
 ---
 
@@ -180,6 +183,7 @@ The ONI Framework maintains Responsible AI standards and documents alignment wit
 |----------|---------|
 | [TRANSPARENCY.md](../TRANSPARENCY.md) | Human-AI collaboration audit trail — cognitive boundary documentation, HITL methodology |
 | [NEUROETHICS_ALIGNMENT.md](NEUROETHICS_ALIGNMENT.md) | Maps framework components to cognitive liberty, mental privacy, mental integrity principles |
+| [RELATED_WORK.md](RELATED_WORK.md) | Prior BCI security research — acknowledges foundational work, positions ONI's contribution |
 
 ---
 

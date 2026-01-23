@@ -65,6 +65,7 @@ The framework provides security without requiring surveillance. Signal integrity
 |----------|---------|
 | **[TRANSPARENCY.md](TRANSPARENCY.md)** | Human-AI collaboration audit trail — documents cognitive boundary, HITL methodology |
 | **[NEUROETHICS_ALIGNMENT.md](MAIN/NEUROETHICS_ALIGNMENT.md)** | Maps framework components to neuroethics principles |
+| **[RELATED_WORK.md](MAIN/RELATED_WORK.md)** | Prior BCI security research — acknowledges foundational work, positions ONI contribution |
 
 ### Naming Convention
 
@@ -114,9 +115,23 @@ print(f"Decision: {result.decision.name}")  # ACCEPT, ACCEPT_FLAG, or REJECT
 stack = ONIStack()
 print(stack.layer(8).name)  # "Neural Gateway" - the firewall layer
 print(stack.ascii_diagram())  # Visual representation
+
+# Neurosecurity: Kohno's CIA triad + BCI Anonymizer (NEW)
+from oni.neurosecurity import NeurosecurityFirewall, BCIAnonymizer, ThreatType
+
+# Validate signals against Kohno's threat model
+ns_firewall = NeurosecurityFirewall()
+# decision = ns_firewall.validate(signal)  # ALLOW, BLOCK, or EMERGENCY_SHUTOFF
+
+# Filter privacy-sensitive information (BCI Anonymizer)
+anonymizer = BCIAnonymizer()
+# result = anonymizer.anonymize(signal_data)
+# print(f"Privacy Score: {result.metrics.privacy_score}")  # Lower = more private
 ```
 
 **Full documentation:** [MAIN/oni-framework/README.md](MAIN/oni-framework/README.md)
+
+**Neurosecurity Integration:** Based on [Kohno et al. (2009)](https://doi.org/10.3171/2009.4.FOCUS0985) and [BCI Anonymizer patent](https://patents.google.com/patent/US20140228701A1). See [NEUROSECURITY_IMPLEMENTATION.md](MAIN/NEUROSECURITY_IMPLEMENTATION.md).
 
 ---
 
@@ -363,5 +378,5 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 ---
 
 *Auto-published from research pipeline*
-*Last update: 2026-01-22*
-*Documents: 14 | Topics: 6 | Python Package: v0.3.0*
+*Last update: 2026-01-23*
+*Documents: 16 | Topics: 6 | Python Packages: oni-framework v0.2.0, oni-tara v0.4.0*

@@ -18,7 +18,7 @@ This paper proposes a unified layered framework—the Organic Network Interface 
 
 ### 1.1 The Problem: No Framework for Organic Network Security
 
-As brain-computer interfaces (BCIs) transition from research prototypes to FDA-regulated medical devices, a critical gap emerges: while the OSI model provides a standardized framework for securing digital communications, no equivalent abstraction exists for the organic-digital boundary.
+As brain-computer interfaces (BCIs) transition from research prototypes to FDA-regulated medical devices, a critical gap emerges: while the OSI model provides a standardized framework for securing digital communications, no widely adopted architectural abstraction bridges the organic-digital boundary. Prior work in neurosecurity (Denning, Matsuoka, & Kohno, 2009) established foundational threat models and the CIA triad for neural devices; however, a layered reference architecture extending established networking models has not yet achieved standardization.
 
 The trajectory of technology suggests an inevitable convergence. If we can already interface with neural tissue using wireless nodes (as demonstrated by Neuralink and similar technologies), and if all complex systems are subject to entropy and vulnerabilities, then we must anticipate attack vectors before they become exploitable zero-day vulnerabilities.
 

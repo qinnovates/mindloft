@@ -114,9 +114,9 @@ But where’s the security framework?
 
 We have _MITRE ATT &CK_ for cyber threats. We have Zero Trust for cloud architecture. We have OSI for network communication.
 
-We have _nothing_ for neural interfaces.
+For neural interfaces, foundational work exists — Kohno's "neurosecurity" paper (2009) established the threat model, and researchers have built privacy tools and threat taxonomies. But we lack a widely adopted _architectural standard_ that engineers can implement.
 
-The ONI Framework is my attempt to fill that gap — to create the security architecture **before** the first neural exploit, not after..
+The ONI Framework is my attempt to bridge that gap — to extend OSI into neural territory with a layered architecture **before** the first neural exploit, not after..
 
 ### What Would It Look Like?
 

@@ -1,7 +1,7 @@
 {
   "project": "ONI Framework",
   "version": "0.3.0",
-  "last_updated": "2026-01-22",
+  "last_updated": "2026-01-23",
   "loop_iteration": 3,
 
   "exit_conditions": {
@@ -98,6 +98,15 @@
       "learnings": "Created MAIN/resources/images/CHATGPT_HOURGLASS_PROMPT.md with detailed prompts for image generation"
     },
     {
+      "id": "related-work-documentation",
+      "description": "Create RELATED_WORK.md documenting prior BCI security research and positioning ONI's contribution",
+      "status": "complete",
+      "exit_condition": "MAIN/RELATED_WORK.md exists with references; no 'first' or 'only' claims in existing docs",
+      "completed_at": "2026-01-23",
+      "priority": "high",
+      "learnings": "Fixed claims in TechDoc-ONI_Framework.md and Blog-Neural_Firewall.md. Acknowledged Kohno 2009, IEEE standards, BCI Anonymizer, etc. ONI differs via OSI extension architecture, Coherence Metric, implementation focus."
+    },
+    {
       "id": "changelog-creation",
       "description": "Create CHANGELOG.md at repository root",
       "status": "pending",
@@ -110,6 +119,15 @@
       "status": "pending",
       "exit_condition": "Layer definitions in Python match corrected ONI (L1-L7 OSI, L8-L14 Neural)",
       "priority": "high"
+    },
+    {
+      "id": "neurosecurity-implementation",
+      "description": "Implement Kohno (2009) neurosecurity principles and BCI Anonymizer (2014) patent in ONI codebase",
+      "status": "complete",
+      "exit_condition": "oni/neurosecurity/ module exists with firewall.py, anonymizer.py, threats.py, privacy_score.py; tests pass",
+      "completed_at": "2026-01-23",
+      "priority": "high",
+      "learnings": "Implemented NeurosecurityFirewall (Kohno CIA triad), BCIAnonymizer (Chizeck patent), ThreatType enum, PrivacyScoreCalculator. Created NEUROSECURITY_IMPLEMENTATION.md with full integration guide. Key insight: Kohno's 3 threats (alteration, blocking, eavesdropping) map perfectly to ONI layers (L8-9 for integrity/availability, L13-14 for confidentiality)."
     }
   ],
 
@@ -174,10 +192,10 @@
   ],
 
   "metrics": {
-    "total_tasks": 12,
-    "completed": 10,
+    "total_tasks": 14,
+    "completed": 12,
     "in_progress": 0,
     "pending": 2,
-    "completion_rate": "83%"
+    "completion_rate": "86%"
   }
 }
