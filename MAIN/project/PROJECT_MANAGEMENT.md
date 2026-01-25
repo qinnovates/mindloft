@@ -271,7 +271,7 @@ When assigning priority, score each criterion (0-2):
 | 01-22 | External threats doc | Docs | Medium | MRI, EMP, trauma, RF interference |
 | 01-22 | Images organization | Assets | Low | Centralized in resources/images/ |
 | 01-22 | Privacy statement | Docs | Critical | Framework is for protection, NOT surveillance |
-| 01-22 | Hourglass prompt | Visualization | Low | ChatGPT can generate diagrams |
+| 01-22 | Hourglass prompt | Visualization | Low | OpenAI or Google can generate decent diagrams |
 
 #### Week of 2026-01-23
 
