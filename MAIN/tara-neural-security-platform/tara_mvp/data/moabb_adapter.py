@@ -27,7 +27,7 @@ Usage:
     >>> signals, labels = adapter.get_signals(dataset, subject=1)
     >>>
     >>> # Process through Neural Firewall
-    >>> from tara import NeuralFirewall
+    >>> from tara_mvp import NeuralFirewall
     >>> firewall = NeuralFirewall()
     >>> for signal in signals:
     ...     result = firewall.process_signal(signal)
@@ -257,7 +257,7 @@ class MOABBAdapter:
         >>> signals = adapter.get_signals(dataset, subject=1, session="0train")
         >>>
         >>> # Process through TARA
-        >>> from tara import NeuralFirewall, CoherenceMetric
+        >>> from tara_mvp import NeuralFirewall, CoherenceMetric
         >>> firewall = NeuralFirewall()
         >>> coherence = CoherenceMetric()
         >>>

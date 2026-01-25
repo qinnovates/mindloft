@@ -31,7 +31,7 @@ This prototype suite demonstrates 5 interactive web applications designed to mak
 
 3. **Find the visualizations**
    - Open the unzipped folder
-   - Navigate to: `MAIN` → `tara-neural-security-platform` → `visualizations`
+   - Navigate to: `MAIN` → `interactive-concept-demo`
 
 4. **Launch the app**
    - Double-click `index.html`
@@ -42,7 +42,7 @@ This prototype suite demonstrates 5 interactive web applications designed to mak
 
 ```bash
 git clone https://github.com/qikevinl/ONI.git
-cd ONI/MAIN/tara-neural-security-platform/visualizations
+cd ONI/MAIN/interactive-concept-demo
 open index.html    # Mac
 start index.html   # Windows
 ```
@@ -60,7 +60,7 @@ No build step required - pure HTML/CSS/JS
 ## File Structure
 
 ```
-visualizations/
+interactive-concept-demo/
 ├── index.html                          # Master index & design system
 ├── README.md                           # This file
 ├── 01-coherence-metric-playground.html

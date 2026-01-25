@@ -151,7 +151,7 @@ def create_parser() -> argparse.ArgumentParser:
 
 def cmd_version():
     """Show version information."""
-    from tara import __version__, __name_full__
+    from tara_mvp import __version__, __name_full__
     print(f"TARA v{__version__}")
     print(f"{__name_full__}")
     print()

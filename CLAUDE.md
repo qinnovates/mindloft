@@ -589,7 +589,7 @@ Update the metrics table:
 - Forgetting to update `siem/` to `nsam/` (the actual folder name)
 - Outdated version numbers in metrics
 - Stale test counts
-- Referencing old paths (source is now in `tara-neural-security-platform/tara/`, not `prototype-mvp/`)
+- Referencing old paths (source is now in `tara-neural-security-platform/tara_mvp/`, not `prototype-mvp/`)
 
 ---
 

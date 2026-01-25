@@ -18,7 +18,7 @@ Components:
 - UI: Web interface for non-technical users
 
 Quick Start:
-    >>> from tara import NeuralFirewall, AttackSimulator, NeuralNSAM
+    >>> from tara_mvp import NeuralFirewall, AttackSimulator, NeuralNSAM
     >>> from tara_mvp.simulation import LayeredNetwork
     >>> from tara_mvp.ui import launch_dashboard
 

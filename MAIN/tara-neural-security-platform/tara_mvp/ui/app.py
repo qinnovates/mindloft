@@ -2795,7 +2795,7 @@ def _render_coherence_benchmark():
         with st.spinner("Running coherence benchmark..."):
             try:
                 from tara_mvp.data import MOABBAdapter
-                from tara import calculate_cs
+                from tara_mvp import calculate_cs
 
                 adapter = MOABBAdapter()
 
