@@ -176,13 +176,20 @@ TARA's Streamlit UI has the following pages:
 | **Brain Topology** | 3D brain visualization with electrode monitoring |
 | **Neural Firewall** | ONI L8-L14 validation pipeline |
 | **Signal Assurance** | Live metrics, alerts management, event logs |
+| **Neurosecurity** | Kohno threat rules, privacy calculator, BCI Anonymizer |
 
-### Testing Pages
+### Data Pages
+
+| Page | Purpose |
+|------|---------|
+| **Real EEG Data** | MOABB dataset integration, attack injection, coherence benchmarking |
+
+### Simulations Pages
 
 | Page | Purpose |
 |------|---------|
 | **Neural Simulator** | Brain region security analysis with attacks/defenses |
-| **Attack Testing** | Execute attack scenarios and view results |
+| **Attack Simulator** | Neural ATT&CK matrix, attack simulation, pew-pew visualization |
 
 ### Interactive Visualizations (ONI Suite)
 
@@ -508,9 +515,10 @@ pytest tests/ -v
 | 0.4.0 | 2026-01 | Added neurosecurity module (Kohno 2009, Bonaci 2015) |
 | 0.5.0 | 2026-01 | Consolidated package structure, integrated ONI Visualization Suite |
 | 0.5.1 | 2026-01 | Fixed Layer Explorer interactivity, comprehensive educational content for all 14 layers |
+| 0.6.0 | 2026-01 | Major UI enhancements: Neurosecurity page, Real EEG Data page, Neural ATT&CK matrix, pew-pew attack animation |
 
 ---
 
-*Version: 1.4*
+*Version: 1.5*
 *Last Updated: 2026-01-24*
 *For: Claude AI Assistant*

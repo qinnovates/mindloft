@@ -112,6 +112,28 @@ def init_session_state():
         else:
             st.session_state.bci_network = None
 
+    # Neurosecurity page state
+    if "privacy_score_result" not in st.session_state:
+        st.session_state.privacy_score_result = None
+    if "selected_erps" not in st.session_state:
+        st.session_state.selected_erps = []
+    if "threat_classification" not in st.session_state:
+        st.session_state.threat_classification = None
+
+    # Real EEG Data page state
+    if "moabb_signals" not in st.session_state:
+        st.session_state.moabb_signals = None
+    if "moabb_dataset" not in st.session_state:
+        st.session_state.moabb_dataset = None
+    if "moabb_benchmark_results" not in st.session_state:
+        st.session_state.moabb_benchmark_results = None
+
+    # Attack animation state
+    if "attack_animation_state" not in st.session_state:
+        st.session_state.attack_animation_state = None
+    if "attack_animation_frame" not in st.session_state:
+        st.session_state.attack_animation_frame = 0
+
 
 def render_sidebar():
     """Render the sidebar navigation."""
@@ -127,7 +149,7 @@ def render_sidebar():
         st.session_state.current_page = "Dashboard"
 
     # Monitoring section
-    monitoring_pages = ["Dashboard", "Brain Topology", "Neural Firewall", "Signal Assurance"]
+    monitoring_pages = ["Dashboard", "Brain Topology", "Neural Firewall", "Signal Assurance", "Neurosecurity"]
     for p in monitoring_pages:
         if st.sidebar.button(p, key=f"nav_{p}", use_container_width=True,
                             type="primary" if st.session_state.current_page == p else "secondary"):
@@ -135,11 +157,22 @@ def render_sidebar():
             st.rerun()
 
     st.sidebar.markdown("")
-    st.sidebar.markdown("**Testing**")
+    st.sidebar.markdown("**Data**")
 
-    # Testing section
-    testing_pages = ["Neural Simulator", "Attack Testing"]
-    for p in testing_pages:
+    # Data section
+    data_pages = ["Real EEG Data"]
+    for p in data_pages:
+        if st.sidebar.button(p, key=f"nav_{p}", use_container_width=True,
+                            type="primary" if st.session_state.current_page == p else "secondary"):
+            st.session_state.current_page = p
+            st.rerun()
+
+    st.sidebar.markdown("")
+    st.sidebar.markdown("**Simulations**")
+
+    # Simulations section
+    simulations_pages = ["Neural Simulator", "Attack Simulator"]
+    for p in simulations_pages:
         if st.sidebar.button(p, key=f"nav_{p}", use_container_width=True,
                             type="primary" if st.session_state.current_page == p else "secondary"):
             st.session_state.current_page = p
@@ -1006,14 +1039,162 @@ def render_neural_simulator_page():
     st.caption("*L8 (Neural Gateway) is the critical firewall boundary between biological (L1-L7) and silicon (L9-L14) domains*")
 
 
-def render_attack_testing_page():
-    """Render the attack simulation testing page."""
-    st.title("Attack Simulation Testing")
+# Neural ATT&CK Matrix - MITRE-style tactics and techniques for BCI
+NEURAL_ATTACK_MATRIX = {
+    "Reconnaissance": {
+        "color": "#6366f1",
+        "oni_layers": ["L7", "L8"],
+        "techniques": [
+            {"id": "RECON-01", "name": "Signal Profiling", "description": "Passive monitoring of neural signal patterns"},
+            {"id": "RECON-02", "name": "Side-Channel Analysis", "description": "Extracting info from power/timing signatures"},
+            {"id": "RECON-03", "name": "Network Mapping", "description": "Discovering BCI node topology"},
+        ],
+    },
+    "Initial Access": {
+        "color": "#8b5cf6",
+        "oni_layers": ["L8", "L9"],
+        "techniques": [
+            {"id": "ACCESS-01", "name": "Electrode Compromise", "description": "Physical access to neural electrodes"},
+            {"id": "ACCESS-02", "name": "RF Exploitation", "description": "Exploiting wireless BCI protocols"},
+            {"id": "ACCESS-03", "name": "Firmware Backdoor", "description": "Compromising BCI firmware update"},
+        ],
+    },
+    "Execution": {
+        "color": "#ec4899",
+        "oni_layers": ["L9", "L10", "L11"],
+        "techniques": [
+            {"id": "EXEC-01", "name": "Signal Injection", "description": "Injecting crafted neural signals"},
+            {"id": "EXEC-02", "name": "Protocol Manipulation", "description": "Exploiting neural protocol weaknesses"},
+            {"id": "EXEC-03", "name": "Command Hijacking", "description": "Intercepting motor commands"},
+        ],
+    },
+    "Persistence": {
+        "color": "#f59e0b",
+        "oni_layers": ["L10", "L11"],
+        "techniques": [
+            {"id": "PERSIST-01", "name": "Pattern Lock", "description": "Embedding recurring attack patterns"},
+            {"id": "PERSIST-02", "name": "Memory Implant", "description": "Persistent neural pathway modification"},
+        ],
+    },
+    "Defense Evasion": {
+        "color": "#10b981",
+        "oni_layers": ["L8", "L9"],
+        "techniques": [
+            {"id": "EVADE-01", "name": "Coherence Mimicry", "description": "Matching legitimate signal coherence"},
+            {"id": "EVADE-02", "name": "Gradual Drift", "description": "Slow parameter changes below threshold"},
+        ],
+    },
+    "Collection": {
+        "color": "#3b82f6",
+        "oni_layers": ["L12", "L13", "L14"],
+        "techniques": [
+            {"id": "COLLECT-01", "name": "ERP Harvesting", "description": "Extracting event-related potentials"},
+            {"id": "COLLECT-02", "name": "Cognitive Capture", "description": "Recording cognitive state patterns"},
+            {"id": "COLLECT-03", "name": "Memory Extraction", "description": "Reading memory-related signals"},
+        ],
+    },
+    "Impact": {
+        "color": "#ef4444",
+        "oni_layers": ["L11", "L12", "L13", "L14"],
+        "techniques": [
+            {"id": "IMPACT-01", "name": "Neural DoS", "description": "Overwhelming neural pathways"},
+            {"id": "IMPACT-02", "name": "Motor Hijacking", "description": "Forcing involuntary movements"},
+            {"id": "IMPACT-03", "name": "Identity Erosion", "description": "Long-term personality alteration"},
+        ],
+    },
+}
 
+
+def render_attack_simulator_page():
+    """Render the Attack Simulator page with Neural ATT&CK matrix and pew-pew animation."""
+    st.title("Attack Simulator")
+    st.markdown("*MITRE ATT&CK-style Neural Security Testing*")
+
+    # Tabs for different sections
+    tab1, tab2, tab3 = st.tabs(["Neural ATT&CK Matrix", "Attack Simulation", "Pew-Pew Visualization"])
+
+    with tab1:
+        _render_neural_attack_matrix()
+
+    with tab2:
+        _render_attack_simulation_panel()
+
+    with tab3:
+        _render_pew_pew_animation()
+
+
+def _render_neural_attack_matrix():
+    """Render the Neural ATT&CK matrix in MITRE style."""
+    st.subheader("Neural ATT&CK Matrix")
+    st.markdown("*7 Tactics | 18 Techniques | Mapped to ONI Layers*")
+
+    # Matrix header
+    tactics = list(NEURAL_ATTACK_MATRIX.keys())
+    cols = st.columns(len(tactics))
+
+    # Render tactic headers
+    for i, (tactic, data) in enumerate(NEURAL_ATTACK_MATRIX.items()):
+        with cols[i]:
+            st.markdown(
+                f"""<div style="background-color:{data['color']}; padding:10px; border-radius:5px;
+                text-align:center; margin-bottom:5px;">
+                <b style="color:white;">{tactic}</b><br>
+                <small style="color:white;">{', '.join(data['oni_layers'])}</small>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+
+    # Render techniques
+    max_techniques = max(len(data["techniques"]) for data in NEURAL_ATTACK_MATRIX.values())
+
+    for row in range(max_techniques):
+        cols = st.columns(len(tactics))
+        for i, (tactic, data) in enumerate(NEURAL_ATTACK_MATRIX.items()):
+            with cols[i]:
+                if row < len(data["techniques"]):
+                    tech = data["techniques"][row]
+                    with st.expander(tech["name"], expanded=False):
+                        st.markdown(f"**ID:** {tech['id']}")
+                        st.markdown(f"**Description:** {tech['description']}")
+                        st.markdown(f"**Target Layers:** {', '.join(data['oni_layers'])}")
+
+                        if st.button(f"Simulate", key=f"sim_{tech['id']}"):
+                            st.session_state.selected_technique = tech
+                            st.session_state.current_page = "Attack Simulator"
+                            st.rerun()
+
+    st.divider()
+
+    # Legend
+    st.markdown("### ONI Layer Mapping")
+    layer_info = {
+        "L7": ("Application Interface", "🔵"),
+        "L8": ("Neural Gateway", "🟣"),
+        "L9": ("Signal Processing", "🟢"),
+        "L10": ("Neural Protocol", "🟡"),
+        "L11": ("Cognitive Transport", "🟠"),
+        "L12": ("Cognitive Session", "🔴"),
+        "L13": ("Semantic", "⭕"),
+        "L14": ("Identity & Ethics", "⚫"),
+    }
+
+    legend_cols = st.columns(4)
+    for i, (layer, (name, icon)) in enumerate(layer_info.items()):
+        with legend_cols[i % 4]:
+            st.markdown(f"{icon} **{layer}**: {name}")
+
+
+def _render_attack_simulation_panel():
+    """Render the attack simulation configuration and results panel."""
     col1, col2 = st.columns([1, 2])
 
     with col1:
         st.subheader("Attack Configuration")
+
+        # If technique was selected from matrix
+        if "selected_technique" in st.session_state and st.session_state.selected_technique:
+            tech = st.session_state.selected_technique
+            st.info(f"Selected: {tech['name']} ({tech['id']})")
 
         attack_type = st.selectbox(
             "Attack Scenario",
@@ -1028,7 +1209,8 @@ def render_attack_testing_page():
 
         target_layer = st.selectbox(
             "Target Layer",
-            ["L8 - Neural Gateway", "L9 - Signal Processing", "L10 - Protocol"],
+            ["L8 - Neural Gateway", "L9 - Signal Processing", "L10 - Protocol",
+             "L11 - Transport", "L12 - Session", "L13 - Semantic", "L14 - Identity"],
         )
 
         intensity = st.slider("Attack Intensity", 0.0, 1.0, 0.7, step=0.1)
@@ -1037,10 +1219,19 @@ def render_attack_testing_page():
 
         st.divider()
 
-        if st.button("Launch Attack Simulation", type="primary", use_container_width=True):
+        if st.button("Launch Attack", type="primary", use_container_width=True):
+            # Set animation state
+            st.session_state.attack_animation_state = {
+                "attack_type": attack_type,
+                "target_layer": target_layer,
+                "intensity": intensity,
+                "duration": duration,
+                "phase": "launching",
+                "frame": 0,
+            }
             _run_attack_simulation(attack_type, target_layer, intensity, duration)
 
-        st.warning("This is a controlled simulation for security testing purposes only.")
+        st.warning("Controlled simulation for security testing only.")
 
     with col2:
         st.subheader("Attack Results")
@@ -1050,7 +1241,7 @@ def render_attack_testing_page():
 
             # Status indicator
             if results["blocked"]:
-                st.success("Attack BLOCKED by Neural Firewall")
+                st.success("Attack BLOCKED by Neural Firewall (L8)")
             elif results["detected"]:
                 st.warning("Attack DETECTED but not fully blocked")
             else:
@@ -1063,7 +1254,7 @@ def render_attack_testing_page():
 
             stages = results.get("stages", [])
             for i, stage in enumerate(stages):
-                color = "green" if stage.get("blocked") else "orange" if stage.get("detected") else "red"
+                color = "#22c55e" if stage.get("blocked") else "#f59e0b" if stage.get("detected") else "#ef4444"
                 fig.add_trace(go.Bar(
                     x=[stage["duration"]],
                     y=[stage["name"]],
@@ -1080,6 +1271,8 @@ def render_attack_testing_page():
                 height=250,
                 margin=dict(l=150, r=20, t=50, b=50),
                 barmode="stack",
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
             )
             st.plotly_chart(fig, use_container_width=True)
 
@@ -1098,12 +1291,242 @@ def render_attack_testing_page():
             with st.expander("View Full Report"):
                 st.text(results.get("report", "No report available"))
 
+            # Export button
+            if st.button("Export Report"):
+                st.download_button(
+                    "Download Report",
+                    data=results.get("report", ""),
+                    file_name=f"attack_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                    mime="text/plain",
+                )
+
         else:
             st.info("Configure an attack scenario and launch to see results.")
 
 
+def _render_pew_pew_animation():
+    """Render the pew-pew attack animation visualization."""
+    st.subheader("Attack Visualization")
+    st.markdown("*Real-time attack packet propagation across ONI layers*")
+
+    # Animation controls
+    col1, col2, col3 = st.columns([1, 1, 2])
+
+    with col1:
+        animation_speed = st.slider("Animation Speed", 0.1, 2.0, 1.0, 0.1)
+
+    with col2:
+        show_shield = st.checkbox("Show L8 Shield", value=True)
+
+    # Create the attack visualization
+    if st.session_state.attack_animation_state:
+        state = st.session_state.attack_animation_state
+        fig = _create_attack_animation_frame(state, show_shield)
+        st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+        # Animation info
+        st.markdown("### Attack Path")
+        st.markdown(f"**Type:** {state.get('attack_type', 'Unknown')}")
+        st.markdown(f"**Target:** {state.get('target_layer', 'Unknown')}")
+        st.markdown(f"**Intensity:** {state.get('intensity', 0):.0%}")
+
+    else:
+        # Show static demo
+        st.info("Launch an attack from the 'Attack Simulation' tab to see the animation.")
+
+        # Demo visualization
+        fig = _create_demo_attack_viz()
+        st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+    st.divider()
+
+    # Legend
+    st.markdown("### Legend")
+    legend_cols = st.columns(4)
+    with legend_cols[0]:
+        st.markdown("🔴 **Attack Origin** - External threat source")
+    with legend_cols[1]:
+        st.markdown("🟣 **L8 Shield** - Neural Gateway firewall")
+    with legend_cols[2]:
+        st.markdown("🟢 **Clean Signal** - Legitimate neural traffic")
+    with legend_cols[3]:
+        st.markdown("🟡 **Impact Zone** - Compromised layer")
+
+
+def _create_attack_animation_frame(state: dict, show_shield: bool = True) -> go.Figure:
+    """Create a single frame of the attack animation."""
+    fig = go.Figure()
+
+    # ONI Layer positions (vertical stack)
+    layers = ["External", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14"]
+    layer_y = {layer: i for i, layer in enumerate(layers)}
+    layer_colors = {
+        "External": "#6b7280",
+        "L7": "#3b82f6",
+        "L8": "#8b5cf6",
+        "L9": "#22c55e",
+        "L10": "#eab308",
+        "L11": "#f97316",
+        "L12": "#ef4444",
+        "L13": "#ec4899",
+        "L14": "#6366f1",
+    }
+
+    # Draw layer bars
+    for layer in layers:
+        fig.add_trace(go.Bar(
+            x=[1],
+            y=[layer],
+            orientation="h",
+            marker_color=layer_colors.get(layer, "#888888"),
+            opacity=0.3,
+            showlegend=False,
+            hoverinfo="text",
+            hovertext=f"{layer}: {'Neural Gateway (Firewall)' if layer == 'L8' else layer}",
+        ))
+
+    # Draw L8 shield effect
+    if show_shield:
+        fig.add_trace(go.Scatter(
+            x=[0.5],
+            y=["L8"],
+            mode="markers",
+            marker=dict(
+                size=40,
+                color="rgba(139, 92, 246, 0.5)",
+                symbol="diamond",
+                line=dict(width=3, color="#8b5cf6"),
+            ),
+            showlegend=False,
+            hoverinfo="text",
+            hovertext="L8 Neural Gateway Shield",
+        ))
+
+    # Draw attack packets based on state
+    target_layer = state.get("target_layer", "L8 - Neural Gateway").split(" - ")[0]
+    blocked = state.get("blocked", False)
+
+    # Attack origin
+    fig.add_trace(go.Scatter(
+        x=[0.1],
+        y=["External"],
+        mode="markers+text",
+        marker=dict(size=20, color="#ef4444", symbol="circle"),
+        text=["Attack"],
+        textposition="middle right",
+        showlegend=False,
+    ))
+
+    # Attack path line
+    path_layers = ["External", "L7", "L8"]
+    if not blocked:
+        # Attack penetrated further
+        target_idx = layers.index(target_layer) if target_layer in layers else 3
+        path_layers = layers[:target_idx + 1]
+
+    path_x = [0.2 + i * 0.1 for i in range(len(path_layers))]
+    path_y = path_layers
+
+    line_color = "#ef4444" if not blocked else "#22c55e"
+    fig.add_trace(go.Scatter(
+        x=path_x,
+        y=path_y,
+        mode="lines+markers",
+        line=dict(color=line_color, width=3, dash="dot"),
+        marker=dict(size=10, color=line_color),
+        showlegend=False,
+    ))
+
+    # Impact zone (if attack succeeded)
+    if not blocked:
+        fig.add_trace(go.Scatter(
+            x=[0.8],
+            y=[target_layer],
+            mode="markers",
+            marker=dict(
+                size=50,
+                color="rgba(239, 68, 68, 0.3)",
+                symbol="circle",
+                line=dict(width=2, color="#ef4444"),
+            ),
+            showlegend=False,
+            hoverinfo="text",
+            hovertext=f"Impact Zone: {target_layer}",
+        ))
+
+    # Block indicator
+    if blocked:
+        fig.add_trace(go.Scatter(
+            x=[0.4],
+            y=["L8"],
+            mode="markers+text",
+            marker=dict(size=30, color="#22c55e", symbol="x"),
+            text=["BLOCKED"],
+            textposition="middle right",
+            textfont=dict(color="#22c55e", size=14),
+            showlegend=False,
+        ))
+
+    fig.update_layout(
+        title="Attack Propagation Visualization",
+        xaxis=dict(visible=False, range=[0, 1.2]),
+        yaxis=dict(categoryorder="array", categoryarray=list(reversed(layers))),
+        height=400,
+        margin=dict(l=100, r=20, t=50, b=20),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        barmode="overlay",
+    )
+
+    return fig
+
+
+def _create_demo_attack_viz() -> go.Figure:
+    """Create a demo attack visualization."""
+    fig = go.Figure()
+
+    layers = ["External", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14"]
+
+    # Draw layer bars
+    for i, layer in enumerate(layers):
+        opacity = 0.8 if layer == "L8" else 0.3
+        color = "#8b5cf6" if layer == "L8" else "#6b7280"
+
+        fig.add_trace(go.Bar(
+            x=[1],
+            y=[layer],
+            orientation="h",
+            marker_color=color,
+            opacity=opacity,
+            showlegend=False,
+        ))
+
+    # L8 Shield
+    fig.add_trace(go.Scatter(
+        x=[0.5],
+        y=["L8"],
+        mode="markers+text",
+        marker=dict(size=50, color="rgba(139, 92, 246, 0.5)", symbol="diamond"),
+        text=["FIREWALL"],
+        textfont=dict(color="white"),
+        showlegend=False,
+    ))
+
+    fig.update_layout(
+        title="ONI Layer Stack (Launch attack to animate)",
+        xaxis=dict(visible=False, range=[0, 1.2]),
+        yaxis=dict(categoryorder="array", categoryarray=list(reversed(layers))),
+        height=400,
+        margin=dict(l=100, r=20, t=50, b=20),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+    )
+
+    return fig
+
+
 def _run_attack_simulation(attack_type, target_layer, intensity, duration):
-    """Run attack simulation (simplified for demo)."""
+    """Run attack simulation with animated visualization."""
     with st.spinner("Running attack simulation..."):
         time.sleep(1.5)
 
@@ -1132,6 +1555,17 @@ def _run_attack_simulation(attack_type, target_layer, intensity, duration):
             "impact": 2.5 if blocked else (5.0 if detected else 8.0),
             "stages": stages,
             "report": _generate_attack_report(attack_type, detected, blocked),
+        }
+
+        # Update animation state
+        st.session_state.attack_animation_state = {
+            "attack_type": attack_type,
+            "target_layer": target_layer,
+            "intensity": intensity,
+            "duration": duration,
+            "phase": "complete",
+            "blocked": blocked,
+            "detected": detected,
         }
 
         # Add alert
@@ -1699,6 +2133,760 @@ def render_settings_page():
             st.success("Settings saved successfully!")
 
 
+# ============================================================================
+# NEUROSECURITY PAGE (Kohno Threat Rules + Privacy Calculator)
+# ============================================================================
+
+# Kohno (2009) Threat Rules - 11 rules across 3 categories
+KOHNO_THREAT_RULES = [
+    # ALTERATION (Integrity threats)
+    {"id": "ALT-01", "category": "ALTERATION", "name": "Signal Injection", "description": "Unauthorized signal injection to alter neural processing", "cia": "Integrity", "severity": "CRITICAL"},
+    {"id": "ALT-02", "category": "ALTERATION", "name": "Motor Hijacking", "description": "Forced motor output through unauthorized commands", "cia": "Integrity", "severity": "CRITICAL"},
+    {"id": "ALT-03", "category": "ALTERATION", "name": "Memory Tampering", "description": "Modification of memory formation or recall", "cia": "Integrity", "severity": "CRITICAL"},
+    {"id": "ALT-04", "category": "ALTERATION", "name": "Perception Distortion", "description": "Altering sensory processing pathways", "cia": "Integrity", "severity": "HIGH"},
+    # BLOCKING (Availability threats)
+    {"id": "BLK-01", "category": "BLOCKING", "name": "Neural DoS", "description": "Overwhelming neural pathways to cause dysfunction", "cia": "Availability", "severity": "CRITICAL"},
+    {"id": "BLK-02", "category": "BLOCKING", "name": "Signal Jamming", "description": "Interference preventing legitimate signal transmission", "cia": "Availability", "severity": "HIGH"},
+    {"id": "BLK-03", "category": "BLOCKING", "name": "Motor Lockout", "description": "Blocking motor command execution", "cia": "Availability", "severity": "CRITICAL"},
+    {"id": "BLK-04", "category": "BLOCKING", "name": "Communication Block", "description": "Preventing BCI communication channels", "cia": "Availability", "severity": "HIGH"},
+    # EAVESDROPPING (Confidentiality threats)
+    {"id": "EVD-01", "category": "EAVESDROPPING", "name": "Neural Wiretapping", "description": "Unauthorized reading of neural signals", "cia": "Confidentiality", "severity": "HIGH"},
+    {"id": "EVD-02", "category": "EAVESDROPPING", "name": "Cognitive State Extraction", "description": "Inferring mental states from neural patterns", "cia": "Confidentiality", "severity": "CRITICAL"},
+    {"id": "EVD-03", "category": "EAVESDROPPING", "name": "Memory Exfiltration", "description": "Extracting memories or learned patterns", "cia": "Confidentiality", "severity": "CRITICAL"},
+]
+
+# ERP Types for Privacy Score (Bonaci et al., 2015)
+ERP_TYPES = {
+    "P300": {"name": "P300", "sensitivity": 0.9, "description": "Recognition, familiarity, lies"},
+    "N170": {"name": "N170", "sensitivity": 0.85, "description": "Face recognition, identity"},
+    "N400": {"name": "N400", "sensitivity": 0.8, "description": "Semantic processing, meaning"},
+    "ERN": {"name": "ERN", "sensitivity": 0.75, "description": "Error detection, self-monitoring"},
+    "LPP": {"name": "LPP", "sensitivity": 0.7, "description": "Emotional arousal, attention"},
+    "MMN": {"name": "MMN", "sensitivity": 0.6, "description": "Deviance detection, attention"},
+    "CNV": {"name": "CNV", "sensitivity": 0.55, "description": "Expectation, preparation"},
+    "SSVEP": {"name": "SSVEP", "sensitivity": 0.4, "description": "Visual attention (less sensitive)"},
+}
+
+
+def render_neurosecurity_page():
+    """Render the Neurosecurity page with Kohno threat rules and privacy calculator."""
+    st.title("Neurosecurity Monitor")
+    st.markdown("*Kohno (2009) Threat Taxonomy + Bonaci (2015) BCI Privacy*")
+
+    # Tabs for different sections
+    tab1, tab2, tab3, tab4 = st.tabs(["Threat Rules", "Privacy Calculator", "BCI Anonymizer", "Threat Classifier"])
+
+    with tab1:
+        _render_kohno_rules_grid()
+
+    with tab2:
+        _render_privacy_calculator()
+
+    with tab3:
+        _render_bci_anonymizer_demo()
+
+    with tab4:
+        _render_threat_classifier()
+
+
+def _render_kohno_rules_grid():
+    """Render Kohno threat rules as an interactive grid."""
+    st.subheader("Kohno (2009) Threat Taxonomy")
+    st.markdown("*11 Neural Security Threat Rules across CIA Triad*")
+
+    # Category tabs
+    categories = ["ALTERATION", "BLOCKING", "EAVESDROPPING"]
+    category_colors = {"ALTERATION": "#ef4444", "BLOCKING": "#f59e0b", "EAVESDROPPING": "#3b82f6"}
+
+    # Summary metrics
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        alt_count = len([r for r in KOHNO_THREAT_RULES if r["category"] == "ALTERATION"])
+        st.metric("Alteration (Integrity)", f"{alt_count} rules", delta="CRITICAL")
+    with col2:
+        blk_count = len([r for r in KOHNO_THREAT_RULES if r["category"] == "BLOCKING"])
+        st.metric("Blocking (Availability)", f"{blk_count} rules", delta="HIGH")
+    with col3:
+        evd_count = len([r for r in KOHNO_THREAT_RULES if r["category"] == "EAVESDROPPING"])
+        st.metric("Eavesdropping (Confidentiality)", f"{evd_count} rules", delta="HIGH")
+
+    st.divider()
+
+    # Display rules by category
+    for category in categories:
+        color = category_colors[category]
+        cia = {"ALTERATION": "Integrity", "BLOCKING": "Availability", "EAVESDROPPING": "Confidentiality"}[category]
+
+        st.markdown(f"### {category} ({cia})")
+
+        rules = [r for r in KOHNO_THREAT_RULES if r["category"] == category]
+        for rule in rules:
+            severity_icon = "🔴" if rule["severity"] == "CRITICAL" else "🟠"
+            with st.expander(f"{severity_icon} {rule['id']}: {rule['name']}", expanded=False):
+                st.markdown(f"**Description:** {rule['description']}")
+                st.markdown(f"**CIA Mapping:** {rule['cia']}")
+                st.markdown(f"**Severity:** {rule['severity']}")
+                st.markdown(f"**ONI Layers:** L8-L14 (Neural Gateway and above)")
+
+                # Detection status (mock)
+                detection_col1, detection_col2 = st.columns(2)
+                with detection_col1:
+                    st.markdown("**Detection Status:** 🟢 Active")
+                with detection_col2:
+                    st.markdown("**Last Triggered:** Never")
+
+        st.markdown("")
+
+
+def _render_privacy_calculator():
+    """Render privacy score calculator with ERP checkboxes."""
+    st.subheader("Privacy Score Calculator")
+    st.markdown("*Based on Bonaci et al. (2015) BCI Privacy Research*")
+
+    st.info("Select detected ERPs to calculate privacy risk score. Higher sensitivity = higher privacy risk.")
+
+    # ERP selection checkboxes
+    st.markdown("### Detected ERPs")
+
+    selected_erps = []
+    erp_cols = st.columns(4)
+
+    for i, (erp_id, erp_info) in enumerate(ERP_TYPES.items()):
+        with erp_cols[i % 4]:
+            if st.checkbox(f"{erp_id}", key=f"erp_{erp_id}"):
+                selected_erps.append(erp_id)
+            st.caption(erp_info["description"][:30])
+
+    st.divider()
+
+    # Calculate score
+    if st.button("Calculate Privacy Score", type="primary"):
+        if selected_erps:
+            # Calculate weighted privacy score
+            total_sensitivity = sum(ERP_TYPES[erp]["sensitivity"] for erp in selected_erps)
+            max_possible = sum(erp["sensitivity"] for erp in ERP_TYPES.values())
+            score = total_sensitivity / max_possible
+
+            # Store result
+            st.session_state.privacy_score_result = {
+                "score": score,
+                "selected_erps": selected_erps,
+                "interpretation": _interpret_privacy_score(score),
+            }
+        else:
+            st.session_state.privacy_score_result = {
+                "score": 0,
+                "selected_erps": [],
+                "interpretation": "LOW",
+            }
+
+    # Display results
+    if st.session_state.privacy_score_result:
+        result = st.session_state.privacy_score_result
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            # Privacy score gauge
+            fig = go.Figure(go.Indicator(
+                mode="gauge+number",
+                value=result["score"] * 100,
+                title={"text": "Privacy Risk Score"},
+                gauge={
+                    "axis": {"range": [0, 100]},
+                    "bar": {"color": "darkred"},
+                    "steps": [
+                        {"range": [0, 25], "color": "#22c55e"},
+                        {"range": [25, 50], "color": "#f59e0b"},
+                        {"range": [50, 75], "color": "#ef4444"},
+                        {"range": [75, 100], "color": "#7f1d1d"},
+                    ],
+                },
+            ))
+            fig.update_layout(height=250, margin=dict(l=20, r=20, t=50, b=20))
+            st.plotly_chart(fig, use_container_width=True)
+
+        with col2:
+            st.markdown("### Risk Interpretation")
+            interp = result["interpretation"]
+            interp_colors = {"LOW": "🟢", "MODERATE": "🟡", "HIGH": "🟠", "CRITICAL": "🔴"}
+            st.markdown(f"**Level:** {interp_colors.get(interp, '⚪')} {interp}")
+
+            st.markdown("**Selected ERPs:**")
+            for erp in result["selected_erps"]:
+                st.markdown(f"- {erp}: {ERP_TYPES[erp]['description']}")
+
+            st.markdown("**Recommendations:**")
+            if interp == "CRITICAL":
+                st.markdown("- Immediate BCI Anonymizer activation required")
+                st.markdown("- Consider temporal smearing and frequency masking")
+            elif interp == "HIGH":
+                st.markdown("- Enable ERP filtering at L8")
+                st.markdown("- Monitor for pattern extraction attempts")
+            elif interp == "MODERATE":
+                st.markdown("- Standard privacy protocols sufficient")
+                st.markdown("- Continue monitoring")
+            else:
+                st.markdown("- Low risk - standard operation")
+
+
+def _interpret_privacy_score(score: float) -> str:
+    """Interpret privacy score into risk level."""
+    if score >= 0.75:
+        return "CRITICAL"
+    elif score >= 0.50:
+        return "HIGH"
+    elif score >= 0.25:
+        return "MODERATE"
+    else:
+        return "LOW"
+
+
+def _render_bci_anonymizer_demo():
+    """Render BCI Anonymizer demo with before/after visualization."""
+    st.subheader("BCI Anonymizer Demo")
+    st.markdown("*Privacy-preserving signal transformation (Bonaci et al., 2015)*")
+
+    st.info("The BCI Anonymizer removes privacy-sensitive ERP components while preserving functional utility.")
+
+    # Configuration
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("### Anonymization Settings")
+        temporal_blur = st.slider("Temporal Smearing (ms)", 0, 50, 20)
+        freq_mask = st.slider("Frequency Masking (%)", 0, 100, 30)
+        erp_filter = st.multiselect("ERPs to Filter", list(ERP_TYPES.keys()), default=["P300", "N170"])
+
+    with col2:
+        st.markdown("### Utility Preservation")
+        st.metric("Motor Command Accuracy", "98%", delta="-2%")
+        st.metric("Latency Impact", "+15ms", delta=None)
+        st.metric("Signal Quality", "92%", delta="-8%")
+
+    st.divider()
+
+    # Generate demo visualization
+    if st.button("Run Anonymization Demo", type="primary"):
+        st.markdown("### Before/After Comparison")
+
+        # Generate sample signal
+        np.random.seed(42)
+        t = np.linspace(0, 1, 500)
+        original = np.sin(2 * np.pi * 10 * t) + 0.5 * np.sin(2 * np.pi * 40 * t)
+        original += 2 * np.exp(-((t - 0.3) ** 2) / 0.01)  # P300-like component
+
+        # Anonymized (remove P300 component, add blur)
+        anonymized = np.sin(2 * np.pi * 10 * t) + 0.5 * np.sin(2 * np.pi * 40 * t)
+        anonymized += np.random.normal(0, 0.1 * temporal_blur / 50, len(t))
+
+        # Create comparison plot
+        fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
+                           subplot_titles=("Original Signal (Privacy-Sensitive)", "Anonymized Signal"))
+
+        fig.add_trace(
+            go.Scatter(x=t * 1000, y=original, mode="lines", name="Original",
+                      line=dict(color="#ef4444")),
+            row=1, col=1,
+        )
+
+        # Highlight P300 region
+        fig.add_vrect(x0=250, x1=350, fillcolor="rgba(239,68,68,0.2)",
+                     line_width=0, row=1, col=1,
+                     annotation_text="P300", annotation_position="top left")
+
+        fig.add_trace(
+            go.Scatter(x=t * 1000, y=anonymized, mode="lines", name="Anonymized",
+                      line=dict(color="#22c55e")),
+            row=2, col=1,
+        )
+
+        fig.update_layout(height=400, showlegend=False)
+        fig.update_xaxes(title_text="Time (ms)", row=2, col=1)
+        fig.update_yaxes(title_text="Amplitude (μV)")
+
+        st.plotly_chart(fig, use_container_width=True)
+
+        st.success(f"Anonymization complete. Filtered ERPs: {', '.join(erp_filter)}")
+
+
+def _render_threat_classifier():
+    """Render threat classifier with metric inputs."""
+    st.subheader("Threat Classifier")
+    st.markdown("*Real-time threat categorization based on signal metrics*")
+
+    # Metric inputs
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        coherence = st.number_input("Coherence Score (Cₛ)", 0.0, 1.0, 0.85, 0.05)
+        spike_rate = st.number_input("Spike Rate (Hz)", 0, 500, 50, 10)
+
+    with col2:
+        amplitude = st.number_input("Signal Amplitude (μV)", 0.0, 200.0, 50.0, 5.0)
+        phase_deviation = st.number_input("Phase Deviation (°)", 0.0, 180.0, 15.0, 5.0)
+
+    with col3:
+        freq_shift = st.number_input("Frequency Shift (%)", -50, 50, 0, 5)
+        latency = st.number_input("Latency (ms)", 0, 500, 20, 5)
+
+    st.divider()
+
+    if st.button("Classify Threat", type="primary"):
+        # Classification logic
+        threat_type = None
+        confidence = 0.0
+
+        if coherence < 0.3:
+            threat_type = "ALTERATION"
+            confidence = (0.3 - coherence) / 0.3
+        elif spike_rate > 300:
+            threat_type = "BLOCKING"
+            confidence = min((spike_rate - 300) / 200, 1.0)
+        elif phase_deviation > 90:
+            threat_type = "EAVESDROPPING"
+            confidence = phase_deviation / 180
+
+        if threat_type:
+            st.session_state.threat_classification = {
+                "type": threat_type,
+                "confidence": confidence,
+                "metrics": {
+                    "coherence": coherence,
+                    "spike_rate": spike_rate,
+                    "amplitude": amplitude,
+                    "phase_deviation": phase_deviation,
+                },
+            }
+        else:
+            st.session_state.threat_classification = {
+                "type": "NORMAL",
+                "confidence": 0.95,
+                "metrics": {},
+            }
+
+    # Display classification
+    if st.session_state.threat_classification:
+        result = st.session_state.threat_classification
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            threat = result["type"]
+            threat_colors = {
+                "NORMAL": "#22c55e",
+                "ALTERATION": "#ef4444",
+                "BLOCKING": "#f59e0b",
+                "EAVESDROPPING": "#3b82f6",
+            }
+            color = threat_colors.get(threat, "#888888")
+
+            st.markdown(f"""
+            <div style="background-color:{color}; padding:20px; border-radius:10px; text-align:center;">
+                <h2 style="color:white; margin:0;">{threat}</h2>
+                <p style="color:white; margin:5px 0;">Confidence: {result['confidence']:.0%}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col2:
+            st.markdown("### Recommended Actions")
+            if threat == "ALTERATION":
+                st.markdown("- 🔴 Activate L8 Neural Firewall")
+                st.markdown("- 🔴 Enable signal integrity verification")
+                st.markdown("- 🔴 Alert security team")
+            elif threat == "BLOCKING":
+                st.markdown("- 🟠 Check for DoS attack patterns")
+                st.markdown("- 🟠 Enable rate limiting at L8")
+                st.markdown("- 🟠 Switch to backup channels")
+            elif threat == "EAVESDROPPING":
+                st.markdown("- 🔵 Activate BCI Anonymizer")
+                st.markdown("- 🔵 Enable encryption at L9")
+                st.markdown("- 🔵 Monitor for data exfiltration")
+            else:
+                st.markdown("- 🟢 Normal operation")
+                st.markdown("- 🟢 Continue standard monitoring")
+
+
+# ============================================================================
+# REAL EEG DATA PAGE (MOABB Integration)
+# ============================================================================
+
+# Available MOABB datasets
+MOABB_DATASETS = {
+    "BNCI2014_001": {
+        "name": "BNCI2014_001 (Motor Imagery)",
+        "paradigm": "Motor Imagery",
+        "subjects": 9,
+        "description": "4-class motor imagery (left hand, right hand, feet, tongue)",
+        "oni_relevance": "Motor cortex (L13) attack detection",
+    },
+    "BNCI2014_002": {
+        "name": "BNCI2014_002 (Motor Imagery)",
+        "paradigm": "Motor Imagery",
+        "subjects": 14,
+        "description": "3-class motor imagery (left hand, right hand, feet)",
+        "oni_relevance": "Longitudinal firewall validation",
+    },
+    "EPFLP300": {
+        "name": "EPFL P300 Dataset",
+        "paradigm": "P300",
+        "subjects": 8,
+        "description": "P300 speller paradigm",
+        "oni_relevance": "Privacy-sensitive ERP (Kohno threats)",
+    },
+    "SSVEP_Exo": {
+        "name": "SSVEP Exoskeleton",
+        "paradigm": "SSVEP",
+        "subjects": 12,
+        "description": "Steady-state visual evoked potentials",
+        "oni_relevance": "Frequency injection attack vectors",
+    },
+    "Weibo2014": {
+        "name": "Weibo 2014 (Motor Imagery)",
+        "paradigm": "Motor Imagery",
+        "subjects": 10,
+        "description": "Multi-class motor imagery",
+        "oni_relevance": "Cross-session attack resilience",
+    },
+}
+
+# Attack types for injection
+ATTACK_TYPES = {
+    "spike": {"name": "Spike Attack", "description": "Sharp amplitude spikes (ransomware signature)"},
+    "noise": {"name": "Gaussian Noise", "description": "Additive white noise (jamming)"},
+    "frequency": {"name": "Frequency Shift", "description": "Alter frequency content (evasion)"},
+    "phase": {"name": "Phase Manipulation", "description": "Phase scrambling (coherence attack)"},
+    "dc_shift": {"name": "DC Shift", "description": "Baseline drift (gradual manipulation)"},
+}
+
+
+def render_real_eeg_page():
+    """Render Real EEG Data page with MOABB integration."""
+    st.title("Real EEG Data")
+    st.markdown("*MOABB Dataset Integration for Security Testing*")
+
+    # Check if MOABB is available
+    try:
+        from tara.data import MOABBAdapter, is_moabb_available
+        moabb_available = is_moabb_available()
+    except ImportError:
+        moabb_available = False
+
+    if not moabb_available:
+        st.warning("MOABB not installed. Install with: `pip install oni-tara[moabb]`")
+        st.info("MOABB provides real EEG datasets for testing attack detection algorithms.")
+
+        # Show what would be available
+        st.markdown("### Available Datasets (requires MOABB)")
+        for ds_id, ds_info in MOABB_DATASETS.items():
+            with st.expander(ds_info["name"]):
+                st.markdown(f"**Paradigm:** {ds_info['paradigm']}")
+                st.markdown(f"**Subjects:** {ds_info['subjects']}")
+                st.markdown(f"**Description:** {ds_info['description']}")
+                st.markdown(f"**ONI Relevance:** {ds_info['oni_relevance']}")
+        return
+
+    # MOABB is available
+    st.success("MOABB is available. Real EEG data ready for security testing.")
+
+    # Create tabs
+    tab1, tab2, tab3 = st.tabs(["Load Dataset", "Attack Injection", "Coherence Benchmark"])
+
+    with tab1:
+        _render_dataset_loader()
+
+    with tab2:
+        _render_attack_injection()
+
+    with tab3:
+        _render_coherence_benchmark()
+
+
+def _render_dataset_loader():
+    """Render dataset loading interface."""
+    st.subheader("Load MOABB Dataset")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Dataset selector
+        dataset_id = st.selectbox(
+            "Select Dataset",
+            list(MOABB_DATASETS.keys()),
+            format_func=lambda x: MOABB_DATASETS[x]["name"],
+        )
+
+        ds_info = MOABB_DATASETS[dataset_id]
+        st.markdown(f"**Paradigm:** {ds_info['paradigm']}")
+        st.markdown(f"**Description:** {ds_info['description']}")
+
+    with col2:
+        # Subject and epoch controls
+        subject = st.number_input("Subject ID", 1, ds_info["subjects"], 1)
+        max_epochs = st.slider("Max Epochs", 5, 100, 20)
+
+    st.divider()
+
+    if st.button("Load Dataset", type="primary"):
+        with st.spinner("Loading dataset... (this may take a moment for first download)"):
+            try:
+                from tara.data import MOABBAdapter
+
+                adapter = MOABBAdapter()
+                dataset = adapter.load_dataset(dataset_id)
+                signals = adapter.get_signals(dataset, subject=subject, max_epochs=max_epochs)
+
+                st.session_state.moabb_signals = signals
+                st.session_state.moabb_dataset = dataset_id
+
+                st.success(f"Loaded {len(signals)} epochs from {dataset_id}, subject {subject}")
+
+            except Exception as e:
+                st.error(f"Error loading dataset: {e}")
+
+    # Display loaded signals
+    if st.session_state.moabb_signals:
+        signals = st.session_state.moabb_signals
+        st.markdown("### Loaded Signals")
+
+        st.metric("Total Epochs", len(signals))
+
+        # Show first signal preview
+        if signals:
+            signal = signals[0]
+            st.markdown(f"**Shape:** {signal.data.shape}")
+            st.markdown(f"**Sample Rate:** {signal.sample_rate} Hz")
+            st.markdown(f"**Label:** {signal.label}")
+
+            # Plot first epoch
+            fig = go.Figure()
+            for ch in range(min(4, signal.data.shape[0])):
+                fig.add_trace(go.Scatter(
+                    y=signal.data[ch, :500],
+                    mode="lines",
+                    name=f"Ch {ch}",
+                    opacity=0.7,
+                ))
+            fig.update_layout(
+                title="First Epoch Preview (4 channels, 500 samples)",
+                xaxis_title="Sample",
+                yaxis_title="Amplitude (μV)",
+                height=300,
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+
+def _render_attack_injection():
+    """Render attack injection interface."""
+    st.subheader("Attack Injection")
+
+    if not st.session_state.moabb_signals:
+        st.warning("Load a dataset first in the 'Load Dataset' tab.")
+        return
+
+    signals = st.session_state.moabb_signals
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Attack type selector
+        attack_type = st.selectbox(
+            "Attack Type",
+            list(ATTACK_TYPES.keys()),
+            format_func=lambda x: ATTACK_TYPES[x]["name"],
+        )
+        st.caption(ATTACK_TYPES[attack_type]["description"])
+
+        # Attack parameters
+        intensity = st.slider("Attack Intensity", 0.1, 5.0, 2.0, 0.1)
+        target_channels = st.multiselect(
+            "Target Channels",
+            list(range(min(8, signals[0].data.shape[0]))),
+            default=[0, 1, 2],
+        )
+
+    with col2:
+        # Epoch selector
+        epoch_idx = st.slider("Target Epoch", 0, len(signals) - 1, 0)
+
+        st.markdown("### Original Signal Stats")
+        signal = signals[epoch_idx]
+        st.metric("Max Amplitude", f"{signal.data.max():.2f} μV")
+        st.metric("Mean", f"{signal.data.mean():.2f} μV")
+        st.metric("Std", f"{signal.data.std():.2f} μV")
+
+    st.divider()
+
+    if st.button("Inject Attack", type="primary"):
+        try:
+            from tara.data import MOABBAdapter
+
+            adapter = MOABBAdapter()
+            attacked = adapter.inject_attack(
+                signals[epoch_idx],
+                attack_type=attack_type,
+                intensity=intensity,
+                channels=target_channels,
+            )
+
+            # Comparison plot
+            fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
+                               subplot_titles=("Original Signal", f"After {ATTACK_TYPES[attack_type]['name']}"))
+
+            ch = target_channels[0] if target_channels else 0
+
+            fig.add_trace(
+                go.Scatter(y=signals[epoch_idx].data[ch, :], mode="lines",
+                          line=dict(color="#22c55e"), name="Original"),
+                row=1, col=1,
+            )
+
+            fig.add_trace(
+                go.Scatter(y=attacked.attacked[ch, :], mode="lines",
+                          line=dict(color="#ef4444"), name="Attacked"),
+                row=2, col=1,
+            )
+
+            fig.update_layout(height=400, showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
+
+            # Stats comparison
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("**Original:**")
+                st.metric("Max", f"{signals[epoch_idx].data.max():.2f}")
+            with col2:
+                st.markdown("**Attacked:**")
+                delta = attacked.attacked.max() - signals[epoch_idx].data.max()
+                st.metric("Max", f"{attacked.attacked.max():.2f}", delta=f"+{delta:.2f}")
+
+        except Exception as e:
+            st.error(f"Error injecting attack: {e}")
+
+
+def _render_coherence_benchmark():
+    """Render coherence benchmark interface."""
+    st.subheader("Coherence Benchmark")
+    st.markdown("*Test coherence metric detection accuracy against real EEG*")
+
+    if not st.session_state.moabb_signals:
+        st.warning("Load a dataset first in the 'Load Dataset' tab.")
+        return
+
+    signals = st.session_state.moabb_signals
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        attack_type = st.selectbox(
+            "Attack Type for Benchmark",
+            list(ATTACK_TYPES.keys()),
+            format_func=lambda x: ATTACK_TYPES[x]["name"],
+            key="bench_attack",
+        )
+        intensity = st.slider("Attack Intensity", 0.5, 3.0, 1.5, 0.1, key="bench_intensity")
+
+    with col2:
+        n_samples = st.slider("Number of Epochs to Test", 5, min(50, len(signals)), 10)
+
+    st.divider()
+
+    if st.button("Run Benchmark", type="primary"):
+        with st.spinner("Running coherence benchmark..."):
+            try:
+                from tara.data import MOABBAdapter
+                from tara import calculate_cs
+
+                adapter = MOABBAdapter()
+
+                # Prepare clean and attacked signals
+                clean_scores = []
+                attacked_scores = []
+
+                for i in range(min(n_samples, len(signals))):
+                    signal = signals[i]
+
+                    # Calculate coherence on clean signal
+                    clean_score = calculate_cs(signal.data)
+                    clean_scores.append(clean_score)
+
+                    # Inject attack and calculate
+                    attacked = adapter.inject_attack(signal, attack_type, intensity)
+                    attacked_score = calculate_cs(attacked.attacked)
+                    attacked_scores.append(attacked_score)
+
+                # Calculate detection metrics
+                threshold = 0.5
+                clean_correct = sum(1 for s in clean_scores if s >= threshold)
+                attacked_correct = sum(1 for s in attacked_scores if s < threshold)
+                total = len(clean_scores) + len(attacked_scores)
+
+                accuracy = (clean_correct + attacked_correct) / total
+                precision = attacked_correct / max(attacked_correct + (len(clean_scores) - clean_correct), 1)
+                recall = attacked_correct / len(attacked_scores)
+                f1 = 2 * precision * recall / max(precision + recall, 0.001)
+
+                # Store results
+                st.session_state.moabb_benchmark_results = {
+                    "accuracy": accuracy,
+                    "precision": precision,
+                    "recall": recall,
+                    "f1": f1,
+                    "clean_scores": clean_scores,
+                    "attacked_scores": attacked_scores,
+                }
+
+                st.success("Benchmark complete!")
+
+            except Exception as e:
+                st.error(f"Error running benchmark: {e}")
+
+    # Display results
+    if st.session_state.moabb_benchmark_results:
+        results = st.session_state.moabb_benchmark_results
+
+        st.markdown("### Detection Metrics")
+
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Accuracy", f"{results['accuracy']:.1%}")
+        with col2:
+            st.metric("Precision", f"{results['precision']:.1%}")
+        with col3:
+            st.metric("Recall", f"{results['recall']:.1%}")
+        with col4:
+            st.metric("F1 Score", f"{results['f1']:.2f}")
+
+        # Distribution plot
+        fig = go.Figure()
+        fig.add_trace(go.Histogram(
+            x=results["clean_scores"],
+            name="Clean Signals",
+            marker_color="#22c55e",
+            opacity=0.7,
+        ))
+        fig.add_trace(go.Histogram(
+            x=results["attacked_scores"],
+            name="Attacked Signals",
+            marker_color="#ef4444",
+            opacity=0.7,
+        ))
+
+        fig.add_vline(x=0.5, line_dash="dash", line_color="white",
+                     annotation_text="Threshold (0.5)")
+
+        fig.update_layout(
+            title="Coherence Score Distribution",
+            xaxis_title="Coherence Score (Cₛ)",
+            yaxis_title="Count",
+            barmode="overlay",
+            height=300,
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+        st.caption("Clean signals should cluster above threshold (0.5), attacked signals below.")
+
+
 def _generate_sample_data():
     """Generate sample metric data."""
     n_points = 100
@@ -1878,10 +3066,14 @@ def main():
         render_neural_firewall_page()
     elif page == "Neural Simulator":
         render_neural_simulator_page()
-    elif page == "Attack Testing":
-        render_attack_testing_page()
+    elif page == "Attack Simulator":
+        render_attack_simulator_page()
     elif page == "Signal Assurance":
         render_nsam_page()
+    elif page == "Neurosecurity":
+        render_neurosecurity_page()
+    elif page == "Real EEG Data":
+        render_real_eeg_page()
     elif page == "Settings":
         render_settings_page()
     # Interactive visualization pages (ONI Visualization Suite)

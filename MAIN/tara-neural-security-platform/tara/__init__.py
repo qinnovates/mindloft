@@ -41,7 +41,7 @@ License: Apache 2.0
 Repository: https://github.com/qikevinl/ONI
 """
 
-__version__ = "0.5.1"
+__version__ = "0.6.0"
 __author__ = "Kevin L. Qi"
 __name_full__ = "Telemetry Awareness and Response Analyzer"  # TARA
 

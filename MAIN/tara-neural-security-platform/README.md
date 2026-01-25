@@ -65,8 +65,10 @@ The dashboard opens at `http://localhost:8501` with these pages:
 | **Brain Topology** | Monitoring | 3D brain visualization with electrode monitoring |
 | **Neural Firewall** | Monitoring | ONI L8-L14 validation pipeline |
 | **Signal Assurance** | Monitoring | Live metrics, alerts management, event logs |
-| **Neural Simulator** | Testing | Brain region security analysis |
-| **Attack Testing** | Testing | Execute attack scenarios |
+| **Neurosecurity** | Monitoring | Kohno threat rules, privacy calculator, BCI Anonymizer |
+| **Real EEG Data** | Data | MOABB dataset integration, attack injection, coherence benchmarking |
+| **Neural Simulator** | Simulations | Brain region security analysis |
+| **Attack Simulator** | Simulations | Neural ATT&CK matrix, attack simulation, pew-pew visualization |
 | **Settings** | Configuration | Thresholds, rules, system parameters |
 
 ### Test with Real EEG Data (MOABB)
@@ -293,10 +295,24 @@ tara/
 - **Neuron Network Visualization**: 3D neuron connections within regions
 - **ONI Layer Stack**: Visual representation of full layer model
 
-### Attack Testing Page
-- **Attack Scenarios**: Ransomware, DoS, gateway bypass, reconnaissance
-- **Attack Timeline**: Stage-by-stage visualization
+### Attack Simulator Page
+- **Neural ATT&CK Matrix**: MITRE-style grid with 7 tactics and 18 techniques mapped to ONI layers
+- **Attack Simulation**: Configure and launch attacks with intensity/duration controls
+- **Pew-Pew Visualization**: Real-time attack packet animation across ONI layers with L8 shield effects
+- **Attack Timeline**: Stage-by-stage visualization with detection/block status
 - **Detection Metrics**: Detection rate, block rate, response time, impact score
+- **Report Export**: Download attack simulation reports
+
+### Neurosecurity Page
+- **Kohno Threat Rules**: 11 threat rules across ALTERATION, BLOCKING, EAVESDROPPING categories
+- **Privacy Calculator**: Calculate privacy risk based on detected ERPs (P300, N170, N400, etc.)
+- **BCI Anonymizer Demo**: Before/after visualization of privacy-preserving signal transformation
+- **Threat Classifier**: Real-time threat categorization based on signal metrics
+
+### Real EEG Data Page
+- **MOABB Integration**: Load real EEG datasets (BNCI2014_001, EPFLP300, etc.)
+- **Attack Injection**: Inject spike, noise, frequency, phase, dc_shift attacks into real signals
+- **Coherence Benchmark**: Test detection accuracy with precision, recall, F1 metrics
 
 ---
 
@@ -572,6 +588,35 @@ If you use TARA in your research, please cite:
 
 ## Changelog
 
+### v0.6.0 (2026-01-24)
+- **Major UI Enhancements**:
+  - Renamed "Testing" section to "Simulations" in navigation
+  - Renamed "Attack Testing" to "Attack Simulator"
+  - Added new "Data" section in navigation
+- **New Neurosecurity Page** (under Monitoring):
+  - Kohno threat rules grid (11 rules: ALTERATION/BLOCKING/EAVESDROPPING)
+  - Privacy score calculator with ERP checkboxes (P300, N170, N400, ERN, LPP, MMN, CNV, SSVEP)
+  - BCI Anonymizer demo with before/after visualization
+  - Threat classifier with metric inputs
+- **New Real EEG Data Page** (under Data):
+  - MOABB dataset selector (5 datasets: BNCI2014_001, BNCI2014_002, EPFLP300, SSVEP_Exo, Weibo2014)
+  - Subject and epoch controls
+  - Attack injection (5 types: spike, noise, frequency, phase, dc_shift)
+  - Coherence benchmark with detection metrics (accuracy, precision, recall, F1)
+- **Attack Simulator Enhancements**:
+  - Neural ATT&CK Matrix with 7 tactics and 18 techniques mapped to ONI layers
+  - Pew-pew attack animation with L8 shield effect
+  - Attack report export capability
+- Updated documentation (README.md, CLAUDE.md)
+
+### v0.5.1 (2026-01-24)
+- Fixed Layer Explorer interactivity
+- Added comprehensive educational content for all 14 ONI layers
+
+### v0.5.0 (2026-01-24)
+- Consolidated package structure
+- Integrated ONI Visualization Suite
+
 ### v0.4.0 (2026-01-23)
 - Added neurosecurity module with Kohno threat taxonomy (2009)
 - Added 12 Kohno-based detection rules for NSAM
@@ -605,5 +650,5 @@ If you use TARA in your research, please cite:
 ---
 
 *Documents: README.md, CLAUDE.md, AGENTS.md*
-*Modules: 9 | Sub-modules: 16 | Lines of Code: ~17,000*
-*Last Updated: 2026-01-23*
+*Modules: 9 | Sub-modules: 16 | Lines of Code: ~19,000*
+*Last Updated: 2026-01-24*
