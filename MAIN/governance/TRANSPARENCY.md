@@ -75,11 +75,16 @@ The Coherence Metric (Cₛ) combines three variance components: phase (σ²φ), 
 3. **Why This Matters for Security**: An attacker cannot easily *improve* transport reliability — it's biologically constrained. However, they can *exploit* it by injecting signals that appear to have unnaturally high reliability (>0.95), which should trigger anomaly detection. Signals with *too perfect* transmission are as suspicious as degraded ones.
 
 4. **The Learning Moment**: AI's suggestion of uniform 0.95 reliability would have:
-   - Overestimated baseline signal quality
-   - Missed a key attack detection vector (supranormal reliability)
-   - Ignored decades of neuroscience research on synaptic stochasticity
 
-This example illustrates why domain expertise cannot be fully offloaded to AI — the AI optimized for "clean" assumptions while biological systems operate on "messy" realities that carry security-relevant information.
+   - **Overestimated baseline signal quality**: A 0.95 reliability assumption is 10 percentage points higher than biological reality (~0.85). This might seem like a small difference, but compounded across pathways it dramatically shifts expectations. At 0.95³ = 0.86 reliability for 3 synapses vs. 0.85³ = 0.61 — the AI's assumption would predict 40% higher pathway reliability than actually exists. Any coherence threshold calibrated on these inflated baselines would be fundamentally miscalibrated.
+
+   - **Missed a key attack detection vector (supranormal reliability)**: "Supranormal" means *above the normal biological range*. If real synapses transmit at ~85% reliability, a signal showing 95%+ reliability is biologically implausible — it's *too clean*. This is a critical security insight: attackers injecting synthetic signals into a BCI cannot easily replicate the natural "messiness" of biological transmission. Their signals will be suspiciously reliable. By using 0.95 as our baseline, we would have normalized this attack signature, making it invisible to detection. The 0.95 threshold matters specifically because it sits at the boundary of biological plausibility — signals above this should trigger immediate scrutiny.
+
+   - **Ignored decades of neuroscience research on synaptic stochasticity**: The probabilistic nature of synaptic transmission has been documented since Katz's Nobel Prize-winning work in the 1950s-70s (Del Castillo & Katz, 1954). This isn't obscure knowledge — it's foundational neuroscience. The AI's "clean" assumption of 0.95 revealed a pattern: AI systems optimize for mathematical elegance (uniform, high values) rather than biological fidelity (heterogeneous, lower values). This is precisely the kind of domain-specific knowledge that requires human oversight.
+
+   **Why 0.95 Specifically?** The AI likely selected 0.95 because it's a common "high confidence" placeholder in engineering contexts (like 95% confidence intervals). But this reveals a category error: applying statistical conventions to biological systems. Real synapses don't care about human statistical preferences — they evolved under constraints of energy efficiency, plasticity, and noise tolerance that produce ~85% reliability as an *optimal* tradeoff, not a limitation.
+
+This example illustrates why domain expertise cannot be fully offloaded to AI — the AI optimized for "clean" assumptions while biological systems operate on "messy" realities that carry security-relevant information. The mess *is* the signal.
 
 #### Example 4: Firewall Decision Matrix
 - **AI Initial Output**: Suggested binary accept/reject based solely on coherence score
