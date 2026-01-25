@@ -2,8 +2,8 @@
 
 > This document serves as an auditable record of how AI tools were integrated into the development of the ONI Framework, demonstrating principles of Responsible AI, cognitive boundary maintenance, and Human-in-the-Loop (HITL) methodology.
 
-**Last Updated:** 2026-01-22
-**Document Version:** 1.0
+**Last Updated:** 2026-01-24
+**Document Version:** 1.1
 
 ---
 
@@ -64,6 +64,23 @@ The following examples demonstrate active human oversight correcting AI output:
 - **Action Taken**: Researched actual synaptic transmission reliability (~0.85), myelination effects, etc.
 - **Lesson**: AI defaulted to simplified assumptions that would reduce biological validity
 
+**Expanded Analysis — Why Synaptic Reliability Dominates:**
+
+The Coherence Metric (Cₛ) combines three variance components: phase (σ²φ), transport (σ²τ), and gain (σ²γ). Understanding *why* transport variance dominates required multiple iterations:
+
+1. **Biological Reality of Synaptic Transmission**: Synaptic vesicle release is inherently probabilistic — approximately 85% reliable per synapse (Branco & Bhalla, 2006; Del Castillo & Katz, 1954). This isn't a defect; it's a feature enabling neural plasticity and energy efficiency.
+
+2. **Compounding Effect Across Pathways**: Neural signals traverse multi-synaptic pathways. For a 3-synapse pathway: 0.85³ ≈ 0.61 reliability. For 5 synapses: 0.85⁵ ≈ 0.44. This exponential degradation means transport variance accumulates faster than phase or gain variance.
+
+3. **Why This Matters for Security**: An attacker cannot easily *improve* transport reliability — it's biologically constrained. However, they can *exploit* it by injecting signals that appear to have unnaturally high reliability (>0.95), which should trigger anomaly detection. Signals with *too perfect* transmission are as suspicious as degraded ones.
+
+4. **The Learning Moment**: AI's suggestion of uniform 0.95 reliability would have:
+   - Overestimated baseline signal quality
+   - Missed a key attack detection vector (supranormal reliability)
+   - Ignored decades of neuroscience research on synaptic stochasticity
+
+This example illustrates why domain expertise cannot be fully offloaded to AI — the AI optimized for "clean" assumptions while biological systems operate on "messy" realities that carry security-relevant information.
+
 #### Example 4: Firewall Decision Matrix
 - **AI Initial Output**: Suggested binary accept/reject based solely on coherence score
 - **Human Enhancement**: Added authentication requirement and ACCEPT_FLAG intermediate state
@@ -116,7 +133,7 @@ Using AI for efficiency creates a risk: cognitive offloading may trade deep unde
 
 **Where AI Hindered Understanding:**
 - Initial over-reliance on AI-structured outlines delayed developing my own organizational logic
-- Transport variance defaults required multiple iterations before I fully internalized *why* synaptic transmission reliability (0.85) dominates the coherence penalty
+- Transport variance defaults required multiple iterations before I fully internalized *why* synaptic transmission reliability (0.85) dominates the coherence penalty (see Example 3 in Refinement Loop for detailed analysis). The AI's "clean" assumptions obscured the biological insight that stochastic synaptic release is both a constraint *and* a security feature — understanding this required returning to primary neuroscience literature and reasoning through the exponential compounding effect myself.
 - Some nuances only became clear when I had to explain AI errors
 
 **Mitigation Strategy:**
@@ -130,10 +147,15 @@ Using AI for efficiency creates a risk: cognitive offloading may trade deep unde
 
 ### AI Tools Used
 
-| Tool | Version/Model | Use Case |
-|------|---------------|----------|
-| Claude (Anthropic) | Claude Opus 4.5 | Code assistance, documentation drafting, research synthesis |
-| Claude Code | CLI | Repository management, file operations, git workflows |
+| Tool | Version/Model | Use Case | Contribution Level |
+|------|---------------|----------|-------------------|
+| Claude (Anthropic) | Claude Opus 4.5 | Code assistance, documentation drafting, research synthesis | Primary |
+| Claude Code | CLI | Repository management, file operations, git workflows | Primary |
+| Gemini (Google) | Gemini 1.5/2.0 | Research verification, cross-model validation, alternative perspectives | Secondary |
+| ChatGPT (OpenAI) | GPT-4 | Research queries, concept exploration, literature discovery | Secondary |
+| LMArena (LMSYS) | Blind comparison | Unbiased initial concept exploration, cross-model validation | Exploratory |
+
+**Note on Multi-Model Approach**: Using multiple AI models serves as a form of epistemic hygiene — cross-referencing outputs between Claude, Gemini, ChatGPT, and blind comparisons via LMArena helps identify model-specific biases or hallucinations. When models disagree, human judgment adjudicates by consulting primary sources.
 
 ### Non-AI Tools
 - Python 3.9+ for implementation
