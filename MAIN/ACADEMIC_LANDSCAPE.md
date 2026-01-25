@@ -80,6 +80,53 @@ These researchers' work is directly implemented in ONI's codebase.
 
 ---
 
+### UC Berkeley — Security Research
+
+**Pioneering research on BCI side-channel attacks and privacy vulnerabilities.**
+
+| Researcher | Role | Key Contributions | ONI Alignment |
+|------------|------|-------------------|---------------|
+| **[Dawn Song](https://people.eecs.berkeley.edu/~dawnsong/)** | Professor, EECS | MacArthur Fellow, first BCI privacy attack demonstration (2012), most-cited in computer security | Attack vector identification |
+| **[Mario Frank](https://www.mariofrankphd.com/)** | Research Scientist | Co-author of foundational BCI side-channel research | Privacy attack patterns |
+
+**Key Publication:**
+- Martinovic, I., Davies, D., Frank, M., Perito, D., Ros, T., & Song, D. (2012). [On the Feasibility of Side-Channel Attacks with Brain-Computer Interfaces](https://www.usenix.org/conference/usenixsecurity12/technical-sessions/presentation/martinovic). *USENIX Security Symposium*.
+
+**Key Findings:**
+- First demonstration that consumer EEG devices can leak private information
+- Captured EEG signals revealed bank card PINs, location, and known persons
+- Entropy of private information decreased 15-40% vs random guessing
+- Tested on Emotiv EEG device with 28 participants
+
+**How ONI Aligns:**
+- Attack patterns inform TARA's adversarial testing scenarios
+- Privacy leakage vectors addressed in L13 Semantic layer protections
+
+---
+
+### Northeastern University — Archimedes Center for Medical Device Security
+
+**Leading center for implantable medical device cybersecurity, including neural implants.**
+
+| Researcher | Role | Key Contributions | ONI Alignment |
+|------------|------|-------------------|---------------|
+| **[Kevin Fu](https://www.khoury.northeastern.edu/people/kevin-fu/)** | Professor, Director | ACM/IEEE Fellow, former FDA acting director of medical device cybersecurity | Regulatory pathway, hardware security |
+
+**Center:** [secure-medicine.org](https://www.secure-medicine.org/)
+
+**Funding & Achievements:**
+- **$3.5M NSF grant** for brain and neural implant cybersecurity
+- **$22M total awards** for healthcare device security research
+- Inaugural FDA acting director of medical device cybersecurity (2021-2022)
+- Research on cardiac defibrillator vulnerabilities prompted global regulatory changes
+
+**How ONI Can Contribute:**
+- Framework provides theoretical model for their neural implant security work
+- TARA platform could integrate with their vulnerability testing
+- Collaboration for FDA regulatory guidance alignment
+
+---
+
 ## Tier 2: Neuroethics & Policy Research
 
 These researchers define the ethical and legal frameworks that ONI's technical implementations serve.
@@ -91,10 +138,14 @@ These researchers define the ethical and legal frameworks that ONI's technical i
 | **[Sara Goering](https://phil.washington.edu/people/sara-goering)** | Professor & Chair, Philosophy | Agency in BCI users, disability theory integration, BRAIN Initiative ethics lead | Identity layer (L14) design principles |
 | **[Eran Klein](https://phil.washington.edu/neuroethics-research-group)** | Neurologist & Affiliate Professor | Clinical neuroethics, user experience in neural devices | User consent models, cognitive autonomy |
 
-**Key Research:**
-- $1.6M NIH grant: "Human Agency and Brain Computer Interfaces" (2018-2022)
-- $1.5M NIH R01: "Caring for BRAIN Pioneers" (2022-2026)
+**Key Publications:**
+- Goering, S., Brown, T., & Klein, E. (2021). [Neurotechnology ethics and relational agency](https://onlinelibrary.wiley.com/doi/10.1111/phc3.12734). *Philosophy Compass*, 16(4), e12734.
+- Goering, S., Klein, E., et al. (2017). [Staying in the loop: Relational agency and identity in next-generation DBS](https://pubmed.ncbi.nlm.nih.gov/28520532/). *AJOB Neuroscience*, 8(2), 59-70.
 - Goering, Brown & Klein (2024). "Brain Pioneers and Moral Entanglement." *Hastings Center Report*.
+
+**Grants:**
+- $1.6M NIH: "Human Agency and Brain Computer Interfaces" (2018-2022)
+- $1.5M NIH R01: "Caring for BRAIN Pioneers" (2022-2026)
 
 **How ONI Aligns:**
 - L14 (Identity & Ethics layer) directly addresses agency concerns raised by Goering/Klein
