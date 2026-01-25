@@ -13,6 +13,9 @@
 
 - [Executive Summary](#executive-summary)
 - [Tier 1: Core Foundational Research](#tier-1-core-foundational-research-directly-integrated)
+  - [University of Washington — Security & Privacy Research Lab](#university-of-washington--security--privacy-research-lab--biorobotics-lab)
+  - [UC Berkeley — Security Research](#uc-berkeley--security-research)
+  - [Northeastern University — Archimedes Center](#northeastern-university--archimedes-center-for-medical-device-security)
 - [Tier 2: Neuroethics & Policy Research](#tier-2-neuroethics--policy-research)
   - [University of Washington — Neuroethics Research Group](#university-of-washington--neuroethics-research-group)
   - [Harvard Medical School — Center for Bioethics](#harvard-medical-school--center-for-bioethics)
@@ -178,6 +181,9 @@ These researchers define the ethical and legal frameworks that ONI's technical i
 |------------|------|-------------------|---------------|
 | **[Rafael Yuste](https://en.wikipedia.org/wiki/Rafael_Yuste)** | Professor, Biological Sciences | Co-initiator of BRAIN Initiative, NeuroRights Foundation co-founder, Kavli Institute co-director | Full framework alignment with 5 neurorights |
 
+**Key Publication:**
+- Yuste, R., Goering, S., et al. (2017). [Four ethical priorities for neurotechnologies and AI](https://www.nature.com/articles/551159a). *Nature*, 551(7679), 159-163.
+
 **The Five Neurorights (Yuste et al.):**
 1. **Mental Privacy** — Brain data cannot be used without consent
 2. **Personal Identity** — Technology cannot alter sense of self
@@ -232,6 +238,9 @@ These researchers define the ethical and legal frameworks that ONI's technical i
 |------------|------|-------------------|---------------|
 | **[Marcello Ienca](https://www.professoren.tum.de/en/ienca-marcello)** | Professor, Ethics of AI & Neuroscience | Four original neurorights proposal (2017), UNESCO advisor, Council of Europe neural data guidelines | Theoretical foundation for privacy layers |
 
+**Key Publication:**
+- Ienca, M., & Andorno, R. (2017). [Towards new human rights in the age of neuroscience and neurotechnology](https://link.springer.com/article/10.1186/s40504-017-0050-1). *Life Sciences, Society and Policy*, 13(1), 5.
+
 **The Four Neurorights (Ienca & Andorno, 2017):**
 1. **Cognitive Liberty** — Right to mental self-determination
 2. **Mental Privacy** — Protection against unauthorized brain data collection
@@ -250,6 +259,10 @@ These researchers define the ethical and legal frameworks that ONI's technical i
 | Researcher | Role | Key Contributions | ONI Alignment |
 |------------|------|-------------------|---------------|
 | **[Hannah Maslen](https://www.practicalethics.ox.ac.uk/people/dr-hannah-maslen)** | Senior Research Fellow | BrainCom project ethics lead, EU BCI regulation advisor, autonomy in closed-loop systems | Adaptive system design, regulatory preparation |
+
+**Key Publications:**
+- Maslen, H., et al. (2024). [Ethical considerations for the use of brain–computer interfaces for cognitive enhancement](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3002899). *PLOS Biology*.
+- Rainey, S., Maslen, H., & Savulescu, J. (2020). [When thinking is doing: Responsibility for BCI-mediated action](https://pubmed.ncbi.nlm.nih.gov/31955657/). *AJOB Neuroscience*, 11(1), 46-58.
 
 **Key Insight:**
 > "It raises questions about autonomy because it's directly modulating the brain... a person who uses a closed-loop system to manage a mood disorder could find themselves unable to have a negative emotional experience, even in a situation in which it would be considered normal."
@@ -461,6 +474,8 @@ First bidirectional BCI integrating EEG decoding with focused ultrasound stimula
 | Institution | Program | Faculty Alignment | ONI Contribution |
 |-------------|---------|-------------------|------------------|
 | **University of Washington** | CSE (Security) | Kohno, Goering, Klein | Extend neurosecurity, neuroethics implementation |
+| **UC Berkeley** | EECS (Security) | Song | BCI attack vectors, privacy research |
+| **Northeastern** | Khoury CS / Archimedes | Fu | Medical device security, FDA pathway |
 | **Harvard** | Bioethics / HMS | Lázaro-Muñoz | Technical substrate for ethics research |
 | **Columbia** | Neuroscience | Yuste | Neurorights enforcement mechanisms |
 | **Yale** | Digital Ethics | Floridi, Schroder | BCI threat modeling, regulatory frameworks |
@@ -555,6 +570,8 @@ Update this document when:
 - Tadayoshi Kohno (UW) — Foundational neurosecurity
 - Tamara Bonaci (UW) — BCI privacy, anonymization
 - Howard Chizeck (UW) — Device security, closed-loop systems
+- Dawn Song (UC Berkeley) — BCI side-channel attacks, MacArthur Fellow
+- Kevin Fu (Northeastern) — Medical device security, FDA advisor
 - Tyler Schroder (Yale) — BCI threat modeling, cyber risk analysis
 - Luciano Floridi (Yale) — Digital ethics, neural data philosophy
 
