@@ -24,26 +24,26 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 # TARA visualization imports
 try:
-    from tara.visualization.components.brain_topology import BrainTopologyVisualization
-    from tara.visualization.components.firewall_pipeline import (
+    from tara_mvp.visualization.components.brain_topology import BrainTopologyVisualization
+    from tara_mvp.visualization.components.firewall_pipeline import (
         NeuralFirewall,
         FirewallPipelineVisualization,
         CheckpointStatus,
     )
-    from tara.visualization.themes.oni_theme import ONI_COLORS, apply_oni_theme
-    from tara.data.brain_regions import (
+    from tara_mvp.visualization.themes.oni_theme import ONI_COLORS, apply_oni_theme
+    from tara_mvp.data.brain_regions import (
         BRAIN_REGIONS,
         create_demo_array,
         ElectrodeStatus,
     )
-    from tara.data.bci_nodes import (
+    from tara_mvp.data.bci_nodes import (
         BCINode,
         BCINodeNetwork,
         NodeStatus,
         ConnectionStatus,
         create_demo_network,
     )
-    from tara.visualization.embeds.html_bridge import (
+    from tara_mvp.visualization.embeds.html_bridge import (
         ONIVisualizationEmbed,
         get_visualization_options,
     )
@@ -2567,7 +2567,7 @@ def render_real_eeg_page():
 
     # Check if MOABB is available
     try:
-        from tara.data import MOABBAdapter, is_moabb_available
+        from tara_mvp.data import MOABBAdapter, is_moabb_available
         moabb_available = is_moabb_available()
     except ImportError:
         moabb_available = False
@@ -2630,7 +2630,7 @@ def _render_dataset_loader():
     if st.button("Load Dataset", type="primary"):
         with st.spinner("Loading dataset... (this may take a moment for first download)"):
             try:
-                from tara.data import MOABBAdapter
+                from tara_mvp.data import MOABBAdapter
 
                 adapter = MOABBAdapter()
                 dataset = adapter.load_dataset(dataset_id)
@@ -2719,7 +2719,7 @@ def _render_attack_injection():
 
     if st.button("Inject Attack", type="primary"):
         try:
-            from tara.data import MOABBAdapter
+            from tara_mvp.data import MOABBAdapter
 
             adapter = MOABBAdapter()
             attacked = adapter.inject_attack(
@@ -2794,7 +2794,7 @@ def _render_coherence_benchmark():
     if st.button("Run Benchmark", type="primary"):
         with st.spinner("Running coherence benchmark..."):
             try:
-                from tara.data import MOABBAdapter
+                from tara_mvp.data import MOABBAdapter
                 from tara import calculate_cs
 
                 adapter = MOABBAdapter()

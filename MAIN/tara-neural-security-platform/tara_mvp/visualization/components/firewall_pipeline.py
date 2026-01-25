@@ -28,7 +28,7 @@ from datetime import datetime
 try:
     from ..themes.oni_theme import ONI_COLORS, apply_oni_theme, get_layer_color
 except ImportError:
-    from tara.visualization.themes.oni_theme import ONI_COLORS, apply_oni_theme, get_layer_color
+    from tara_mvp.visualization.themes.oni_theme import ONI_COLORS, apply_oni_theme, get_layer_color
 
 
 class CheckpointStatus(Enum):

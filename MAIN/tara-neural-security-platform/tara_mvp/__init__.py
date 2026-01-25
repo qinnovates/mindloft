@@ -19,8 +19,8 @@ Components:
 
 Quick Start:
     >>> from tara import NeuralFirewall, AttackSimulator, NeuralNSAM
-    >>> from tara.simulation import LayeredNetwork
-    >>> from tara.ui import launch_dashboard
+    >>> from tara_mvp.simulation import LayeredNetwork
+    >>> from tara_mvp.ui import launch_dashboard
 
     >>> # Create ONI-aligned network
     >>> network = LayeredNetwork.create_oni_model()

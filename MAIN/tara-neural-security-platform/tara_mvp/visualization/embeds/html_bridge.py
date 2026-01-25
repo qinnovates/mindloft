@@ -69,14 +69,16 @@ class ONIVisualizationEmbed:
         if base_path:
             self.base_path = Path(base_path)
         else:
-            # Try to find visualizations relative to tara package
+            # Try to find visualizations relative to tara_mvp package
             tara_root = Path(__file__).parent.parent.parent
 
             # Try multiple possible locations
+            # Visualizations moved to MAIN/interactive-concept-demo/
             possible_paths = [
-                tara_root.parent / "visualizations",  # Dev: tara-neural-security-platform/visualizations
-                tara_root / "visualizations",          # If included in package
-                Path.cwd() / "visualizations",         # Current working directory
+                tara_root.parent.parent / "interactive-concept-demo",  # Dev: MAIN/interactive-concept-demo
+                tara_root.parent / "interactive-concept-demo",          # Alternative location
+                Path.cwd() / "interactive-concept-demo",                # Current working directory
+                Path.cwd().parent / "interactive-concept-demo",         # Parent of cwd
             ]
 
             self.base_path = None
@@ -152,7 +154,7 @@ class ONIVisualizationEmbed:
                 </ol>
                 <p style="margin-top: 20px; color: #94a3b8;">
                     Or open the HTML files directly:<br>
-                    <code>visualizations/index.html</code>
+                    <code>MAIN/interactive-concept-demo/index.html</code>
                 </p>
             </div>
             """

@@ -33,7 +33,7 @@ tara-neural-security-platform/   # Complete package
 ├── pyproject.toml               # Package configuration
 ├── LICENSE                      # Apache 2.0
 │
-├── tara/                        # Source code
+├── tara_mvp/                        # Source code
 │   ├── __init__.py              # Package entry point
 │   ├── cli.py                   # Command-line interface
 │   │
@@ -95,7 +95,7 @@ tara-neural-security-platform/   # Complete package
 │   ├── test_nsam.py
 │   └── test_scale_freq.py
 │
-└── visualizations/              # Interactive HTML visualizations (ONI Suite)
+└── ../interactive-concept-demo/              # Interactive HTML visualizations (ONI Suite)
     ├── index.html               # Master launcher
     ├── README.md                # Visualization documentation
     ├── 01-coherence-metric-playground.html
@@ -523,7 +523,7 @@ pytest tests/ -v
 ### UI not loading
 - Check Streamlit is installed: `pip install streamlit`
 - Kill existing processes: `pkill -f streamlit`
-- Restart: `tara ui` or `python -m streamlit run tara/ui/app.py`
+- Restart: `tara ui` or `python -m streamlit run tara_mvp/ui/app.py`
 
 ### Visualization not rendering
 - Check Plotly is installed: `pip install plotly`

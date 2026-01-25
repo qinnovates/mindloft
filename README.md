@@ -228,7 +228,7 @@ ONI/
     │   ├── pyproject.toml       # Package configuration
     │   ├── README.md            # Platform documentation
     │   ├── LICENSE              # Apache 2.0
-    │   ├── tara/                # Source modules
+    │   ├── tara_mvp/             # Source modules (MVP)
     │   │   ├── core/            # ONI security primitives
     │   │   ├── simulation/      # Neural network simulation
     │   │   ├── attacks/         # Attack testing & scenarios

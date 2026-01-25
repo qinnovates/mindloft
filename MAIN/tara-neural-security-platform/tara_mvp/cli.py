@@ -197,8 +197,8 @@ def cmd_simulate(args):
     print(f"  Duration: {args.duration} ms")
 
     try:
-        from tara.simulation import LayeredNetwork, RecurrentNetwork, SmallWorldNetwork
-        from tara.simulation.engine import Simulator, NeuralRecorder
+        from tara_mvp.simulation import LayeredNetwork, RecurrentNetwork, SmallWorldNetwork
+        from tara_mvp.simulation.engine import Simulator, NeuralRecorder
 
         # Create network
         if args.network == "oni":
@@ -245,8 +245,8 @@ def cmd_attack(args):
     print(f"  Intensity: {args.intensity}")
 
     try:
-        from tara.attacks import AttackSimulator
-        from tara.attacks.scenarios import get_scenario
+        from tara_mvp.attacks import AttackSimulator
+        from tara_mvp.attacks.scenarios import get_scenario
 
         simulator = AttackSimulator()
         scenario = get_scenario(args.scenario)
@@ -293,7 +293,7 @@ def cmd_monitor(args):
     print("Starting TARA neural monitor...")
 
     try:
-        from tara.nsam import NeuralMonitor
+        from tara_mvp.nsam import NeuralMonitor
 
         monitor = NeuralMonitor(name="TARA")
 
@@ -350,7 +350,7 @@ def cmd_monitor(args):
 def cmd_list(args):
     """List available resources."""
     if args.resource == "patterns":
-        from tara.attacks.patterns import list_patterns, ATTACK_PATTERNS
+        from tara_mvp.attacks.patterns import list_patterns, ATTACK_PATTERNS
         print("Available Attack Patterns:")
         print("-" * 40)
         for name in list_patterns():
@@ -362,7 +362,7 @@ def cmd_list(args):
             print()
 
     elif args.resource == "scenarios":
-        from tara.attacks.scenarios import list_scenarios, PREDEFINED_SCENARIOS
+        from tara_mvp.attacks.scenarios import list_scenarios, PREDEFINED_SCENARIOS
         print("Available Attack Scenarios:")
         print("-" * 40)
         for name in list_scenarios():
@@ -374,7 +374,7 @@ def cmd_list(args):
             print()
 
     elif args.resource == "rules":
-        from tara.nsam.rules import list_rules, PREDEFINED_RULES
+        from tara_mvp.nsam.rules import list_rules, PREDEFINED_RULES
         print("Available Detection Rules:")
         print("-" * 40)
         for rule_id in list_rules():

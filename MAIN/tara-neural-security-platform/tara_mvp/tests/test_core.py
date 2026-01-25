@@ -13,12 +13,12 @@ class TestCoherence:
 
     def test_coherence_import(self):
         """Test that coherence module can be imported."""
-        from tara.core import coherence
+        from tara_mvp.core import coherence
         assert hasattr(coherence, "CoherenceMetric")
 
     def test_coherence_calculation(self):
         """Test basic coherence calculation."""
-        from tara.core.coherence import CoherenceMetric
+        from tara_mvp.core.coherence import CoherenceMetric
 
         metric = CoherenceMetric(reference_freq=40.0)
 
@@ -31,7 +31,7 @@ class TestCoherence:
 
     def test_coherence_high_for_coherent_signal(self):
         """Test that coherent signals have high Cₛ."""
-        from tara.core.coherence import CoherenceMetric
+        from tara_mvp.core.coherence import CoherenceMetric
 
         metric = CoherenceMetric(reference_freq=40.0)
 
@@ -44,7 +44,7 @@ class TestCoherence:
 
     def test_coherence_low_for_noise(self):
         """Test that noisy signals have lower Cₛ."""
-        from tara.core.coherence import CoherenceMetric
+        from tara_mvp.core.coherence import CoherenceMetric
 
         metric = CoherenceMetric(reference_freq=40.0)
 
@@ -63,19 +63,19 @@ class TestONILayers:
 
     def test_layers_import(self):
         """Test that layers module can be imported."""
-        from tara.core import layers
+        from tara_mvp.core import layers
         assert hasattr(layers, "ONIStack")
 
     def test_layer_count(self):
         """Test that ONI model has 14 layers."""
-        from tara.core.layers import ONIStack
+        from tara_mvp.core.layers import ONIStack
 
         stack = ONIStack()
         assert len(stack) == 14
 
     def test_layer_8_is_gateway(self):
         """Test that L8 is Neural Gateway."""
-        from tara.core.layers import ONIStack
+        from tara_mvp.core.layers import ONIStack
 
         stack = ONIStack()
         layer_8 = stack.layer(8)
@@ -83,7 +83,7 @@ class TestONILayers:
 
     def test_biological_layers(self):
         """Test that L1-L7 are OSI domain."""
-        from tara.core.layers import ONIStack
+        from tara_mvp.core.layers import ONIStack
 
         stack = ONIStack()
         for layer in stack.biological_layers():
@@ -92,7 +92,7 @@ class TestONILayers:
 
     def test_silicon_layers(self):
         """Test that L9-L14 are neural/cognitive domain."""
-        from tara.core.layers import ONIStack
+        from tara_mvp.core.layers import ONIStack
 
         stack = ONIStack()
         for layer in stack.silicon_layers():
@@ -105,12 +105,12 @@ class TestFirewall:
 
     def test_firewall_import(self):
         """Test that firewall module can be imported."""
-        from tara.core import firewall
+        from tara_mvp.core import firewall
         assert hasattr(firewall, "NeuralFirewall")
 
     def test_firewall_pass_good_signal(self):
         """Test that good signals pass the firewall."""
-        from tara.core.firewall import NeuralFirewall, Signal
+        from tara_mvp.core.firewall import NeuralFirewall, Signal
 
         fw = NeuralFirewall()
 
@@ -127,7 +127,7 @@ class TestFirewall:
 
     def test_firewall_block_unauthenticated(self):
         """Test that unauthenticated signals with medium coherence are blocked."""
-        from tara.core.firewall import NeuralFirewall, Signal
+        from tara_mvp.core.firewall import NeuralFirewall, Signal
 
         fw = NeuralFirewall()
 
@@ -144,7 +144,7 @@ class TestFirewall:
 
     def test_firewall_block_out_of_bounds(self):
         """Test that out-of-bounds amplitude signals are blocked."""
-        from tara.core.firewall import NeuralFirewall, Signal
+        from tara_mvp.core.firewall import NeuralFirewall, Signal
 
         fw = NeuralFirewall(amplitude_bounds=(0, 200))
 
@@ -164,12 +164,12 @@ class TestScaleFrequency:
 
     def test_scale_freq_import(self):
         """Test that scale_freq module can be imported."""
-        from tara.core import scale_freq
+        from tara_mvp.core import scale_freq
         assert hasattr(scale_freq, "ScaleFrequencyInvariant")
 
     def test_invariant_holds(self):
         """Test that f × S ≈ k for valid signals."""
-        from tara.core.scale_freq import ScaleFrequencyInvariant
+        from tara_mvp.core.scale_freq import ScaleFrequencyInvariant
 
         sfi = ScaleFrequencyInvariant()
 
@@ -187,7 +187,7 @@ class TestScaleFrequency:
 
     def test_validate_biologically_plausible(self):
         """Test that biologically plausible signals validate."""
-        from tara.core.scale_freq import ScaleFrequencyInvariant
+        from tara_mvp.core.scale_freq import ScaleFrequencyInvariant
 
         sfi = ScaleFrequencyInvariant()
 

@@ -11,7 +11,7 @@ Install with: pip install oni-tara[moabb]
 import pytest
 import numpy as np
 
-from tara.data.moabb_adapter import (
+from tara_mvp.data.moabb_adapter import (
     is_moabb_available,
     get_moabb_version,
     BCIParadigm,
@@ -140,13 +140,13 @@ class TestMOABBAdapter:
 
     def test_adapter_initialization(self):
         """Should initialize adapter when MOABB available."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         assert adapter.is_available
 
     def test_list_datasets(self):
         """Should list available datasets with metadata."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         datasets = adapter.list_datasets()
         assert len(datasets) > 0
@@ -155,14 +155,14 @@ class TestMOABBAdapter:
 
     def test_load_dataset(self):
         """Should load a dataset."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         dataset = adapter.load_dataset("BNCI2014_001")
         assert dataset is not None
 
     def test_get_signals(self):
         """Should extract signals from dataset."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         dataset = adapter.load_dataset("BNCI2014_001")
         signals = adapter.get_signals(dataset, subject=1, max_epochs=5)
@@ -173,7 +173,7 @@ class TestMOABBAdapter:
 
     def test_inject_attack_spike(self):
         """Should inject spike attack into signal."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         dataset = adapter.load_dataset("BNCI2014_001")
         signals = adapter.get_signals(dataset, subject=1, max_epochs=1)
@@ -191,7 +191,7 @@ class TestMOABBAdapter:
 
     def test_inject_attack_noise(self):
         """Should inject noise attack into signal."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         dataset = adapter.load_dataset("BNCI2014_001")
         signals = adapter.get_signals(dataset, subject=1, max_epochs=1)
@@ -211,7 +211,7 @@ class TestMOABBAdapter:
 
     def test_benchmark_coherence(self):
         """Should benchmark coherence metric against signals."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         dataset = adapter.load_dataset("BNCI2014_001")
         signals = adapter.get_signals(dataset, subject=1, max_epochs=5)
@@ -225,7 +225,7 @@ class TestMOABBAdapter:
 
     def test_benchmark_coherence_with_attacks(self):
         """Should benchmark coherence with attack detection metrics."""
-        from tara.data.moabb_adapter import MOABBAdapter
+        from tara_mvp.data.moabb_adapter import MOABBAdapter
         adapter = MOABBAdapter()
         dataset = adapter.load_dataset("BNCI2014_001")
         signals = adapter.get_signals(dataset, subject=1, max_epochs=5)

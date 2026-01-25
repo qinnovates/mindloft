@@ -65,8 +65,8 @@ class AttackSimulator:
     measuring effectiveness and detection rates.
 
     Example:
-        >>> from tara.attacks import AttackSimulator, get_scenario
-        >>> from tara.simulation import LayeredNetwork
+        >>> from tara_mvp.attacks import AttackSimulator, get_scenario
+        >>> from tara_mvp.simulation import LayeredNetwork
 
         >>> # Create network and simulator
         >>> network = LayeredNetwork.create_oni_model()

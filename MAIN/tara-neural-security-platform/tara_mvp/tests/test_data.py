@@ -12,12 +12,12 @@ class TestBrainRegions:
 
     def test_brain_regions_import(self):
         """Test that brain_regions module can be imported."""
-        from tara.data import brain_regions
+        from tara_mvp.data import brain_regions
         assert hasattr(brain_regions, "BRAIN_REGIONS")
 
     def test_all_regions_present(self):
         """Test that all 10 brain regions are defined."""
-        from tara.data.brain_regions import BRAIN_REGIONS
+        from tara_mvp.data.brain_regions import BRAIN_REGIONS
 
         expected_regions = ["M1", "S1", "PMC", "SMA", "PFC", "BROCA", "WERNICKE", "V1", "A1", "HIPP"]
 
@@ -26,7 +26,7 @@ class TestBrainRegions:
 
     def test_region_has_required_fields(self):
         """Test that each region has required fields."""
-        from tara.data.brain_regions import BRAIN_REGIONS
+        from tara_mvp.data.brain_regions import BRAIN_REGIONS
 
         for abbr, region in BRAIN_REGIONS.items():
             assert hasattr(region, "name") or "name" in region.__dict__
@@ -35,7 +35,7 @@ class TestBrainRegions:
 
     def test_region_oni_layers_valid(self, oni_layer_mapping):
         """Test that ONI layer assignments are valid (11-14 for silicon domain)."""
-        from tara.data.brain_regions import BRAIN_REGIONS
+        from tara_mvp.data.brain_regions import BRAIN_REGIONS
 
         for abbr, expected_layer in oni_layer_mapping.items():
             if abbr in BRAIN_REGIONS:
@@ -45,7 +45,7 @@ class TestBrainRegions:
 
     def test_region_positions_in_brain(self, brain_region_positions):
         """Test that region positions are within brain bounds."""
-        from tara.data.brain_regions import BRAIN_REGIONS
+        from tara_mvp.data.brain_regions import BRAIN_REGIONS
 
         # Brain is approximately 170x140x140mm, centered roughly at origin
         for abbr, (x, y, z) in brain_region_positions.items():
@@ -59,13 +59,13 @@ class TestBCINodes:
 
     def test_bci_nodes_import(self):
         """Test that bci_nodes module can be imported."""
-        from tara.data import bci_nodes
+        from tara_mvp.data import bci_nodes
         assert hasattr(bci_nodes, "BCINode")
         assert hasattr(bci_nodes, "BCINodeNetwork")
 
     def test_create_demo_network(self):
         """Test creating a demo BCI node network."""
-        from tara.data.bci_nodes import create_demo_network
+        from tara_mvp.data.bci_nodes import create_demo_network
 
         network = create_demo_network(n_nodes=4)
 
@@ -74,7 +74,7 @@ class TestBCINodes:
 
     def test_node_at_layer_8(self):
         """Test that BCI nodes operate at L8 (Neural Gateway)."""
-        from tara.data.bci_nodes import BCINode
+        from tara_mvp.data.bci_nodes import BCINode
 
         node = BCINode(node_id="test_1", name="Test Node")
 
@@ -82,7 +82,7 @@ class TestBCINodes:
 
     def test_node_network_connections(self):
         """Test node network connectivity."""
-        from tara.data.bci_nodes import create_demo_network
+        from tara_mvp.data.bci_nodes import create_demo_network
 
         network = create_demo_network(n_nodes=4)
 
@@ -96,7 +96,7 @@ class TestBCINodes:
 
     def test_node_health_score(self):
         """Test node health score calculation."""
-        from tara.data.bci_nodes import create_demo_network
+        from tara_mvp.data.bci_nodes import create_demo_network
 
         network = create_demo_network(n_nodes=4)
 
@@ -106,7 +106,7 @@ class TestBCINodes:
 
     def test_network_topology_data(self):
         """Test getting topology data for visualization."""
-        from tara.data.bci_nodes import create_demo_network
+        from tara_mvp.data.bci_nodes import create_demo_network
 
         network = create_demo_network(n_nodes=4)
         topo = network.get_topology_data()
@@ -121,11 +121,11 @@ class TestElectrodes:
 
     def test_electrode_import(self):
         """Test that electrode classes can be imported."""
-        from tara.data.brain_regions import Electrode, ElectrodeThread, ElectrodeArray
+        from tara_mvp.data.brain_regions import Electrode, ElectrodeThread, ElectrodeArray
 
     def test_create_demo_array(self):
         """Test creating a demo electrode array."""
-        from tara.data.brain_regions import create_demo_array
+        from tara_mvp.data.brain_regions import create_demo_array
 
         array = create_demo_array(
             n_threads_per_region=2,
@@ -139,7 +139,7 @@ class TestElectrodes:
 
     def test_electrode_status_enum(self):
         """Test electrode status enumeration."""
-        from tara.data.brain_regions import ElectrodeStatus
+        from tara_mvp.data.brain_regions import ElectrodeStatus
 
         assert hasattr(ElectrodeStatus, "NORMAL")
         assert hasattr(ElectrodeStatus, "WARNING")
@@ -148,7 +148,7 @@ class TestElectrodes:
 
     def test_electrode_metrics(self):
         """Test electrode metric ranges."""
-        from tara.data.brain_regions import create_demo_array
+        from tara_mvp.data.brain_regions import create_demo_array
 
         array = create_demo_array(
             n_threads_per_region=1,

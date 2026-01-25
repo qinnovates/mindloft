@@ -97,24 +97,24 @@ Repository = "https://github.com/qikevinl/ONI"
 Issues = "https://github.com/qikevinl/ONI/issues"
 
 [project.scripts]
-tara = "tara.cli:main"
+tara = "tara_mvp.cli:main"
 
-# Source code is now in ./tara/ (moved from prototype-mvp)
+# Source code is now in ./tara_mvp/ (renamed from tara)
+# Tests are in ./tara_mvp/tests/
+# Visualizations moved to ../interactive-concept-demo/
 # For development: pip install -e .
 [tool.hatch.build.targets.wheel]
-packages = ["tara"]
+packages = ["tara_mvp"]
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "tara",
-    "tests",
-    "visualizations",
+    "tara_mvp",
     "/README.md",
     "/LICENSE",
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tara_mvp/tests"]
 python_files = ["test_*.py"]
 addopts = "-v --tb=short"
 

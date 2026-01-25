@@ -47,7 +47,7 @@ class AttackGenerator:
     neural security systems and firewall effectiveness.
 
     Example:
-        >>> from tara.attacks import AttackGenerator, get_pattern
+        >>> from tara_mvp.attacks import AttackGenerator, get_pattern
         >>> generator = AttackGenerator()
         >>> pattern = get_pattern("phase_jitter")
         >>> signal = generator.generate(pattern, duration=1000)

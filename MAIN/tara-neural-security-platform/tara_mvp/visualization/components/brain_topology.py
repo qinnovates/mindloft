@@ -26,8 +26,8 @@ try:
     )
 except ImportError:
     # Fallback for direct imports
-    from tara.visualization.themes.oni_theme import ONI_COLORS, apply_oni_theme, get_status_color
-    from tara.data.brain_regions import (
+    from tara_mvp.visualization.themes.oni_theme import ONI_COLORS, apply_oni_theme, get_status_color
+    from tara_mvp.data.brain_regions import (
         BrainRegion,
         BRAIN_REGIONS,
         Electrode,
@@ -48,7 +48,7 @@ class BrainTopologyVisualization:
     - Interactive drill-down support
 
     Example:
-        >>> from tara.data.brain_regions import create_demo_array
+        >>> from tara_mvp.data.brain_regions import create_demo_array
         >>> viz = BrainTopologyVisualization()
         >>> viz.set_electrode_array(create_demo_array())
         >>> fig = viz.render(color_by="spike_rate")

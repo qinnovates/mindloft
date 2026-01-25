@@ -407,7 +407,7 @@ class NeurosecurityMonitor:
     - Optional BCI Anonymizer integration
 
     Example:
-        >>> from tara.neurosecurity import NeurosecurityMonitor
+        >>> from tara_mvp.neurosecurity import NeurosecurityMonitor
         >>> monitor = NeurosecurityMonitor()
         >>>
         >>> # Process incoming signal

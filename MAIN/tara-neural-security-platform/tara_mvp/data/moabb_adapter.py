@@ -17,7 +17,7 @@ Citation:
     https://doi.org/10.1088/1741-2552/aadea0
 
 Usage:
-    >>> from tara.data.moabb_adapter import MOABBAdapter, BCIParadigm
+    >>> from tara_mvp.data.moabb_adapter import MOABBAdapter, BCIParadigm
     >>>
     >>> # Initialize adapter
     >>> adapter = MOABBAdapter()

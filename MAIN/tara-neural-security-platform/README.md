@@ -437,7 +437,7 @@ L7      │   ●   │        │         │         │       │         │
 ### Components
 
 ```
-tara/
+tara_mvp/
 ├── core/                  # ONI Framework security primitives
 │   ├── coherence.py       # Coherence metric (Cₛ) calculation
 │   ├── layers.py          # 14-layer model implementation
@@ -750,7 +750,7 @@ Optional:
 ### Project Structure
 
 ```
-tara/
+tara_mvp/
 ├── CLAUDE.md        # Claude AI instructions for updates
 ├── AGENTS.md        # Learnings from development sessions
 ├── README.md        # This file
@@ -765,7 +765,7 @@ tara/
 pip install -e ".[full,dev]"
 
 # Run UI
-python -m streamlit run tara/ui/app.py --server.port 8505
+python -m streamlit run tara_mvp/ui/app.py --server.port 8505
 
 # Run tests
 pytest tests/ -v
