@@ -74,6 +74,36 @@ This document maps concrete pathways to achieve each goal.
 - Validation paper: Coherence Metric performance on real signals
 - Demo video showing TARA with live EEG
 
+**Future Priority: EMOTIV**
+
+| Aspect | Details |
+|--------|---------|
+| **Platform** | EMOTIV (EPOC X, Insight, MN8, FLEX) |
+| **Hardware** | 5-32 channel EEG, consumer and research grade |
+| **Software** | Python SDK (Cortex API), BrainFlow compatible |
+| **Community** | Developer portal, research partnerships program |
+| **Website** | [emotiv.com](https://emotiv.com) |
+| **Founder** | [Tan Le](https://dec.yale.edu/tan-le) — Author of *The NeuroGeneration*, WEF Global Future Council member |
+
+**Why EMOTIV:**
+- **Largest consumer BCI install base** — Millions of devices worldwide, making security critical at scale
+- **Research-to-consumer bridge** — EPOC X used in 10,000+ academic publications, ideal for validating ONI in real research contexts
+- **Founder alignment** — Tan Le's work on neurotechnology ethics and her book *The NeuroGeneration* directly inspired ONI's human-centered security approach (see [RELATED_WORK.md](RELATED_WORK.md))
+- **Python SDK** — Native compatibility with `oni-framework`
+- **Privacy focus** — EMOTIV already emphasizes user data ownership, aligned with ONI's L14 Identity layer
+
+**Integration Path:**
+1. Develop `oni-emotiv` adapter package using Cortex API
+2. Implement real-time Coherence Metric (Cₛ) on EMOTIV streams
+3. Demonstrate TARA dashboard with EMOTIV hardware
+4. Explore research partnership through EMOTIV's academic program
+5. Potential direct engagement given founder's neuroethics involvement
+
+**Deliverables:**
+- `pip install oni-emotiv` — EMOTIV hardware adapter
+- Tutorial: "Consumer BCI Security with ONI + EMOTIV"
+- Research collaboration proposal for joint security analysis
+
 ---
 
 ### Tier 2: Academic Research Partnerships
@@ -198,7 +228,7 @@ The term "neurosecurity" was coined at UW. Partnership here provides:
 | Platform | Hardware | Software | Integration Potential |
 |----------|----------|----------|----------------------|
 | **OpenBCI** | Cyton, Ganglion, Ultracortex | Python/BrainFlow | ⭐⭐⭐ High — Python native, active community |
-| **Emotiv SDK** | EPOC, Insight, FLEX | Python SDK | ⭐⭐ Medium — Consumer grade, proprietary |
+| **EMOTIV** | EPOC X, Insight, MN8, FLEX | Python SDK (Cortex) | ⭐⭐⭐ High — Largest install base, research program, founder alignment |
 | **Muse (Interaxon)** | Muse S, Muse 2 | Python libraries | ⭐⭐ Medium — Meditation focus, simple |
 | **BrainFlow** | Multi-device abstraction | Python native | ⭐⭐⭐ High — Device-agnostic layer |
 | **NeuroTechX** | Community resources | Various | ⭐⭐ Medium — Educational focus |
@@ -219,6 +249,7 @@ The term "neurosecurity" was coined at UW. Partnership here provides:
 | Company | Contact Path | Partnership Type |
 |---------|--------------|------------------|
 | **OpenBCI** | GitHub, community forums | Open-source collaboration |
+| **EMOTIV** | Research program, developer portal | Consumer BCI security, founder engagement via neuroethics |
 | **Blackrock Neurotech** | Research partnerships | Validation on clinical hardware |
 | **Kernel** | Press/research inquiries | Consumer BCI security |
 | **Synchron** | Clinical/research | FDA pathway security |
@@ -357,5 +388,5 @@ For partnership inquiries:
 
 ---
 
-*Last Updated: 2026-01-24*
+*Last Updated: 2026-01-25*
 *Part of the [ONI Framework](../README.md)*
