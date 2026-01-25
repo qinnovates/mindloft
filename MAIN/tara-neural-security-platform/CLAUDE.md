@@ -143,18 +143,44 @@ NEURAL/COGNITIVE (L9-L14):
 
 ### Brain Regions → ONI Layer Mapping
 
-| Region | Full Name | ONI Layer | Domain |
-|--------|-----------|-----------|--------|
-| M1 | Primary Motor Cortex | L13 | Semantic |
-| S1 | Primary Somatosensory | L12 | Cognitive Session |
-| PMC | Premotor Cortex | L13 | Semantic |
-| SMA | Supplementary Motor | L13 | Semantic |
-| PFC | Prefrontal Cortex | L14 | Identity |
-| BROCA | Broca's Area | L14 | Identity |
-| WERNICKE | Wernicke's Area | L14 | Identity |
-| V1 | Primary Visual | L12 | Cognitive Session |
-| A1 | Primary Auditory | L12 | Cognitive Session |
-| HIPP | Hippocampus | L11 | Cognitive Transport |
+| Region | Full Name | ONI Layer | Domain | MNI Coords | Brodmann |
+|--------|-----------|-----------|--------|------------|----------|
+| M1 | Primary Motor Cortex | L13 | Semantic | (-35,-20,55) | BA4 |
+| S1 | Primary Somatosensory | L12 | Cognitive Session | (-35,-35,50) | BA1-3 |
+| PMC | Premotor Cortex | L13 | Semantic | (-45,5,50) | BA6 |
+| SMA | Supplementary Motor | L13 | Semantic | (0,-5,60) | BA6 |
+| PFC | Prefrontal Cortex | L14 | Identity | (35,45,25) | BA8-12 |
+| BROCA | Broca's Area | L14 | Identity | (-50,20,15) | BA44-45 |
+| WERNICKE | Wernicke's Area | L14 | Identity | (-55,-55,20) | BA22 |
+| V1 | Primary Visual | L12 | Cognitive Session | (0,-85,5) | BA17 |
+| A1 | Primary Auditory | L12 | Cognitive Session | (-55,-20,10) | BA41-42 |
+| HIPP | Hippocampus | L11 | Cognitive Transport | (-25,-20,-15) | — |
+
+**Layer Mapping Rationale:**
+- **L14 (Identity):** Regions central to self, language, executive function (PFC, BROCA, WERNICKE)
+- **L13 (Semantic):** Regions translating intention to meaningful action (M1, PMC, SMA)
+- **L12 (Cognitive Session):** Sensory processing regions (S1, V1, A1)
+- **L11 (Cognitive Transport):** Memory transfer/consolidation (HIPP)
+
+### Neurosecurity — Kohno Threat Taxonomy
+
+| Category | CIA Property | Target Layers | Key Rules |
+|----------|--------------|---------------|-----------|
+| ALTERATION | Integrity | L13-L14 | signal_injection, command_modification, stimulation_tampering |
+| BLOCKING | Availability | L8-L9 | neural_dos, signal_suppression, jamming, motor_lockout |
+| EAVESDROPPING | Confidentiality | L11-L14 | cognitive_leakage, memory_extraction, face_recognition_probe |
+
+### Attack Simulator — Neural ATT&CK Tactics
+
+| Tactic | ONI Layers | Techniques Count |
+|--------|------------|------------------|
+| Reconnaissance | L7-L8 | 3 |
+| Initial Access | L8-L9 | 3 |
+| Execution | L9-L11 | 3 |
+| Persistence | L10-L11 | 2 |
+| Defense Evasion | L8-L9 | 2 |
+| Collection | L12-L14 | 3 |
+| Impact | L11-L14 | 3 |
 
 ### Key Formulas
 
@@ -519,6 +545,6 @@ pytest tests/ -v
 
 ---
 
-*Version: 1.5*
-*Last Updated: 2026-01-24*
+*Version: 1.6*
+*Last Updated: 2026-01-25*
 *For: Claude AI Assistant*

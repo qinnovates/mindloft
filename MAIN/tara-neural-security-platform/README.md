@@ -200,20 +200,239 @@ SILICON DOMAIN (L9-L14):
   L14: Application        - End-user interfaces, identity & ethics
 ```
 
-### Brain Regions → ONI Layer Mapping
+### Brain Regions → ONI Layer Mapping (Neural Simulator)
 
-| Region | Name | ONI Layer | Function |
-|--------|------|-----------|----------|
-| M1 | Primary Motor Cortex | L13 | Motor command execution |
-| S1 | Primary Somatosensory | L12 | Tactile/proprioceptive processing |
-| PMC | Premotor Cortex | L13 | Movement planning |
-| SMA | Supplementary Motor | L13 | Sequence coordination |
-| PFC | Prefrontal Cortex | L14 | Executive function, decision-making |
-| BROCA | Broca's Area | L14 | Speech production |
-| WERNICKE | Wernicke's Area | L14 | Language comprehension |
-| V1 | Primary Visual | L12 | Visual processing |
-| A1 | Primary Auditory | L12 | Auditory processing |
-| HIPP | Hippocampus | L11 | Memory formation |
+The Neural Simulator includes **10 brain regions** strategically selected for their relevance to BCI security. Each region represents a critical attack surface in modern brain-computer interfaces.
+
+#### Quick Reference
+
+| Region | Name | ONI Layer | Domain | BCI Application |
+|--------|------|-----------|--------|-----------------|
+| M1 | Primary Motor Cortex | L13 | Semantic | Motor BCIs (Neuralink, BrainGate) |
+| S1 | Primary Somatosensory | L12 | Cognitive Session | Sensory feedback, closed-loop control |
+| PMC | Premotor Cortex | L13 | Semantic | Movement prediction |
+| SMA | Supplementary Motor Area | L13 | Semantic | Complex movement sequences |
+| PFC | Prefrontal Cortex | L14 | Identity | Cognitive state, attention, intent |
+| BROCA | Broca's Area | L14 | Identity | Speech BCIs (Edward Chang lab) |
+| WERNICKE | Wernicke's Area | L14 | Identity | Language comprehension BCIs |
+| V1 | Primary Visual Cortex | L12 | Cognitive Session | Visual prosthetics (Second Sight Orion) |
+| A1 | Primary Auditory Cortex | L12 | Cognitive Session | Cochlear implant integration |
+| HIPP | Hippocampus | L11 | Cognitive Transport | Memory prosthetics (DARPA RAM) |
+
+#### ONI Layer Hierarchy Visualization
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        ONI BIOLOGICAL DOMAIN                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│  L14 │ Identity & Ethics  │ PFC, BROCA, WERNICKE                       │
+│      │                    │ Executive function, language, self-model    │
+├──────┼────────────────────┼─────────────────────────────────────────────┤
+│  L13 │ Semantic           │ M1, PMC, SMA                                │
+│      │                    │ Motor intention → meaningful action         │
+├──────┼────────────────────┼─────────────────────────────────────────────┤
+│  L12 │ Cognitive Session  │ S1, V1, A1                                  │
+│      │                    │ Sensory processing, perceptual context      │
+├──────┼────────────────────┼─────────────────────────────────────────────┤
+│  L11 │ Cognitive Transport│ HIPP                                        │
+│      │                    │ Memory encoding/consolidation               │
+├──────┴────────────────────┴─────────────────────────────────────────────┤
+│  L8  │ Neural Gateway     │ ═══ FIREWALL BOUNDARY ═══                   │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+#### Region Details
+
+| Region | MNI Coordinates | Brodmann Area | Key Security Threats |
+|--------|-----------------|---------------|----------------------|
+| **M1** | (-35, -20, 55) | BA4 | Motor hijacking, motor lockout |
+| **S1** | (-35, -35, 50) | BA1-3 | Sensory flooding, sensory deprivation |
+| **PMC** | (-45, 5, 50) | BA6 | Movement planning disruption |
+| **SMA** | (0, -5, 60) | BA6 | Sequence coordination attacks |
+| **PFC** | (35, 45, 25) | BA8-12, 44-47 | Decision manipulation, identity erosion |
+| **BROCA** | (-50, 20, 15) | BA44-45 | Speech hijacking, expressive aphasia |
+| **WERNICKE** | (-55, -55, 20) | BA22 | Comprehension disruption |
+| **V1** | (0, -85, 5) | BA17 | Visual injection, phosphene attacks |
+| **A1** | (-55, -20, 10) | BA41-42 | Auditory hallucination injection |
+| **HIPP** | (-25, -20, -15) | — (subcortical) | False memory implant, memory erasure |
+
+**Sources:** MNI coordinates verified against neuroimaging meta-analyses ([PMC2034289](https://pmc.ncbi.nlm.nih.gov/articles/PMC2034289/)). Functional mappings based on established neuroanatomy.
+
+---
+
+### Neurosecurity Module — Kohno Threat Taxonomy
+
+TARA implements the foundational **Denning, Matsuoka & Kohno (2009)** neurosecurity threat taxonomy, the first academic framework for BCI security.
+
+> "Neurosecurity is protection of the confidentiality, integrity, and availability of neural devices from malicious parties with the goal of preserving the safety of a person's neural mechanisms, neural computation, and free will."
+> — Denning et al. (2009)
+
+#### Threat Categories → CIA Triad Mapping
+
+```
+┌──────────────────────────────────────────────────────────────────────────┐
+│                    KOHNO THREAT TAXONOMY (2009)                          │
+├────────────────┬─────────────────┬───────────────────────────────────────┤
+│   CATEGORY     │   CIA PROPERTY  │   DESCRIPTION                         │
+├────────────────┼─────────────────┼───────────────────────────────────────┤
+│  ALTERATION    │   Integrity     │ Unauthorized modification of neural   │
+│                │                 │ signals, commands, or stimulation     │
+│                │                 │ Target: L13-L14 (Semantic/Identity)   │
+├────────────────┼─────────────────┼───────────────────────────────────────┤
+│  BLOCKING      │   Availability  │ Suppression or denial of neural       │
+│                │                 │ signals, causing loss of function     │
+│                │                 │ Target: L8-L9 (Gateway/Signal)        │
+├────────────────┼─────────────────┼───────────────────────────────────────┤
+│  EAVESDROPPING │ Confidentiality │ Unauthorized extraction of cognitive  │
+│                │                 │ states, memories, or identity info    │
+│                │                 │ Target: L11-L14 (Cognitive/Identity)  │
+└────────────────┴─────────────────┴───────────────────────────────────────┘
+```
+
+#### Kohno Detection Rules (11 Rules)
+
+| Rule ID | Category | Severity | Detection Method | Target |
+|---------|----------|----------|------------------|--------|
+| `kohno_signal_injection` | ALTERATION | CRITICAL | Coherence mismatch + external origin | L8-L9 |
+| `kohno_command_modification` | ALTERATION | CRITICAL | Motor command checksum mismatch | L13-L14 |
+| `kohno_stimulation_tampering` | ALTERATION | CRITICAL | Stimulation >10mA threshold | L9 |
+| `kohno_neural_dos` | BLOCKING | CRITICAL | spike_rate >500 AND coherence <0.3 | L8 |
+| `kohno_signal_suppression` | BLOCKING | HIGH | amplitude <0.01 | L9 |
+| `kohno_jamming` | BLOCKING | CRITICAL | noise_floor >0.8 AND SNR <1.0 | L8 |
+| `kohno_motor_lockout` | BLOCKING | CRITICAL | Motor output blocked | L13 |
+| `kohno_cognitive_leakage` | EAVESDROPPING | CRITICAL | P300 ERP + external query pattern | L12-L14 |
+| `kohno_memory_extraction` | EAVESDROPPING | CRITICAL | N400 ERP + hippocampus activation | L11 |
+| `kohno_face_recognition_probe` | EAVESDROPPING | HIGH | N170 ERP + visual stimulus | L12 |
+| `kohno_emotional_inference` | EAVESDROPPING | HIGH | Amygdala activation pattern | L14 |
+
+#### BCI Privacy — Bonaci et al. (2015)
+
+TARA includes privacy protections based on research showing that **BCI applications can extract private information without user awareness**.
+
+> "Most applications have unrestricted access to users' brainwave signals and can easily extract private information about their users without them even noticing."
+> — Bonaci et al. (2015)
+
+##### ERP Privacy Risk Matrix
+
+| ERP Component | Latency | Privacy Risk | Information Leaked |
+|---------------|---------|--------------|-------------------|
+| **P300** | ~300ms | 🔴 CRITICAL | Recognition, secrets, PIN codes |
+| **N170** | ~170ms | 🔴 CRITICAL | Face recognition, known persons |
+| **N400** | ~400ms | 🟠 HIGH | Semantic knowledge, memory content |
+| **ERN** | ~100ms | 🟡 MEDIUM | Error awareness, decision confidence |
+| **LRP** | ~200ms | 🟢 LOW | Motor preparation (allowed for BCIs) |
+| **CNV** | ~1000ms | 🟢 LOW | Anticipation (allowed for BCIs) |
+
+##### BCI Anonymizer Function
+
+```
+Raw EEG Signal → [Privacy Filter] → Anonymized Signal
+                       │
+                       ├─ BLOCK: P300, N170, N400 (privacy-sensitive)
+                       └─ ALLOW: LRP, CNV (motor commands only)
+```
+
+**Patent Status:** The BCI Anonymizer patent (US20140228701A1) was **abandoned** — concepts freely available for implementation.
+
+**Sources:** [Kohno (2009)](https://pubmed.ncbi.nlm.nih.gov/19569895/), [Bonaci (2015)](https://www.semanticscholar.org/paper/App-Stores-for-the-Brain-:-Privacy-and-Security-in-Bonaci-Calo/9ce645240e6e965cc160dfb290504c7fc7d7ebe5), [UW BioRobotics BCI Security](https://wp.ece.uw.edu/brl/neural-engineering/bci-security/)
+
+---
+
+### Attack Simulator — Neural ATT&CK Matrix
+
+The Attack Simulator implements a **MITRE ATT&CK-inspired framework** adapted for neural interfaces, mapping adversary tactics and techniques to the ONI layer model.
+
+> MITRE ATT&CK organizes adversary behavior into tactics (objectives) and techniques (methods). TARA's Neural ATT&CK applies this methodology to brain-computer interfaces.
+
+#### Neural ATT&CK Matrix (7 Tactics × 18 Techniques)
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                              NEURAL ATT&CK MATRIX                                       │
+├─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬──────────────────┤
+│RECONNAISSANCE│INITIAL ACCESS│ EXECUTION  │ PERSISTENCE │DEF. EVASION │ COLLECTION       │
+│   (L7-L8)   │   (L8-L9)   │  (L9-L11)  │  (L10-L11)  │   (L8-L9)   │   (L12-L14)      │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
+│Signal       │Electrode    │Signal       │Pattern      │Coherence    │ERP               │
+│Profiling    │Compromise   │Injection    │Lock         │Mimicry      │Harvesting        │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
+│Side-Channel │RF           │Protocol     │Memory       │Gradual      │Cognitive         │
+│Analysis     │Exploitation │Manipulation │Implant      │Drift        │Capture           │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼──────────────────┤
+│Network      │Firmware     │Command      │             │             │Memory            │
+│Mapping      │Backdoor     │Hijacking    │             │             │Extraction        │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┴──────────────────┘
+                                                                              │
+                                    ┌─────────────────────────────────────────┘
+                                    │
+                              ┌─────┴─────┐
+                              │  IMPACT   │
+                              │ (L11-L14) │
+                              ├───────────┤
+                              │Neural DoS │
+                              ├───────────┤
+                              │Motor      │
+                              │Hijacking  │
+                              ├───────────┤
+                              │Identity   │
+                              │Erosion    │
+                              └───────────┘
+```
+
+#### Tactic Definitions (Aligned with MITRE ATT&CK)
+
+| Tactic | Objective | ONI Layers | Example Techniques |
+|--------|-----------|------------|-------------------|
+| **Reconnaissance** | Gather information for attack planning | L7-L8 | Signal profiling, side-channel analysis |
+| **Initial Access** | Gain entry to the BCI system | L8-L9 | Electrode compromise, RF exploitation |
+| **Execution** | Run malicious neural signals | L9-L11 | Signal injection, command hijacking |
+| **Persistence** | Maintain long-term access | L10-L11 | Pattern lock, memory implant |
+| **Defense Evasion** | Avoid detection by NSAM | L8-L9 | Coherence mimicry, gradual drift |
+| **Collection** | Extract neural data | L12-L14 | ERP harvesting, cognitive capture |
+| **Impact** | Cause harm to the user | L11-L14 | Neural DoS, motor hijacking, identity erosion |
+
+#### Attack Patterns (8 Predefined)
+
+| Pattern | Type | Target Layer | Intensity | Signature |
+|---------|------|--------------|-----------|-----------|
+| `phase_jitter` | Phase Disruption | L8 | 0.7 | Timing jitter in gamma band |
+| `amplitude_surge` | Amplitude Manipulation | L9 | 0.8 | 10x amplitude spikes |
+| `desync_wave` | Desynchronization | L3 | 0.6 | Multi-frequency phase chaos |
+| `neural_ransomware` | Ransomware | L6 | 0.9 | Pattern suppression + override |
+| `dos_flood` | DoS Flooding | L8 | 1.0 | High-rate spike flood |
+| `gateway_bypass` | Layer 8 Gateway | L8 | 0.6 | Coherence mimicry → drift |
+| `replay_attack` | Signal Replay | L8 | 0.5 | Captured signal repetition |
+| `side_channel_leak` | Side Channel | L9 | 0.3 | Timing/power analysis |
+
+#### Attack Scenarios (5 Predefined)
+
+| Scenario | Severity | Stages | Duration | Target Layers |
+|----------|----------|--------|----------|---------------|
+| **Neural Ransomware Campaign** | 🔴 CRITICAL | 4 | 6.8s | L6, L8, L9 |
+| **Gateway Infiltration** | 🟠 HIGH | 3 | 4.7s | L8, L9, L10 |
+| **Denial of Service** | 🟠 HIGH | 2 | 5.6s | L8, L9 |
+| **Man-in-the-Middle** | 🔴 CRITICAL | 3 | 5.2s | L8, L10, L11 |
+| **Stealth Reconnaissance** | 🟡 MEDIUM | 1 | 5.0s | L8, L9 |
+
+#### Attack → ONI Layer Coverage Map
+
+```
+Layer   │ Recon │ Access │ Execute │ Persist │ Evade │ Collect │ Impact │
+────────┼───────┼────────┼─────────┼─────────┼───────┼─────────┼────────┤
+L14     │       │        │         │         │       │    ●    │   ●    │ Identity
+L13     │       │        │    ●    │         │       │    ●    │   ●    │ Semantic
+L12     │       │        │         │         │       │    ●    │   ●    │ Session
+L11     │       │        │    ●    │    ●    │       │    ●    │   ●    │ Transport
+L10     │       │        │    ●    │    ●    │       │         │        │ Protocol
+L9      │   ●   │   ●    │    ●    │         │   ●   │         │        │ Signal
+L8      │   ●   │   ●    │    ●    │         │   ●   │         │        │ Gateway
+L7      │   ●   │        │         │         │       │         │        │ Application
+────────┴───────┴────────┴─────────┴─────────┴───────┴─────────┴────────┘
+```
+
+**Sources:** [MITRE ATT&CK](https://attack.mitre.org/), [BCI Security Research 2024](https://arxiv.org/abs/2508.12571), [Yale BCI Security Study](https://news.yale.edu/2025/07/23/study-offers-measures-safeguarding-brain-implants)
+
+---
 
 ### Components
 
@@ -588,6 +807,16 @@ If you use TARA in your research, please cite:
 
 ## Changelog
 
+### v0.6.1 (2026-01-25)
+- **Documentation Overhaul**:
+  - Added comprehensive Neural Simulator brain region documentation with MNI coordinates and Brodmann areas
+  - Added detailed Neurosecurity module documentation with Kohno (2009) threat taxonomy
+  - Added Neural ATT&CK Matrix documentation with 7 tactics and 18 techniques
+  - Added visual ASCII diagrams for ONI layer hierarchy and attack coverage maps
+  - Added ERP privacy risk matrix with component-level analysis
+  - Cross-referenced all mappings with peer-reviewed neuroscience literature
+  - Verified MNI coordinates against neuroimaging meta-analyses
+
 ### v0.6.0 (2026-01-24)
 - **Major UI Enhancements**:
   - Renamed "Testing" section to "Simulations" in navigation
@@ -651,4 +880,4 @@ If you use TARA in your research, please cite:
 
 *Documents: README.md, CLAUDE.md, AGENTS.md*
 *Modules: 9 | Sub-modules: 16 | Lines of Code: ~19,000*
-*Last Updated: 2026-01-24*
+*Last Updated: 2026-01-25*
