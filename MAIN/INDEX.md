@@ -2,7 +2,7 @@
 
 > **The central navigation hub for all ONI Framework research, publications, and development.**
 
-**Version:** 1.8
+**Version:** 1.9
 **Last Updated:** 2026-01-24
 **Status:** Active Development
 
@@ -216,7 +216,7 @@ The ONI Framework extends the classical OSI model with 7 additional layers for n
 
 | Project | Description |
 |---------|-------------|
-| [Visualizations](visualizations/README.md) | Interactive web apps for ONI concepts |
+| [Visualizations](tara-neural-security-platform/visualizations/README.md) | Interactive web apps for ONI concepts (5 demos) |
 
 ---
 
@@ -417,19 +417,19 @@ MAIN/
 │   ├── tests/                  # Unit tests (77 tests)
 │   └── pyproject.toml          # Package config (v0.1.0)
 │
-├── tara/                       # Security Operations Platform (pip install oni-tara)
-│   ├── tara/                   # Source modules (nested package structure)
+├── tara-neural-security-platform/  # Security Operations Platform (pip install oni-tara)
+│   ├── pyproject.toml          # Package config (v0.4.0)
+│   ├── tara/                   # Source modules
 │   │   ├── core/               # ONI security primitives
 │   │   ├── simulation/         # Neural network simulation
 │   │   ├── attacks/            # Attack testing & scenarios
 │   │   ├── nsam/               # Neural Signal Assurance Monitoring
 │   │   ├── neurosecurity/      # Kohno rules integration
+│   │   ├── data/               # Data models & adapters
 │   │   ├── visualization/      # Real-time dashboards
 │   │   └── ui/                 # Streamlit web interface
 │   ├── tests/                  # Unit tests (31 tests)
-│   └── pyproject.toml          # Package config (v0.4.0)
-│
-├── visualizations/             # Interactive web visualizations
+│   └── visualizations/         # Interactive HTML demos (5 apps)
 │
 ├── publications/               # Research content
 │   ├── 0-oni-framework/
