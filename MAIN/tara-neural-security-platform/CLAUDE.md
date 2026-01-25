@@ -23,16 +23,21 @@ This file provides instructions for Claude to follow when updating, maintaining,
 
 ## Module Architecture
 
+> **Note:** Source code is located in `MAIN/prototype-mvp/tara/`. This folder contains package configuration and documentation.
+
 ```
-tara/
-├── CLAUDE.md              # Claude AI instructions (this file)
-├── AGENTS.md              # Learnings from previous sessions
-├── README.md              # Public documentation
-├── pyproject.toml         # Package configuration
-├── __init__.py            # Package entry point
-├── cli.py                 # Command-line interface
+tara-neural-security-platform/   # Package config
+├── CLAUDE.md                    # Claude AI instructions (this file)
+├── AGENTS.md                    # Learnings from previous sessions
+├── README.md                    # Public documentation
+├── pyproject.toml               # Package configuration
+└── LICENSE                      # Apache 2.0
+
+prototype-mvp/tara/              # Source code (separate folder)
+├── __init__.py                  # Package entry point
+├── cli.py                       # Command-line interface
 │
-├── core/                  # ONI Framework security primitives
+├── core/                        # ONI Framework security primitives
 │   ├── coherence.py       # Cₛ (Coherence Score) calculation
 │   ├── layers.py          # 14-layer ONI model (L1-L14)
 │   ├── firewall.py        # Neural firewall decision matrix
@@ -81,9 +86,9 @@ tara/
 │   ├── widgets/           # Reusable UI components
 │   └── pages/             # Page components (if split)
 │
-├── persistence/           # Data storage (SQLite, placeholder)
-│
-└── tests/                 # Unit tests
+└── persistence/           # Data storage (SQLite, placeholder)
+
+prototype-mvp/tests/             # Unit tests (separate folder)
 ```
 
 ---

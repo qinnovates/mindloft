@@ -62,15 +62,15 @@ pip install oni-tara
 
 | Module | Purpose | Key Functions |
 |--------|---------|---------------|
-| [tara.core](tara/tara/core/) | ONI security primitives | `CoherenceMetric`, `ONIStack`, `NeuralFirewall` |
-| [tara.simulation](tara/tara/simulation/) | Neural network simulation | `LIFNeuron`, `IzhikevichNeuron`, networks |
-| [tara.attacks](tara/tara/attacks/) | Attack testing & scenarios | `AttackSimulator`, `AttackScenario` |
-| [tara.nsam](tara/tara/nsam/) | Neural Signal Assurance Monitoring | `NSAMMonitor`, `RuleEngine`, `AlertManager` |
-| [tara.neurosecurity](tara/tara/neurosecurity/) | Kohno rules integration | `NeurosecurityMonitor` |
-| [tara.data](tara/tara/data/) | Data models & external datasets | `MOABBAdapter`, `BrainRegion`, `BCINode` |
-| [tara.ui](tara/tara/ui/) | Streamlit web interface | `tara ui` command |
+| [tara.core](prototype-mvp/tara/core/) | ONI security primitives | `CoherenceMetric`, `ONIStack`, `NeuralFirewall` |
+| [tara.simulation](prototype-mvp/tara/simulation/) | Neural network simulation | `LIFNeuron`, `IzhikevichNeuron`, networks |
+| [tara.attacks](prototype-mvp/tara/attacks/) | Attack testing & scenarios | `AttackSimulator`, `AttackScenario` |
+| [tara.nsam](prototype-mvp/tara/nsam/) | Neural Signal Assurance Monitoring | `NSAMMonitor`, `RuleEngine`, `AlertManager` |
+| [tara.neurosecurity](prototype-mvp/tara/neurosecurity/) | Kohno rules integration | `NeurosecurityMonitor` |
+| [tara.data](prototype-mvp/tara/data/) | Data models & external datasets | `MOABBAdapter`, `BrainRegion`, `BCINode` |
+| [tara.ui](prototype-mvp/tara/ui/) | Streamlit web interface | `tara ui` command |
 
-**Documentation:** [tara/README.md](tara/README.md) | **CLI:** `tara --help`
+**Documentation:** [tara-neural-security-platform/README.md](tara-neural-security-platform/README.md) | **CLI:** `tara --help`
 
 #### MOABB Integration (External Datasets)
 
@@ -232,6 +232,7 @@ The ONI Framework maintains Responsible AI standards and documents alignment wit
 | [POST_DEPLOYMENT_ETHICS.md](governance/POST_DEPLOYMENT_ETHICS.md) | Device lifecycle, maintenance obligations, abandonment prevention |
 | [PEDIATRIC_CONSIDERATIONS.md](governance/PEDIATRIC_CONSIDERATIONS.md) | Guidelines for minors and individuals with limited capacity |
 | [RELATED_WORK.md](RELATED_WORK.md) | Prior BCI security research — acknowledges foundational work, positions ONI's contribution |
+| [ACADEMIC_LANDSCAPE.md](ACADEMIC_LANDSCAPE.md) | **Research landscape** — top universities, key researchers, collaboration opportunities |
 | [PARTNERSHIPS.md](PARTNERSHIPS.md) | Partnership opportunities, implementation roadmap, how to get involved |
 
 ---
@@ -380,6 +381,7 @@ MAIN/
 ├── INDEX.md                    # This file (central hub)
 ├── CONTRIBUTING.md             # Contribution guidelines
 ├── RELATED_WORK.md             # Prior BCI security research
+├── ACADEMIC_LANDSCAPE.md       # Universities, researchers, collaboration opportunities
 │
 ├── governance/                 # Ethics & transparency
 │   ├── TRANSPARENCY.md         # Human-AI collaboration audit trail

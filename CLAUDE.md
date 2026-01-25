@@ -56,6 +56,7 @@ ONI/
     ├── INDEX.md                        # MAIN WIKI — navigation, dependencies, cross-references
     ├── CONTRIBUTING.md                 # Contribution guidelines
     ├── RELATED_WORK.md                 # Prior BCI security research
+    ├── ACADEMIC_LANDSCAPE.md           # Universities, researchers, collaboration
     │
     ├── governance/                     # Ethics & transparency
     │   ├── TRANSPARENCY.md             # Human-AI collaboration audit trail
@@ -77,8 +78,14 @@ ONI/
     │   ├── tests/                      # Unit tests
     │   └── README.md                   # Library documentation
     │
-    ├── tara/                           # Neural Security Platform (pip install oni-tara)
-    │   ├── tara/                       # Source modules (nested package)
+    ├── tara-neural-security-platform/  # TARA package config (pip install oni-tara)
+    │   ├── pyproject.toml              # Package configuration
+    │   ├── README.md                   # Platform documentation
+    │   ├── CLAUDE.md                   # Claude instructions for TARA
+    │   └── LICENSE                     # Apache 2.0
+    │
+    ├── prototype-mvp/                  # Working prototypes and source code
+    │   ├── tara/                       # TARA source modules
     │   │   ├── core/                   # ONI security primitives
     │   │   ├── simulation/             # Neural network simulation
     │   │   ├── attacks/                # Attack testing & scenarios
@@ -87,9 +94,7 @@ ONI/
     │   │   ├── visualization/          # Real-time dashboards
     │   │   └── ui/                     # Streamlit web interface
     │   ├── tests/                      # Unit tests
-    │   └── README.md                   # Platform documentation
-    │
-    ├── visualizations/                 # Interactive web visualizations
+    │   └── visualizations/             # Interactive HTML visualizations
     │
     ├── publications/                   # CONTENT ONLY
     │   ├── 0-oni-framework/            # Base/foundational content
@@ -118,6 +123,8 @@ ONI/
         │   ├── verified/               # Verified claims with citations
         │   ├── incoming/               # Raw research monitor output
         │   └── processed/              # Reviewed and categorized
+        ├── workflows/                  # Workflow strategies and documentation
+        │   └── VISUALIZATION_AS_CODE_STRATEGY.md  # Remotion/programmatic viz
         └── images/                     # ONI diagrams
 ```
 
@@ -130,8 +137,8 @@ ONI/
 | `governance/` | **Ethics & transparency** | TRANSPARENCY.md, NEUROETHICS_ALIGNMENT.md |
 | `project/` | **Project management** | prd.json, processes/ (workflows, improvements) |
 | `oni-framework/` | **Python library** | Source code, tests, package config (pip installable) |
-| `tara/` | **Security platform** | TARA SOC platform (pip install oni-tara) |
-| `visualizations/` | **Interactive demos** | Web apps, HTML visualizations |
+| `tara-neural-security-platform/` | **TARA package config** | pyproject.toml, README, LICENSE |
+| `prototype-mvp/` | **Working prototypes** | TARA source, tests, HTML visualizations |
 | `publications/` | **Content only** | Blog posts, technical documents |
 | `resources/templates/` | Formatting templates | APA template, Blog template |
 | `resources/pipeline/` | Research pipeline | Incoming papers, processed, scripts, keywords |
@@ -578,7 +585,7 @@ Update the metrics table:
 
 **Common Mistakes to Avoid:**
 - Forgetting to update `siem/` to `nsam/` (the actual folder name)
-- Missing nested package structure (e.g., `tara/tara/`)
+- Missing package structure (source in `prototype-mvp/tara/`, config in `tara-neural-security-platform/`)
 - Outdated version numbers in metrics
 - Stale test counts
 

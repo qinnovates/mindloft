@@ -58,6 +58,7 @@ An extensible framework for monitoring and securing neural communications, desig
 | **[TRANSPARENCY.md](MAIN/governance/TRANSPARENCY.md)** | Human-AI collaboration audit trail — documents cognitive boundary, HITL methodology |
 | **[NEUROETHICS_ALIGNMENT.md](MAIN/governance/NEUROETHICS_ALIGNMENT.md)** | Maps framework components to neuroethics principles |
 | **[RELATED_WORK.md](MAIN/RELATED_WORK.md)** | Prior BCI security research — acknowledges foundational work, positions ONI contribution |
+| **[ACADEMIC_LANDSCAPE.md](MAIN/ACADEMIC_LANDSCAPE.md)** | Research landscape — top universities, key researchers, collaboration opportunities |
 
 ### Naming Convention
 
@@ -125,13 +126,36 @@ anonymizer = BCIAnonymizer()
 
 ### Foundational Research Integration
 
-ONI builds directly on the pioneering neurosecurity research of **Tadayoshi Kohno**, **Tamara Bonaci**, and **Howard Chizeck** at the University of Washington:
+ONI builds directly on pioneering research from leading institutions in BCI security and neuroethics:
 
-| Research | Implementation in ONI |
-|----------|----------------------|
-| [Kohno et al. (2009) - Neurosecurity](https://doi.org/10.3171/2009.4.FOCUS0985) | `NeurosecurityFirewall` — CIA threat model for neural devices |
-| [BCI Anonymizer Patent (US20140228701A1)](https://patents.google.com/patent/US20140228701A1) | `BCIAnonymizer` — Privacy-preserving signal filtering |
+#### Core Technical Foundation (Directly Implemented)
 
+| Institution | Researchers | Research | ONI Implementation |
+|-------------|-------------|----------|-------------------|
+| **[University of Washington](https://seclab.cs.washington.edu/)** | [Tadayoshi Kohno](https://homes.cs.washington.edu/~yoshi/), [Tamara Bonaci](https://www.researchgate.net/profile/Tamara-Bonaci), [Howard Chizeck](https://people.ece.uw.edu/chizeck/) | [Neurosecurity (2009)](https://doi.org/10.3171/2009.4.FOCUS0985) — Coined the term, defined CIA threat model | `NeurosecurityFirewall` |
+| **[UW BioRobotics Lab](https://wp.ece.uw.edu/brl/)** | Bonaci, Chizeck | [BCI Anonymizer Patent](https://patents.google.com/patent/US20140228701A1) — Privacy-preserving signal filtering | `BCIAnonymizer` |
+
+#### Neuroethics & Policy Foundation
+
+| Institution | Researchers | Contribution | ONI Alignment |
+|-------------|-------------|--------------|---------------|
+| **[Columbia University](https://www.neurorightsfoundation.org/)** | [Rafael Yuste](https://magazine.columbia.edu/article/need-protect-data-our-brains) | [Five Neurorights](https://www.frontiersin.org/articles/10.3389/fnhum.2021.701258) — Mental privacy, identity, free will | Framework-wide design principles |
+| **[ETH Zurich / TU Munich](https://ethz.ch/en/news-and-events/eth-news/news/2021/10/marcello-ienca-we-must-expand-human-rights-to-cover-neurotechnology.html)** | [Marcello Ienca](https://www.professoren.tum.de/en/ienca-marcello) | [Four Neurorights (2017)](https://link.springer.com/article/10.1007/s12152-022-09498-8) — Cognitive liberty, mental integrity | L14 Identity layer design |
+| **[UW Neuroethics Group](https://phil.washington.edu/neuroethics-research-group)** | [Sara Goering](https://phil.washington.edu/people/sara-goering), [Eran Klein](https://phil.washington.edu/ethical-considerations-and-neurotechnology) | [Agency in BCI users](https://pmc.ncbi.nlm.nih.gov/articles/PMC8443241/) — Relational agency, user autonomy | User consent models |
+| **[Harvard Bioethics](https://bioethics.hms.harvard.edu/faculty-staff/gabriel-lazaro-munoz)** | [Gabriel Lázaro-Muñoz](https://brain.harvard.edu/?people=gabriel-lazaro-munoz) | [DBS ethics, neural data privacy](https://www.frontiersin.org/articles/10.3389/fnhum.2024.1332451) | Privacy scoring, vulnerable populations |
+| **[Oxford Uehiro Centre](https://www.practicalethics.ox.ac.uk/people/dr-hannah-maslen)** | [Hannah Maslen](https://www.nature.com/articles/d41586-019-02214-2) | [Autonomy in closed-loop BCIs](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3002899) | Adaptive system safeguards |
+
+#### Neural Engineering (Security-Relevant)
+
+| Institution | Lab/Program | Security Relevance |
+|-------------|-------------|-------------------|
+| **[Brown University](https://www.brown.edu/news/2021-03-31/braingate-wireless)** | [BrainGate Consortium](https://www.braingate.org/) | Wireless BCI security, 17-year safety data |
+| **[Stanford University](https://nptl.stanford.edu/)** | Neural Prosthetics Translational Lab | Clinical trial protocols, multi-site security |
+| **[Carnegie Mellon](https://www.cmu.edu/bme/helab/)** | [Bin He Lab](https://engineering.cmu.edu/directory/bios/he-bin.html) | Bidirectional BCI, ML decoder security |
+| **[Johns Hopkins APL](https://www.hopkinsmedicine.org/physical-medicine-rehabilitation/research/tetraplegia-brain-study)** | [Celnik Lab](https://celniklab.johnshopkins.edu/) | Bilateral implants, multi-array sync |
+| **[Caltech](https://www.vis.caltech.edu/)** | [Andersen Lab](https://www.vis.caltech.edu/Chen_Center) | Intent decoding, stimulation safety |
+
+**Full academic landscape:** [ACADEMIC_LANDSCAPE.md](MAIN/ACADEMIC_LANDSCAPE.md)
 **Implementation details:** [NEUROSECURITY_IMPLEMENTATION.md](MAIN/oni-framework/NEUROSECURITY_IMPLEMENTATION.md)
 
 ### TARA - Neural Security Platform
@@ -152,7 +176,7 @@ tara ui
 
 **Note:** TARA is a research and development tool for BCI security analysis. It requires `oni-framework` as a dependency and is intended for security researchers, not production BCI systems.
 
-**Full documentation:** [MAIN/tara/README.md](MAIN/tara/README.md)
+**Full documentation:** [MAIN/tara-neural-security-platform/README.md](MAIN/tara-neural-security-platform/README.md)
 
 ---
 
@@ -177,6 +201,7 @@ ONI/
     ├── INDEX.md                 # Central hub — navigation, dependencies, cross-references
     ├── CONTRIBUTING.md          # Contribution guidelines
     ├── RELATED_WORK.md          # Prior BCI security research
+    ├── ACADEMIC_LANDSCAPE.md    # Universities, researchers, collaboration
     │
     ├── governance/              # Ethics & transparency
     │   ├── TRANSPARENCY.md      # Human-AI collaboration audit trail
@@ -197,8 +222,13 @@ ONI/
     │   │   └── neurosecurity/   # Kohno threat model + BCI Anonymizer
     │   └── tests/               # Unit tests
     │
-    ├── tara/                    # Neural Security Platform (pip install oni-tara)
-    │   ├── tara/                # Source modules (nested package)
+    ├── tara-neural-security-platform/  # TARA package config (pip install oni-tara)
+    │   ├── pyproject.toml       # Package configuration
+    │   ├── README.md            # Platform documentation
+    │   └── LICENSE              # Apache 2.0
+    │
+    ├── prototype-mvp/           # Working prototypes and source code
+    │   ├── tara/                # TARA source modules
     │   │   ├── core/            # ONI security primitives
     │   │   ├── simulation/      # Neural network simulation
     │   │   ├── attacks/         # Attack testing & scenarios
@@ -206,9 +236,8 @@ ONI/
     │   │   ├── neurosecurity/   # Kohno rules integration
     │   │   ├── visualization/   # Real-time dashboards
     │   │   └── ui/              # Streamlit web interface
-    │   └── tests/               # Unit tests
-    │
-    ├── visualizations/          # Interactive web visualizations
+    │   ├── tests/               # Unit tests
+    │   └── visualizations/      # Interactive HTML visualizations
     │
     ├── publications/            # Research content
     │   ├── 0-oni-framework/     # Base/foundational content
@@ -221,9 +250,10 @@ ONI/
     └── resources/               # Infrastructure
         ├── agents/              # PM Agent instructions
         ├── editor/              # Editor Agent (quality & sync)
-        ├── images/              # ONI diagrams and visualizations
+        ├── images/              # ONI diagrams
         ├── templates/           # Formatting templates
-        └── pipeline/            # Research pipeline
+        ├── pipeline/            # Research pipeline
+        └── workflows/           # Workflow strategies (Visualization as Code)
 ```
 
 ---
@@ -447,5 +477,5 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 ---
 
 *Auto-published from research pipeline*
-*Last update: 2026-01-23*
+*Last update: 2026-01-24*
 *Documents: 16 | Topics: 6 | Python Packages: oni-framework v0.2.0, oni-tara v0.4.0*

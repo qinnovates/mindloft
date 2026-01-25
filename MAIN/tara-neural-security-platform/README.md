@@ -43,7 +43,7 @@ pip install oni-tara[moabb]
 pip install oni-tara[full]
 
 # Development installation (from source)
-cd MAIN/tara
+cd MAIN/tara-neural-security-platform
 pip install -e ".[full,dev]"
 ```
 
