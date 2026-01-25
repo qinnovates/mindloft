@@ -2,8 +2,8 @@
 
 > **Purpose:** Persistent learnings from Ralph Loop iterations. AI agents read this file at the start of each session to benefit from discovered patterns, gotchas, and conventions.
 
-**Last Updated:** 2026-01-23
-**Loop Iterations:** 2
+**Last Updated:** 2026-01-24
+**Loop Iterations:** 5
 
 ---
 
@@ -21,6 +21,9 @@
 | 2026-01-23 | PyPI trusted publishing via GitHub Actions is more secure than storing tokens | No secrets in config, OIDC-based authentication |
 | 2026-01-23 | INDEX.md must be updated when packages/structure change | Created INDEX.md Update Protocol in CLAUDE.md — check versions, folder structure, metrics |
 | 2026-01-23 | Repository reorganized: governance/, project/, visualizations/ | prd.json→project/, ethics→governance/, oni-visualizations→visualizations/, processes→project/ |
+| 2026-01-24 | Research Verification Protocol adapted from kevinqicode hallucination firewall | Domain-specific verification: SOCRATES (general), GÖDEL (math), FARADAY (physics/neuro) |
+| 2026-01-24 | Persona system implemented for research verification | 7 personas: AURORA, SOCRATES, GÖDEL, FARADAY, HYPATIA, ARCHIMEDES, EDITOR |
+| 2026-01-24 | Uncertainty tagging system: ✅ ⚠️ 🔍 ❌ 🔬 | All claims must be tagged before publication |
 
 ### Patterns Established
 
@@ -35,6 +38,72 @@
 - README.md files don't auto-update when TechDoc changes — Editor Agent sync_rules.md handles this
 - **INDEX.md must be updated when moving files or changing packages** — Python Packages, Dependency Map, Folder Structure, and Metrics sections all need updating
 - **Folder names in INDEX.md can drift from reality** — e.g., `siem/` vs actual `nsam/`, always verify against filesystem
+
+---
+
+## Persona System Learnings
+
+### The ONI Research Personas
+
+| Persona | Archetype | Domain | Key Question |
+|---------|-----------|--------|--------------|
+| **AURORA** | Illuminator | Main reasoning | "What's the insight?" |
+| **SOCRATES** | Questioner | General verification | "What evidence supports this?" |
+| **GÖDEL** | Logician | Math/formulas | "Does this formula hold?" |
+| **FARADAY** | Experimentalist | Physics/neuroscience | "What does the science say?" |
+| **HYPATIA** | Librarian | Documentation | "Where does this belong?" |
+| **ARCHIMEDES** | Pragmatist | Project management | "What's the lever?" |
+| **EDITOR** | Validator | Cross-references | "Is this consistent?" |
+
+### Research Verification Protocol
+
+Adapted from kevinqicode anti-hallucination firewall for academic research:
+
+**4-Layer Architecture:**
+```
+Truth Layer      → Authoritative sources (papers, patents, specs)
+Grounding Engine → Extract claims with citations
+Firewall         → Domain-specific verification (SOCRATES/GÖDEL/FARADAY)
+Publication      → Only verified content
+```
+
+**Uncertainty Tags:**
+- ✅ VERIFIED — Peer-reviewed source, safe to use
+- ⚠️ INFERRED — Logical inference, must label
+- 🔍 UNVERIFIED — No source, do NOT use
+- ❌ CONTRADICTED — Evidence against, do NOT use
+- 🔬 HYPOTHESIS — Novel ONI contribution, label clearly
+
+### Folder Structure for Verification
+
+```
+MAIN/resources/pipeline/
+├── sources/                    # Authoritative documents
+│   ├── papers/                 # Peer-reviewed
+│   ├── patents/                # Patents
+│   ├── specs/                  # Standards
+│   └── data/                   # Datasets
+├── verified/                   # Verified claims with citations
+└── ...
+```
+
+### Key Patterns
+
+| Pattern | Why |
+|---------|-----|
+| Domain personas prevent cross-domain errors | FARADAY catches physics errors GÖDEL misses |
+| Tension between personas is valuable | SOCRATES questions what AURORA proposes |
+| Uncertainty tags force explicit epistemic states | No more confident hallucinations |
+| Verified claims file creates audit trail | Academic credibility requires traceability |
+
+### Common Errors Caught
+
+| Error Type | Persona | Example |
+|------------|---------|---------|
+| Timescale confusion | FARADAY | "10 ms" instead of "100 fs" quantum coherence |
+| Uniform reliability | FARADAY | AI suggesting 0.95 instead of biological 0.85 |
+| Formula mismatch | GÖDEL | TechDoc formula differs from Python code |
+| Missing citation | SOCRATES | Confident claim with no source |
 
 ---
 
@@ -223,10 +292,11 @@ L14: Identity & Ethics         (Biology)
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 4 |
-| Learnings Captured | 23 |
+| Total Iterations | 5 |
+| Learnings Captured | 26 |
 | Gotchas Documented | 7 |
-| Patterns Established | 12 |
+| Patterns Established | 16 |
+| Personas Defined | 7 |
 
 ---
 

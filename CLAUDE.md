@@ -12,12 +12,15 @@
 | **Python Package** | `MAIN/oni-framework/` | **pip install oni-framework** |
 | **Transparency Statement** | `MAIN/governance/TRANSPARENCY.md` | **Human-AI collaboration audit trail** |
 | **Neuroethics Alignment** | `MAIN/governance/NEUROETHICS_ALIGNMENT.md` | **Framework-to-ethics principle mapping** |
+| **Research Verification** | `MAIN/resources/agents/RESEARCH_VERIFICATION_PROTOCOL.md` | **Anti-hallucination firewall for claims** |
+| **Personas** | `MAIN/resources/agents/PERSONAS.md` | **Agent personas for research verification** |
 | Topic README Template | `MAIN/resources/templates/README_TEMPLATE.md` | Template for topic-level overviews |
 | APA Template | `MAIN/resources/templates/TECHDOC_TEMPLATE_APA.md` | Formatting for technical documents |
 | Blog Template | `MAIN/resources/templates/BLOG_TEMPLATE.md` | Formatting for blog posts |
 | Publishing Instructions | `MAIN/project/processes/PUBLISHING_INSTRUCTIONS.md` | Step-by-step publishing workflow |
 | Research Monitor | `MAIN/resources/pipeline/scripts/research_monitor.py` | Fetch new academic papers |
 | Keywords File | `MAIN/resources/pipeline/scripts/keywords.json` | Research search terms |
+| Verified Claims | `MAIN/resources/pipeline/verified/` | Verified research claims with citations |
 | **Editor Agent** | `MAIN/resources/editor/EDITOR_AGENT.md` | **Automated quality & sync (run before commits)** |
 | **AGENTS.md** | `AGENTS.md` | **Ralph Loop learnings — read at session start** |
 | **prd.json** | `MAIN/project/prd.json` | **Task tracker with exit conditions** |
@@ -97,15 +100,24 @@ ONI/
     │   └── scale-frequency/
     │
     └── resources/                      # NON-CONTENT (infrastructure)
-        ├── agents/                     # PM Agent instructions
+        ├── agents/                     # Agent instructions & personas
+        │   ├── PM_AGENT.md
+        │   ├── PERSONAS.md             # Research verification personas
+        │   └── RESEARCH_VERIFICATION_PROTOCOL.md  # Anti-hallucination firewall
         ├── editor/                     # Editor Agent (quality & sync)
         │   ├── EDITOR_AGENT.md
         │   └── checks/
         ├── templates/                  # Formatting templates
         ├── pipeline/                   # Research pipeline
-        │   ├── scripts/
-        │   ├── incoming/
-        │   └── processed/
+        │   ├── scripts/                # research_monitor.py, keywords.json
+        │   ├── sources/                # Authoritative source documents
+        │   │   ├── papers/             # Peer-reviewed papers
+        │   │   ├── patents/            # Patent documents
+        │   │   ├── specs/              # Standards and specifications
+        │   │   └── data/               # Experimental datasets
+        │   ├── verified/               # Verified claims with citations
+        │   ├── incoming/               # Raw research monitor output
+        │   └── processed/              # Reviewed and categorized
         └── images/                     # ONI diagrams
 ```
 
@@ -221,6 +233,77 @@ L9-L14: Biology (Ion Channel Encoding → Identity & Ethics)
 **Coherence Formula:** Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ)
 
 **Scale-Frequency:** f × S ≈ k
+
+---
+
+## Persona System (Research Verification)
+
+> **Purpose:** Prevent AI hallucinations in academic research through domain-specific verification personas. See full documentation: `MAIN/resources/agents/PERSONAS.md`
+
+### Quick Reference
+
+| Persona | Role | Key Question |
+|---------|------|--------------|
+| **AURORA** | Main reasoning partner | "What's the insight here?" |
+| **SOCRATES** | General fact-checking | "What evidence supports this?" |
+| **GÖDEL** | Mathematical verification | "Does this formula hold?" |
+| **FARADAY** | Physics/neuroscience claims | "What does the science say?" |
+| **HYPATIA** | Documentation organization | "Where does this belong?" |
+| **ARCHIMEDES** | Project management | "What's the lever?" |
+| **EDITOR** | Cross-reference sync | "Is this consistent?" |
+
+### Research Verification Protocol
+
+> **CRITICAL:** All neuroscience, physics, and security claims must be verified before publication. See: `MAIN/resources/agents/RESEARCH_VERIFICATION_PROTOCOL.md`
+
+#### Uncertainty Tags
+
+Every claim gets tagged:
+
+| Tag | Meaning | Action |
+|-----|---------|--------|
+| ✅ VERIFIED | Direct citation from peer-reviewed source | Safe to use |
+| ⚠️ INFERRED | Logical inference from verified facts | Flag in text |
+| 🔍 UNVERIFIED | Plausible but no source found | Do NOT use |
+| ❌ CONTRADICTED | Evidence contradicts claim | Do NOT use |
+| 🔬 HYPOTHESIS | Novel ONI contribution | Label clearly |
+
+#### Domain Checks
+
+| Domain | Persona | Common Errors |
+|--------|---------|---------------|
+| **Neuroscience** | FARADAY | Timescale errors (ms vs fs), uniform reliability assumptions |
+| **Physics** | FARADAY | Thermodynamic violations, energy estimate errors |
+| **Mathematics** | GÖDEL | Formula/code mismatch, notation inconsistency |
+| **Security** | SOCRATES | Theoretical vs practical attack vectors |
+
+#### Before Any Factual Claim
+
+```
+1. Do I have a source? → No = flag as 🔍 UNVERIFIED
+2. Is it peer-reviewed? → No = downgrade confidence
+3. Does claim match source exactly? → No = flag as ⚠️ INFERRED
+4. Is this neuroscience/physics? → Yes = run through FARADAY
+5. Is this mathematical? → Yes = verify with GÖDEL
+6. Tag: ✅ ⚠️ 🔍 ❌ 🔬
+7. Cite: (Author, Year)
+```
+
+### Verified Claims Workflow
+
+```
+1. Identify claim needing verification
+         ↓
+2. SOCRATES: Search for authoritative sources
+         ↓
+3. Add source to MAIN/resources/pipeline/sources/
+         ↓
+4. FARADAY/GÖDEL: Domain-specific validation
+         ↓
+5. HYPATIA: Document in verified/[topic]-verified.md
+         ↓
+6. Use ✅ claims in publications
+```
 
 ---
 
@@ -725,6 +808,6 @@ mkdir MAIN/publications/[topic-name]/
 
 ---
 
-*Version: 7.0*
-*Last Updated: 2026-01-22*
+*Version: 8.0*
+*Last Updated: 2026-01-24*
 *For: Claude AI Assistant*
