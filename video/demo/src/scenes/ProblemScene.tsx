@@ -101,11 +101,11 @@ export const ProblemScene: React.FC = () => {
     extrapolateRight: 'clamp',
   }));
 
-  // Phase 6: Selling points
+  // Phase 6: Selling points - emphasize "first" positioning
   const sellingPoints = [
-    { text: 'Universal', sub: 'One framework for the entire neural stack' },
-    { text: 'Secure by Design', sub: 'Built-in protection from Layer 1 to 14' },
-    { text: 'Biodigital Ready', sub: 'Bridging silicon to synapse' },
+    { text: 'Security-First', sub: 'The first BCI framework with protection at its foundation' },
+    { text: 'Privacy-Native', sub: 'Your thoughts stay yours—by design, not by promise' },
+    { text: 'The Standard', sub: 'The OSI model the neural era has been waiting for' },
   ];
 
   // Typing effect for bottom text

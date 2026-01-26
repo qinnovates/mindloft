@@ -9,7 +9,8 @@ import { Brain2D } from '../components/Brain2D';
 import { NeuralFlow } from '../components/NeuralFlow';
 import { FloatingParticles } from '../components/Particles';
 import { LettersPullUp, BlurInText } from '../components/TextAnimations';
-import { colors } from '../data/oni-theme';
+import { AnomalyDetectionViz } from '../components/AnomalyDetectionViz';
+import { colors, typography } from '../data/oni-theme';
 
 // Feature cards for TARA stack - professional icons for academic audience
 const features = [
@@ -33,6 +34,7 @@ const features = [
   },
   {
     title: 'Privacy-First',
+    subtitle: 'with you in mind',
     description: 'Only Cₛ scores transmitted—raw data stays local',
     iconType: 'privacy' as const,
     color: colors.primary.accentPurple,
@@ -87,9 +89,11 @@ export const TARAScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Phase control
-  const showBrain = frame > 80;
-  const showFeatures = frame > 250;
+  // Phase control - TARA intro first, then anomaly detection
+  const showTARAIntro = frame < 500;
+  const showAnomalyDetection = frame >= 500;
+  const showBrain = frame > 80 && showTARAIntro;
+  const showFeatures = frame > 250 && showTARAIntro;
 
   // Title animation
   const titleProgress = spring({
@@ -127,13 +131,18 @@ export const TARAScene: React.FC = () => {
         maxSize={4}
       />
 
-      {/* Content layout */}
+      {/* Content layout - TARA Intro Phase */}
+      {showTARAIntro && (
       <div
         style={{
           display: 'flex',
           height: '100%',
           padding: 80,
           gap: 60,
+          opacity: interpolate(frame, [480, 500], [1, 0], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+          }),
         }}
       >
         {/* Left side - 3D Brain */}
@@ -274,6 +283,11 @@ export const TARAScene: React.FC = () => {
                         }}
                       >
                         {feature.title}
+                        {(feature as any).subtitle && (
+                          <span style={{ fontStyle: 'italic', fontWeight: 400, marginLeft: 8, color: colors.text.muted }}>
+                            {(feature as any).subtitle}
+                          </span>
+                        )}
                       </div>
                       <div
                         style={{
@@ -302,79 +316,147 @@ export const TARAScene: React.FC = () => {
             </div>
           )}
 
-          {/* Open Source badge with smooth animation */}
+        </div>
+      </div>
+      )}
+
+      {/* ===== ANOMALY DETECTION PHASE ===== */}
+      {showAnomalyDetection && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 40,
+            opacity: interpolate(frame - 500, [0, 40], [0, 1], {
+              extrapolateLeft: 'clamp',
+              extrapolateRight: 'clamp',
+            }),
+          }}
+        >
+          {/* Title */}
           <div
             style={{
-              opacity: interpolate(frame - 380, [0, 30], [0, 1], {
+              fontSize: 48,
+              fontWeight: 700,
+              color: '#ffffff',
+              fontFamily: "-apple-system, 'SF Pro Display', sans-serif",
+              marginBottom: 12,
+              transform: `translateY(${interpolate(frame - 500, [0, 40], [20, 0], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+              })}px)`,
+            }}
+          >
+            How TARA Detects Threats
+          </div>
+
+          {/* Subtitle */}
+          <div
+            style={{
+              fontSize: 18,
+              color: colors.text.secondary,
+              maxWidth: 750,
+              textAlign: 'center',
+              lineHeight: 1.5,
+              marginBottom: 30,
+              opacity: interpolate(frame - 520, [0, 30], [0, 1], {
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
               }),
-              transform: `translateY(${interpolate(
-                frame - 380,
-                [0, 30],
-                [20, 0],
-                { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
-              )}px)`,
             }}
           >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 14,
-                padding: '14px 20px',
-                background: `${colors.security.safe}0a`,
-                borderRadius: 12,
-                border: `1px solid ${colors.security.safe}22`,
-                width: 'fit-content',
-              }}
-            >
+            Like enterprise SIEM systems, TARA uses statistical baselines and z-score thresholds
+            to identify anomalous neural signals in real-time
+          </div>
+
+          {/* Anomaly Detection Visualization */}
+          <AnomalyDetectionViz
+            width={950}
+            height={400}
+            showLabels={true}
+            showDistribution={true}
+            anomalyFrame={frame - 500}
+          />
+
+          {/* Method cards */}
+          <div
+            style={{
+              display: 'flex',
+              gap: 24,
+              marginTop: 30,
+              opacity: interpolate(frame - 580, [0, 30], [0, 1], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+              }),
+            }}
+          >
+            {[
+              { label: 'Statistical Baseline', desc: 'Moving average μ from historical data', icon: 'μ' },
+              { label: 'Threshold Detection', desc: 'Z-score alerts at ±2.5σ deviation', icon: 'σ' },
+              { label: 'Real-time Response', desc: 'Automated defense on anomaly detection', icon: '⚡' },
+            ].map((item, i) => (
               <div
+                key={i}
                 style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: colors.security.safe,
-                  boxShadow: `0 0 8px ${colors.security.safe}`,
+                  padding: '18px 28px',
+                  background: 'rgba(0,0,0,0.5)',
+                  borderRadius: 14,
+                  border: `1px solid ${colors.primary.accent}33`,
+                  textAlign: 'center',
+                  minWidth: 220,
+                  backdropFilter: 'blur(10px)',
                 }}
-              />
-              <span
-                style={{
-                  color: colors.security.safe,
+              >
+                <div style={{
+                  fontSize: 32,
+                  color: colors.primary.accent,
+                  fontFamily: typography.fontFamily.mono,
+                  marginBottom: 10,
+                }}>
+                  {item.icon}
+                </div>
+                <div style={{
+                  fontSize: 15,
                   fontWeight: 600,
-                  fontSize: 14,
-                }}
-              >
-                100% Open Source
-              </span>
-              <span
-                style={{
+                  color: colors.text.primary,
+                  marginBottom: 6,
+                }}>
+                  {item.label}
+                </div>
+                <div style={{
+                  fontSize: 13,
                   color: colors.text.muted,
-                  fontSize: 14,
-                }}
-              >
-                Apache 2.0
-              </span>
-            </div>
+                  lineHeight: 1.4,
+                }}>
+                  {item.desc}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Decorative corner elements */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 40,
-          right: 40,
-          width: 60,
-          height: 60,
-          borderTop: `1px solid ${colors.primary.accent}33`,
-          borderRight: `1px solid ${colors.primary.accent}33`,
-          opacity: interpolate(frame, [0, 60], [0, 0.5], {
-            extrapolateRight: 'clamp',
-          }),
-        }}
-      />
+      {showTARAIntro && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 40,
+            right: 40,
+            width: 60,
+            height: 60,
+            borderTop: `1px solid ${colors.primary.accent}33`,
+            borderRight: `1px solid ${colors.primary.accent}33`,
+            opacity: interpolate(frame, [0, 60], [0, 0.5], {
+              extrapolateRight: 'clamp',
+            }),
+          }}
+        />
+      )}
     </AbsoluteFill>
   );
 };
