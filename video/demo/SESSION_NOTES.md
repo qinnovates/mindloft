@@ -95,7 +95,7 @@
 ### Files to Check for Threshold Values
 - `/oni/MAIN/oni-framework/COHERENCE.md`
 - `/oni/MAIN/oni-framework/ONI_LAYERS.md`
-- `/oni/MAIN/oni-academy/` (course materials)
+- `/oni/learning/oni-academy/` (course materials)
 - `/oni/docs/` (GitHub Pages source)
 - `/oni/README.md`
 

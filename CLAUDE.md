@@ -55,7 +55,15 @@ ONI/
 ├── scripts/
 │   └── sync_brand.py                   # Syncs brand.json → README.md
 │
-├── neuroscience-homework-todo/         # Personal research/learning - neuroscience for BCI security
+├── learning/                           # Educational content and personal research
+│   ├── oni-academy/                    # ONI Academy (pip install oni-academy)
+│   │   ├── README.md                   # Academy documentation
+│   │   ├── ONI_ACADEMY.md              # Course curriculum
+│   │   └── oni_academy/                # Source code
+│   └── neuroscience-bci/               # Personal neuroscience learning for BCI security
+│       ├── README.md                   # Learning roadmap
+│       ├── brain-regions/              # Brain anatomy notes
+│       └── Research-BCI_Mouse_Movement.md
 │
 ├── .github/
 │   ├── .gitignore                      # Git ignore rules
@@ -106,12 +114,6 @@ ONI/
     │   │   ├── visualization/          # Real-time dashboards
     │   │   └── ui/                     # Streamlit web interface
     │   └── tests/                      # Unit tests
-    │
-    ├── oni-academy/                    # ONI Academy (educational platform)
-    │   ├── README.md                   # Academy documentation
-    │   └── oni_academy/
-    │       ├── __init__.py             # Package entry point
-    │       └── _brand.py               # Loads brand from brand.json
     │
     ├── publications/                   # CONTENT ONLY
     │   ├── 0-oni-framework/            # Base/foundational content
@@ -292,8 +294,9 @@ Push to GitHub → website auto-updates on next page load.
 | `project/` | **Project management** | prd.json, processes/ (workflows, improvements) |
 | `oni-framework/` | **Python library** | Source code, tests, package config (pip installable) |
 | `tara-nsec-platform/` | **TARA package** | Source, tests, visualizations, pyproject.toml |
-| `oni-academy/` | **Educational platform** | Learning modules, tutorials, interactive content |
 | `publications/` | **Content only** | Blog posts, technical documents |
+
+> **Note:** `oni-academy/` has moved to `learning/oni-academy/` (root-level `learning/` folder).
 | `resources/templates/` | Formatting templates | APA template, Blog template |
 | `resources/pipeline/` | Research pipeline | Incoming papers, processed, scripts, keywords |
 | `resources/editor/` | **Editor Agent** | Quality validation, sync rules, auto-fix logic |
