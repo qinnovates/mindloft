@@ -24,9 +24,15 @@ st.set_page_config(
 
 # Import styles
 try:
-    from .styles import inject_styles, hero_section, section_header, feature_card, metric_card, info_box
+    from .styles import (
+        inject_styles, hero_section, section_header, feature_card, metric_card, info_box,
+        inject_terminal_styles, mock_terminal, api_method_card
+    )
 except ImportError:
-    from styles import inject_styles, hero_section, section_header, feature_card, metric_card, info_box
+    from styles import (
+        inject_styles, hero_section, section_header, feature_card, metric_card, info_box,
+        inject_terminal_styles, mock_terminal, api_method_card
+    )
 
 # Inject global CSS
 inject_styles()
@@ -52,6 +58,7 @@ def main():
         "Neural Firewall": render_firewall,
         "Privacy": render_privacy,
         "Threat Detection": render_threats,
+        "API Playground": render_api_playground,
         "Interactive Lab": render_interactive_lab,
         "Code Examples": render_code_lab,
         "Research": render_research,
@@ -105,6 +112,7 @@ def render_sidebar():
         st.markdown('<p style="font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Resources</p>', unsafe_allow_html=True)
 
         resource_items = [
+            "API Playground",
             "Interactive Lab",
             "Code Examples",
             "Research",
@@ -203,9 +211,9 @@ def render_home():
             <div class="oni-card-text">Apply the Kohno threat model to classify and defend against BCI attacks.</div>
         </div>
         <div class="oni-card">
-            <div class="oni-card-icon">🧪</div>
-            <div class="oni-card-title">Interactive Lab</div>
-            <div class="oni-card-text">Explore live visualizations and simulations to see ONI concepts in action.</div>
+            <div class="oni-card-icon">💻</div>
+            <div class="oni-card-title">API Playground</div>
+            <div class="oni-card-text">Interactive terminal to learn the ONI API with live code execution and examples.</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -232,8 +240,8 @@ def render_home():
         if st.button("Learn Threats", key="go_threats", use_container_width=True):
             navigate_to("Threat Detection")
     with col6:
-        if st.button("Open Lab", key="go_lab", use_container_width=True, type="primary"):
-            navigate_to("Interactive Lab")
+        if st.button("Try API", key="go_api_card", use_container_width=True, type="primary"):
+            navigate_to("API Playground")
 
     st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
 
@@ -263,18 +271,35 @@ def render_home():
 
     st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
 
-    # Quick start code
-    section_header("Quick Start")
+    # Quick start with mock terminal
+    section_header("Quick Start", "Try it in your terminal")
 
-    st.code("""pip install oni-framework
+    # Inject terminal styles
+    inject_terminal_styles()
 
-# In Python:
-from oni import CoherenceMetric, NeuralFirewall
+    # Mock terminal showing installation and first use
+    mock_terminal([
+        {"type": "prompt", "text": "$ "},
+        {"type": "command", "text": "pip install oni-framework"},
+        {"type": "output", "text": ""},
+        {"type": "output", "text": "Collecting oni-framework"},
+        {"type": "output", "text": "  Downloading oni_framework-0.2.1-py3-none-any.whl (42 kB)"},
+        {"type": "success", "text": "Successfully installed oni-framework-0.2.1"},
+        {"type": "output", "text": ""},
+        {"type": "prompt", "text": "$ "},
+        {"type": "command", "text": "python"},
+        {"type": "output", "text": "Python 3.11.0"},
+        {"type": "highlight", "text": ">>> from oni import CoherenceMetric"},
+        {"type": "highlight", "text": ">>> metric = CoherenceMetric(reference_freq=40.0)"},
+        {"type": "highlight", "text": ">>> trust = metric.calculate([0.0, 0.025, 0.050], [100, 98, 102])"},
+        {"type": "highlight", "text": ">>> print(f'Signal trust: {trust:.2f}')"},
+        {"type": "success", "text": "Signal trust: 0.89"},
+    ], title="Terminal — Quick Start")
 
-# Calculate signal trust
-metric = CoherenceMetric(reference_freq=40.0)
-trust = metric.calculate([0.0, 0.025, 0.050], [100, 98, 102])
-print(f"Signal trust: {trust:.2f}")""", language="python")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("Explore API Playground", key="go_api", use_container_width=True, type="primary"):
+            navigate_to("API Playground")
 
 
 def render_what_is_oni():
@@ -894,6 +919,451 @@ def render_threats():
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+
+def render_api_playground():
+    """API Playground - Interactive API learning with mock terminal."""
+    # Inject terminal styles
+    inject_terminal_styles()
+
+    st.markdown("## API Playground")
+    st.markdown("*Learn the ONI API through interactive examples*")
+
+    st.markdown("---")
+
+    # Quick Start with Mock Terminal
+    section_header("Quick Start", "Install and try ONI in your terminal")
+
+    # Installation terminal
+    mock_terminal([
+        {"type": "prompt", "text": "$ "},
+        {"type": "command", "text": "pip install oni-framework"},
+        {"type": "output", "text": ""},
+        {"type": "output", "text": "Collecting oni-framework"},
+        {"type": "output", "text": "  Downloading oni_framework-0.2.1-py3-none-any.whl (42 kB)"},
+        {"type": "output", "text": "Installing collected packages: oni-framework"},
+        {"type": "success", "text": "Successfully installed oni-framework-0.2.1"},
+        {"type": "output", "text": ""},
+        {"type": "prompt", "text": "$ "},
+        {"type": "command", "text": "python"},
+        {"type": "output", "text": "Python 3.11.0 (main) [GCC 11.3.0]"},
+        {"type": "highlight", "text": '>>> from oni import CoherenceMetric, NeuralFirewall, ONIStack'},
+        {"type": "highlight", "text": '>>> print("ONI Framework loaded!")'},
+        {"type": "success", "text": "ONI Framework loaded!"},
+    ], title="Terminal — pip install")
+
+    st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
+
+    # Interactive API Sandbox
+    section_header("API Sandbox", "Select a module to explore")
+
+    # Tabs for different API modules
+    api_tab = st.selectbox(
+        "Select API Module:",
+        ["CoherenceMetric", "NeuralFirewall", "ONIStack", "ScaleFrequencyInvariant", "Privacy Tools"],
+        label_visibility="collapsed"
+    )
+
+    st.markdown("---")
+
+    if api_tab == "CoherenceMetric":
+        render_coherence_api()
+    elif api_tab == "NeuralFirewall":
+        render_firewall_api()
+    elif api_tab == "ONIStack":
+        render_stack_api()
+    elif api_tab == "ScaleFrequencyInvariant":
+        render_scale_freq_api()
+    elif api_tab == "Privacy Tools":
+        render_privacy_api()
+
+
+def render_coherence_api():
+    """Coherence Metric API playground."""
+    inject_terminal_styles()
+
+    st.markdown("### CoherenceMetric")
+    st.markdown("*Calculate signal trustworthiness scores*")
+
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        st.markdown("**API Reference**")
+
+        api_method_card(
+            "CoherenceMetric",
+            "(reference_freq=40.0)",
+            "CoherenceMetric instance",
+            "Create a new coherence metric calculator with the specified reference frequency (Hz)."
+        )
+
+        api_method_card(
+            ".calculate",
+            "(arrival_times, amplitudes)",
+            "float (0.0 - 1.0)",
+            "Calculate coherence score from timing and amplitude data. Higher score = more trustworthy."
+        )
+
+        api_method_card(
+            ".interpret",
+            "(cs)",
+            "tuple (level, description)",
+            "Get human-readable interpretation of a coherence score."
+        )
+
+    with col2:
+        st.markdown("**Try It Live**")
+
+        ref_freq = st.number_input("Reference Frequency (Hz)", value=40.0, min_value=1.0, max_value=200.0)
+
+        st.markdown("**Signal Data** (comma-separated)")
+        times_input = st.text_input("Arrival Times (seconds)", value="0.0, 0.025, 0.050, 0.075, 0.100")
+        amps_input = st.text_input("Amplitudes (μV)", value="100, 98, 102, 99, 101")
+
+        if st.button("Calculate Coherence", type="primary"):
+            try:
+                from oni import CoherenceMetric
+
+                times = [float(x.strip()) for x in times_input.split(",")]
+                amps = [float(x.strip()) for x in amps_input.split(",")]
+
+                metric = CoherenceMetric(reference_freq=ref_freq)
+                cs = metric.calculate(times, amps)
+                level, desc = metric.interpret(cs)
+
+                # Show result in terminal style
+                mock_terminal([
+                    {"type": "highlight", "text": f">>> metric = CoherenceMetric(reference_freq={ref_freq})"},
+                    {"type": "highlight", "text": f">>> cs = metric.calculate({times}, {amps})"},
+                    {"type": "highlight", "text": ">>> print(f'Score: {cs:.4f}')"},
+                    {"type": "success", "text": f"Score: {cs:.4f}"},
+                    {"type": "highlight", "text": ">>> metric.interpret(cs)"},
+                    {"type": "output", "text": f"('{level}', '{desc}')"},
+                ], title="Python REPL")
+
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+
+def render_firewall_api():
+    """Neural Firewall API playground."""
+    inject_terminal_styles()
+
+    st.markdown("### NeuralFirewall")
+    st.markdown("*Filter signals at the brain-computer boundary*")
+
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        st.markdown("**API Reference**")
+
+        api_method_card(
+            "NeuralFirewall",
+            "(threshold_high=0.6, threshold_low=0.3, amplitude_bounds=(0, 500))",
+            "NeuralFirewall instance",
+            "Create a firewall with configurable thresholds for signal filtering."
+        )
+
+        api_method_card(
+            "Signal",
+            "(arrival_times, amplitudes, authenticated=False)",
+            "Signal instance",
+            "Create a signal object to be filtered. Authentication status affects decision."
+        )
+
+        api_method_card(
+            ".filter",
+            "(signal)",
+            "FilterResult",
+            "Filter a signal. Returns decision (ACCEPT/REJECT/ACCEPT_FLAG), coherence score, and reason."
+        )
+
+    with col2:
+        st.markdown("**Try It Live**")
+
+        th_high = st.slider("High Threshold", 0.5, 0.9, 0.6, key="fw_th_high")
+        th_low = st.slider("Low Threshold", 0.1, 0.5, 0.3, key="fw_th_low")
+        authenticated = st.checkbox("Signal Authenticated", value=True, key="fw_auth")
+
+        quality = st.select_slider(
+            "Signal Quality",
+            options=["Corrupted", "Poor", "Medium", "Good", "Excellent"],
+            value="Good",
+            key="fw_quality"
+        )
+
+        if st.button("Filter Signal", type="primary", key="fw_filter"):
+            try:
+                from oni import NeuralFirewall
+                from oni.firewall import Signal
+
+                quality_signals = {
+                    "Corrupted": ([0.0, 0.1, 0.15], [100, 30, 180]),
+                    "Poor": ([0.0, 0.03, 0.07], [100, 70, 130]),
+                    "Medium": ([0.0, 0.026, 0.052], [100, 85, 115]),
+                    "Good": ([0.0, 0.025, 0.050], [100, 95, 105]),
+                    "Excellent": ([0.0, 0.025, 0.050], [100, 99, 101]),
+                }
+
+                times, amps = quality_signals[quality]
+
+                firewall = NeuralFirewall(threshold_high=th_high, threshold_low=th_low)
+                signal = Signal(arrival_times=times, amplitudes=amps, authenticated=authenticated)
+                result = firewall.filter(signal)
+
+                decision_color = {
+                    "ACCEPT": "success",
+                    "REJECT": "error",
+                    "ACCEPT_FLAG": "warning",
+                }
+
+                mock_terminal([
+                    {"type": "highlight", "text": f">>> firewall = NeuralFirewall(threshold_high={th_high}, threshold_low={th_low})"},
+                    {"type": "highlight", "text": f">>> signal = Signal(arrival_times={times}, amplitudes={amps}, authenticated={authenticated})"},
+                    {"type": "highlight", "text": ">>> result = firewall.filter(signal)"},
+                    {"type": "highlight", "text": ">>> print(result.decision.name)"},
+                    {"type": decision_color.get(result.decision.name, "output"), "text": result.decision.name},
+                    {"type": "highlight", "text": ">>> print(f'Coherence: {result.coherence:.3f}')"},
+                    {"type": "output", "text": f"Coherence: {result.coherence:.3f}"},
+                    {"type": "highlight", "text": ">>> print(result.reason)"},
+                    {"type": "output", "text": result.reason},
+                ], title="Python REPL")
+
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+
+def render_stack_api():
+    """ONI Stack API playground."""
+    inject_terminal_styles()
+
+    st.markdown("### ONIStack")
+    st.markdown("*Navigate the 14-layer security model*")
+
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        st.markdown("**API Reference**")
+
+        api_method_card(
+            "ONIStack",
+            "()",
+            "ONIStack instance",
+            "Create an ONI Stack representing the full 14-layer model."
+        )
+
+        api_method_card(
+            ".layer",
+            "(n)",
+            "Layer object",
+            "Get a specific layer by number (1-14). Returns layer name, function, and attack surfaces."
+        )
+
+        api_method_card(
+            ".biological_layers",
+            "()",
+            "Iterator[Layer]",
+            "Iterate through biological domain layers (L9-L14)."
+        )
+
+        api_method_card(
+            ".silicon_layers",
+            "()",
+            "Iterator[Layer]",
+            "Iterate through silicon domain layers (L1-L7)."
+        )
+
+        api_method_card(
+            ".bridge_layer",
+            "()",
+            "Layer",
+            "Get the Neural Gateway (L8) — the critical boundary layer."
+        )
+
+    with col2:
+        st.markdown("**Try It Live**")
+
+        selected_layer = st.slider("Select Layer", 1, 14, 8, key="stack_layer")
+
+        if st.button("Explore Layer", type="primary", key="stack_explore"):
+            try:
+                from oni import ONIStack
+
+                stack = ONIStack()
+                layer = stack.layer(selected_layer)
+
+                # Determine domain
+                if selected_layer <= 7:
+                    domain = "Silicon"
+                elif selected_layer == 8:
+                    domain = "Bridge"
+                else:
+                    domain = "Biology"
+
+                attack_surfaces = getattr(layer, 'attack_surfaces', [])
+                attack_str = str(attack_surfaces) if attack_surfaces else "[]"
+
+                mock_terminal([
+                    {"type": "highlight", "text": ">>> from oni import ONIStack"},
+                    {"type": "highlight", "text": ">>> stack = ONIStack()"},
+                    {"type": "highlight", "text": f">>> layer = stack.layer({selected_layer})"},
+                    {"type": "highlight", "text": ">>> print(f'Name: {layer.name}')"},
+                    {"type": "success", "text": f"Name: {layer.name}"},
+                    {"type": "highlight", "text": ">>> print(f'Domain: {domain}')"},
+                    {"type": "output", "text": f"Domain: {domain}"},
+                    {"type": "highlight", "text": ">>> print(f'Function: {layer.function}')"},
+                    {"type": "output", "text": f"Function: {layer.function}"},
+                    {"type": "highlight", "text": ">>> print(f'Attack Surfaces: {layer.attack_surfaces}')"},
+                    {"type": "warning" if attack_surfaces else "output", "text": f"Attack Surfaces: {attack_str}"},
+                ], title="Python REPL")
+
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+
+def render_scale_freq_api():
+    """Scale-Frequency Invariant API playground."""
+    inject_terminal_styles()
+
+    st.markdown("### ScaleFrequencyInvariant")
+    st.markdown("*Validate signals against the f × S ≈ k constraint*")
+
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        st.markdown("**API Reference**")
+
+        api_method_card(
+            "ScaleFrequencyInvariant",
+            "(k=1e-3, tolerance=0.5)",
+            "ScaleFrequencyInvariant instance",
+            "Create validator with constant k and tolerance for deviation."
+        )
+
+        api_method_card(
+            ".validate",
+            "(frequency, spatial_scale)",
+            "bool",
+            "Check if frequency/scale combination is biologically plausible."
+        )
+
+        api_method_card(
+            ".deviation",
+            "(frequency, spatial_scale)",
+            "float",
+            "Calculate how far the signal deviates from the expected f × S ≈ k relationship."
+        )
+
+        api_method_card(
+            ".expected_frequency",
+            "(spatial_scale)",
+            "float",
+            "Calculate expected frequency for a given spatial scale."
+        )
+
+    with col2:
+        st.markdown("**Try It Live**")
+
+        freq = st.number_input("Frequency (Hz)", value=40.0, min_value=0.1, max_value=1000.0, key="sfi_freq")
+        scale_um = st.number_input("Spatial Scale (μm)", value=100.0, min_value=0.01, max_value=100000.0, key="sfi_scale")
+
+        if st.button("Validate", type="primary", key="sfi_validate"):
+            try:
+                from oni import ScaleFrequencyInvariant
+
+                sfi = ScaleFrequencyInvariant()
+                scale_m = scale_um * 1e-6  # Convert μm to meters
+
+                is_valid = sfi.validate(freq, scale_m)
+                deviation = sfi.deviation(freq, scale_m)
+                expected = sfi.expected_frequency(scale_m)
+
+                mock_terminal([
+                    {"type": "highlight", "text": ">>> from oni import ScaleFrequencyInvariant"},
+                    {"type": "highlight", "text": ">>> sfi = ScaleFrequencyInvariant()"},
+                    {"type": "highlight", "text": f">>> sfi.validate({freq}, {scale_m:.2e})"},
+                    {"type": "success" if is_valid else "error", "text": str(is_valid)},
+                    {"type": "highlight", "text": f">>> sfi.deviation({freq}, {scale_m:.2e})"},
+                    {"type": "output", "text": f"{deviation:.2%}"},
+                    {"type": "highlight", "text": f">>> sfi.expected_frequency({scale_m:.2e})"},
+                    {"type": "output", "text": f"{expected:.1f} Hz"},
+                ], title="Python REPL")
+
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+
+def render_privacy_api():
+    """Privacy Tools API playground."""
+    inject_terminal_styles()
+
+    st.markdown("### Privacy Tools")
+    st.markdown("*Calculate privacy risk and anonymize neural data*")
+
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        st.markdown("**API Reference**")
+
+        api_method_card(
+            "PrivacyScoreCalculator",
+            "()",
+            "PrivacyScoreCalculator instance",
+            "Create a calculator for assessing privacy risk in neural signals."
+        )
+
+        api_method_card(
+            ".calculate",
+            "(signal_data, detected_erps)",
+            "PrivacyScore",
+            "Calculate privacy risk based on detected ERPs. Returns score (0-1) and interpretation."
+        )
+
+        api_method_card(
+            "KohnoThreatModel",
+            "()",
+            "KohnoThreatModel instance",
+            "The foundational BCI threat taxonomy (Kohno et al., 2009)."
+        )
+
+    with col2:
+        st.markdown("**Try It Live**")
+
+        st.markdown("**Select Detected ERPs:**")
+        has_p300 = st.checkbox("P300 (Recognition)", value=True, key="priv_p300")
+        has_n170 = st.checkbox("N170 (Face Recognition)", value=False, key="priv_n170")
+        has_n400 = st.checkbox("N400 (Semantic Memory)", value=False, key="priv_n400")
+
+        if st.button("Calculate Risk", type="primary", key="priv_calc"):
+            try:
+                from oni import PrivacyScoreCalculator
+
+                erps = []
+                if has_p300:
+                    erps.append("P300")
+                if has_n170:
+                    erps.append("N170")
+                if has_n400:
+                    erps.append("N400")
+
+                calc = PrivacyScoreCalculator()
+                sample_signal = [0.1 * i for i in range(100)]
+                result = calc.calculate(signal_data=sample_signal, detected_erps=erps)
+
+                risk_type = "error" if result.score >= 0.6 else ("warning" if result.score >= 0.3 else "success")
+
+                mock_terminal([
+                    {"type": "highlight", "text": ">>> from oni import PrivacyScoreCalculator"},
+                    {"type": "highlight", "text": ">>> calc = PrivacyScoreCalculator()"},
+                    {"type": "highlight", "text": f">>> result = calc.calculate(signal_data, detected_erps={erps})"},
+                    {"type": "highlight", "text": ">>> print(f'Privacy Risk: {result.score:.2f}')"},
+                    {"type": risk_type, "text": f"Privacy Risk: {result.score:.2f}"},
+                    {"type": "highlight", "text": ">>> print(result.interpretation)"},
+                    {"type": "output", "text": result.interpretation},
+                ], title="Python REPL")
+
+            except Exception as e:
+                st.error(f"Error: {e}")
 
 
 def render_interactive_lab():

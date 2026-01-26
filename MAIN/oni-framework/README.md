@@ -48,6 +48,33 @@ The ONI Framework provides tools for validating and securing neural signals at t
 - **Neural Firewall** - Zero-trust signal filtering at the Neural Gateway (L8)
 - **Scale-Frequency Invariant** - Validate signals against the f × S ≈ k constraint
 
+---
+
+## Package Architecture
+
+```
+oni-framework (pip install oni-framework)
+│
+├── Core Library (oni/)
+│   ├── coherence.py      # Cₛ signal trust scoring
+│   ├── firewall.py       # Zero-trust signal filtering
+│   ├── layers.py         # 14-layer ONI model
+│   ├── scale_freq.py     # f × S ≈ k invariant
+│   └── neurosecurity/    # Kohno threat model, BCI Anonymizer
+│
+└── ONI Academy (oni/ui/)
+    └── Interactive learning interface for BCI security concepts
+```
+
+| Component | Purpose | Access |
+|-----------|---------|--------|
+| **Core Library** | Security primitives for BCI development | `from oni import CoherenceMetric, NeuralFirewall` |
+| **ONI Academy** | Interactive UI for learning ONI concepts | `oni ui` or `streamlit run oni/ui/app.py` |
+
+**ONI Academy** is the branded learning interface included with the framework. It provides interactive visualizations and tutorials but is built on the same core library you use in production code.
+
+---
+
 ## Installation
 
 ```bash

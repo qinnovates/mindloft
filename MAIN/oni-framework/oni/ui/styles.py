@@ -618,3 +618,242 @@ def card_grid_end():
     """End a card grid container."""
     import streamlit as st
     st.markdown('</div>', unsafe_allow_html=True)
+
+
+# Mock Terminal CSS
+TERMINAL_CSS = """
+<style>
+    .mock-terminal {
+        background: #0d1117;
+        border: 1px solid #30363d;
+        border-radius: 12px;
+        overflow: hidden;
+        font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .terminal-header {
+        background: linear-gradient(180deg, #2d333b 0%, #22272e 100%);
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid #30363d;
+    }
+
+    .terminal-btn {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .terminal-btn.close { background: #ff5f56; }
+    .terminal-btn.minimize { background: #ffbd2e; }
+    .terminal-btn.maximize { background: #27c93f; }
+
+    .terminal-title {
+        color: #8b949e;
+        font-size: 0.75rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .terminal-body {
+        padding: 1rem;
+        min-height: 200px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .terminal-line {
+        color: #c9d1d9;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin: 0.25rem 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .terminal-prompt {
+        color: #58a6ff;
+    }
+
+    .terminal-command {
+        color: #c9d1d9;
+    }
+
+    .terminal-output {
+        color: #8b949e;
+    }
+
+    .terminal-success {
+        color: #3fb950;
+    }
+
+    .terminal-error {
+        color: #f85149;
+    }
+
+    .terminal-warning {
+        color: #d29922;
+    }
+
+    .terminal-highlight {
+        color: #a371f7;
+    }
+
+    .terminal-cursor {
+        display: inline-block;
+        width: 8px;
+        height: 16px;
+        background: #58a6ff;
+        animation: blink 1s step-end infinite;
+        vertical-align: text-bottom;
+        margin-left: 2px;
+    }
+
+    @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+    }
+
+    .terminal-typing {
+        overflow: hidden;
+        animation: typing 0.5s steps(40, end);
+    }
+
+    @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+    }
+
+    /* API Reference Card Styles */
+    .api-method-card {
+        background: rgba(30, 30, 50, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin: 1rem 0;
+        transition: all 0.2s ease;
+    }
+
+    .api-method-card:hover {
+        border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .api-method-name {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1rem;
+        color: #a371f7;
+        font-weight: 600;
+    }
+
+    .api-method-params {
+        color: #79c0ff;
+    }
+
+    .api-method-returns {
+        color: #7ee787;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+
+    .api-method-desc {
+        color: #8b949e;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        line-height: 1.5;
+    }
+</style>
+"""
+
+
+def inject_terminal_styles():
+    """Inject terminal-specific CSS styles."""
+    import streamlit as st
+    st.markdown(TERMINAL_CSS, unsafe_allow_html=True)
+
+
+def mock_terminal(lines: list, title: str = "Terminal"):
+    """
+    Create a mock terminal display.
+
+    Args:
+        lines: List of dicts with 'type' and 'text' keys.
+               Types: 'prompt', 'command', 'output', 'success', 'error', 'warning', 'highlight'
+        title: Terminal window title
+
+    Example:
+        mock_terminal([
+            {"type": "prompt", "text": "$ "},
+            {"type": "command", "text": "pip install oni-framework"},
+            {"type": "output", "text": "Collecting oni-framework..."},
+            {"type": "success", "text": "Successfully installed oni-framework-0.2.1"},
+        ])
+    """
+    import streamlit as st
+
+    # Build terminal lines HTML
+    lines_html = ""
+    for line in lines:
+        line_type = line.get("type", "output")
+        text = line.get("text", "")
+        css_class = f"terminal-{line_type}"
+
+        # Handle combined prompt + command lines
+        if line_type == "prompt":
+            lines_html += f'<div class="terminal-line"><span class="terminal-prompt">{text}</span>'
+        elif line_type == "command" and lines_html.endswith("</span>"):
+            lines_html = lines_html[:-7]  # Remove closing </span>
+            lines_html += f'</span><span class="terminal-command">{text}</span></div>'
+        else:
+            lines_html += f'<div class="terminal-line"><span class="{css_class}">{text}</span></div>'
+
+    terminal_html = f"""
+    <div class="mock-terminal">
+        <div class="terminal-header">
+            <span class="terminal-btn close"></span>
+            <span class="terminal-btn minimize"></span>
+            <span class="terminal-btn maximize"></span>
+            <span class="terminal-title">{title}</span>
+        </div>
+        <div class="terminal-body">
+            {lines_html}
+        </div>
+    </div>
+    """
+
+    st.markdown(terminal_html, unsafe_allow_html=True)
+
+
+def interactive_terminal(session_key: str = "terminal_history"):
+    """
+    Create an interactive mock terminal with input.
+
+    Args:
+        session_key: Session state key for storing terminal history
+    """
+    import streamlit as st
+
+    # Initialize history
+    if session_key not in st.session_state:
+        st.session_state[session_key] = []
+
+    return session_key
+
+
+def api_method_card(name: str, params: str, returns: str, description: str):
+    """Display an API method reference card."""
+    import streamlit as st
+
+    html = f"""
+    <div class="api-method-card">
+        <div>
+            <span class="api-method-name">{name}</span><span class="api-method-params">{params}</span>
+        </div>
+        <div class="api-method-returns">Returns: {returns}</div>
+        <div class="api-method-desc">{description}</div>
+    </div>
+    """
+    st.markdown(html, unsafe_allow_html=True)
