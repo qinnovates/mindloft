@@ -1,0 +1,17 @@
+# CODEOWNERS - Require approval for critical files
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# This file (protects itself)
+.github/CODEOWNERS @qikevinl
+
+# CI/CD workflows (prevent malicious publish)
+.github/workflows/ @qikevinl
+
+# Security policy
+SECURITY.md @qikevinl
+
+# Brand configuration (single source of truth)
+MAIN/resources/brand.json @qikevinl
+
+# Layer definitions
+MAIN/oni-framework/ONI_LAYERS.md @qikevinl
