@@ -8,7 +8,8 @@
 
 | Resource | Location | Purpose |
 |----------|----------|---------|
-| **Brand Constants** | `MAIN/resources/brand.json` | **Single source of truth for ONI/TARA naming, slogans, versions** |
+| **Brand Constants** | `MAIN/resources/brand.json` | **Single source of truth for ONI/TARA naming, slogans, versions, stats** |
+| **Website Stats** | `docs/index.html` | **Dynamic stats system - see "Website Stats System" section** |
 | **Main Wiki (INDEX)** | `MAIN/INDEX.md` | **Central hub - navigation, dependencies, cross-references** |
 | **Python Package** | `MAIN/oni-framework/` | **pip install oni-framework** |
 | **Transparency Statement** | `MAIN/governance/TRANSPARENCY.md` | **Human-AI collaboration audit trail** |
@@ -224,6 +225,63 @@ print(ONI.full_name)  # "Open Neurosecurity Interoperability"
 from tara_mvp._brand import TARA, ONI
 print(TARA.tagline)  # "Protection for the neural frontier"
 ```
+
+---
+
+## Website Stats System
+
+> **The GitHub Pages site (`docs/index.html`) displays stats that update from two sources.**
+
+### Stats Overview
+
+| Stat | Source | Update Method |
+|------|--------|---------------|
+| **Security Layers** | `brand.json → stats.security_layers` | Manual (always 14) |
+| **Threat Patterns** | `brand.json → stats.threat_patterns` | Manual |
+| **Learning Portals** | `brand.json → stats.learning_portals` | Manual |
+| **Commits** | GitHub API | **Auto** (real-time) |
+| **Interactive Tools** | GitHub API | **Auto** (counts `.html` in `docs/visualizations/`) |
+| **Python Packages** | GitHub API | **Auto** (counts `pyproject.toml` in `MAIN/`) |
+
+### How It Works
+
+1. **Page loads** → displays default values from HTML
+2. **JavaScript fetches** `brand.json` from GitHub raw URL
+3. **Manual stats** (layers, threats, portals) update from `brand.json`
+4. **Auto stats** fetch from GitHub API:
+   - Commits: `api.github.com/repos/qikevinl/ONI/commits`
+   - Tools: `api.github.com/repos/qikevinl/ONI/contents/docs/visualizations`
+   - Packages: Checks each `MAIN/*/` directory for `pyproject.toml`
+
+### Updating Manual Stats
+
+Edit `MAIN/resources/brand.json`:
+
+```json
+{
+  "stats": {
+    "security_layers": 14,
+    "threat_patterns": 25,
+    "learning_portals": 1
+  }
+}
+```
+
+Push to GitHub → website auto-updates on next page load.
+
+### Auto Stats Update Automatically When:
+
+| Stat | Triggers Update |
+|------|-----------------|
+| Commits | Any push to main branch |
+| Interactive Tools | Add/remove `.html` files in `docs/visualizations/` |
+| Python Packages | Add/remove directories with `pyproject.toml` in `MAIN/` |
+
+### Troubleshooting
+
+- **Stats not updating?** GitHub API has rate limits (60 req/hr unauthenticated). Wait and refresh.
+- **Wrong count?** Check that files match expected patterns (`.html` for tools, `pyproject.toml` for packages).
+- **Local testing?** Stats fetch from GitHub raw/API, so local changes won't reflect until pushed.
 
 ---
 

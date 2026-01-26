@@ -946,6 +946,11 @@
         </div>
     </section>
 
+    <!-- Slogan Banner -->
+    <div style="text-align: center; padding: 3rem 2rem;" data-aos="fade-up">
+        <p id="slogan-text" style="font-size: 1.75rem; font-style: italic; color: var(--text-secondary); font-weight: 300; letter-spacing: 0.02em;">"Our minds. Our rules. Our future."</p>
+    </div>
+
     <section class="section" id="install" style="padding-top: 2rem;">
         <!-- ONI Layers Diagram - Scroll Reveal -->
         <div style="text-align: center; margin-bottom: 2rem;">
@@ -958,27 +963,27 @@
 
         <div class="stats-row" data-aos="fade-up">
             <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/oni-framework/ONI_LAYERS.md" class="stat" data-aos="zoom-in" data-aos-delay="100">
-                <div class="stat-value" data-count="14">14</div>
+                <div class="stat-value" id="stat-layers" data-count="14">14</div>
                 <div class="stat-label">Security Layers</div>
             </a>
             <a href="visualizations/06-oni-attack-matrix.html" class="stat" data-aos="zoom-in" data-aos-delay="200">
-                <div class="stat-value" data-count="25">25</div>
+                <div class="stat-value" id="stat-threats" data-count="25">25</div>
                 <div class="stat-label">Threat Patterns</div>
             </a>
             <a href="https://pypi.org/project/oni-framework/" class="stat" data-aos="zoom-in" data-aos-delay="300">
-                <div class="stat-value" data-count="2">2</div>
+                <div class="stat-value" id="stat-packages" data-count="2">2</div>
                 <div class="stat-label">Python Packages</div>
             </a>
             <a href="https://github.com/qikevinl/ONI/commits/main/" class="stat" data-aos="zoom-in" data-aos-delay="400">
-                <div class="stat-value">150+</div>
+                <div class="stat-value" id="stat-commits" data-count="150">150+</div>
                 <div class="stat-label">Commits</div>
             </a>
             <a href="visualizations/" class="stat" data-aos="zoom-in" data-aos-delay="500">
-                <div class="stat-value" data-count="6">6</div>
+                <div class="stat-value" id="stat-tools" data-count="6">6</div>
                 <div class="stat-label">Interactive Tools</div>
             </a>
             <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/oni-academy/README.md" class="stat" data-aos="zoom-in" data-aos-delay="600">
-                <div class="stat-value" data-count="1">1</div>
+                <div class="stat-value" id="stat-portals" data-count="1">1</div>
                 <div class="stat-label">Learning Portal</div>
             </a>
         </div>
@@ -1620,9 +1625,102 @@
                     missionEl.textContent = brand.oni.mission;
                 }
 
+                // Update slogan text
+                const sloganEl = document.getElementById('slogan-text');
+                if (sloganEl && brand.oni && brand.oni.slogan) {
+                    sloganEl.textContent = '"' + brand.oni.slogan + '"';
+                }
+
+                // Update MANUAL stats from brand.json
+                // These require human updates: security_layers (always 14), threat_patterns, learning_portals
+                if (brand.stats) {
+                    const manualStats = {
+                        'stat-layers': brand.stats.security_layers,
+                        'stat-threats': brand.stats.threat_patterns,
+                        'stat-portals': brand.stats.learning_portals
+                    };
+                    for (const [id, value] of Object.entries(manualStats)) {
+                        const el = document.getElementById(id);
+                        if (el && value !== undefined) {
+                            el.textContent = value;
+                            el.setAttribute('data-count', value);
+                        }
+                    }
+                }
+
                 console.log('Brand loaded:', brand.oni.name, 'v' + brand.oni.version);
             } catch (err) {
-                console.log('Using default mission text (brand.json not available)');
+                console.log('Using default brand values (brand.json not available)');
+            }
+
+            // ===========================================
+            // AUTO-UPDATING STATS (fetched from GitHub API)
+            // - Commits: Total commit count on main branch
+            // - Interactive Tools: Count of .html files in docs/visualizations/
+            // - Python Packages: Count of pyproject.toml files in MAIN/
+            // ===========================================
+
+            // Fetch commit count
+            try {
+                const commitsResponse = await fetch('https://api.github.com/repos/qikevinl/ONI/commits?per_page=1');
+                if (commitsResponse.ok) {
+                    const linkHeader = commitsResponse.headers.get('Link');
+                    if (linkHeader) {
+                        const match = linkHeader.match(/page=(\d+)>; rel="last"/);
+                        if (match) {
+                            const commitCount = parseInt(match[1]);
+                            const commitEl = document.getElementById('stat-commits');
+                            if (commitEl) {
+                                commitEl.textContent = commitCount;
+                                commitEl.setAttribute('data-count', commitCount);
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                console.log('Using default commit count');
+            }
+
+            // Fetch interactive tools count (HTML files in visualizations/)
+            try {
+                const vizResponse = await fetch('https://api.github.com/repos/qikevinl/ONI/contents/docs/visualizations');
+                if (vizResponse.ok) {
+                    const files = await vizResponse.json();
+                    const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.name !== 'index.html');
+                    const toolsEl = document.getElementById('stat-tools');
+                    if (toolsEl && htmlFiles.length > 0) {
+                        toolsEl.textContent = htmlFiles.length;
+                        toolsEl.setAttribute('data-count', htmlFiles.length);
+                    }
+                }
+            } catch (err) {
+                console.log('Using default tools count');
+            }
+
+            // Fetch python packages count (directories with pyproject.toml in MAIN/)
+            try {
+                const mainResponse = await fetch('https://api.github.com/repos/qikevinl/ONI/contents/MAIN');
+                if (mainResponse.ok) {
+                    const items = await mainResponse.json();
+                    const dirs = items.filter(i => i.type === 'dir');
+                    let packageCount = 0;
+
+                    // Check each directory for pyproject.toml
+                    for (const dir of dirs) {
+                        try {
+                            const dirResponse = await fetch(`https://api.github.com/repos/qikevinl/ONI/contents/MAIN/${dir.name}/pyproject.toml`);
+                            if (dirResponse.ok) packageCount++;
+                        } catch (e) { /* not a package */ }
+                    }
+
+                    const packagesEl = document.getElementById('stat-packages');
+                    if (packagesEl && packageCount > 0) {
+                        packagesEl.textContent = packageCount;
+                        packagesEl.setAttribute('data-count', packageCount);
+                    }
+                }
+            } catch (err) {
+                console.log('Using default packages count');
             }
         }
 

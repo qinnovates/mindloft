@@ -19,14 +19,21 @@
     "description": "A neural security platform for BCI monitoring, simulation, and attack testing. Real-time security analysis for brain-computer interfaces.",
     "version": "0.8.1"
   },
+  "stats": {
+    "_comment": "Manual stats only. Auto-updating stats (commits, tools, packages) are fetched via GitHub API in docs/index.html",
+    "security_layers": 14,
+    "threat_patterns": 25,
+    "learning_portals": 1
+  },
   "_meta": {
     "last_updated": "2026-01-26",
     "location": "MAIN/resources/brand.json",
     "consumers": [
       "MAIN/oni-framework/oni/brand.py",
       "MAIN/tara-nsec-platform/tara_mvp/_brand.py",
-      "MAIN/oni-academy/oni_academy/_brand.py"
+      "MAIN/oni-academy/oni_academy/_brand.py",
+      "docs/index.html"
     ],
-    "note": "Single source of truth for all ONI project branding"
+    "note": "Single source of truth for all ONI project branding and stats"
   }
 }
