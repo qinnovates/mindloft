@@ -373,6 +373,17 @@
 
         .stat {
             text-align: center;
+            text-decoration: none;
+            color: inherit;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.2s;
+            display: block;
+        }
+
+        .stat:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
         }
 
         .stat-value {
@@ -383,10 +394,20 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .stat:hover .stat-value {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .stat-label {
             color: var(--text-muted);
             font-size: 0.85rem;
             margin-top: 0.25rem;
+        }
+
+        .stat:hover .stat-label {
+            color: var(--text-secondary);
         }
 
         /* Resources */
@@ -726,26 +747,26 @@
         </div>
 
         <div class="stats-row">
-            <div class="stat">
+            <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/oni-framework/ONI_LAYERS.md" class="stat">
                 <div class="stat-value">14</div>
                 <div class="stat-label">Security Layers</div>
-            </div>
-            <div class="stat">
+            </a>
+            <a href="visualizations/06-oni-attack-matrix.html" class="stat">
                 <div class="stat-value">25</div>
                 <div class="stat-label">Threat Patterns</div>
-            </div>
-            <div class="stat">
+            </a>
+            <a href="https://pypi.org/project/oni-framework/" class="stat">
                 <div class="stat-value">2</div>
                 <div class="stat-label">Python Packages</div>
-            </div>
-            <div class="stat">
+            </a>
+            <a href="https://github.com/qikevinl/ONI/tree/main/MAIN/oni-framework/tests" class="stat">
                 <div class="stat-value">150+</div>
                 <div class="stat-label">Unit Tests</div>
-            </div>
-            <div class="stat">
+            </a>
+            <a href="visualizations/" class="stat">
                 <div class="stat-value">6</div>
                 <div class="stat-label">Interactive Tools</div>
-            </div>
+            </a>
         </div>
 
         <div class="quick-grid">
