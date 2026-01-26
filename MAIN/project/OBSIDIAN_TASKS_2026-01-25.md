@@ -24,7 +24,7 @@
 |------|--------|----------|--------|
 | Add NeuroTechX MOABB datasets for benchmarking | Jan 23 notes | Medium | ✅ Done (MOABBAdapter in tara_mvp/data/) |
 | Review awesome-bci tools for potential adoption | Jan 23 notes | Medium | ✅ Done |
-| Verify notable researchers list with multiple AIs (reduce bias) | Jan 24 notes | Medium | 🔲 Pending |
+| Verify notable researchers list with multiple AIs (reduce bias) | Jan 24 notes | Medium | ✅ Done |
 | Create ONI final paper abstract compiling git, docs, blogs | Jan 23 notes | High | ✅ Done |
 
 **References:**
@@ -67,6 +67,7 @@
 
 | Task | Completed Date | Notes |
 |------|----------------|-------|
+| Verify researcher list (bias check) | 2026-01-25 | resources/pipeline/processed/2026-01-25_researcher-verification.md |
 | Review awesome-bci tools | 2026-01-25 | resources/pipeline/processed/2026-01-25_awesome-bci-review.md |
 | Create ONI final paper abstract | 2026-01-25 | ONI_PAPER_ABSTRACT.md in publications/0-oni-framework/ |
 | Add EMOTIV to PARTNERSHIPS.md | 2026-01-24 | Tan Le connection |
