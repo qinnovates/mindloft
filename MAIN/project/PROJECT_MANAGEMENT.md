@@ -410,9 +410,16 @@ When assigning priority, score each criterion (0-2):
 | **Vulnerability Analysis** | ✅ Complete | Cₛ fingerprinting identified, mitigations designed |
 | **User Documentation** | ✅ Complete | DATA_POLICY_FAQ.md, visualization, demo video |
 | **Score Anonymization Spec** | ✅ Complete | ε-DP, bucketing, temporal aggregation defined |
-| **Federated Learning Design** | 🔄 In Progress | TensorFlow Federated / PySyft evaluation |
-| **Implementation** | ⏳ Pending | Python modules, integration with TARA |
-| **Testing & Validation** | ⏳ Pending | Privacy budget optimization, attack testing |
+| **Score Anonymization Impl** | ⏳ Pending | Python modules for differential privacy, bucketing |
+| **TARA Integration** | ⏳ Pending | Score-only transmission in TARA platform |
+| **Testing & Validation** | ⏳ Pending | Privacy budget optimization, fingerprinting tests |
+
+**Backlogged (Future Work):**
+| Phase | Status | Notes |
+|-------|--------|-------|
+| **Federated Learning** | 📋 Backlogged | TensorFlow Federated / PySyft — requires significant infrastructure |
+| **Gradient Encryption** | 📋 Backlogged | Homomorphic encryption for gradient sharing |
+| **Secure Aggregation Server** | 📋 Backlogged | Centralized gradient aggregation without visibility |
 
 **Architecture:**
 ```

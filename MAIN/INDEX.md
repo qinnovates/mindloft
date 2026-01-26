@@ -2,8 +2,8 @@
 
 > **The central navigation hub for all ONI Framework research, publications, and development.**
 
-**Version:** 2.2
-**Last Updated:** 2026-01-25
+**Version:** 2.3
+**Last Updated:** 2026-01-26
 **Status:** Active Development
 
 ---
@@ -280,8 +280,9 @@ The ONI Framework maintains Responsible AI standards and documents alignment wit
 
 | Document | Purpose |
 |----------|---------|
-| [PROJECT_MANAGEMENT.md](project/PROJECT_MANAGEMENT.md) | **Master PM doc — scope, risks, priorities, metrics** |
-| [KANBAN.md](project/KANBAN.md) | **Visual Kanban board — task status at a glance** |
+| **[README.md](project/README.md)** | **START HERE — Status dashboard, metrics, quick links** |
+| [PROJECT_MANAGEMENT.md](project/PROJECT_MANAGEMENT.md) | Master PM doc — scope, risks, priorities, metrics |
+| [KANBAN.md](project/KANBAN.md) | Visual Kanban board — task status at a glance |
 | [prd.json](project/prd.json) | Machine-readable task tracker with exit conditions |
 | [PUBLISHING_INSTRUCTIONS.md](project/processes/PUBLISHING_INSTRUCTIONS.md) | Step-by-step publishing workflow |
 | [PROCESS_IMPROVEMENTS.md](project/processes/PROCESS_IMPROVEMENTS.md) | Workflow enhancement tracking |
@@ -430,6 +431,7 @@ MAIN/
 │   └── PEDIATRIC_CONSIDERATIONS.md   # Minors and incapacity guidelines
 │
 ├── project/                    # Project management
+│   ├── README.md               # **STATUS DASHBOARD — start here**
 │   ├── PROJECT_MANAGEMENT.md   # Master PM doc (scope, risks, priorities)
 │   ├── KANBAN.md               # Visual Kanban board
 │   ├── prd.json                # Task tracker with exit conditions

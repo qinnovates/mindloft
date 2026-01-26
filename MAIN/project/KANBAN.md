@@ -3,7 +3,7 @@
 > **Visual task board for tracking work in progress.**
 > Synced with `prd.json` — update both when tasks move.
 
-**Last Updated:** 2026-01-24
+**Last Updated:** 2026-01-26
 **Sprint:** Q1 2026
 
 ---
@@ -32,10 +32,10 @@
 |                  |                  |                  |                  | [P1] ONI_LAYERS  |
 |                  |                  |                  |                  | Reference        |
 |                  |                  |                  |                  |                  |
-|                  |                  |                  |                  | ...+12 more      |
+|                  |                  |                  |                  | ...+15 more      |
 |                  |                  |                  |                  |                  |
 +------------------+------------------+------------------+------------------+------------------+
-     3 items            3 items           0 items           0 items           18 items
+     3 items            3 items           0 items           0 items           21 items
 ```
 
 ---
@@ -138,8 +138,11 @@
 | consent-validation-module | consent.py module | 2026-01-24 | P1 |
 | neurosecurity-implementation | Kohno + BCI Anonymizer | 2026-01-23 | P1 |
 | moabb-adapter-implementation | MOABB adapter for EEG | 2026-01-24 | P1 |
+| pm-hub-readme | Project README dashboard | 2026-01-26 | P2 |
+| github-pages-sri-fix | SRI hash fix for GitHub Pages | 2026-01-26 | P0 |
+| pypi-security-scan | Bandit security scan + fixes | 2026-01-26 | P1 |
 
-**Total Completed:** 18 tasks
+**Total Completed:** 21 tasks
 
 ---
 
@@ -160,7 +163,7 @@
 ```
 Backlog: brainflow-integration
 To Do: changelog-creation
-Done: editor-agent, pm-agent, images-organization
+Done: editor-agent, pm-agent, images-organization, pm-hub-readme, github-pages-sri-fix, pypi-security-scan
 ```
 
 ### Code & Implementation
@@ -199,8 +202,8 @@ Done: hourglass-diagram-prompt
 
 | Metric | Value |
 |--------|-------|
-| Total Tasks | 23 |
-| Completed | 18 (78%) |
+| Total Tasks | 27 |
+| Completed | 22 (81%) |
 | In Progress | 0 |
 | Pending | 5 |
 | Blocked | 0 |
@@ -253,5 +256,5 @@ After moving tasks:
 
 ---
 
-*Synced with: `prd.json` v0.4.0*
-*Board Version: 1.0*
+*Synced with: `prd.json` v0.5.0*
+*Board Version: 1.1*

@@ -1,8 +1,8 @@
 {
   "project": "ONI Framework",
   "version": "0.4.0",
-  "last_updated": "2026-01-24",
-  "loop_iteration": 4,
+  "last_updated": "2026-01-26",
+  "loop_iteration": 13,
 
   "exit_conditions": {
     "global": "All tasks complete, Editor Agent passes with 0 critical issues, ONI layers correct across all docs",
@@ -215,6 +215,33 @@
       "completed_at": "2026-01-24",
       "priority": "medium",
       "learnings": "Created Risk Impact Assessment methodology (Likelihood × Impact matrix), Priority Framework (P0-P3), Scope Change Request process, and milestone roadmap. Kanban with WIP limits (3 in progress, 2 in review)."
+    },
+    {
+      "id": "pm-hub-readme",
+      "description": "Create centralized README.md dashboard for project/ folder with status tracking, quick links, and navigation",
+      "status": "complete",
+      "exit_condition": "MAIN/project/README.md exists with status dashboard, metrics, milestone overview, and links to all PM documents",
+      "completed_at": "2026-01-26",
+      "priority": "medium",
+      "learnings": "Consolidated PM navigation into single dashboard. Progress bars and metrics at top for quick status. Links to detailed docs (KANBAN, prd.json, PROJECT_MANAGEMENT) for drill-down."
+    },
+    {
+      "id": "github-pages-sri-fix",
+      "description": "Fix SRI hash mismatch causing GitHub Pages black screen",
+      "status": "complete",
+      "exit_condition": "docs/index.html loads without errors; AOS animations work",
+      "completed_at": "2026-01-26",
+      "priority": "critical",
+      "learnings": "SRI (Subresource Integrity) hashes must match actual file content. Incorrect hashes cause browser to block CDN scripts silently. AOS library elements with data-aos stay hidden (opacity:0) when library fails to load."
+    },
+    {
+      "id": "pypi-security-scan",
+      "description": "Run Bandit security scan on all PyPI packages and address findings",
+      "status": "complete",
+      "exit_condition": "Bandit scan passes with only acknowledged patterns (nosec annotations)",
+      "completed_at": "2026-01-26",
+      "priority": "high",
+      "learnings": "Used # nosec annotations for reviewed patterns: B102 exec() for hardcoded examples, B110 try/except/pass for fault-tolerant callbacks, B311 random for UI jitter, B105 false positives."
     }
   ],
 
@@ -414,10 +441,10 @@
   ],
 
   "metrics": {
-    "total_tasks": 24,
-    "completed": 19,
+    "total_tasks": 27,
+    "completed": 22,
     "in_progress": 0,
     "pending": 5,
-    "completion_rate": "79%"
+    "completion_rate": "81%"
   }
 }
