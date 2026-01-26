@@ -418,48 +418,59 @@ oni-framework/
 
 ## API Reference
 
-### `oni.CoherenceMetric`
+### Signal Trust & Validation
 
-- `calculate(arrival_times, amplitudes)` → Coherence score (0-1)
-- `calculate_variances(...)` → Individual variance components
-- `interpret(cs)` → (level, description) tuple
+| Class | Method | Returns | Description |
+|-------|--------|---------|-------------|
+| `CoherenceMetric` | `calculate(times, amps)` | `float` (0-1) | Calculate Cₛ trust score |
+| | `calculate_variances(...)` | `VarianceComponents` | Individual σ²φ, σ²τ, σ²γ |
+| | `interpret(cs)` | `(level, desc)` | Human-readable interpretation |
+| `NeuralFirewall` | `filter(signal)` | `FilterResult` | ACCEPT/REJECT/FLAG decision |
+| | `filter_batch(signals)` | `List[FilterResult]` | Batch processing |
+| | `get_stats()` | `dict` | Accept/reject/flag counts |
+| | `register_callback(level, fn)` | — | Alert on security events |
+| `ScaleFrequencyInvariant` | `validate(freq, scale)` | `bool` | Check biological plausibility |
+| | `deviation(freq, scale)` | `float` | Fractional deviation from k |
+| | `expected_frequency(scale)` | `float` | Predicted f for given scale |
+| | `anomaly_score(freq, scale)` | `float` (0-1) | 0=normal, 1=impossible |
 
-### `oni.NeuralFirewall`
+### Architecture (14-Layer Model)
 
-- `filter(signal)` → FilterResult with decision
-- `filter_batch(signals)` → List of FilterResults
-- `get_stats()` → Filtering statistics
-- `register_callback(level, fn)` → Alert callbacks
+| Class | Method | Returns | Description |
+|-------|--------|---------|-------------|
+| `ONIStack` | `layer(n)` | `Layer` | Get layer by number (1-14) |
+| | `silicon_layers()` | `List[Layer]` | L1-L7 (OSI networking) |
+| | `biology_layers()` | `List[Layer]` | L9-L14 (Cognitive processing) |
+| | `bridge_layer()` | `Layer` | L8 (Neural Gateway) |
+| | `ascii_diagram()` | `str` | Visual stack representation |
+| | `brain_regions_for_layer(n)` | `List[str]` | Brain regions for layer |
+| | `neurotransmitters_for_layer(n)` | `List[str]` | Neurotransmitters for layer |
+| | `functions_for_layer(n)` | `List[str]` | Cognitive functions for layer |
+| | `layer_neuroscience_report(n)` | `str` | Comprehensive report |
+| | `security_implications_for_layer(n)` | `List[str]` | Security concerns |
 
-### `oni.ONIStack`
+### Neuroscience Mappings
 
-- `layer(n)` → Get layer by number (1-14)
-- `silicon_layers()` → L1-L7 (OSI networking)
-- `biology_layers()` → L9-L14 (Cognitive processing)
-- `bridge_layer()` → L8 (Neural Gateway)
-- `ascii_diagram()` → Visual representation
-- `brain_regions_for_layer(n)` → Brain regions for layer
-- `neurotransmitters_for_layer(n)` → Neurotransmitters for layer
-- `functions_for_layer(n)` → Cognitive functions for layer
-- `layer_neuroscience_report(n)` → Comprehensive report
-- `security_implications_for_layer(n)` → Security concerns
+| Class | Method | Returns | Description |
+|-------|--------|---------|-------------|
+| `NeuroscienceAtlas` | `brain_region(abbr)` | `BrainRegion` | Look up by abbreviation (SNc, VTA) |
+| | `neurotransmitter(name)` | `NeurotransmitterSystem` | Look up NT system |
+| | `cognitive_function(name)` | `CognitiveFunction` | Look up function |
+| | `citation(id)` | `Citation` | Get research citation |
+| | `citations_for(topic)` | `List[Citation]` | Citations for a topic |
+| | `layer_mapping(n)` | `dict` | All mappings for a layer |
+| | `bci_capabilities_summary()` | `dict` | What BCI can/cannot do |
 
-### `oni.NeuroscienceAtlas`
+### Neurosecurity (Kohno Threat Model)
 
-- `brain_region(abbr)` → BrainRegion object
-- `neurotransmitter(name)` → NeurotransmitterSystem object
-- `cognitive_function(name)` → CognitiveFunction object
-- `citation(id)` → Research citation
-- `citations_for(topic)` → Citations for a topic
-- `layer_mapping(n)` → All mappings for a layer
-- `bci_capabilities_summary()` → What BCI can/cannot do
-
-### `oni.ScaleFrequencyInvariant`
-
-- `validate(frequency, scale)` → Boolean validity
-- `deviation(frequency, scale)` → Fractional deviation
-- `expected_frequency(scale)` → Predicted frequency
-- `anomaly_score(frequency, scale)` → 0-1 anomaly score
+| Class | Method | Returns | Description |
+|-------|--------|---------|-------------|
+| `KohnoThreatModel` | `classify_threat(signal)` | `ThreatType` | CIA threat classification |
+| | `assess_risk(signal)` | `float` (0-1) | Risk score |
+| `NeurosecurityFirewall` | `filter(signal)` | `SecurityDecision` | Combined coherence + threats |
+| | `register_threat_callback(fn)` | — | Alert on threats |
+| `BCIAnonymizer` | `anonymize(signal)` | `AnonymizedSignal` | Strip sensitive ERPs |
+| `PrivacyScoreCalculator` | `calculate(signal)` | `PrivacyScoreResult` | Quantify info leakage risk |
 
 ## Documentation & Resources
 
