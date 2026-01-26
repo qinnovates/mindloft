@@ -2,8 +2,8 @@
 
 > **Purpose:** Persistent learnings from Ralph Loop iterations. AI agents read this file at the start of each session to benefit from discovered patterns, gotchas, and conventions.
 
-**Last Updated:** 2026-01-25
-**Loop Iterations:** 10
+**Last Updated:** 2026-01-26
+**Loop Iterations:** 11
 
 ---
 
@@ -33,6 +33,11 @@
 | 2026-01-25 | **CI/CD pipeline fully implemented** | tests.yml (matrix: Python 3.9-3.12, Ubuntu/macOS), security.yml (Bandit, Safety, CodeQL), publish.yml (trusted publishing). Weekly security scans. |
 | 2026-01-25 | **Dependabot configured for automated security updates** | Weekly updates for: pip (oni-framework, oni-tara), npm (oni-demo-video), GitHub Actions. Groups minor/patch updates. |
 | 2026-01-25 | **GitHub Pages made dynamic with CDN-based animations** | AOS.js for scroll animations, CSS keyframes for hero effects, neural network background, counter animations. No build step required — CDN libraries auto-update. |
+| 2026-01-26 | **Brand sync script enhanced** | Now syncs: full_name, tagline, slogan (ONI) + full_name (TARA) to README.md; mission to docs/index.html. Generic regex patterns allow any slogan value. |
+| 2026-01-26 | **brand.json moved to MAIN/resources/** | Centralized with other resources. All brand loaders updated with new paths. GitHub workflow trigger path updated. docs/index.html fetch URL updated. |
+| 2026-01-26 | **Slogan changed to singular form** | "My mind. My rules. My future." — Updated across 6 files: brand.json, README.md, CLAUDE.md, and 3 _brand.py fallbacks. |
+| 2026-01-26 | **.gitignore consolidated to repo root** | Removed duplicate .github/.gitignore. Standard location is repo root, not .github/. Added node_modules/, .vite/ for JavaScript projects. |
+| 2026-01-26 | **Removed .vite cache from git tracking** | Build artifacts should never be committed. Used `git rm --cached` to untrack without deleting local files. |
 
 ### Patterns Established
 
@@ -385,14 +390,62 @@ L14: Identity & Ethics         (Biology)
 
 ---
 
+## Brand System Learnings
+
+### Architecture
+
+```
+MAIN/resources/brand.json      ← Single source of truth
+    │
+    ├── oni/brand.py           ← Python API for ONI Framework
+    ├── tara_mvp/_brand.py     ← Python API for TARA (no oni dependency)
+    ├── oni_academy/_brand.py  ← Python API for ONI Academy
+    │
+    ├── scripts/sync_brand.py  ← Syncs to README.md, docs/index.html
+    │
+    └── docs/index.html        ← JavaScript fetches from GitHub raw URL
+```
+
+### What Gets Synced
+
+| Source Field | Target File | Pattern |
+|--------------|-------------|---------|
+| `oni.full_name` | README.md | `**ONI** (Full Name) —` |
+| `oni.tagline` | README.md | `*Tagline*` (italicized line) |
+| `oni.slogan` | README.md | `**Slogan**` (bold line) |
+| `tara.full_name` | README.md | `**TARA** (Full Name) is` |
+| `oni.mission` | docs/index.html | `<p id="mission-text">` |
+
+### Sync Triggers
+
+| Trigger | How |
+|---------|-----|
+| **Automatic** | GitHub Action on push to `main` when `MAIN/resources/brand.json` changes |
+| **Manual** | `python scripts/sync_brand.py` |
+| **Dynamic** | docs/index.html fetches from raw.githubusercontent.com at runtime |
+
+### Key Patterns
+
+- **Fallback values:** Python _brand.py files have hardcoded defaults for pip-installed packages without repo access
+- **Path flexibility:** Brand loaders try multiple paths to find brand.json in different installation contexts
+- **Generic regex:** Sync patterns use flexible regex (e.g., any bold line) rather than matching exact old values
+
+### Gotchas
+
+- `.gitignore` belongs in repo root, NOT `.github/` — the latter only applies to that subdirectory
+- README.md is static markdown — cannot dynamically load values like HTML/JavaScript can
+- When moving brand.json, must update: all _brand.py paths, sync_brand.py, workflow trigger, docs/index.html fetch URL
+
+---
+
 ## Loop Metadata
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 9 |
-| Learnings Captured | 34 |
-| Gotchas Documented | 12 |
-| Patterns Established | 26 |
+| Total Iterations | 11 |
+| Learnings Captured | 40 |
+| Gotchas Documented | 14 |
+| Patterns Established | 30 |
 | Personas Defined | 7 |
 | PM Documents | 3 |
 | CI/CD Workflows | 3 |
