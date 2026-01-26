@@ -2,7 +2,7 @@
 
 *The OSI of Mind*
 
-**Our minds. Our rules. Our future.**
+**My mind. My rules. My future.**
 
 The most important connections deserve the most thought.
 

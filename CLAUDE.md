@@ -206,7 +206,7 @@ Update `brand.json` when:
   "full_name": "Open Neurosecurity Interoperability",
   "name": "ONI Framework",
   "tagline": "The OSI of Mind",
-  "slogan": "Our minds. Our rules. Our future.",
+  "slogan": "My mind. My rules. My future.",
   "mission": "The mind is the last frontier...",
   "description": "A unified 14-layer model...",
   "version": "0.2.0"
