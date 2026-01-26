@@ -3,7 +3,7 @@
 > **Purpose:** Persistent learnings from Ralph Loop iterations. AI agents read this file at the start of each session to benefit from discovered patterns, gotchas, and conventions.
 
 **Last Updated:** 2026-01-26
-**Loop Iterations:** 11
+**Loop Iterations:** 14
 
 ---
 
@@ -46,6 +46,8 @@
 | 2026-01-26 | **Security scanning with Bandit + nosec annotations** | Scanned all 3 PyPI packages. Added `# nosec` comments for reviewed patterns: B102 (exec for demos), B110 (fault-tolerant callbacks), B311 (random for UI), B105 (false positives). |
 | 2026-01-26 | **Broken links fixed across repo** | Fixed: `06-oni-attack-matrix.html` → `06-oni-threat-matrix.html`, relative links → absolute GitHub URLs in READMEs for PyPI compatibility. |
 | 2026-01-26 | **Packages released: oni-framework 0.2.4, oni-academy 0.1.4** | Link fixes, security annotations. oni-academy first public release. |
+| 2026-01-26 | **Packages released: oni-framework 0.2.5, oni-academy 0.1.5** | Final link fixes, SRI hash corrections, security nosec annotations. |
+| 2026-01-26 | **Centralized PM hub created** | `project/README.md` dashboard with progress bars, metrics, quick links. Single entry point for all PM docs. |
 
 ### Patterns Established
 
@@ -55,6 +57,7 @@
 - **CDN for GitHub Pages:** Use unpkg.com/CDN for JavaScript libraries (AOS, GSAP) to avoid npm dependencies and get auto-updates
 - **Dependabot Grouping:** Group minor/patch updates together to reduce PR noise while catching security issues
 - **Post-Publish Validation:** Accessibility checks run after PyPI publish (workflow_run trigger), not on every commit — ensures release quality without blocking development
+- **PM Dashboard Pattern:** Create README.md in project folders with progress bars and metrics at top, quick links to detailed docs below — single entry point for navigation
 
 ### Gotchas Avoided
 
@@ -453,12 +456,12 @@ MAIN/resources/brand.json      ← Single source of truth
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 13 |
-| Learnings Captured | 48 |
+| Total Iterations | 14 |
+| Learnings Captured | 50 |
 | Gotchas Documented | 16 |
-| Patterns Established | 31 |
+| Patterns Established | 32 |
 | Personas Defined | 7 |
-| PM Documents | 3 |
+| PM Documents | 4 |
 | CI/CD Workflows | 4 |
 
 ---
