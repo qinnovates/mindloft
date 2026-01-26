@@ -7,8 +7,11 @@
     <meta name="description" content="BCIs are being implanted in humans today — with no security standard. ONI is building one. 14 layers extending OSI into the biological domain.">
     <meta name="keywords" content="BCI security, neural interface, brain-computer interface, neurosecurity, ONI model, neural security standard, neuroethics">
 
-    <!-- AOS (Animate on Scroll) - CDN -->
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' https: data:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; font-src 'self';">
+
+    <!-- AOS (Animate on Scroll) - CDN with SRI -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" integrity="sha384-/rJKQnzXffaXJfyu1v+gEbEYxbp0OQA3BI/X9p5N8nCf4NL8MF8p1K1b9796xeMs" crossorigin="anonymous">
 
     <!-- Open Graph -->
     <meta property="og:title" content="ONI Model | The OSI of Mind">
@@ -1598,7 +1601,7 @@
     </script>
 
     <!-- AOS (Animate on Scroll) - CDN -->
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" integrity="sha384-oZixfuJpr9a/P06Xslt0X7l/w8j7VZT9Kzl49e7K1FiWJr8+Eca5bJnpuP0v+2V9" crossorigin="anonymous"></script>
 
     <script>
         // Initialize AOS
@@ -1812,6 +1815,23 @@
             updateReveal();
         }
 
+        // Security: Sanitize and validate brand.json input
+        function sanitizeText(input, maxLength = 500) {
+            if (typeof input !== 'string') return null;
+            // Limit length to prevent DoS
+            if (input.length > maxLength) return null;
+            // Remove any HTML-like content as extra protection (even though textContent is safe)
+            if (/<[^>]*>/.test(input)) return null;
+            // Remove control characters
+            return input.replace(/[\x00-\x1F\x7F]/g, '');
+        }
+
+        function sanitizeNumber(input, min = 0, max = 10000) {
+            const num = parseInt(input, 10);
+            if (isNaN(num) || num < min || num > max) return null;
+            return num;
+        }
+
         // Load brand constants from brand.json
         async function loadBrandConstants() {
             try {
@@ -1821,42 +1841,50 @@
 
                 const brand = await response.json();
 
-                // Update mission text
+                // Validate structure
+                if (!brand || typeof brand !== 'object' || !brand.oni) {
+                    throw new Error('Invalid brand.json structure');
+                }
+
+                // Update mission text (with validation)
                 const missionEl = document.getElementById('mission-text');
-                if (missionEl && brand.oni && brand.oni.mission) {
-                    missionEl.textContent = brand.oni.mission;
+                const safeMission = sanitizeText(brand.oni.mission, 500);
+                if (missionEl && safeMission) {
+                    missionEl.textContent = safeMission;
                 }
 
-                // Update slogan text
+                // Update slogan text (with validation)
                 const sloganEl = document.getElementById('slogan-text');
-                if (sloganEl && brand.oni && brand.oni.slogan) {
-                    sloganEl.textContent = '"' + brand.oni.slogan + '"';
+                const safeSlogan = sanitizeText(brand.oni.slogan, 200);
+                if (sloganEl && safeSlogan) {
+                    sloganEl.textContent = '"' + safeSlogan + '"';
                 }
 
-                // Update vision text
+                // Update vision text (with validation)
                 const visionEl = document.getElementById('vision-text');
-                if (visionEl && brand.oni && brand.oni.vision) {
-                    visionEl.textContent = brand.oni.vision;
+                const safeVision = sanitizeText(brand.oni.vision, 600);
+                if (visionEl && safeVision) {
+                    visionEl.textContent = safeVision;
                 }
 
-                // Update MANUAL stats from brand.json
+                // Update MANUAL stats from brand.json (with validation)
                 // These require human updates: security_layers (always 14), threat_signatures, learning_portals
-                if (brand.stats) {
+                if (brand.stats && typeof brand.stats === 'object') {
                     const manualStats = {
-                        'stat-layers': { value: brand.stats.security_layers, suffix: '' },
-                        'stat-threats': { value: brand.stats.threat_signatures, suffix: '+' },
-                        'stat-portals': { value: brand.stats.learning_portals, suffix: '' }
+                        'stat-layers': { value: sanitizeNumber(brand.stats.security_layers, 1, 100), suffix: '' },
+                        'stat-threats': { value: sanitizeNumber(brand.stats.threat_signatures, 1, 1000), suffix: '+' },
+                        'stat-portals': { value: sanitizeNumber(brand.stats.learning_portals, 1, 100), suffix: '' }
                     };
                     for (const [id, config] of Object.entries(manualStats)) {
                         const el = document.getElementById(id);
-                        if (el && config.value !== undefined) {
+                        if (el && config.value !== null) {
                             el.textContent = config.value + config.suffix;
                             el.setAttribute('data-count', config.value);
                         }
                     }
                 }
 
-                console.log('Brand loaded:', brand.oni.name, 'v' + brand.oni.version);
+                console.log('Brand loaded:', sanitizeText(brand.oni.name, 50), 'v' + sanitizeText(brand.oni.version, 20));
             } catch (err) {
                 console.log('Using default brand values (brand.json not available)');
             }
