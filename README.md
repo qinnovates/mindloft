@@ -1,10 +1,16 @@
 # ONI Framework
-*Our mind. Our future. Our rules.*
->*Because the most important connections deserves the most thought.*
-*"Welcome to the OSI of Mind"*
 
- **ONI**: 
-Open/Organic Neurocomputing Interface (ONI) — An extensible framework built on a unified 14-layer model extending OSI into the bio-digital landscape **securely** designed for transparency and interoperability across brain-computer interfaces.
+*The OSI of Mind*
+
+**Our minds. Our rules. Our future.**
+
+The most important connections deserve the most thought.
+
+---
+
+**ONI** (Open Neurocomputing Interface) — a unified 14-layer model extending OSI into the biological domain.
+
+One framework to understand, build, and secure brain-computer interfaces. Open. Extensible. Universal.
 
 ---
 
