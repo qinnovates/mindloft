@@ -1,0 +1,62 @@
+version: 2
+updates:
+  # Python dependencies (oni-framework, oni-tara)
+  - package-ecosystem: "pip"
+    directory: "/MAIN/oni-framework"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps(oni)"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+    labels:
+      - "dependencies"
+      - "oni-framework"
+      - "automated"
+
+  - package-ecosystem: "pip"
+    directory: "/MAIN/tara-neural-security-platform"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps(tara)"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+    labels:
+      - "dependencies"
+      - "oni-tara"
+      - "automated"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "ci"
+      - "automated"
+
+  # npm (if oni-demo-video or GitHub Pages uses npm)
+  - package-ecosystem: "npm"
+    directory: "/oni-demo-video"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(video)"
+    labels:
+      - "dependencies"
+      - "automated"

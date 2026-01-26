@@ -7,6 +7,9 @@
     <meta name="description" content="BCIs are being implanted in humans today — with no security standard. ONI is building one. 14 layers extending OSI into the biological domain.">
     <meta name="keywords" content="BCI security, neural interface, brain-computer interface, neurosecurity, ONI model, neural security standard, neuroethics">
 
+    <!-- AOS (Animate on Scroll) - CDN -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
     <!-- Open Graph -->
     <meta property="og:title" content="ONI Model | The OSI of Mind">
     <meta property="og:description" content="The neural security standard. 14 layers extending OSI to protect brain-computer interfaces.">
@@ -521,6 +524,176 @@
             #audience > div:last-of-type { grid-template-columns: 1fr !important; }
         }
 
+        /* ============================================
+           DYNAMIC ANIMATIONS
+           ============================================ */
+
+        /* Hero text gradient animation */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-cyan), var(--accent-blue));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 6s ease infinite;
+        }
+
+        /* Floating animation for pills */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .pill {
+            animation: float 3s ease-in-out infinite;
+        }
+        .pill:nth-child(2) { animation-delay: 0.5s; }
+        .pill:nth-child(3) { animation-delay: 1s; }
+
+        /* Pulse animation for stats */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); }
+        }
+
+        .stat:hover {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* Card shimmer effect on hover */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .viz-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background-size: 200% 100%;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            border-radius: 12px;
+        }
+
+        .viz-card:hover::before {
+            opacity: 1;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .viz-card {
+            position: relative;
+        }
+
+        /* Animated background gradient for hero */
+        .hero {
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
+            animation: bg-pulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes bg-pulse {
+            0% {
+                background:
+                    radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                    radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                    radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
+            }
+            100% {
+                background:
+                    radial-gradient(ellipse at 40% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                    radial-gradient(ellipse at 60% 70%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                    radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 60%);
+            }
+        }
+
+        /* Typing cursor effect for tagline */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .hero-tagline::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+            color: var(--accent-cyan);
+        }
+
+        /* Neural network dots animation in background */
+        .neural-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .neural-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: neural-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes neural-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        /* Button hover glow */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Stats counter animation */
+        .stat-value {
+            display: inline-block;
+        }
+
+        /* Smooth reveal for sections */
+        [data-aos] {
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         /* Video Player Styles */
         .video-container {
             position: relative;
@@ -691,17 +864,20 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-inner">
-            <div class="hero-content">
-                <p style="font-size: 0.9rem; color: var(--accent-cyan); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 0.5rem;">NEURAL SECURITY STANDARD</p>
-                <h1><span>ONI</span> Framework</h1>
-                <p class="hero-tagline"><em>The OSI of Mind</em></p>
+        <!-- Animated neural network background dots -->
+        <div class="neural-bg" id="neuralBg"></div>
 
-                <p class="hero-desc">
+        <div class="hero-inner" style="position: relative; z-index: 1;">
+            <div class="hero-content">
+                <p data-aos="fade-down" data-aos-delay="100" style="font-size: 0.9rem; color: var(--accent-cyan); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 0.5rem;">NEURAL SECURITY STANDARD</p>
+                <h1 data-aos="fade-up" data-aos-delay="200"><span>ONI</span> Framework</h1>
+                <p class="hero-tagline" data-aos="fade-up" data-aos-delay="300"><em>The OSI of Mind</em></p>
+
+                <p class="hero-desc" data-aos="fade-up" data-aos-delay="400">
                     Securing the most important connection you'll ever make.
                 </p>
 
-                <div class="hero-actions">
+                <div class="hero-actions" data-aos="fade-up" data-aos-delay="500">
                     <a href="visualizations/" class="btn btn-primary">
                         Try Interactive Demo
                     </a>
@@ -710,7 +886,7 @@
                     </a>
                 </div>
 
-                <div class="layer-pills">
+                <div class="layer-pills" data-aos="fade-up" data-aos-delay="600">
                     <span class="pill pill-silicon">L1-L7 Silicon</span>
                     <span class="pill pill-bridge">L8 Neural Gateway</span>
                     <span class="pill pill-biology">L9-L14 Biology</span>
@@ -743,25 +919,25 @@
             <img src="images/oni-14-layer-hourglass.png" alt="ONI 14-Layer Model - Extending OSI into the biological domain" style="max-width: 780px; width: 100%; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
         </div>
 
-        <div class="stats-row">
-            <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/oni-framework/ONI_LAYERS.md" class="stat">
-                <div class="stat-value">14</div>
+        <div class="stats-row" data-aos="fade-up">
+            <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/oni-framework/ONI_LAYERS.md" class="stat" data-aos="zoom-in" data-aos-delay="100">
+                <div class="stat-value" data-count="14">14</div>
                 <div class="stat-label">Security Layers</div>
             </a>
-            <a href="visualizations/06-oni-attack-matrix.html" class="stat">
-                <div class="stat-value">25</div>
+            <a href="visualizations/06-oni-attack-matrix.html" class="stat" data-aos="zoom-in" data-aos-delay="200">
+                <div class="stat-value" data-count="25">25</div>
                 <div class="stat-label">Threat Patterns</div>
             </a>
-            <a href="https://pypi.org/project/oni-framework/" class="stat">
-                <div class="stat-value">2</div>
+            <a href="https://pypi.org/project/oni-framework/" class="stat" data-aos="zoom-in" data-aos-delay="300">
+                <div class="stat-value" data-count="2">2</div>
                 <div class="stat-label">Python Packages</div>
             </a>
-            <a href="https://github.com/qikevinl/ONI/commits/main/" class="stat">
+            <a href="https://github.com/qikevinl/ONI/commits/main/" class="stat" data-aos="zoom-in" data-aos-delay="400">
                 <div class="stat-value">150+</div>
                 <div class="stat-label">Commits</div>
             </a>
-            <a href="visualizations/" class="stat">
-                <div class="stat-value">6</div>
+            <a href="visualizations/" class="stat" data-aos="zoom-in" data-aos-delay="500">
+                <div class="stat-value" data-count="6">6</div>
                 <div class="stat-label">Interactive Tools</div>
             </a>
         </div>
@@ -797,14 +973,14 @@
     </section>
 
     <section class="section" id="explore">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
             <h2>Interactive Learning</h2>
             <p>Explore ONI's neural security concepts through hands-on educational tools</p>
         </div>
 
         <div class="viz-grid">
             <!-- Coherence Metric Playground -->
-            <a href="visualizations/01-coherence-metric-playground.html" class="viz-card">
+            <a href="visualizations/01-coherence-metric-playground.html" class="viz-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="viz-preview">
                     <svg viewBox="0 0 200 100">
                         <defs>
@@ -826,7 +1002,7 @@
             </a>
 
             <!-- ONI Layer Explorer -->
-            <a href="visualizations/02-oni-layer-explorer.html" class="viz-card">
+            <a href="visualizations/02-oni-layer-explorer.html" class="viz-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="viz-preview">
                     <svg viewBox="0 0 200 100">
                         <rect x="30" y="10" width="140" height="12" rx="2" fill="#3b82f6" opacity="0.6"/>
@@ -847,7 +1023,7 @@
             </a>
 
             <!-- Academic Research Alignment -->
-            <a href="visualizations/03-academic-alignment.html" class="viz-card">
+            <a href="visualizations/03-academic-alignment.html" class="viz-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="viz-preview">
                     <svg viewBox="0 0 200 100">
                         <circle cx="60" cy="50" r="25" fill="none" stroke="#10b981" stroke-width="2" opacity="0.6"/>
@@ -867,7 +1043,7 @@
             </a>
 
             <!-- NSAM Checkpoint Simulator -->
-            <a href="visualizations/04-nsam-checkpoint-simulator.html" class="viz-card">
+            <a href="visualizations/04-nsam-checkpoint-simulator.html" class="viz-card" data-aos="fade-up" data-aos-delay="400">
                 <div class="viz-preview">
                     <svg viewBox="0 0 200 100">
                         <circle cx="40" cy="50" r="15" fill="#10b981"/>
@@ -891,7 +1067,7 @@
             </a>
 
             <!-- Scale-Frequency Navigator -->
-            <a href="visualizations/05-scale-frequency-navigator.html" class="viz-card">
+            <a href="visualizations/05-scale-frequency-navigator.html" class="viz-card" data-aos="fade-up" data-aos-delay="500">
                 <div class="viz-preview">
                     <svg viewBox="0 0 200 100">
                         <rect x="20" y="20" width="160" height="60" rx="4" fill="#0a0e17" stroke="#1e293b"/>
@@ -910,7 +1086,7 @@
             </a>
 
             <!-- ONI Threat Matrix -->
-            <a href="visualizations/06-oni-attack-matrix.html" class="viz-card">
+            <a href="visualizations/06-oni-attack-matrix.html" class="viz-card" data-aos="fade-up" data-aos-delay="600">
                 <div class="viz-preview">
                     <svg viewBox="0 0 200 100">
                         <!-- Clean MITRE-style matrix grid -->
@@ -958,7 +1134,7 @@
 
     <!-- Who It's For Section -->
     <section class="section" id="audience">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
             <h2>Who ONI Is For</h2>
             <p>A shared vocabulary for everyone building, securing, and governing BCIs</p>
         </div>
@@ -1203,6 +1379,72 @@
             if (e.key === 'Escape') {
                 closeVideoModal();
             }
+        });
+    </script>
+
+    <!-- AOS (Animate on Scroll) - CDN -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Create neural network background dots
+        function createNeuralBackground() {
+            const container = document.getElementById('neuralBg');
+            if (!container) return;
+
+            const dotCount = 20;
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'neural-dot';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.top = Math.random() * 100 + '%';
+                dot.style.animationDelay = Math.random() * 4 + 's';
+                dot.style.animationDuration = (3 + Math.random() * 2) + 's';
+                container.appendChild(dot);
+            }
+        }
+
+        // Counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                // Start counting when element is in view
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        updateCounter();
+                        observer.disconnect();
+                    }
+                });
+                observer.observe(counter);
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            createNeuralBackground();
+            animateCounters();
         });
     </script>
 </body>
