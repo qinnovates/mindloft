@@ -6,6 +6,8 @@
 
 > **Educational Platform for Neurosecurity** - Learn brain-computer interface security concepts through interactive modules and tutorials.
 
+> **Status:** Alpha. The core framework and [interactive web tools](https://qikevinl.github.io/ONI/visualizations/) are functional. Learning module content is a work-in-progress and will expand with future iterations. Contributions welcome.
+
 ---
 
 ## Overview
