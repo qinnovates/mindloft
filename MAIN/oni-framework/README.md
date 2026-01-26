@@ -1,52 +1,82 @@
-# ONI Framework
+# Cₛ Core (ONI Framework)
 
-**Open Neurosecurity Interoperability Framework** - A Python library for brain-computer interface security.
+**Mathematical API for detection signatures and anomaly validation in brain-computer interfaces.**
 
 [![PyPI version](https://badge.fury.io/py/oni-framework.svg)](https://badge.fury.io/py/oni-framework)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Tests](https://github.com/qikevinl/ONI/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/tests.yml)
 
-> **Research Status:** This library implements theoretical frameworks for BCI security that have not yet been empirically validated. It is intended for research, experimentation, and to provide shared vocabulary for the emerging field of neural interface security. The mathematical models (Cₛ coherence metric, f × S ≈ k invariant) are derived from neuroscience literature but require experimental validation against real BCI data. Contributions and validation efforts are welcome.
-
 ---
 
-## Important: What This Library Is (and Isn't)
+## Core Equations
 
-**This is a framework, not a measurement tool.**
+### Coherence Score (Cₛ)
 
-The ONI Framework provides mathematical formulas and models for evaluating neural signal trustworthiness. It does NOT:
-- Connect to any hardware
-- Measure signals from your computer or any device
-- Collect real data
+The foundation of anomaly detection — a trust score from 0 to 1:
 
-**All examples use sample data.** When you see code like:
-```python
-arrival_times = [0.0, 0.025, 0.050, 0.075]
-amplitudes = [100, 98, 102, 99]
 ```
-These are **made-up numbers for demonstration**. In a real application, this data would come from:
-- A BCI device (like Neuralink, OpenBCI, etc.)
-- Neural signal processing software
-- Research lab equipment
+Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
+```
 
-**Some values are theoretical defaults.** The transport reliability factors (synaptic transmission = 0.85, etc.) are based on neuroscience literature, not live measurements. In a real BCI system, you would measure these from your specific hardware and tissue interface.
+| Symbol | Name | What It Detects |
+|--------|------|-----------------|
+| **σ²φ** | Phase variance | Timing jitter, desynchronization attacks |
+| **σ²τ** | Transport variance | Pathway degradation, signal injection |
+| **σ²γ** | Gain variance | Amplitude manipulation, surge attacks |
 
-**Think of this library as:**
-- A calculator that can process neural signal data (once you have it)
-- A shared vocabulary for discussing BCI security concepts
-- A starting point for building real security systems
+**Output:** 1.0 = perfect trust, 0.0 = anomaly detected
+
+### Scale-Frequency Invariant
+
+Validates biological plausibility of neural signals:
+
+```
+f × S ≈ k (constant)
+```
+
+| Variable | Meaning |
+|----------|---------|
+| **f** | Signal frequency (Hz) |
+| **S** | Spatial scale (meters) |
+| **k** | Biological constant (~0.004) |
+
+**Use case:** Detect impossible signals (e.g., 500 Hz oscillation at whole-brain scale).
 
 ---
 
-## Overview
+## What This API Does
 
-The ONI Framework provides tools for validating and securing neural signals at the brain-computer interface boundary. It implements:
+Build detection signatures for neural signal anomalies:
 
-- **Coherence Metric (Cₛ)** - Quantify signal trustworthiness across timing, pathway, and amplitude dimensions
-- **14-Layer Model** - Unified architecture bridging biological (L1-L7) and silicon (L9-L14) domains
-- **Neural Firewall** - Zero-trust signal filtering at the Neural Gateway (L8)
-- **Scale-Frequency Invariant** - Validate signals against the f × S ≈ k constraint
+```python
+from oni import CoherenceMetric, NeuralFirewall, ScaleFrequencyInvariant
+
+# 1. Calculate trust score from signal data
+metric = CoherenceMetric(reference_freq=40.0)
+cs = metric.calculate(arrival_times, amplitudes)  # → 0.0 to 1.0
+
+# 2. Make accept/reject decisions
+firewall = NeuralFirewall(threshold_low=0.3, threshold_high=0.6)
+result = firewall.filter(signal)  # → ACCEPT, REJECT, or FLAG
+
+# 3. Validate biological plausibility
+sfi = ScaleFrequencyInvariant()
+valid = sfi.validate(frequency=40, spatial_scale=1e-4)  # → True/False
+```
+
+**This is an API, not a measurement tool.** It provides mathematical primitives — you supply the signal data from your BCI hardware.
+
+---
+
+## Quick Reference
+
+| Function | Input | Output | Use For |
+|----------|-------|--------|---------|
+| `CoherenceMetric.calculate()` | timestamps, amplitudes | 0.0–1.0 | Anomaly scoring |
+| `NeuralFirewall.filter()` | Signal object | ACCEPT/REJECT/FLAG | Access control |
+| `ScaleFrequencyInvariant.validate()` | frequency, scale | True/False | Plausibility check |
+| `ONIStack.layer(n)` | layer number | Layer object | Architecture reference |
 
 ---
 
@@ -249,50 +279,60 @@ print(sfi.hierarchy_report())
 | Regional | ~10 mm | ~1-10 Hz | Brain regions |
 | Whole-Brain | ~100 mm | <1 Hz | Global states |
 
-## Core Concepts
+## Detection Signatures
 
-### Coherence Metric Formula
+### Variance Components (σ²)
 
+The Cₛ equation combines three variance measurements:
+
+```python
+from oni import CoherenceMetric
+
+metric = CoherenceMetric(reference_freq=40.0)
+
+# Get individual variance components for custom signatures
+variances = metric.calculate_variances(arrival_times, amplitudes)
+print(f"Phase variance (σ²φ): {variances.phase}")      # Timing attacks
+print(f"Transport variance (σ²τ): {variances.transport}")  # Injection attacks
+print(f"Gain variance (σ²γ): {variances.gain}")        # Amplitude attacks
 ```
-Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
-```
 
-**In plain English:** The coherence score is calculated from three types of "variance" (inconsistency). More variance = lower score = less trustworthy.
-
-| Component | Symbol | What It Measures | Data Source |
-|-----------|--------|------------------|-------------|
-| **Phase variance** | σ²φ | Timing jitter — are pulses arriving when expected? | **Measured from signal** — compares arrival times to reference frequency |
-| **Transport variance** | σ²τ | Pathway reliability — how lossy is the signal path? | **Model defaults** — based on neuroscience literature (can be overridden) |
-| **Gain variance** | σ²γ | Amplitude stability — is signal strength consistent? | **Measured from signal** — compares each amplitude to the mean |
-
-**Important:** Transport variance uses **hardcoded default values** from neuroscience research:
+**Default transport factors** (override for your hardware):
 ```python
 DEFAULT_TRANSPORT_FACTORS = {
-    'myelinated_axon': 0.999,       # Very reliable (insulated nerve fibers)
+    'myelinated_axon': 0.999,       # Very reliable
     'unmyelinated_axon': 0.97,      # Slightly less reliable
-    'synaptic_transmission': 0.85,  # Synapses sometimes fail to fire
-    'dendritic_integration': 0.90,  # Some signal loss in dendrites
+    'synaptic_transmission': 0.85,  # Synapses sometimes fail
+    'dendritic_integration': 0.90,  # Some signal loss
 }
 ```
-In a real BCI system, you would measure these from your specific hardware and replace the defaults.
 
 ### Firewall Decision Matrix
 
-| Coherence | Authentication | Decision |
-|-----------|----------------|----------|
-| High (>0.6) | Valid | ACCEPT |
-| High (>0.6) | Invalid | REJECT |
-| Medium (0.3-0.6) | Valid | ACCEPT + FLAG |
-| Medium (0.3-0.6) | Invalid | REJECT |
-| Low (<0.3) | Any | REJECT |
+| Cₛ Score | Authenticated | Decision | Action |
+|----------|---------------|----------|--------|
+| > 0.6 | Yes | `ACCEPT` | Allow signal |
+| > 0.6 | No | `REJECT` | Block (auth required) |
+| 0.3–0.6 | Yes | `FLAG` | Allow + log for review |
+| 0.3–0.6 | No | `REJECT` | Block |
+| < 0.3 | Any | `REJECT` | Block (anomaly detected) |
 
-### Scale-Frequency Invariant
+### Biological Plausibility Check
 
-```
-f × S ≈ k (constant)
+```python
+from oni import ScaleFrequencyInvariant
 
-Higher frequencies → Smaller spatial scales
-Lower frequencies → Larger spatial scales
+sfi = ScaleFrequencyInvariant()
+
+# Check if signal is biologically possible
+# 40 Hz at 100μm scale (neural cluster) → valid
+sfi.validate(frequency=40, spatial_scale=1e-4)  # True
+
+# 500 Hz at 10cm scale (whole brain) → impossible
+sfi.validate(frequency=500, spatial_scale=0.1)  # False → anomaly!
+
+# Get anomaly score (0 = normal, 1 = impossible)
+score = sfi.anomaly_score(frequency=500, spatial_scale=0.1)  # ~0.95
 ```
 
 ## Project Structure

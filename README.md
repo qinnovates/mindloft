@@ -337,7 +337,7 @@ For complete layer definitions, see [ONI_LAYERS.md](MAIN/oni-framework/ONI_LAYER
 
 ### The Coherence Metric
 
-Mathematical framework for validating neural signal trustworthiness:
+Mathematical framework for validating neural signal trustworthiness using entropy-based anomaly detection:
 
 ```
 Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
@@ -348,6 +348,14 @@ Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
 | **Phase** | σ²φ | Timing jitter | Detects out-of-sync signal injections |
 | **Transport** | σ²τ | Pathway reliability | Flags signals bypassing biological routes |
 | **Gain** | σ²γ | Amplitude stability | Catches over/under-powered attacks |
+
+**Why Exponential Decay?** The formula models biological threshold behaviors from information theory. Total variance (σ²φ + σ²τ + σ²γ) represents Shannon entropy—the uncertainty across all signal dimensions. The exponential form creates sharp transitions: coherence remains high at low variance but collapses rapidly as variance increases, mirroring how neural systems gate signals for downstream propagation.
+
+**Anomaly Detection Approach:**
+1. **Baseline Establishment** — ML models trained on authentic neural signatures establish per-user variance thresholds for phase, transport, and gain
+2. **Statistical Monitoring** — Incoming signals are continuously evaluated against learned baselines
+3. **Deviation Flagging** — Signals exceeding standard deviation bounds trigger coherence score degradation
+4. **Threshold Enforcement** — Cₛ below configurable threshold (default: 0.6) triggers rejection or enhanced scrutiny
 
 **Interpretation:** Cₛ ranges from 0 (untrusted) to 1 (fully coherent). Signals below threshold are rejected before reaching neural tissue.
 
