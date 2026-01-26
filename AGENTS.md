@@ -42,6 +42,10 @@
 | 2026-01-26 | **Accessibility checker script created** | `check_accessibility.py` validates contrast ratios, font sizes, focus indicators, motion preferences, skip links. Exit codes: 0=pass, 1=fail, 2=error. |
 | 2026-01-26 | **Accessibility workflow triggers on PyPI publish** | Changed from push/PR triggers to `workflow_run` on "Publish to PyPI" completion. Ensures every released version is accessibility-compliant. |
 | 2026-01-26 | **Packages released: oni-framework 0.2.2, oni-tara 0.8.1** | Accessibility release with WCAG compliance, CHANGELOGs created/updated. |
+| 2026-01-26 | **SRI hash mismatch caused GitHub Pages black screen** | AOS library (aos.js/aos.css) SRI hashes were incorrect, blocking browser from loading scripts. Content with `data-aos` stayed hidden (opacity: 0). Always verify SRI hashes match actual file content. |
+| 2026-01-26 | **Security scanning with Bandit + nosec annotations** | Scanned all 3 PyPI packages. Added `# nosec` comments for reviewed patterns: B102 (exec for demos), B110 (fault-tolerant callbacks), B311 (random for UI), B105 (false positives). |
+| 2026-01-26 | **Broken links fixed across repo** | Fixed: `06-oni-attack-matrix.html` → `06-oni-threat-matrix.html`, relative links → absolute GitHub URLs in READMEs for PyPI compatibility. |
+| 2026-01-26 | **Packages released: oni-framework 0.2.4, oni-academy 0.1.4** | Link fixes, security annotations. oni-academy first public release. |
 
 ### Patterns Established
 
@@ -60,6 +64,8 @@
 - **INDEX.md must be updated when moving files or changing packages** — Python Packages, Dependency Map, Folder Structure, and Metrics sections all need updating
 - **Folder names in INDEX.md can drift from reality** — e.g., `siem/` vs actual `nsam/`, always verify against filesystem
 - **⚠️ CRITICAL: L9-L14 are BIOLOGY, not Silicon** — Even though L9-L10 involve signal processing/protocols, they operate on the BRAIN SIDE of the L8 bridge. This error appeared in 6+ files on 2026-01-24 and was systematically corrected. Memory aid: Below bridge (L1-L7) = computers. Above bridge (L9-L14) = brains.
+- **⚠️ SRI hashes must be verified when adding CDN libraries** — Calculate hash with `curl -s URL | openssl dgst -sha384 -binary | openssl base64 -A`. Wrong hash = browser blocks script = black screen. Symptom: page loads but content invisible, animations don't work.
+- **Relative links in README.md break on PyPI** — PyPI renders README standalone; use absolute GitHub URLs for cross-file links.
 
 ---
 
@@ -447,9 +453,9 @@ MAIN/resources/brand.json      ← Single source of truth
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 12 |
-| Learnings Captured | 44 |
-| Gotchas Documented | 14 |
+| Total Iterations | 13 |
+| Learnings Captured | 48 |
+| Gotchas Documented | 16 |
 | Patterns Established | 31 |
 | Personas Defined | 7 |
 | PM Documents | 3 |
