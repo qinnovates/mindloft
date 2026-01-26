@@ -2,8 +2,8 @@
 
 > **Purpose:** Persistent learnings from Ralph Loop iterations. AI agents read this file at the start of each session to benefit from discovered patterns, gotchas, and conventions.
 
-**Last Updated:** 2026-01-24
-**Loop Iterations:** 8
+**Last Updated:** 2026-01-25
+**Loop Iterations:** 9
 
 ---
 
@@ -28,6 +28,9 @@
 | 2026-01-24 | **Comprehensive PM system implemented** — KANBAN.md + PROJECT_MANAGEMENT.md | Risk Impact Assessment (L×I matrix), Priority Framework (P0-P3), Scope Change Requests, Milestone roadmap |
 | 2026-01-24 | **Package consolidation: prototype-mvp → tara-neural-security-platform** | Source code, tests, visualizations now in single package directory. pyproject.toml updated to local paths. |
 | 2026-01-24 | **ONI Visualization Suite integrated into TARA UI** | 5 HTML apps accessible via sidebar "Interactive" section. Research alignment documented in VISUALIZATION_RESEARCH dict. |
+| 2026-01-25 | **Bidirectional BCI security implemented in L8 firewall** | StimulationCommand validation with 7 safety checks: auth, region, amplitude, frequency, pulse width, charge density, rate limit. Based on Shannon (1992) safety bounds. |
+| 2026-01-25 | **MOABB dataset integration tests added** | 42 tests covering 5 datasets, 5 attack types, coherence benchmarking. Uses mock data for CI/CD without requiring actual dataset downloads. |
+| 2026-01-25 | **CI/CD pipeline fully implemented** | tests.yml (matrix: Python 3.9-3.12, Ubuntu/macOS), security.yml (Bandit, Safety, CodeQL), publish.yml (trusted publishing). Weekly security scans. |
 
 ### Patterns Established
 
@@ -340,16 +343,55 @@ L14: Identity & Ethics         (Biology)
 
 ---
 
+---
+
+## CI/CD Pipeline Learnings
+
+### GitHub Actions Workflows
+
+| Workflow | File | Purpose | Triggers |
+|----------|------|---------|----------|
+| **Tests** | `tests.yml` | Matrix testing (Python 3.9-3.12, Ubuntu/macOS) | push, PR, manual |
+| **Security** | `security.yml` | Bandit, Safety, CodeQL scanning | push, PR, weekly schedule, manual |
+| **Publish** | `publish.yml` | Trusted publishing to PyPI | manual dispatch |
+
+### Security Scanning Tools
+
+| Tool | Purpose | Configuration |
+|------|---------|---------------|
+| **Bandit** | Python code security | `--severity-level medium --confidence-level medium` |
+| **Safety** | Dependency vulnerabilities | `--full-report` |
+| **CodeQL** | Advanced code analysis | `security-and-quality` queries |
+
+### Key Patterns
+
+- **Matrix Testing:** Test across multiple Python versions and OS combinations simultaneously
+- **Trusted Publishing:** Use OIDC tokens instead of API keys for PyPI publishing
+- **Weekly Scans:** Schedule security scans weekly (cron: `0 9 * * 1`) to catch new vulnerabilities
+- **Artifact Upload:** Store scan results as artifacts with 30-day retention
+- **Continue on Error:** Use `|| true` for informational scans that shouldn't fail the build
+- **Summary Reports:** Write to `$GITHUB_STEP_SUMMARY` for visual workflow summaries
+
+### Gotchas
+
+- **Bandit `-uall` flag:** Never use `-uall` with git status on large repos — can cause memory issues
+- **Path triggers:** Use path filters to avoid running tests on unrelated changes
+- **Artifact paths:** Download artifacts to specific directories to avoid conflicts
+- **CodeQL permissions:** Requires `security-events: write` permission
+
+---
+
 ## Loop Metadata
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 8 |
-| Learnings Captured | 30 |
-| Gotchas Documented | 8 |
-| Patterns Established | 20 |
+| Total Iterations | 9 |
+| Learnings Captured | 34 |
+| Gotchas Documented | 12 |
+| Patterns Established | 26 |
 | Personas Defined | 7 |
 | PM Documents | 3 |
+| CI/CD Workflows | 3 |
 
 ---
 

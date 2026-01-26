@@ -2,7 +2,7 @@
 
 > **The central navigation hub for all ONI Framework research, publications, and development.**
 
-**Version:** 2.1
+**Version:** 2.2
 **Last Updated:** 2026-01-25
 **Status:** Active Development
 
@@ -447,17 +447,17 @@ MAIN/
 │   └── pyproject.toml          # Package config (v0.1.0)
 │
 ├── tara-neural-security-platform/  # Security Operations Platform (pip install oni-tara)
-│   ├── pyproject.toml          # Package config (v0.4.0)
-│   ├── tara/                   # Source modules
-│   │   ├── core/               # ONI security primitives
+│   ├── pyproject.toml          # Package config (v0.8.0)
+│   ├── tara_mvp/               # Source modules
+│   │   ├── core/               # ONI security primitives (incl. bidirectional BCI)
 │   │   ├── simulation/         # Neural network simulation
 │   │   ├── attacks/            # Attack testing & scenarios
 │   │   ├── nsam/               # Neural Signal Assurance Monitoring
 │   │   ├── neurosecurity/      # Kohno rules integration
-│   │   ├── data/               # Data models & adapters
+│   │   ├── data/               # Data models & adapters (incl. MOABB)
 │   │   ├── visualization/      # Real-time dashboards
 │   │   └── ui/                 # Streamlit web interface
-│   ├── tests/                  # Unit tests (31 tests)
+│   ├── tests/                  # Unit tests (105 tests)
 │   └── visualizations/         # Interactive HTML demos (6 apps)
 │
 ├── publications/               # Research content
@@ -486,8 +486,9 @@ MAIN/
 | Published Documents | 14 |
 | Blog Posts | 8 |
 | Technical Documents | 6 |
-| Python Packages | oni-framework v0.1.0, oni-tara v0.4.0 |
-| Unit Tests | 108 (77 + 31) |
+| Python Packages | oni-framework v0.2.0, oni-tara v0.8.0 |
+| Unit Tests | 182 (77 + 105) |
+| CI/CD Workflows | 3 (tests, publish, security) |
 | Planned Topics | 5 |
 
 ---

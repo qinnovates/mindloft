@@ -2,6 +2,10 @@
 
 **Telemetry Analysis & Response Automation**
 
+[![PyPI version](https://badge.fury.io/py/oni-tara.svg)](https://badge.fury.io/py/oni-tara)
+[![Tests](https://github.com/qikevinl/ONI/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/tests.yml)
+[![Security](https://github.com/qikevinl/ONI/actions/workflows/security.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/security.yml)
+
 TARA is a comprehensive neural security platform for brain-computer interfaces (BCIs). It combines neural network simulation, attack modeling, real-time security monitoring, and interactive visualization in a unified framework aligned with the ONI 14-layer model.
 
 Named after Tara, the Buddhist goddess of protection who guides travelers safely through darkness — with 8 forms protecting against 8 fears, just as TARA protects neural interfaces across all ONI layers.
@@ -858,6 +862,28 @@ If you use TARA in your research, please cite:
 ---
 
 ## Changelog
+
+### v0.8.0 (2026-01-25)
+- **Bidirectional BCI Security**:
+  - Added `FlowDirection` enum (READ/WRITE/BIDIRECTIONAL)
+  - Added `StimulationCommand` and `StimulationResult` dataclasses
+  - Added `filter_stimulation()` method to NeuralFirewall with 7 safety checks
+  - Safety bounds based on Shannon (1992) and Merrill (2005): charge density, amplitude, frequency limits
+  - Region authorization and rate limiting for stimulation commands
+- **MOABB Integration Tests**:
+  - Added 42 tests for MOABB dataset adapter
+  - Tests cover all 5 datasets (BNCI2014_001, BNCI2014_002, EPFLP300, SSVEP_Exo, Weibo2014)
+  - Tests cover all 5 attack types (spike, noise, frequency, phase, dc_shift)
+  - Coherence benchmarking with detection metrics
+  - Uses mock data for CI/CD without requiring actual downloads
+- **Stimulation Security Tests**:
+  - Added 32 tests for stimulation command validation
+  - Tests for safety bounds, region authorization, rate limiting
+  - Comprehensive edge case coverage
+- **CI/CD Pipeline**:
+  - Updated tests.yml with Python 3.9-3.12 matrix and macOS support
+  - Added security.yml with Bandit, Safety, and CodeQL scanning
+  - Weekly scheduled security scans
 
 ### v0.6.1 (2026-01-25)
 - **Documentation Overhaul**:

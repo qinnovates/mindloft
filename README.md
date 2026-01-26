@@ -76,6 +76,7 @@ An extensible framework for monitoring and securing neural communications, desig
 
 [![PyPI version](https://badge.fury.io/py/oni-framework.svg)](https://badge.fury.io/py/oni-framework)
 [![Tests](https://github.com/qikevinl/ONI/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/tests.yml)
+[![Security](https://github.com/qikevinl/ONI/actions/workflows/security.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/security.yml)
 
 The ONI Framework is available as a Python package for researchers and developers.
 
@@ -176,6 +177,8 @@ ONI builds directly on pioneering research from leading institutions in BCI secu
 ### TARA - Neural Security Platform
 
 [![PyPI version](https://badge.fury.io/py/oni-tara.svg)](https://badge.fury.io/py/oni-tara)
+[![Tests](https://github.com/qikevinl/ONI/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/tests.yml)
+[![Security](https://github.com/qikevinl/ONI/actions/workflows/security.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/security.yml)
 
 **TARA** (Telemetry Analysis & Response Automation) is a neural security platform for BCI monitoring, simulation, and attack testing. Named after the Buddhist goddess of protection, TARA provides real-time security analysis aligned with the ONI 14-layer model.
 
@@ -499,4 +502,4 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 
 *Auto-published from research pipeline*
 *Last update: 2026-01-25*
-*Documents: 16 | Topics: 6 | Python Packages: oni-framework v0.2.0, oni-tara v0.4.0*
+*Documents: 16 | Topics: 6 | Python Packages: oni-framework v0.2.0, oni-tara v0.8.0*
