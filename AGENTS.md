@@ -38,6 +38,10 @@
 | 2026-01-26 | **Slogan changed to singular form** | "Our minds. Our rules. Our future." — Updated across 6 files: brand.json, README.md, CLAUDE.md, and 3 _brand.py fallbacks. |
 | 2026-01-26 | **.gitignore consolidated to repo root** | Removed duplicate .github/.gitignore. Standard location is repo root, not .github/. Added node_modules/, .vite/ for JavaScript projects. |
 | 2026-01-26 | **Removed .vite cache from git tracking** | Build artifacts should never be committed. Used `git rm --cached` to untrack without deleting local files. |
+| 2026-01-26 | **WCAG 2.1 AA Accessibility Compliance** | ONI Academy and TARA UIs now fully accessible. Color contrast (4.5:1 min), focus indicators, skip links, prefers-reduced-motion support. |
+| 2026-01-26 | **Accessibility checker script created** | `check_accessibility.py` validates contrast ratios, font sizes, focus indicators, motion preferences, skip links. Exit codes: 0=pass, 1=fail, 2=error. |
+| 2026-01-26 | **Accessibility workflow triggers on PyPI publish** | Changed from push/PR triggers to `workflow_run` on "Publish to PyPI" completion. Ensures every released version is accessibility-compliant. |
+| 2026-01-26 | **Packages released: oni-framework 0.2.2, oni-tara 0.8.1** | Accessibility release with WCAG compliance, CHANGELOGs created/updated. |
 
 ### Patterns Established
 
@@ -46,6 +50,7 @@
 - **Hybrid Validation:** Auto-fix mechanical issues (dates, counts), require approval for content changes
 - **CDN for GitHub Pages:** Use unpkg.com/CDN for JavaScript libraries (AOS, GSAP) to avoid npm dependencies and get auto-updates
 - **Dependabot Grouping:** Group minor/patch updates together to reduce PR noise while catching security issues
+- **Post-Publish Validation:** Accessibility checks run after PyPI publish (workflow_run trigger), not on every commit — ensures release quality without blocking development
 
 ### Gotchas Avoided
 
@@ -442,13 +447,13 @@ MAIN/resources/brand.json      ← Single source of truth
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 11 |
-| Learnings Captured | 40 |
+| Total Iterations | 12 |
+| Learnings Captured | 44 |
 | Gotchas Documented | 14 |
-| Patterns Established | 30 |
+| Patterns Established | 31 |
 | Personas Defined | 7 |
 | PM Documents | 3 |
-| CI/CD Workflows | 3 |
+| CI/CD Workflows | 4 |
 
 ---
 
