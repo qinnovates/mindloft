@@ -260,19 +260,22 @@
           "id": "fl-local-training-module",
           "title": "Local Training Module",
           "description": "On-device model training using TensorFlow Federated or PySyft",
-          "status": "not-started"
+          "status": "backlogged",
+          "notes": "Requires significant infrastructure - defer to future phase"
         },
         {
           "id": "fl-gradient-encryption",
           "title": "Gradient Encryption Layer",
           "description": "Homomorphic encryption or secure aggregation for gradient sharing",
-          "status": "not-started"
+          "status": "backlogged",
+          "notes": "Dependent on fl-local-training-module"
         },
         {
           "id": "fl-differential-privacy",
           "title": "Differential Privacy Integration",
-          "description": "Add noise to gradients to prevent model inversion attacks",
-          "status": "not-started"
+          "description": "Add calibrated Laplacian noise to Cₛ scores: Cₛ' = Cₛ + Lap(1/ε). Default ε ≈ 1.0 balances privacy and utility.",
+          "status": "not-started",
+          "notes": "Can implement for score anonymization independent of federated learning"
         },
         {
           "id": "fl-score-only-transmission",
@@ -285,7 +288,8 @@
           "id": "fl-aggregation-server",
           "title": "Secure Aggregation Server",
           "description": "Central server that combines encrypted gradients without seeing individual updates",
-          "status": "not-started"
+          "status": "backlogged",
+          "notes": "Dependent on fl-local-training-module and fl-gradient-encryption"
         },
         {
           "id": "fl-score-anonymization",
