@@ -46,7 +46,7 @@ jobs:
           pytest tests/ -v --cov=oni --cov-report=xml
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         with:
           file: MAIN/oni-framework/coverage.xml
@@ -82,7 +82,7 @@ jobs:
           pytest tests/ -v --cov=tara_mvp --cov-report=xml
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         with:
           file: MAIN/tara-nsec-platform/coverage.xml
@@ -119,7 +119,7 @@ jobs:
           pytest tests/ -v --cov=oni_academy --cov-report=xml || echo "No tests yet"
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         with:
           file: autodidact/oni-academy/coverage.xml
