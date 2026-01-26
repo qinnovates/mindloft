@@ -166,7 +166,7 @@ I'm publishing anyway because we need shared vocabulary. Quantum physicists, neu
 
 ## Part of Something Larger: The ONI Framework
 
-This research extends the ONI (Organic Neural Interface) framework into quantum territory.
+This research extends the ONI (Open Neurosecurity Interoperability) framework into quantum territory.
 
 Previous work established:
 - **Coherence Breach**: The moment when neural signal integrity is compromised

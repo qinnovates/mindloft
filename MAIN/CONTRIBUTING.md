@@ -1,6 +1,6 @@
 # Contributing to ONI Framework
 
-Thank you for your interest in contributing to the Organic Neural Interface (ONI) Framework.
+Thank you for your interest in contributing to the Open Neurosecurity Interoperability (ONI) Framework.
 
 ## How to Contribute
 

@@ -73,7 +73,7 @@ This isn't a technological limitation. It's a mathematical necessity. The linear
 
 ## The "Observer" Is the Hacker: The Coherence Breach
 
-While the universe forbids sending a message via entanglement, it allows something much more subtle: The Observer Effect. In my ONI (Organic Neural Interface) framework, we see this play out in biological systems, but it applies equally to quantum ones.
+While the universe forbids sending a message via entanglement, it allows something much more subtle: The Observer Effect. In my ONI (Open Neurosecurity Interoperability) framework, we see this play out in biological systems, but it applies equally to quantum ones.
 
 In a quantum computer, the mere act of "observing" or measuring a system changes its state. This isn't just a physics quirk; it is a fundamental security vulnerability.
 

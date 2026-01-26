@@ -10,7 +10,7 @@
 
 ## Summary
 
-The Organic Neural Interface (ONI) Framework provides a systematic approach to understanding and securing brain-computer interfaces by extending the familiar OSI networking model into biological territory. Where OSI addresses data flow through silicon infrastructure, ONI adds seven biological layers (L1-L7) representing neural processing from molecular interactions to behavioral outputs.
+The Open Neurosecurity Interoperability (ONI) Framework provides a systematic approach to understanding and securing brain-computer interfaces by extending the familiar OSI networking model into biological territory. Where OSI addresses data flow through silicon infrastructure, ONI adds seven biological layers (L1-L7) representing neural processing from molecular interactions to behavioral outputs.
 
 Layer 8 — the Neural Gateway — serves as the critical boundary where biology meets silicon. This is where BCIs physically interface with neural tissue, and where security concerns become most acute. The framework enables security professionals to apply familiar network defense concepts (firewalls, intrusion detection, signal validation) to an entirely new domain.
 

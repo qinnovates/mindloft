@@ -46,7 +46,7 @@ We need something different. We need Zero Trust — for the brain.
 
 ### Introducing the Neural Firewall
 
-I’ve been developing a framework called **ONI (Organic Neural Interface)** that treats brain-computer interfaces the way we treat network infrastructure — with layers, boundaries, and trust zones.
+I've been developing a framework called **ONI (Open Neurosecurity Interoperability)** that treats brain-computer interfaces the way we treat network infrastructure — with layers, boundaries, and trust zones.
 
 The core insight: **BCI electrodes are edge nodes.**
 

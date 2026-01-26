@@ -130,7 +130,7 @@ Traditional cyber frameworks model how attacks succeed; ONI models when signals 
 
 ### Introducing the ONI’s Neural Signal Assurance Model (NSAM)
 
-Instead of a _linear chain_ , ONI uses a **layered interference map** that aligns with the **L0–L14 Organic Neural Interface layers**. The key is that ONI **complements existing frameworks** and operates at a different layer — true defense-in-depth.
+Instead of a _linear chain_ , ONI uses a **layered interference map** that aligns with the **L0–L14 Open Neurosecurity Interoperability layers**. The key is that ONI **complements existing frameworks** and operates at a different layer — true defense-in-depth.
 
 #### Think of it this way:
 
@@ -158,7 +158,7 @@ Once that happens, the damage may already be irreversible.
 
 ONI replaces the idea of a “kill chain” with a **neural kill surface** — a set of physiological checkpoints that _every signal must pass_ before it reaches the brain.
 
-To address the limitations of existing cyber threat frameworks when applied to neural interfaces, we introduce the Neural Signal Assurance Model (NSAM). NSAM is a physiology-first defense framework that evaluates the legitimacy of neural signals prior to cortical interaction, enforcing continuous coherence, contextual validity, and human agency across all layers of the Organic Neural Interface (ONI) stack.
+To address the limitations of existing cyber threat frameworks when applied to neural interfaces, we introduce the Neural Signal Assurance Model (NSAM). NSAM is a physiology-first defense framework that evaluates the legitimacy of neural signals prior to cortical interaction, enforcing continuous coherence, contextual validity, and human agency across all layers of the Open Neurosecurity Interoperability (ONI) stack.
 
 This shifts defense from **reactive detection** to **preventive enforcement**.
 

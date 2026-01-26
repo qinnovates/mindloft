@@ -1,7 +1,7 @@
 """
 ONI Framework Layer Model
 
-Implements the 14-layer Organic Neural Interface model that extends
+Implements the 14-layer Open Neurosecurity Interoperability model that extends
 the OSI networking model into biological neural systems.
 
 ===============================================================================

@@ -30,7 +30,7 @@
 
 ### Vision
 
-The ONI (Organic Neural Interface) Framework provides a comprehensive security architecture for brain-computer interfaces, extending the OSI model into biological domains to protect neural data and cognitive integrity.
+The ONI (Open Neurosecurity Interoperability) Framework provides a comprehensive security architecture for brain-computer interfaces, extending the OSI model into biological domains to protect neural data and cognitive integrity.
 
 ### Mission
 

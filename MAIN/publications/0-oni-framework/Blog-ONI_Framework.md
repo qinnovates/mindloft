@@ -35,7 +35,7 @@ We have no shared vocabulary for these questions.
 
 **A Proposed Starting Point**
 
-I’m publishing an open framework called **ONI (Organic Neural Interface)** — a 14-layer model that extends the OSI stack into biological territory. Each layer has characteristic frequencies, spatial scales, and critically — attack surfaces.
+I'm publishing an open framework called **ONI (Open Neurosecurity Interoperability)** — a 14-layer model that extends the OSI stack into biological territory. Each layer has characteristic frequencies, spatial scales, and critically — attack surfaces.
 
   * **Layers 1–7:** Traditional OSI
   * **Layers 8–10:** Neural interface domain (electrodes, local field potentials, oscillatory patterns)
@@ -45,7 +45,7 @@ I’m publishing an open framework called **ONI (Organic Neural Interface)** —
 
 This is not a finished product. It’s a scaffold that needs neuroscientists, AI safety researchers, and BCI engineers to stress-test, correct, and extend.
 
-**The Organic Neural Interface (ONI) Framework**
+**The Open Neurosecurity Interoperability (ONI) Framework**
 
 <https://medium.com/media/72b5fd6b54812a99403ccb3115d9c5b3/href>
 

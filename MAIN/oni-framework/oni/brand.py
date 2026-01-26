@@ -32,7 +32,7 @@ class ProjectBrand:
 
 ONI = ProjectBrand(
     acronym="ONI",
-    full_name="Open Neurocomputing Interface",
+    full_name="Open Neurosecurity Interoperability",
     name="ONI Framework",
     tagline="The OSI of Mind",
     slogan="Our minds. Our rules. Our future.",
@@ -54,7 +54,7 @@ ONI = ProjectBrand(
 
 TARA = ProjectBrand(
     acronym="TARA",
-    full_name="Telemetry Analysis and Response Automation",
+    full_name="Telemetry Analysis & Response Automation",
     name="TARA Platform",
     tagline="Protection for the neural frontier",
     slogan="Named after the Buddhist goddess of protection.",

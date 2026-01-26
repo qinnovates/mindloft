@@ -1,6 +1,6 @@
 # ONI Framework
 
-**Organic Neural Interface Framework** - A Python library for brain-computer interface security.
+**Open Neurosecurity Interoperability Framework** - A Python library for brain-computer interface security.
 
 [![PyPI version](https://badge.fury.io/py/oni-framework.svg)](https://badge.fury.io/py/oni-framework)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)

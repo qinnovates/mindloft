@@ -16,7 +16,7 @@ series: "ONI Framework"
 
 ## Executive Summary
 
-This document expands on the Organic Neural Interface (ONI) Framework's security architecture, specifically detailing the "Neural Firewall" concept. As brain-computer interfaces (BCIs) become bidirectional systems capable of both reading neural signals and writing stimulation patterns back to the brain, the attack surface expands dramatically.
+This document expands on the Open Neurosecurity Interoperability (ONI) Framework's security architecture, specifically detailing the "Neural Firewall" concept. As brain-computer interfaces (BCIs) become bidirectional systems capable of both reading neural signals and writing stimulation patterns back to the brain, the attack surface expands dramatically.
 
 We propose a multi-layered firewall architecture that treats BCI electrode arrays as edge nodes in a Zero-Trust model—where no signal (biological or digital) is trusted by default. This document details the physical implementation, logical architecture, and operational policies for securing the bio-digital boundary.
 

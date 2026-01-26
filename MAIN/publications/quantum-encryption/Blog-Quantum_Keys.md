@@ -56,7 +56,7 @@ That quote is why this article exists.
 
 Listening to Neil interview John Martinis on StarTalk, I found myself identifying dots between quantum tunneling and network security — between Josephson junctions and VPN protocols — between macroscopic quantum effects and the neural security frameworks I've been developing. The connections felt compelling. Maybe too compelling.
 
-I've spent considerable time developing the [ONI (Organic Neural Interface) framework](https://github.com/qikevinl/ONI) for neural security — exploring coherence breaches, the Scale-Frequency Invariant, and threats to brain-computer interfaces. I know enough about quantum mechanics to see tantalizing connections. But do I know enough to know where I'm wrong?
+I've spent considerable time developing the [ONI (Open Neurosecurity Interoperability) framework](https://github.com/qikevinl/ONI) for neural security — exploring coherence breaches, the Scale-Frequency Invariant, and threats to brain-computer interfaces. I know enough about quantum mechanics to see tantalizing connections. But do I know enough to know where I'm wrong?
 
 This is my attempt to find out. To map the boundaries of what quantum tunneling can and cannot do for network security. To identify where the physics supports my intuitions — and where it doesn't. To strategize future directions for the ONI project by understanding, honestly, what we're working with.
 
