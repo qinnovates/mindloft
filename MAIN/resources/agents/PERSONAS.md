@@ -194,7 +194,7 @@ SOCRATES is the primary enforcer of the [Research Verification Protocol](RESEARC
 
 **Example GÖDEL Catch:**
 ```
-TechDoc: Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ)
+TechDoc: Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
 Python:  coherence_score = sum(w * phi(dt) * theta(f, a) for w, dt, f, a in signals)
 
 GÖDEL: ✅ Notation matches. Verify weights sum to 1? (Not enforced in code — flag for review)

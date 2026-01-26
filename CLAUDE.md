@@ -389,7 +389,7 @@ L8: Neural Gateway (Bridge)
 L9-L14: Biology (Ion Channel Encoding → Identity & Ethics)
 ```
 
-**Coherence Formula:** Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ)
+**Coherence Formula:** Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
 
 **Scale-Frequency:** f × S ≈ k
 

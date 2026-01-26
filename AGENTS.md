@@ -289,7 +289,7 @@ L14: Identity & Ethics         (Biology)
 
 | Name | Formula | Source |
 |------|---------|--------|
-| Coherence Score | Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ) | TechDoc-Coherence_Metric |
+| Coherence Score | Cₛ = e^(−(σ²φ + σ²τ + σ²γ)) | TechDoc-Coherence_Metric |
 | Scale-Frequency | f × S ≈ k | TechDoc-Scale_Frequency |
 
 ---

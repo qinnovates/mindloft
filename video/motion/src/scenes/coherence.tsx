@@ -37,7 +37,7 @@ export default makeScene2D(function* (view) {
   view.add(
     <Txt
       ref={formula}
-      text="Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ)"
+      text="Cₛ = e^(−(σ²φ + σ²τ + σ²γ))"
       x={0}
       y={-280}
       fontSize={0}

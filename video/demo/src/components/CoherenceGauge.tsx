@@ -69,7 +69,7 @@ export const CoherenceGauge: React.FC<CoherenceGaugeProps> = ({
             border: `1px solid ${colors.primary.accent}44`,
           }}
         >
-          C<sub>s</sub> = Σ<sub>i</sub> w<sub>i</sub> × Φ<sub>i</sub>(Δt<sub>i</sub>) × Θ<sub>i</sub>(f<sub>i</sub>, A<sub>i</sub>)
+          C<sub>s</sub> = e<sup>−(σ²φ + σ²τ + σ²γ)</sup>
         </div>
       )}
 

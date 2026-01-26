@@ -84,6 +84,33 @@ export const ProblemScene: React.FC = () => {
   });
   const oniProgress = appleEase(oniRaw);
 
+  // Staggered timing for Phase 5 elements
+  const introTextProgress = appleEase(interpolate(frame - phase5Start, [0, 40], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  }));
+
+  const oniFrameworkProgress = appleEase(interpolate(frame - phase5Start, [35, 75], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  }));
+
+  // Typing effect for bottom text
+  const bottomTextStart = phase5Start + 70;
+  const bottomText = "A unified neurosecurity stack for the next era of computing";
+  const charsToShow = Math.floor(interpolate(frame - bottomTextStart, [0, 90], [0, bottomText.length], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  }));
+  const typedText = bottomText.slice(0, charsToShow);
+  const showCursor = frame >= bottomTextStart && charsToShow < bottomText.length;
+
+  // Animated gradient flow - slowly shifts bluer over time
+  const gradientShift = interpolate(frame - phase5Start, [60, 260], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
   return (
     <AbsoluteFill
       style={{
@@ -253,7 +280,7 @@ export const ProblemScene: React.FC = () => {
         </div>
       )}
 
-      {/* Phase 5: ONI changes that */}
+      {/* Phase 5: ONI Framework - Full screen with staggered reveal */}
       {frame >= phase5Start && (
         <div
           style={{
@@ -263,57 +290,89 @@ export const ProblemScene: React.FC = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 20,
           }}
         >
+          {/* 1. "Introducing" appears first */}
           <div
             style={{
-              fontSize: 28,
+              fontSize: 24,
               fontWeight: 400,
               fontFamily: "-apple-system, 'SF Pro Display', sans-serif",
               color: 'rgba(100, 180, 220, 0.9)',
-              letterSpacing: '0.15em',
+              letterSpacing: '0.2em',
               textTransform: 'uppercase',
-              opacity: interpolate(oniProgress, [0, 0.5], [0, 1]),
-              transform: `translateY(${interpolate(oniProgress, [0, 1], [15, 0])}px)`,
+              opacity: introTextProgress,
+              transform: `translateY(${interpolate(introTextProgress, [0, 1], [20, 0])}px)`,
+              marginBottom: 30,
             }}
           >
             Introducing
           </div>
+          {/* 2. "ONI Framework" appears second */}
           <div
             style={{
-              fontSize: 90,
-              fontWeight: 700,
-              fontFamily: "-apple-system, 'SF Pro Display', sans-serif",
-              background: `linear-gradient(180deg,
-                #ffffff 0%,
-                #ffffff 40%,
-                #60c8e8 70%,
-                #2090c0 100%
-              )`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              letterSpacing: '0.02em',
-              opacity: oniProgress,
-              transform: `translateY(${interpolate(oniProgress, [0, 1], [20, 0])}px)`,
-              filter: `drop-shadow(0 0 40px rgba(0, 160, 220, ${0.3 * oniProgress}))`,
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'center',
+              width: '100%',
+              opacity: oniFrameworkProgress,
+              transform: `scale(${interpolate(oniFrameworkProgress, [0, 1], [0.9, 1])})`,
             }}
           >
-            ONI Framework
+            <span
+              style={{
+                fontSize: 140,
+                fontWeight: 700,
+                fontFamily: "-apple-system, 'SF Pro Display', sans-serif",
+                letterSpacing: '-0.02em',
+                display: 'inline-block',
+                background: 'linear-gradient(90deg, #2a7ab8 0%, #4aa8d8 40%, #a0dff0 70%, #ffffff 100%)',
+                backgroundSize: '200% 100%',
+                backgroundPosition: `${gradientShift * 50}% 0%`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                filter: `drop-shadow(0 0 ${30 + gradientShift * 20}px rgba(0, 120, 200, ${0.3 + gradientShift * 0.3}))`,
+              }}
+            >
+              ONI
+            </span>
+            <span
+              style={{
+                fontSize: 140,
+                fontWeight: 300,
+                fontFamily: "-apple-system, 'SF Pro Display', sans-serif",
+                letterSpacing: '-0.02em',
+                color: '#ffffff',
+                marginLeft: 30,
+              }}
+            >
+              Framework
+            </span>
           </div>
+          {/* 3. Bottom text with typing effect */}
           <div
             style={{
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: 300,
               fontFamily: "-apple-system, 'SF Pro Text', sans-serif",
               color: 'rgba(140, 190, 210, 0.85)',
-              letterSpacing: '0.08em',
-              opacity: interpolate(oniProgress, [0.5, 1], [0, 1]),
-              transform: `translateY(${interpolate(oniProgress, [0.5, 1], [10, 0])}px)`,
+              letterSpacing: '0.1em',
+              opacity: frame >= bottomTextStart ? 1 : 0,
+              marginTop: 40,
+              minHeight: 30,
             }}
           >
-            A unified neurosecurity stack for the next era of computing
+            {typedText}
+            {showCursor && (
+              <span
+                style={{
+                  borderRight: '2px solid rgba(140, 190, 210, 0.85)',
+                  marginLeft: 2,
+                  opacity: Math.floor(frame / 8) % 2 === 0 ? 1 : 0,
+                }}
+              />
+            )}
           </div>
         </div>
       )}

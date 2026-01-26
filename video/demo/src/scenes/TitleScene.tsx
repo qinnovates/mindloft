@@ -119,13 +119,13 @@ export const TitleScene: React.FC = () => {
           gap: 40,
         }}
       >
-        {/* ONI Letters */}
+        {/* ONI Letters with orbiting electron */}
         <div
           style={{
+            position: 'relative',
             display: 'flex',
-            alignItems: 'flex-end',
+            alignItems: 'center',
             justifyContent: 'center',
-            filter: `drop-shadow(0 0 ${60 * glowBreath}px rgba(0, 160, 220, 0.35))`,
           }}
         >
           {letterConfigs.map(({ letter, progress }, i) => {
@@ -142,116 +142,122 @@ export const TitleScene: React.FC = () => {
                   fontWeight: 700,
                   fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif",
                   letterSpacing: '0.02em',
-                  background: `linear-gradient(180deg,
-                    #ffffff 0%,
-                    #ffffff 35%,
-                    #c0e8f8 55%,
-                    #40b8e0 80%,
-                    #2090c0 100%
-                  )`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
+                  color: '#ffffff',
                   transform: `translateY(${y}px) scale(${scale})`,
                   opacity,
+                  textShadow: `0 0 ${40 * glowBreath}px rgba(0, 160, 220, 0.4)`,
                 }}
               >
                 {letter}
-                {/* Neural signal inside the O */}
-                {letter === 'O' && progress > 0.9 && (() => {
-                  const signalOpacity = interpolate(progress, [0.9, 1], [0, 1]);
-
-                  return (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 80,
-                        height: 50,
-                        opacity: signalOpacity,
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {/* Animated brainwave/EKG line inside O */}
-                      <svg width="80" height="50" viewBox="0 0 80 50">
-                        <path
-                          d={`M 0 25
-                              L 15 25
-                              L 20 ${25 + Math.sin(frame * 0.15) * 8}
-                              L 28 ${25 - Math.sin(frame * 0.15 + 0.5) * 12}
-                              L 35 ${25 + Math.cos(frame * 0.12) * 6}
-                              L 40 ${15 - Math.abs(Math.sin(frame * 0.1)) * 8}
-                              L 45 ${25 - Math.sin(frame * 0.15) * 6}
-                              L 52 ${25 + Math.sin(frame * 0.15 + 1) * 10}
-                              L 60 ${25 - Math.cos(frame * 0.12) * 5}
-                              L 65 25
-                              L 80 25`}
-                          stroke="#40d8ff"
-                          strokeWidth="2.5"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          style={{
-                            filter: 'drop-shadow(0 0 4px rgba(64, 216, 255, 0.9))',
-                          }}
-                        />
-                        {/* Pulsing dot at peak */}
-                        <circle
-                          cx="40"
-                          cy={15 - Math.abs(Math.sin(frame * 0.1)) * 8}
-                          r="3"
-                          fill="#ffffff"
-                          style={{
-                            filter: 'drop-shadow(0 0 6px rgba(100, 220, 255, 1))',
-                          }}
-                        />
-                      </svg>
-                    </div>
-                  );
-                })()}
               </div>
             );
           })}
+
+          {/* Electron orbiting horizontally around ONI, passing through O */}
+          {letterConfigs[0].progress > 0.9 && (() => {
+            const electronOpacity = interpolate(letterConfigs[0].progress, [0.9, 1], [0, 1]);
+
+            // Horizontal orbit around all letters
+            const orbitSpeed = 0.06;
+            const t = frame * orbitSpeed;
+
+            // Path: wide horizontal ellipse, but dips into the O center
+            // ONI is about 500px wide, O is at left
+            const pathWidth = 320; // Half-width of orbit
+            const pathHeight = 30; // Slight vertical movement
+
+            // Custom path that goes through the O
+            // When electron is on the left side (near O), it curves inward
+            const rawX = Math.cos(t) * pathWidth;
+            const baseY = Math.sin(t) * pathHeight;
+
+            // Dip into the O when passing through left side
+            const inOZone = rawX < -150; // Near the O
+            const dipAmount = inOZone ? Math.sin((rawX + 150) / 80 * Math.PI) * 50 : 0;
+            const electronY = baseY + (Math.sin(t) > 0 ? dipAmount : -dipAmount);
+
+            // Offset to center the orbit on the full ONI text
+            const electronX = rawX + 50;
+
+            // Trail
+            const trailCount = 10;
+            const trails = Array.from({ length: trailCount }, (_, i) => {
+              const trailT = t - (i + 1) * 0.12;
+              const trailRawX = Math.cos(trailT) * pathWidth;
+              const trailBaseY = Math.sin(trailT) * pathHeight;
+              const trailInOZone = trailRawX < -150;
+              const trailDip = trailInOZone ? Math.sin((trailRawX + 150) / 80 * Math.PI) * 50 : 0;
+              return {
+                x: trailRawX + 50,
+                y: trailBaseY + (Math.sin(trailT) > 0 ? trailDip : -trailDip),
+                opacity: (trailCount - i) / trailCount * 0.5,
+                size: 8 - i * 0.6,
+              };
+            });
+
+            return (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  width: 0,
+                  height: 0,
+                  opacity: electronOpacity,
+                }}
+              >
+                {/* Trail particles */}
+                {trails.map((trail, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      position: 'absolute',
+                      width: trail.size,
+                      height: trail.size,
+                      borderRadius: '50%',
+                      background: '#40d8ff',
+                      opacity: trail.opacity,
+                      transform: `translate(calc(-50% + ${trail.x}px), calc(-50% + ${trail.y}px))`,
+                      filter: `blur(${idx * 0.3}px)`,
+                    }}
+                  />
+                ))}
+
+                {/* Main electron */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    width: 14,
+                    height: 14,
+                    borderRadius: '50%',
+                    background: '#40d8ff',
+                    transform: `translate(calc(-50% + ${electronX}px), calc(-50% + ${electronY}px))`,
+                    boxShadow: `
+                      0 0 8px #40d8ff,
+                      0 0 16px #40d8ff,
+                      0 0 24px rgba(64, 216, 255, 0.7)
+                    `,
+                  }}
+                />
+              </div>
+            );
+          })()}
         </div>
 
         {/* Tagline */}
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 16,
+            fontSize: 22,
+            fontWeight: 300,
+            letterSpacing: '0.25em',
+            textTransform: 'uppercase',
+            fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif",
+            opacity: taglineProgress,
+            transform: `translateY(${interpolate(taglineProgress, [0, 1], [15, 0])}px)`,
+            color: '#ffffff',
           }}
         >
-          <div
-            style={{
-              fontSize: 24,
-              fontWeight: 300,
-              letterSpacing: '0.3em',
-              color: '#70b8d8',
-              textTransform: 'uppercase',
-              fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif",
-              opacity: taglineProgress,
-              transform: `translateY(${interpolate(taglineProgress, [0, 1], [15, 0])}px)`,
-            }}
-          >
-            Open Neurosecurity Interoperability
-          </div>
-          <div
-            style={{
-              fontSize: 16,
-              fontWeight: 400,
-              letterSpacing: '0.08em',
-              color: 'rgba(140, 180, 200, 0.9)',
-              fontFamily: "-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif",
-              opacity: subtitleProgress,
-              transform: `translateY(${interpolate(subtitleProgress, [0, 1], [10, 0])}px)`,
-            }}
-          >
-            The OSI of Mind
-          </div>
+          OPEN <span style={{ fontWeight: 700 }}>NEURO</span>SECURITY INTEROPERABILITY
         </div>
       </div>
     </AbsoluteFill>

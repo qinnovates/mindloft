@@ -82,7 +82,7 @@ score = metric.calculate(signal_data)
 score = calculate_cs(signal_data)
 ```
 
-**Formula:** `Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ)`
+**Formula:** `Cₛ = e^(−(σ²φ + σ²τ + σ²γ))`
 
 | Parameter | Type | Description |
 |-----------|------|-------------|

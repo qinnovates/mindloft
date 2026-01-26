@@ -186,7 +186,7 @@ NEURAL/COGNITIVE (L9-L14):
 
 ### Key Formulas
 
-**Coherence Score:** `Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ)`
+**Coherence Score:** `Cₛ = e^(−(σ²φ + σ²τ + σ²γ))`
 
 **Scale-Frequency Invariant:** `f × S ≈ k`
 

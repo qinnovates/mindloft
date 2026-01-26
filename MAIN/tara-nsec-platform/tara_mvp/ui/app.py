@@ -2955,7 +2955,7 @@ VISUALIZATION_RESEARCH = {
         "title": "Coherence Metric Playground",
         "research": "Kohno (2009) — Signal integrity verification",
         "description": "Interactive coherence score calculation with real-time waveform comparison. "
-                      "Demonstrates how Cₛ = Σᵢ wᵢ × Φᵢ(Δtᵢ) × Θᵢ(fᵢ, Aᵢ) detects attack signatures.",
+                      "Demonstrates how Cₛ = e^(−(σ²φ + σ²τ + σ²γ)) detects attack signatures.",
         "oni_layer": "L8-L9",
     },
     "layers": {
