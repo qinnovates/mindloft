@@ -1404,12 +1404,12 @@
                 <!-- Vision -->
                 <div>
                     <h3 style="color: var(--accent-blue); margin-bottom: 1rem; font-size: 1.1rem;">THE VISION</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+                    <p id="vision-text" style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
                         A world where brain-computer interfaces are as secure as they are powerful.
                         Where neural data is protected by law and by design. Where the boundary
-                        between mind and machine is guarded by open standards, not corporate secrecy.
+                        between mind and machine is guarded by open standards, with security and privacy built in from inception.
                     </p>
-                    <p style="color: var(--text-primary); font-weight: 500;">
+                    <p id="vision-goal" style="color: var(--text-primary); font-weight: 500;">
                         ONI aims to become the IEEE 802 of neural interfaces — the foundation
                         that all BCI security builds upon.
                     </p>
@@ -1831,6 +1831,12 @@
                 const sloganEl = document.getElementById('slogan-text');
                 if (sloganEl && brand.oni && brand.oni.slogan) {
                     sloganEl.textContent = '"' + brand.oni.slogan + '"';
+                }
+
+                // Update vision text
+                const visionEl = document.getElementById('vision-text');
+                if (visionEl && brand.oni && brand.oni.vision) {
+                    visionEl.textContent = brand.oni.vision;
                 }
 
                 // Update MANUAL stats from brand.json
