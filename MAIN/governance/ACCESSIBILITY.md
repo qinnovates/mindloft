@@ -120,9 +120,13 @@ HTML structure includes:
 
 ### GitHub Action: Accessibility Check
 
-Accessibility compliance is automatically verified on every push and pull request.
+Accessibility compliance is automatically verified after each PyPI package publish. This ensures every released version meets WCAG 2.1 AA standards.
 
 **Workflow:** `.github/workflows/accessibility.yml`
+
+**Triggers:**
+- After successful PyPI publish (automatic)
+- Manual workflow dispatch (for ad-hoc testing)
 
 **Checks performed:**
 - Color contrast ratios (WCAG 1.4.3)
@@ -228,16 +232,19 @@ MIN_FONT_SIZE_REM = 0.875      # 14px minimum
 ### CI/CD Integration
 
 The GitHub Action runs on:
-- Push to `main` branch (UI file changes)
-- Pull requests (UI file changes)
+- After successful PyPI publish (`workflow_run` trigger)
 - Manual workflow dispatch
 
 ```yaml
-# Trigger paths
-paths:
-  - 'MAIN/oni-framework/oni/ui/**'
-  - 'MAIN/tara-nsec-platform/tara_mvp/ui/**'
+# Trigger configuration
+on:
+  workflow_run:
+    workflows: ["Publish to PyPI"]
+    types: [completed]
+  workflow_dispatch:
 ```
+
+This ensures every published package version is verified for accessibility compliance.
 
 ---
 

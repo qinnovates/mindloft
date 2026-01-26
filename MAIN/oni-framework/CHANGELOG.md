@@ -5,6 +5,33 @@ All notable changes to the ONI Framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-01-26
+
+### Added
+- **WCAG 2.1 AA Compliance** - Full accessibility compliance for ONI Academy UI
+- **Accessibility Checker** (`check_accessibility.py`) - Automated WCAG validation script
+- **GitHub Action** (`accessibility.yml`) - CI/CD pipeline for accessibility testing
+- **Skip Links** - Keyboard navigation support for screen readers
+- **Focus Indicators** - Visible focus states on all interactive elements
+- **Reduced Motion Support** - Respects `prefers-reduced-motion` preference
+
+### Changed
+- Updated color palette for WCAG AA contrast ratios (4.5:1 minimum)
+- Fixed text colors: `#94a3b8` → `#a8b5c7` (7.2:1), `#64748b` → `#8b9cb3` (5.5:1)
+- Minimum font size now 0.875rem (14px) for accessibility
+- Fixed tagline centering in hero section
+- Improved section header subtitle spacing
+
+### Documentation
+- Added `ACCESSIBILITY.md` with full compliance documentation
+- Added color contrast ratio tables for all UI colors
+- Added automated testing instructions
+
+## [0.2.1] - 2026-01-25
+
+### Fixed
+- Minor bug fixes and stability improvements
+
 ## [0.2.0] - 2026-01-25
 
 ### Added
@@ -50,5 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 0.2.2 | 2026-01-26 | WCAG 2.1 AA compliance, accessibility checker |
+| 0.2.1 | 2026-01-25 | Bug fixes |
 | 0.2.0 | 2026-01-25 | Interactive UI, CLI, ConsentManager |
 | 0.1.0 | 2026-01-15 | Initial release with core modules |

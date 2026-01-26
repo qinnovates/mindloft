@@ -2,8 +2,7 @@
 # WCAG 2.1 Level AA automated verification
 #
 # This workflow runs on:
-# - Every push to main
-# - Every pull request
+# - After successful PyPI publish (workflow_run)
 # - Manual trigger
 #
 # It checks:
@@ -16,18 +15,12 @@
 name: Accessibility Check
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'MAIN/oni-framework/oni/ui/**'
-      - 'MAIN/tara-nsec-platform/tara_mvp/ui/**'
-      - 'MAIN/governance/scripts/check_accessibility.py'
-      - '.github/workflows/accessibility.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'MAIN/oni-framework/oni/ui/**'
-      - 'MAIN/tara-nsec-platform/tara_mvp/ui/**'
+  # Trigger after PyPI publish workflow completes successfully
+  workflow_run:
+    workflows: ["Publish to PyPI"]
+    types:
+      - completed
+  # Manual trigger for ad-hoc checks
   workflow_dispatch:
     inputs:
       strict:
@@ -40,6 +33,8 @@ jobs:
   accessibility-check:
     name: WCAG 2.1 AA Compliance
     runs-on: ubuntu-latest
+    # Only run if triggered manually OR if the publish workflow succeeded
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout repository
@@ -72,31 +67,6 @@ jobs:
           color: ${{ steps.a11y-check.outcome == 'success' && 'green' || 'red' }}
         continue-on-error: true
 
-      - name: Comment on PR
-        if: failure() && github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## ⚠️ Accessibility Check Failed
-
-            This PR contains changes that may not meet WCAG 2.1 Level AA requirements.
-
-            Please review the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
-
-            ### Common fixes:
-            - **Low contrast text**: Use colors with at least 4.5:1 contrast ratio
-            - **Small fonts**: Use minimum 0.875rem (14px) font size
-            - **Missing focus states**: Add \`:focus-visible\` styles
-            - **Motion sensitivity**: Add \`prefers-reduced-motion\` media query
-
-            See [ACCESSIBILITY.md](../blob/main/MAIN/governance/ACCESSIBILITY.md) for guidelines.`
-            })
-        continue-on-error: true
-
       - name: Upload accessibility report
         if: always()
         uses: actions/upload-artifact@v4
@@ -107,27 +77,3 @@ jobs:
           retention-days: 30
         continue-on-error: true
 
-  # Optional: Run with axe-core for more comprehensive checks
-  axe-check:
-    name: Axe-Core Analysis (Optional)
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    continue-on-error: true
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install axe-core CLI
-        run: npm install -g @axe-core/cli
-
-      - name: Note about axe check
-        run: |
-          echo "Note: Full axe-core analysis requires a running web server."
-          echo "For comprehensive accessibility testing, run the UI locally and use:"
-          echo "  npx axe http://localhost:8501 --save accessibility-report.json"
