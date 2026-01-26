@@ -250,19 +250,19 @@ export const script: ScriptLine[] = [
   // Scene 8: Credits (3:21-3:53) - Powerful closing with dynamic waves
   {
     scene: 'credits',
-    text: "Our mind.",
+    text: "Your mind.",
     startFrame: 6570,
     endFrame: 6660,
   },
   {
     scene: 'credits',
-    text: "Our future.",
+    text: "Your privacy.",
     startFrame: 6660,
     endFrame: 6750,
   },
   {
     scene: 'credits',
-    text: "Our rules.",
+    text: "Our future.",
     startFrame: 6750,
     endFrame: 6840,
   },

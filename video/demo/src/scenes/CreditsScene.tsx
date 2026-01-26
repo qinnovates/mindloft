@@ -190,9 +190,9 @@ export const CreditsScene: React.FC = () => {
 
   // Manifesto phrases
   const manifestoPhrases = [
-    { text: 'Our mind.', delay: 0, show: showMind },
-    { text: 'Our future.', delay: 90, show: showFuture },
-    { text: 'Our rules.', delay: 180, show: showRules },
+    { text: 'Your Mind.', delay: 0, show: showMind },
+    { text: 'Your Privacy.', delay: 90, show: showFuture },
+    { text: 'Our Future.', delay: 180, show: showRules },
   ];
 
   return (
