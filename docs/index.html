@@ -283,11 +283,18 @@
             padding: 2rem;
             text-align: center;
             transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .quick-card:hover {
             border-color: var(--accent-blue);
             transform: translateY(-2px);
+        }
+
+        a.quick-card:hover {
+            cursor: pointer;
         }
 
         .quick-card .icon {
@@ -985,31 +992,33 @@
         </div>
 
         <div class="quick-grid">
-            <div class="quick-card">
+            <a href="https://pypi.org/project/oni-framework/" class="quick-card">
                 <div class="icon" style="background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));">
                     <span>C</span>
                 </div>
                 <h3>Coherence Metric</h3>
-                <p>Python API for anomaly detection via mathematical baseline deviation algorithms.</p>
+                <p>Python API for anomaly detection signatures via mathematical baseline deviation algorithms.</p>
                 <div class="code-block">pip install oni-framework</div>
-            </div>
+                <span style="color: var(--accent-blue); font-weight: 500; font-size: 0.9rem;">View on PyPI &rarr;</span>
+            </a>
 
-            <div class="quick-card">
+            <a href="https://pypi.org/project/oni-tara/" class="quick-card">
                 <div class="icon" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));">
                     <span>T</span>
                 </div>
                 <h3>TARA Platform <span style="font-size: 0.6rem; padding: 0.2rem 0.5rem; background: rgba(139, 92, 246, 0.2); color: #a78bfa; border-radius: 4px; vertical-align: middle; margin-left: 0.5rem;">MVP</span></h3>
                 <p>Telemetry Analysis & Response Automation platform with real-time monitoring.</p>
                 <div class="code-block">pip install oni-tara</div>
-            </div>
+                <span style="color: var(--accent-purple); font-weight: 500; font-size: 0.9rem;">View on PyPI &rarr;</span>
+            </a>
 
-            <div class="quick-card">
+            <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/oni-framework/ONI_LAYERS.md" class="quick-card">
                 <div class="icon" style="background: linear-gradient(135deg, var(--accent-emerald), var(--accent-cyan));">
                     <span>F</span>
                 </div>
                 <h3>Neural Firewall</h3>
                 <p>Zero-trust security at L8 Neural Gateway. 7 checkpoints from signal to cognition.</p>
-                <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/oni-framework/ONI_LAYERS.md">View Architecture &rarr;</a>
+                <span style="color: var(--accent-emerald); font-weight: 500; font-size: 0.9rem;">View Architecture &rarr;</span>
             </div>
         </div>
     </section>
