@@ -9,10 +9,10 @@ description = "Cₛ Core - Mathematical API for detection signatures and anomaly
 readme = "README.md"
 license = {text = "Apache-2.0"}
 authors = [
-    {name = "Kevin L. Qi", email = "kevin@qikevinl.com"}
+    {name = "Kevin L. Qi"}
 ]
 maintainers = [
-    {name = "Kevin L. Qi", email = "kevin@qikevinl.com"}
+    {name = "Kevin L. Qi"}
 ]
 keywords = [
     "brain-computer-interface",
