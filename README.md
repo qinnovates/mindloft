@@ -1,9 +1,10 @@
 # ONI Framework
 *"The OSI of Mind"*
+Our mind. Our rules. Our future. 
+...Because the important connections deserves the most thought.
 
-> **ONI**: Organic Neurocomputing Interface — A 14-layer framework extending OSI for brain-computer interface (BCI) security. Oh, because the last thing we need is to make it "open" and susceptible.
-
-An extensible framework for monitoring and securing neural communications, designed for transparency and interoperability across brain-computer interfaces (BCIs).
+> **ONI**: . 
+Open/Organic Neurocomputing Interface (ONI) — An extensible framework built on a unified 14-layer model extending OSI into the bio-digital landscape **securely** designed for transparency and interoperability across brain-computer interfaces.
 
 ---
 
