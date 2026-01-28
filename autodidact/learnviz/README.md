@@ -106,11 +106,11 @@ LearnViz runs locally, enabling:
 
 | Component | File | Status | Description |
 |-----------|------|--------|-------------|
-| **Concept Analyzer** | `analyzer.py` | ✅ Complete | Classifies concepts by type (math, physics, algorithm, etc.) |
+| **Concept Analyzer** | `analyzer.py` | ✅ Complete | Classifies concepts by type (math, physics, algorithm, biology, etc.) |
 | **Engine Selector** | `analyzer.py` | ✅ Complete | Maps concept types to optimal rendering engines |
 | **Manim Generator** | `generators/manim_gen.py` | ✅ Complete | Generates Manim code from templates |
 | **CLI Orchestrator** | `learnviz.py` | ✅ Complete | End-to-end pipeline with render support |
-| **Template Library** | `generators/manim_gen.py` | ✅ 4 templates | Binary search, sorting, Pythagorean, tree traversal |
+| **Template Library** | `generators/manim_gen.py` | ✅ 6 templates | Binary search, sorting, Pythagorean, tree traversal, action potential, synapse |
 
 ### Concept Classification
 
@@ -122,6 +122,7 @@ Pattern-based classification determines the best visualization approach:
 | **Physics** | Gravity, waves, forces, momentum | Manim | Physics primitives, parametric |
 | **Algorithms** | Sorting, searching, recursion | Manim | Step-by-step animation |
 | **Data Structures** | Trees, graphs, arrays | Manim | Node/edge visualization |
+| **Biology** | Action potentials, synapses, neurons, DNA | Manim | Scientific animation, temporal sequences |
 | **Statistics** | Charts, distributions, trends | Remotion | Data-driven, templated |
 | **Timelines** | History, processes, workflows | Remotion | Component model |
 | **Networks** | Graphs, connections, flows | D3.js | Force layouts |
@@ -134,6 +135,8 @@ Pattern-based classification determines the best visualization approach:
 | `sorting` | Bubble/selection/insertion sort with bar chart representation |
 | `pythagorean` | Theorem proof with squares on triangle sides |
 | `tree_traversal` | Inorder/preorder/postorder with visit order display |
+| `action_potential` | Neuron membrane depolarization wave, ion channels, voltage graph |
+| `synapse` | Vesicle release, neurotransmitter diffusion, receptor binding |
 
 ### Usage
 
@@ -151,6 +154,10 @@ python learnviz.py "Pythagorean theorem" --render --format gif
 
 # Use custom parameters
 python learnviz.py "Binary search" --params '{"target": 15, "array": [2,4,6,8,10,12,14,16]}'
+
+# Neuroscience visualizations
+python learnviz.py "How an action potential propagates along a neuron" --render
+python learnviz.py "Synaptic transmission between neurons" --render
 
 # Interactive mode (refine plan before generation)
 python learnviz.py "Tree traversal" --interactive
@@ -404,6 +411,7 @@ LearnViz draws inspiration from:
 | Version | Date | Milestone |
 |---------|------|-----------|
 | **0.1.0** | 2026-01-28 | Initial: analyzer, Manim generator, CLI, 4 templates |
+| **0.1.1** | 2026-01-28 | Neuroscience templates: action potential, synapse; enhanced biology classification |
 | 0.2.0 | TBD | Expanded templates (graphs, recursion, linked lists) |
 | 0.3.0 | TBD | LLM integration for custom generation |
 | **0.4.0** | TBD | **Learner profiles and adaptive pacing** |
