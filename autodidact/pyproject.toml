@@ -80,16 +80,22 @@ Issues = "https://github.com/qikevinl/ONI/issues"
 
 [project.scripts]
 oni-academy = "oni_academy.cli:main"
+learnviz = "learnviz.learnviz:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["oni_academy", "learnviz"]
+packages = ["oni-academy/oni_academy", "learnviz"]
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "oni_academy",
+    "oni-academy/oni_academy",
     "learnviz",
     "/README.md",
-    "/ONI_ACADEMY.md",
+]
+exclude = [
+    "learnviz/output",
+    "learnviz/media",
+    "**/__pycache__",
+    "**/.DS_Store",
 ]
 
 [tool.pytest.ini_options]
