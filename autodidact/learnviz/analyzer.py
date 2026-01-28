@@ -116,6 +116,16 @@ CONCEPT_PATTERNS = {
         r"\b(cell|dna|rna|protein|gene|chromosome|mitosis|meiosis|evolution)\b",
         r"\b(neuron|synapse|brain|heart|muscle|organ|tissue|organism)\b",
         r"\b(photosynthesis|respiration|metabolism|enzyme|hormone|antibody)\b",
+        # Neuroscience-specific patterns
+        r"\b(action potential|membrane potential|resting potential|depolarization|repolarization|hyperpolarization)\b",
+        r"\b(axon|dendrite|soma|myelin|node of ranvier|saltatory|conduction)\b",
+        r"\b(neurotransmitter|dopamine|serotonin|glutamate|gaba|acetylcholine)\b",
+        r"\b(ion channel|sodium|potassium|calcium|Na\+|K\+|Ca2\+|voltage.gated)\b",
+        r"\b(synaptic|presynaptic|postsynaptic|vesicle|cleft|receptor)\b",
+        r"\b(hodgkin|huxley|nernst|goldman|cable equation)\b",
+        r"\b(cortex|hippocampus|amygdala|thalamus|cerebellum|brainstem)\b",
+        r"\b(spike|firing rate|neural signal|neural coding|LFP|EEG|ECoG)\b",
+        r"\b(BCI|brain.computer|neural interface|electrode|implant)\b",
     ],
 }
 
@@ -146,6 +156,10 @@ TEMPLATE_PATTERNS = {
     "timeline": [r"\btimeline\b", r"\bhistory\b", r"\bevolution\b", r"\bchronological\b"],
     "network_force": [r"\bnetwork\b", r"\bconnection\b", r"\brelationship\b"],
     "flowchart": [r"\bprocess\b", r"\bworkflow\b", r"\bsteps\b", r"\bpipeline\b"],
+    # Neuroscience templates
+    "action_potential": [r"\baction potential\b", r"\bdepolarization\b", r"\bspike\b", r"\bfiring\b", r"\bmembrane potential\b"],
+    "synapse": [r"\bsynaptic\b", r"\bsynapse\b", r"\bneurotransmitter\b", r"\bvesicle\b"],
+    "neuron_structure": [r"\bneuron\b", r"\baxon\b", r"\bdendrite\b", r"\bmyelin\b"],
 }
 
 
