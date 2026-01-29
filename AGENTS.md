@@ -2,8 +2,51 @@
 
 > **Purpose:** Persistent learnings from Ralph Loop iterations. AI agents read this file at the start of each session to benefit from discovered patterns, gotchas, and conventions.
 
-**Last Updated:** 2026-01-26
-**Loop Iterations:** 15
+**Last Updated:** 2026-01-28
+**Loop Iterations:** 16
+
+---
+
+## Session Memory
+
+> **Quick context for session continuity.** Update this section at the end of each session.
+
+### Current Workstreams
+
+| Workstream | Status | Last Activity | Notes |
+|------------|--------|---------------|-------|
+| **ONI Academy** | Active | 2026-01-28 | v0.2.0 published to PyPI, LearnViz integration complete |
+| **GitHub Pages** | Active | 2026-01-28 | Wave background added to viz page, nav renamed to "ONI Search WIP" |
+| **TARA Stack** | Stable | 2026-01-26 | v0.8.1 on PyPI, WCAG compliant |
+| **oni-framework** | Stable | 2026-01-26 | v0.2.5 on PyPI |
+
+### User Preferences & Decisions
+
+| Preference | Decision | Date |
+|------------|----------|------|
+| **Background style** | Flowing wave canvas animation (not neural dots/grid) | 2026-01-28 |
+| **PyPI publishing** | Use GitHub Actions trusted publishing (not manual twine) | 2026-01-26 |
+| **Moltbot** | Tabled for later scaling — added to kevinqicode backlog | 2026-01-28 |
+| **Memory persistence** | Enhance AGENTS.md (not Moltbot) | 2026-01-28 |
+| **Brand naming** | "TARA Stack" not "Platform" | 2026-01-26 |
+| **Nav link naming** | "ONI Search WIP" not "Autodidactive demo" | 2026-01-28 |
+
+### Pending Items
+
+| Item | Priority | Context |
+|------|----------|---------|
+| — | — | No pending items |
+
+### Recent Session Context
+
+**2026-01-28 Session:**
+- Fixed oni-academy imports (LEARNVIZ_AVAILABLE = True when installed from PyPI)
+- Published oni-academy v0.2.0 via GitHub Actions
+- Added Moltbot to kevinqicode opportunities backlog (not pursuing now)
+- Renamed "Autodidactive demo" → "ONI Search WIP" in nav
+- Added flowing wave canvas background to `docs/visualizations/08-oni-framework-viz.html`
+- User explicitly wants wave animation, NOT neural dots or grid lines
+- Enhanced AGENTS.md with Session Memory section for persistent context
 
 ---
 
@@ -459,8 +502,8 @@ MAIN/resources/brand/brand.json      ← Single source of truth
 
 | Metric | Value |
 |--------|-------|
-| Total Iterations | 14 |
-| Learnings Captured | 50 |
+| Total Iterations | 16 |
+| Learnings Captured | 51 |
 | Gotchas Documented | 16 |
 | Patterns Established | 32 |
 | Personas Defined | 7 |
@@ -469,4 +512,35 @@ MAIN/resources/brand/brand.json      ← Single source of truth
 
 ---
 
-*This file is read by AI agents at session start. Update after every significant discovery.*
+## Session Memory Protocol
+
+> **How to use the Session Memory section effectively.**
+
+### At Session Start
+1. Read **Session Memory** section first (top of file)
+2. Check **Current Workstreams** for active projects
+3. Check **User Preferences** to respect past decisions
+4. Check **Pending Items** for carry-over tasks
+5. Read **Recent Session Context** for immediate continuity
+
+### At Session End
+1. Update **Current Workstreams** status
+2. Add any new **User Preferences** discovered
+3. Move completed items out of **Pending Items**
+4. Write 3-5 bullet **Recent Session Context** summary
+5. Add significant learnings to appropriate sections below
+
+### What Goes Where
+
+| Information Type | Location |
+|------------------|----------|
+| Quick session context | Session Memory → Recent Session Context |
+| User preferences/decisions | Session Memory → User Preferences |
+| Active project status | Session Memory → Current Workstreams |
+| Reusable patterns | Patterns Established sections |
+| Mistakes to avoid | Gotchas Avoided sections |
+| Technical discoveries | Critical Discoveries tables |
+
+---
+
+*This file is read by AI agents at session start. Update Session Memory at session end.*
