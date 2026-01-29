@@ -18,9 +18,37 @@
             color: #c9d1d9;
         }
         #root { min-height: 100vh; }
+
+        /* Neural network dots animation in background */
+        .neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .neural-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #58a6ff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: neural-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes neural-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
     </style>
 </head>
 <body>
+    <div class="neural-bg" id="neuralBg"></div>
     <div id="root"></div>
 
     <script type="text/babel">
@@ -897,6 +925,25 @@
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<ONIFrameworkViz />);
+    </script>
+    <script>
+        // Create neural network background dots
+        function createNeuralBackground() {
+            const container = document.getElementById('neuralBg');
+            if (!container) return;
+
+            const dotCount = 25;
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'neural-dot';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.top = Math.random() * 100 + '%';
+                dot.style.animationDelay = Math.random() * 4 + 's';
+                dot.style.animationDuration = (3 + Math.random() * 2) + 's';
+                container.appendChild(dot);
+            }
+        }
+        createNeuralBackground();
     </script>
 </body>
 </html>
