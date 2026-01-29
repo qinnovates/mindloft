@@ -274,6 +274,22 @@
 
         .nav-links a:hover { color: var(--text-primary); }
 
+        .nav-links .nav-model {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981 !important;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-links .nav-model:hover {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.5);
+            transform: translateY(-1px);
+        }
+
         .nav-links .nav-demo {
             background: rgba(139, 92, 246, 0.15);
             border: 1px solid rgba(139, 92, 246, 0.3);
@@ -1098,11 +1114,11 @@
             <ul class="nav-links">
                 <li><a href="#mission">Mission</a></li>
                 <li><a href="#explore">Explore</a></li>
-                <li><a href="visualizations/08-oni-framework-viz.html">ONI Model</a></li>
                 <li><a href="#vision">Roadmap</a></li>
                 <li><a href="#contribute">Contribute</a></li>
                 <li><a href="https://github.com/qikevinl/ONI">GitHub</a></li>
                 <li><a href="https://medium.com/@qikevinl" target="_blank" rel="noopener">Publications</a></li>
+                <li><a href="visualizations/08-oni-framework-viz.html" class="nav-model">ONI Model</a></li>
                 <li><a href="https://frontend-phi-seven-64.vercel.app" target="_blank" rel="noopener" class="nav-demo" title="Interactive learning demo built on ONI">Autodidactive <span class="alpha-tag">demo</span></a></li>
             </ul>
         </div>
