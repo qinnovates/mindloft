@@ -33,8 +33,25 @@ Learners visiting Autodidactive want to explore topics interactively — click a
 
 - **Interactive Knowledge Graphs** — Click nodes to explore topics
 - **ONI Framework Courses** — Pre-built curriculum (no API key needed)
-- **Explore Any Topic** — AI-generated graphs for any subject (bring your own API key)
+- **Browser AI Mode** — Run LLMs directly in your browser using WebGPU (no API key needed!)
+- **Explore Any Topic** — AI-generated graphs for any subject (Browser AI or bring your own API key)
+- **Interactive Animations** — Manim-like educational animations generated in the browser
 - **Memory-Only Security** — API keys never persisted, cleared on refresh
+
+### Browser AI & Animations (v0.2)
+
+The platform now includes **browser-based AI** using WebLLM:
+- **No API keys required** — AI runs entirely in your browser
+- **Works offline** after initial model download
+- **Privacy-first** — your data never leaves your device
+- **Supports multiple models** — Llama 3.2, Phi-3, Mistral
+
+**Animation Engine:**
+- Generates educational animations from any topic
+- Manim-like canvas rendering with easing functions
+- Supports circles, rectangles, arrows, text, paths
+- Sequenced animations with narration overlay
+- Play/pause/seek controls with fullscreen mode
 
 ### Live Demo
 
@@ -360,7 +377,9 @@ All future BCI learning features are secured by the ONI Framework:
 - [x] Knowledge graph visualization (React Flow)
 - [x] Pre-built ONI courses
 - [x] AI-powered topic exploration
-- [ ] LearnViz video integration
+- [x] Browser-based AI (WebLLM - no API key needed)
+- [x] Browser-based animation engine (Manim-like)
+- [ ] LearnViz video integration (server-side Manim)
 - [ ] User learning profiles
 
 ### Phase 3: Content Expansion
