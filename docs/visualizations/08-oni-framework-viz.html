@@ -441,6 +441,78 @@
             background: rgba(88, 166, 255, 0.25);
         }
 
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            background: rgba(33, 38, 45, 0.6);
+            border-radius: 8px;
+            padding: 3px;
+            border: 1px solid #21262d;
+        }
+        .view-btn {
+            background: transparent;
+            border: none;
+            color: #8b949e;
+            font-size: 12px;
+            font-family: inherit;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .view-btn:hover {
+            color: #c9d1d9;
+        }
+        .view-btn.active {
+            background: rgba(88, 166, 255, 0.15);
+            color: #58a6ff;
+        }
+
+        /* View visibility */
+        body.view-explorer #oni-3d-container,
+        body.view-explorer #layer-sidebar,
+        body.view-explorer #detail-panel,
+        body.view-explorer #oni3d-signal-log,
+        body.view-explorer #signal-legend,
+        body.view-explorer #oni3d-explainer,
+        body.view-explorer #footer {
+            display: none !important;
+        }
+        body.view-3d #explorer-container {
+            display: none !important;
+        }
+
+        /* Explorer View */
+        #explorer-container {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+        body.view-explorer #explorer-container {
+            display: block;
+        }
+        body.view-explorer {
+            overflow: auto;
+            height: auto;
+        }
+        #explorer-wave-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        body.view-explorer #explorer-wave-canvas {
+            display: block;
+        }
+        body.view-3d #explorer-wave-canvas {
+            display: none;
+        }
+
         /* Footer */
         #footer {
             position: fixed;
@@ -526,6 +598,17 @@
             .legend-item { font-size: 8px; }
 
             #footer { display: none; }
+
+            .view-toggle {
+                order: -1;
+                width: 100%;
+                justify-content: center;
+            }
+
+            body.view-explorer #explorer-container main {
+                grid-template-columns: 1fr !important;
+                padding: 16px !important;
+            }
         }
     </style>
 </head>
@@ -539,6 +622,11 @@
             <div class="header-sub">The OSI of Mind &mdash; 14 Layer Security Model</div>
         </div>
         <div class="header-right">
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="3d" onclick="switchView('3d')">3D Model</button>
+                <button class="view-btn" data-view="explorer" onclick="switchView('explorer')">Layer Explorer</button>
+            </div>
+            <div class="header-divider"></div>
             <div class="header-stat">
                 <div class="stat-val" style="color: #58a6ff">14</div>
                 <div class="stat-label">LAYERS</div>
@@ -590,6 +678,12 @@
     <div id="footer">
         ONI Framework &mdash; Open Neurosecurity Interoperability &mdash;
         <span>"Only life's most important connections deserve the most thought"</span>
+    </div>
+
+    <!-- Explorer View (hidden by default) -->
+    <canvas id="explorer-wave-canvas"></canvas>
+    <div id="explorer-container">
+        <div id="explorer-root"></div>
     </div>
 
     <script>
@@ -1578,6 +1672,395 @@
             el.classList.add('visible');
         });
     }, 1200);
+
+    // --- View Switching ---
+    document.body.classList.add('view-3d');
+    var explorerInitialized = false;
+
+    function switchView(view) {
+        // Update toggle buttons
+        document.querySelectorAll('.view-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-view') === view);
+        });
+
+        if (view === 'explorer') {
+            document.body.classList.remove('view-3d');
+            document.body.classList.add('view-explorer');
+            // Close detail panel when switching
+            selectLayer(null);
+            // Initialize explorer on first switch
+            if (!explorerInitialized) {
+                explorerInitialized = true;
+                initExplorerView();
+                initExplorerWaveBackground();
+            }
+        } else {
+            document.body.classList.remove('view-explorer');
+            document.body.classList.add('view-3d');
+        }
+    }
+
+    // --- Explorer View (React-based Layer Explorer) ---
+    function initExplorerView() {
+        var root = document.getElementById('explorer-root');
+        if (!root) return;
+
+        var explorerState = {
+            activeLayer: null,
+            selectedAttack: null,
+            signalPhase: 0,
+            isAnimating: true,
+            direction: 'up'
+        };
+
+        var animInterval = null;
+
+        function startAnimation() {
+            if (animInterval) clearInterval(animInterval);
+            animInterval = setInterval(function() {
+                explorerState.signalPhase++;
+                if (explorerState.signalPhase > 15) {
+                    explorerState.direction = explorerState.direction === 'up' ? 'down' : 'up';
+                    explorerState.signalPhase = 0;
+                }
+                renderExplorer();
+            }, 400);
+        }
+
+        function getSignalLayer() {
+            if (explorerState.signalPhase === 0 || explorerState.signalPhase > 14) return null;
+            return explorerState.direction === 'up' ? explorerState.signalPhase : 15 - explorerState.signalPhase;
+        }
+
+        function renderExplorer() {
+            var signalLayer = getSignalLayer();
+            var selectedLayerData = explorerState.activeLayer ? layers.find(function(l) { return l.id === explorerState.activeLayer; }) : null;
+            var totalAttacks = layers.reduce(function(sum, layer) { return sum + layer.attacks.length; }, 0);
+
+            var html = '';
+
+            // Main content
+            html += '<main style="max-width:1400px;margin:0 auto;padding:30px 40px;display:grid;grid-template-columns:minmax(320px,380px) 1fr;gap:30px;position:relative;z-index:1">';
+
+            // Left Panel - Layer Stack
+            html += '<div>';
+
+            // Biology zone header
+            html += '<div style="padding:12px 16px;background:linear-gradient(90deg,rgba(63,185,80,0.1),transparent);border-left:3px solid #3fb950;margin-bottom:8px;border-radius:0 8px 8px 0">';
+            html += '<div style="font-size:11px;letter-spacing:0.15em;color:#3fb950">BIOLOGY LAYERS L9-L14</div>';
+            html += '<div style="font-size:12px;color:#8b949e">Cognitive Systems</div>';
+            html += '</div>';
+
+            // Layer Stack
+            html += '<div style="display:flex;flex-direction:column;gap:4px">';
+            var reversed = layers.slice().reverse();
+            for (var i = 0; i < reversed.length; i++) {
+                var layer = reversed[i];
+                var isActive = signalLayer === layer.id;
+                var isSelected = explorerState.activeLayer === layer.id;
+
+                var catStyles = {
+                    biology: { accent: '#3fb950', bg: 'rgba(63,185,80,0.1)' },
+                    gateway: { accent: '#f0883e', bg: 'rgba(240,136,62,0.15)' },
+                    silicon: { accent: '#58a6ff', bg: 'rgba(88,166,255,0.1)' }
+                };
+                var cs = catStyles[layer.category];
+
+                // Zone headers
+                if (layer.id === 8) {
+                    html += '<div style="padding:12px 16px;background:linear-gradient(90deg,rgba(240,136,62,0.15),transparent);border-left:3px solid #f0883e;margin:12px 0 8px 0;border-radius:0 8px 8px 0">';
+                    html += '<div style="font-size:11px;letter-spacing:0.15em;color:#f0883e">NEURAL GATEWAY L8</div>';
+                    html += '<div style="font-size:12px;color:#8b949e">Security Firewall / NSAM Checkpoint</div>';
+                    html += '</div>';
+                }
+                if (layer.id === 7) {
+                    html += '<div style="padding:12px 16px;background:linear-gradient(90deg,rgba(88,166,255,0.1),transparent);border-left:3px solid #58a6ff;margin:12px 0 8px 0;border-radius:0 8px 8px 0">';
+                    html += '<div style="font-size:11px;letter-spacing:0.15em;color:#58a6ff">SILICON LAYERS L1-L7</div>';
+                    html += '<div style="font-size:12px;color:#8b949e">OSI Model Extension</div>';
+                    html += '</div>';
+                }
+
+                var bgColor = isSelected ? cs.bg : isActive ? 'rgba(48,54,61,0.5)' : '#161b22';
+                var borderColor = isSelected ? '#ffffff' : isActive ? 'rgba(139,148,158,0.3)' : '#21262d';
+                var shadow = isActive ? '0 0 20px ' + cs.accent + '30' : 'none';
+                var badgeBg = (isSelected || isActive) ? cs.accent : '#21262d';
+                var badgeColor = (isSelected || isActive) ? '#0d1117' : '#8b949e';
+                var layerPad = layer.id === 8 ? '14px 16px' : '10px 16px';
+
+                html += '<div class="explorer-layer-item" data-layer-id="' + layer.id + '" style="display:grid;grid-template-columns:50px 1fr 24px;align-items:center;gap:12px;padding:' + layerPad + ';background:' + bgColor + ';border-radius:8px;border:1px solid ' + borderColor + ';cursor:pointer;transition:all 0.15s ease;box-shadow:' + shadow + '">';
+                html += '<div style="background:' + badgeBg + ';border-radius:6px;padding:6px;text-align:center;font-size:13px;font-weight:600;color:' + badgeColor + ';transition:all 0.15s ease">L' + layer.id + '</div>';
+                html += '<div>';
+                html += '<div style="font-size:14px;font-weight:500;color:' + (isSelected ? '#f0f6fc' : '#c9d1d9') + '">' + layer.name + '</div>';
+                html += '<div style="font-size:11px;color:#8b949e">' + layer.osi + '</div>';
+                html += '</div>';
+                html += '<div style="width:8px;height:8px;border-radius:50%;background:' + (isActive ? cs.accent : 'transparent') + ';box-shadow:' + (isActive ? '0 0 8px ' + cs.accent : 'none') + '"></div>';
+                html += '</div>';
+            }
+            html += '</div>';
+
+            // Signal Flow Controls
+            html += '<div style="margin-top:20px;padding:16px;background:#161b22;border-radius:8px;border:1px solid #21262d">';
+            html += '<div style="display:flex;justify-content:space-between;align-items:center">';
+            html += '<div>';
+            html += '<div style="font-size:10px;color:#8b949e;letter-spacing:0.1em">SIGNAL FLOW</div>';
+            html += '<div style="font-size:13px;color:' + (explorerState.direction === 'up' ? '#3fb950' : '#58a6ff') + ';margin-top:4px">' + (explorerState.direction === 'up' ? 'BIOLOGY \u2192 SILICON' : 'SILICON \u2192 BIOLOGY') + '</div>';
+            html += '</div>';
+            html += '<button id="explorer-anim-btn" style="background:' + (explorerState.isAnimating ? 'rgba(248,81,73,0.1)' : 'rgba(63,185,80,0.1)') + ';border:1px solid ' + (explorerState.isAnimating ? '#f85149' : '#3fb950') + ';color:' + (explorerState.isAnimating ? '#f85149' : '#3fb950') + ';padding:8px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;font-family:inherit">' + (explorerState.isAnimating ? 'PAUSE' : 'PLAY') + '</button>';
+            html += '</div></div>';
+
+            html += '</div>'; // end left panel
+
+            // Right Panel - Details & Attack Matrix
+            html += '<div style="display:flex;flex-direction:column;gap:20px">';
+
+            // Layer Detail Card
+            html += '<div style="background:#161b22;border-radius:12px;border:1px solid #21262d;overflow:hidden;flex:' + (selectedLayerData ? 'none' : '1') + '">';
+            html += '<div style="padding:16px 20px;border-bottom:1px solid #21262d;background:#0d1117">';
+            html += '<h2 style="margin:0;font-size:14px;color:#8b949e;letter-spacing:0.1em">' + (selectedLayerData ? 'LAYER ' + selectedLayerData.id + ' \u2014 ' + selectedLayerData.name.toUpperCase() : 'SELECT A LAYER TO EXPLORE') + '</h2>';
+            html += '</div>';
+
+            if (selectedLayerData) {
+                var catAccent = selectedLayerData.category === 'silicon' ? '#58a6ff' : selectedLayerData.category === 'gateway' ? '#f0883e' : '#3fb950';
+
+                html += '<div style="padding:20px">';
+
+                // Info grid
+                html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">';
+                html += '<div style="padding:14px;background:#0d1117;border-radius:8px;border-left:3px solid ' + catAccent + '">';
+                html += '<div style="font-size:10px;color:#8b949e;letter-spacing:0.1em;margin-bottom:6px">FUNCTION</div>';
+                html += '<div style="font-size:13px;color:#c9d1d9;line-height:1.5">' + selectedLayerData.description + '</div>';
+                html += '</div>';
+                html += '<div style="padding:14px;background:#0d1117;border-radius:8px;border-left:3px solid #8b949e">';
+                html += '<div style="font-size:10px;color:#8b949e;letter-spacing:0.1em;margin-bottom:6px">OSI MAPPING</div>';
+                html += '<div style="font-size:13px;color:#c9d1d9"><span style="color:#f0f6fc;font-weight:500">' + selectedLayerData.osi + '</span> Layer</div>';
+                html += '<div style="font-size:11px;color:#8b949e;margin-top:8px">';
+                if (selectedLayerData.category === 'silicon') html += 'Standard OSI network model';
+                else if (selectedLayerData.category === 'gateway') html += 'Security perimeter control';
+                else html += 'Cognitive system extension';
+                html += '</div></div>';
+                html += '</div>';
+
+                // Attack vectors
+                html += '<div style="font-size:11px;letter-spacing:0.15em;color:#f85149;margin-bottom:12px;display:flex;align-items:center;gap:8px"><span style="font-size:14px">\u26A0</span> ATTACK VECTORS (' + selectedLayerData.attacks.length + ')</div>';
+                html += '<div style="display:flex;flex-direction:column;gap:8px">';
+                for (var a = 0; a < selectedLayerData.attacks.length; a++) {
+                    var attack = selectedLayerData.attacks[a];
+                    var tc = tacticColors[attack.tactic] || '#8b949e';
+                    var isExpanded = explorerState.selectedAttack === attack.id;
+                    html += '<div class="explorer-attack-card" data-attack-id="' + attack.id + '" style="padding:12px 16px;background:' + (isExpanded ? '#21262d' : '#0d1117') + ';border-radius:8px;border:1px solid ' + (isExpanded ? '#ffffff' : '#21262d') + ';cursor:pointer;transition:all 0.15s ease">';
+                    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:' + (isExpanded ? '10px' : '0') + '">';
+                    html += '<div><span style="font-size:11px;color:#8b949e;margin-right:8px">' + attack.id + '</span>';
+                    html += '<span style="font-size:14px;font-weight:500;color:#f0f6fc">' + attack.name + '</span></div>';
+                    html += '<span style="font-size:10px;padding:3px 8px;border-radius:4px;background:' + tc + '20;color:' + tc + ';font-weight:500;white-space:nowrap">' + attack.tactic + '</span>';
+                    html += '</div>';
+                    if (isExpanded) {
+                        html += '<div style="font-size:13px;color:#8b949e;line-height:1.5;padding-top:10px;border-top:1px solid #21262d">' + attack.description + '</div>';
+                    }
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+            } else {
+                // Welcome state
+                html += '<div style="padding:30px 20px">';
+                html += '<div style="text-align:center;margin-bottom:30px">';
+                html += '<div style="font-size:64px;margin-bottom:16px;opacity:0.2;font-weight:300;background:linear-gradient(90deg,#58a6ff,#f0883e,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent">L1-L14</div>';
+                html += '<div style="color:#8b949e;margin-bottom:8px">Click on any layer to explore attack vectors</div>';
+                html += '<div style="font-size:12px;color:#484f58">Each layer maps to specific threat signatures</div>';
+                html += '</div>';
+
+                // Zone overview cards
+                html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">';
+                html += '<div style="padding:16px;background:rgba(88,166,255,0.05);border-radius:8px;border:1px solid rgba(88,166,255,0.2);text-align:center"><div style="font-size:24px;font-weight:600;color:#58a6ff">L1-L7</div><div style="font-size:11px;color:#8b949e;margin-top:4px">Silicon Layers</div><div style="font-size:10px;color:#484f58;margin-top:2px">OSI Model</div></div>';
+                html += '<div style="padding:16px;background:rgba(240,136,62,0.08);border-radius:8px;border:1px solid rgba(240,136,62,0.3);text-align:center"><div style="font-size:24px;font-weight:600;color:#f0883e">L8</div><div style="font-size:11px;color:#8b949e;margin-top:4px">Neural Gateway</div><div style="font-size:10px;color:#484f58;margin-top:2px">NSAM Firewall</div></div>';
+                html += '<div style="padding:16px;background:rgba(63,185,80,0.05);border-radius:8px;border:1px solid rgba(63,185,80,0.2);text-align:center"><div style="font-size:24px;font-weight:600;color:#3fb950">L9-L14</div><div style="font-size:11px;color:#8b949e;margin-top:4px">Biology Layers</div><div style="font-size:10px;color:#484f58;margin-top:2px">Cognitive Systems</div></div>';
+                html += '</div>';
+
+                // Tactic legend
+                html += '<div style="margin-bottom:24px">';
+                html += '<div style="font-size:11px;color:#8b949e;letter-spacing:0.1em;margin-bottom:12px">THREAT TACTICS</div>';
+                html += '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">';
+                var tactics = Object.keys(tacticColors);
+                for (var t = 0; t < tactics.length; t++) {
+                    html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d1117;border-radius:6px">';
+                    html += '<div style="width:10px;height:10px;border-radius:3px;background:' + tacticColors[tactics[t]] + '"></div>';
+                    html += '<span style="font-size:11px;color:#8b949e">' + tactics[t] + '</span></div>';
+                }
+                html += '</div></div>';
+
+                // Key concepts
+                html += '<div>';
+                html += '<div style="font-size:11px;color:#8b949e;letter-spacing:0.1em;margin-bottom:12px">KEY CONCEPTS</div>';
+                html += '<div style="display:flex;flex-direction:column;gap:8px">';
+                html += '<div style="padding:12px;background:#0d1117;border-radius:8px;display:flex;gap:12px;align-items:flex-start">';
+                html += '<div style="font-size:16px;font-weight:600;color:#3fb950;min-width:36px">C\u209B</div>';
+                html += '<div><div style="font-size:12px;color:#c9d1d9;font-weight:500">Coherence Metric</div>';
+                html += '<div style="font-size:11px;color:#8b949e;margin-top:2px">Signal trust score: C\u209B = e^(\u2212(\u03C3\u00B2\u03C6 + \u03C3\u00B2\u03C4 + \u03C3\u00B2\u03B3))</div></div></div>';
+                html += '<div style="padding:12px;background:#0d1117;border-radius:8px;display:flex;gap:12px;align-items:flex-start">';
+                html += '<div style="font-size:14px;font-weight:600;color:#f0883e;min-width:36px">NSAM</div>';
+                html += '<div><div style="font-size:12px;color:#c9d1d9;font-weight:500">Neural Signal Assurance Model</div>';
+                html += '<div style="font-size:11px;color:#8b949e;margin-top:2px">ML-trained baseline for anomaly detection at L8</div></div></div>';
+                html += '</div></div>';
+
+                html += '</div>';
+            }
+
+            html += '</div>'; // end detail card
+
+            // Signal Propagation SVG
+            html += '<div style="background:#161b22;border-radius:12px;border:1px solid #21262d;padding:20px">';
+            html += '<div style="font-size:11px;letter-spacing:0.15em;color:#8b949e;margin-bottom:16px">SIGNAL PROPAGATION</div>';
+            html += '<svg viewBox="0 0 700 200" style="width:100%;height:auto">';
+            html += '<defs>';
+            html += '<linearGradient id="siliconGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#58a6ff"/><stop offset="100%" stop-color="#1f6feb"/></linearGradient>';
+            html += '<linearGradient id="bioGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3fb950"/><stop offset="100%" stop-color="#238636"/></linearGradient>';
+            html += '<filter id="svgGlow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+            html += '</defs>';
+
+            // Silicon zone
+            html += '<rect x="20" y="20" width="280" height="160" fill="rgba(88,166,255,0.05)" rx="8" stroke="#21262d"/>';
+            html += '<text x="35" y="45" fill="#58a6ff" font-size="10" font-family="Inter,sans-serif">SILICON L1-L7</text>';
+            for (var s = 1; s <= 7; s++) {
+                var sActive = signalLayer === s;
+                var sSel = explorerState.activeLayer === s;
+                var sx = 35 + (s-1) * 36;
+                html += '<rect class="explorer-svg-layer" data-layer-id="' + s + '" x="' + sx + '" y="60" width="32" height="100" rx="4" fill="' + (sActive ? 'url(#siliconGrad)' : sSel ? 'rgba(88,166,255,0.3)' : '#21262d') + '" stroke="' + (sSel ? '#ffffff' : sActive ? '#58a6ff' : '#30363d') + '" stroke-width="' + (sSel ? 2 : 1) + '"' + (sActive ? ' filter="url(#svgGlow)"' : '') + ' style="cursor:pointer"/>';
+                html += '<text x="' + (51 + (s-1)*36) + '" y="115" fill="' + (sActive||sSel ? '#fff' : '#8b949e') + '" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" style="pointer-events:none">L' + s + '</text>';
+            }
+
+            // Gateway
+            var gSel = explorerState.activeLayer === 8;
+            html += '<rect class="explorer-svg-layer" data-layer-id="8" x="320" y="60" width="60" height="100" rx="8" fill="' + (signalLayer===8 ? '#f0883e' : gSel ? 'rgba(240,136,62,0.4)' : 'rgba(240,136,62,0.2)') + '" stroke="' + (gSel ? '#ffffff' : '#f0883e') + '" stroke-width="' + (gSel ? 2 : signalLayer===8 ? 2 : 1) + '"' + (signalLayer===8 ? ' filter="url(#svgGlow)"' : '') + ' style="cursor:pointer"/>';
+            html += '<text x="350" y="100" fill="' + (signalLayer===8 ? '#0d1117' : '#f0883e') + '" font-size="12" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600" style="pointer-events:none">L8</text>';
+            html += '<text x="350" y="120" fill="' + (signalLayer===8 ? '#0d1117' : '#8b949e') + '" font-size="8" font-family="Inter,sans-serif" text-anchor="middle" style="pointer-events:none">GATEWAY</text>';
+            html += '<text x="350" y="145" fill="' + (signalLayer===8 ? '#0d1117' : '#8b949e') + '" font-size="8" font-family="Inter,sans-serif" text-anchor="middle" style="pointer-events:none">NSAM</text>';
+
+            // Biology zone
+            html += '<rect x="400" y="20" width="280" height="160" fill="rgba(63,185,80,0.05)" rx="8" stroke="#21262d"/>';
+            html += '<text x="415" y="45" fill="#3fb950" font-size="10" font-family="Inter,sans-serif">BIOLOGY L9-L14</text>';
+            for (var b = 9; b <= 14; b++) {
+                var bActive = signalLayer === b;
+                var bSel = explorerState.activeLayer === b;
+                var bx = 415 + (b-9) * 42;
+                html += '<rect class="explorer-svg-layer" data-layer-id="' + b + '" x="' + bx + '" y="60" width="38" height="100" rx="4" fill="' + (bActive ? 'url(#bioGrad)' : bSel ? 'rgba(63,185,80,0.3)' : '#21262d') + '" stroke="' + (bSel ? '#ffffff' : bActive ? '#3fb950' : '#30363d') + '" stroke-width="' + (bSel ? 2 : 1) + '"' + (bActive ? ' filter="url(#svgGlow)"' : '') + ' style="cursor:pointer"/>';
+                html += '<text x="' + (434 + (b-9)*42) + '" y="115" fill="' + (bActive||bSel ? '#fff' : '#8b949e') + '" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" style="pointer-events:none">L' + b + '</text>';
+            }
+
+            // Flow arrows
+            html += '<path d="M 295 110 L 315 110" stroke="#f0883e" stroke-width="2" opacity="0.5"/>';
+            html += '<path d="M 385 110 L 405 110" stroke="#f0883e" stroke-width="2" opacity="0.5"/>';
+            html += '</svg>';
+            html += '</div>';
+
+            html += '</div>'; // end right panel
+
+            // Footer
+            html += '</main>';
+            html += '<footer style="padding:20px 40px;border-top:1px solid #21262d;text-align:center;margin-top:40px;position:relative;z-index:1">';
+            html += '<p style="margin:0;font-size:12px;color:#8b949e">ONI Framework \u2014 Open Neurosecurity Interoperability \u2014 <span style="color:#f0883e">"Only life\'s most important connections deserve the most thought"</span></p>';
+            html += '</footer>';
+
+            root.innerHTML = html;
+
+            // Attach event listeners
+            root.querySelectorAll('.explorer-layer-item').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var id = parseInt(this.getAttribute('data-layer-id'));
+                    explorerState.activeLayer = explorerState.activeLayer === id ? null : id;
+                    explorerState.selectedAttack = null;
+                    renderExplorer();
+                });
+            });
+
+            root.querySelectorAll('.explorer-attack-card').forEach(function(el) {
+                el.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var id = this.getAttribute('data-attack-id');
+                    explorerState.selectedAttack = explorerState.selectedAttack === id ? null : id;
+                    renderExplorer();
+                });
+            });
+
+            root.querySelectorAll('.explorer-svg-layer').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var id = parseInt(this.getAttribute('data-layer-id'));
+                    explorerState.activeLayer = explorerState.activeLayer === id ? null : id;
+                    explorerState.selectedAttack = null;
+                    renderExplorer();
+                });
+            });
+
+            var animBtn = document.getElementById('explorer-anim-btn');
+            if (animBtn) {
+                animBtn.addEventListener('click', function() {
+                    explorerState.isAnimating = !explorerState.isAnimating;
+                    if (explorerState.isAnimating) {
+                        startAnimation();
+                    } else {
+                        if (animInterval) clearInterval(animInterval);
+                    }
+                    renderExplorer();
+                });
+            }
+        }
+
+        renderExplorer();
+        startAnimation();
+    }
+
+    // --- Explorer Wave Background ---
+    function initExplorerWaveBackground() {
+        var canvas = document.getElementById('explorer-wave-canvas');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var width, height;
+        var time = 0;
+        var lineCount = 12;
+        var color = '88, 166, 255';
+        var speed = 0.008;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        function drawWave(yOffset, amplitude, frequency, phase, opacity) {
+            ctx.beginPath();
+            ctx.moveTo(0, height / 2 + yOffset);
+            for (var x = 0; x <= width; x += 3) {
+                var y = height / 2 + yOffset +
+                    Math.sin(x * frequency + phase) * amplitude +
+                    Math.sin(x * frequency * 0.5 + phase * 1.3) * (amplitude * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(' + color + ', ' + opacity + ')';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+
+        function animate() {
+            if (!document.body.classList.contains('view-explorer')) {
+                requestAnimationFrame(animate);
+                return;
+            }
+            ctx.fillStyle = '#0a0f1a';
+            ctx.fillRect(0, 0, width, height);
+            for (var i = 0; i < lineCount; i++) {
+                var yOffset = (i - lineCount / 2) * 60;
+                var amplitude = 20 + Math.sin(time + i * 0.5) * 10;
+                var frequency = 0.003 + i * 0.0002;
+                var phase = time * (1 + i * 0.1);
+                var opacity = 0.15 + (1 - Math.abs(i - lineCount / 2) / (lineCount / 2)) * 0.2;
+                drawWave(yOffset, amplitude, frequency, phase, opacity);
+            }
+            time += speed;
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+    }
     </script>
 </body>
 </html>
