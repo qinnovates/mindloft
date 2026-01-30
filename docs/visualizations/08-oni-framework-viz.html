@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONI Framework Visualization | 14-Layer Security Model</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,944 +14,1570 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0a0f1a;
             color: #c9d1d9;
+            overflow: hidden;
+            height: 100vh;
         }
-        #root { min-height: 100vh; position: relative; z-index: 1; }
 
-        /* Flowing Wave Canvas Background */
-        #wave-canvas {
+        /* Header */
+        #header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #21262d;
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header-left .header-label {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: #58a6ff;
+            margin-bottom: 2px;
+        }
+        .header-left h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin: 0;
+        }
+        .header-left .header-sub {
+            font-size: 12px;
+            color: #8b949e;
+            margin-top: 1px;
+        }
+        .header-right {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .header-stat {
+            text-align: center;
+        }
+        .header-stat .stat-val {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .header-stat .stat-label {
+            font-size: 9px;
+            color: #8b949e;
+            letter-spacing: 0.1em;
+        }
+        .header-divider {
+            width: 1px;
+            height: 32px;
+            background: #21262d;
+        }
+        .header-back {
+            color: #58a6ff;
+            text-decoration: none;
+            font-size: 12px;
+            padding: 6px 12px;
+            border: 1px solid #21262d;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .header-back:hover {
+            background: rgba(88, 166, 255, 0.1);
+            border-color: #58a6ff;
+        }
+
+        /* 3D Container */
+        #oni-3d-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0;
+        }
+        #oni-3d-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Zone Labels */
+        .oni3d-label {
+            position: absolute;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.8s ease;
             pointer-events: none;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        .oni3d-label.visible { opacity: 1; }
+        .oni3d-label-silicon {
+            top: 18%;
+            right: 22%;
+            color: #58a6ff;
+        }
+        .oni3d-label-gateway {
+            top: 50%;
+            right: 16%;
+            transform: translateY(-50%);
+            color: #f0883e;
+            font-weight: 600;
+        }
+        .oni3d-label-biology {
+            bottom: 22%;
+            right: 22%;
+            color: #3fb950;
+        }
+
+        /* Layer Sidebar */
+        #layer-sidebar {
+            position: fixed;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding: 10px 6px;
+            background: rgba(13, 17, 23, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid rgba(33, 38, 45, 0.6);
+        }
+        .sidebar-zone-label {
+            font-size: 8px;
+            letter-spacing: 0.15em;
+            text-align: center;
+            padding: 4px 0 2px;
+            font-weight: 600;
+        }
+        .sidebar-zone-label.bio { color: #3fb950; }
+        .sidebar-zone-label.gw { color: #f0883e; }
+        .sidebar-zone-label.si { color: #58a6ff; }
+        .layer-badge {
+            width: 36px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+            background: rgba(33, 38, 45, 0.5);
+            color: #8b949e;
+        }
+        .layer-badge:hover {
+            background: rgba(48, 54, 61, 0.8);
+            color: #c9d1d9;
+        }
+        .layer-badge.active {
+            border-color: #ffffff;
+            color: #f0f6fc;
+        }
+        .layer-badge.silicon { border-color: transparent; }
+        .layer-badge.silicon:hover, .layer-badge.silicon.active { background: rgba(88, 166, 255, 0.2); }
+        .layer-badge.silicon.active { border-color: #58a6ff; box-shadow: 0 0 8px rgba(88, 166, 255, 0.3); }
+        .layer-badge.gateway { border-color: transparent; }
+        .layer-badge.gateway:hover, .layer-badge.gateway.active { background: rgba(240, 136, 62, 0.25); }
+        .layer-badge.gateway.active { border-color: #f0883e; box-shadow: 0 0 10px rgba(240, 136, 62, 0.4); }
+        .layer-badge.biology { border-color: transparent; }
+        .layer-badge.biology:hover, .layer-badge.biology.active { background: rgba(63, 185, 80, 0.2); }
+        .layer-badge.biology.active { border-color: #3fb950; box-shadow: 0 0 8px rgba(63, 185, 80, 0.3); }
+
+        /* Detail Panel */
+        #detail-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 420px;
+            max-width: 92vw;
+            background: rgba(13, 17, 23, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-left: 1px solid #21262d;
+            z-index: 30;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        #detail-panel.hidden {
+            transform: translateX(100%);
+            pointer-events: none;
+        }
+        #detail-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(48, 54, 61, 0.5);
+            border: 1px solid #30363d;
+            color: #8b949e;
+            font-size: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: all 0.15s;
+        }
+        #detail-close:hover {
+            background: rgba(248, 81, 73, 0.15);
+            border-color: #f85149;
+            color: #f85149;
+        }
+        #detail-content {
+            padding: 20px;
+            padding-top: 56px;
+        }
+        .detail-header {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: #8b949e;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #21262d;
+        }
+        .detail-header .layer-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f0f6fc;
+            letter-spacing: 0;
+            display: block;
+            margin-top: 6px;
+        }
+        .detail-card {
+            padding: 14px;
+            background: rgba(22, 27, 34, 0.8);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .detail-card-label {
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            color: #8b949e;
+            margin-bottom: 6px;
+        }
+        .detail-card-text {
+            font-size: 13px;
+            color: #c9d1d9;
+            line-height: 1.5;
+        }
+        .detail-card-accent {
+            border-left: 3px solid #8b949e;
+        }
+        .attacks-header {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: #f85149;
+            margin: 20px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .attack-card {
+            padding: 12px 14px;
+            background: rgba(13, 17, 23, 0.8);
+            border-radius: 8px;
+            border: 1px solid #21262d;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .attack-card:hover {
+            background: rgba(33, 38, 45, 0.6);
+        }
+        .attack-card.expanded {
+            border-color: #30363d;
+            background: rgba(33, 38, 45, 0.5);
+        }
+        .attack-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .attack-id {
+            font-size: 10px;
+            color: #8b949e;
+            margin-right: 6px;
+        }
+        .attack-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #f0f6fc;
+        }
+        .attack-tactic {
+            font-size: 9px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .attack-desc {
+            font-size: 12px;
+            color: #8b949e;
+            line-height: 1.5;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #21262d;
+            display: none;
+        }
+        .attack-card.expanded .attack-desc {
+            display: block;
+        }
+
+        /* Signal Log */
+        #oni3d-signal-log {
+            position: fixed;
+            bottom: 60px;
+            left: 60px;
+            z-index: 15;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-width: 380px;
+        }
+        .oni3d-log-entry {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-left: 2px solid;
+            background: rgba(13, 17, 23, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 0 4px 4px 0;
+            transition: opacity 0.6s;
+        }
+        .oni3d-log-entry.fade { opacity: 0; }
+
+        /* Signal Legend */
+        #signal-legend {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            display: flex;
+            gap: 16px;
+            padding: 6px 16px;
+            background: rgba(13, 17, 23, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(33, 38, 45, 0.5);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: #8b949e;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .legend-dot.blue { background: #60a5fa; box-shadow: 0 0 4px rgba(96,165,250,0.5); }
+        .legend-dot.red { background: #f87171; box-shadow: 0 0 4px rgba(248,113,113,0.5); }
+        .legend-dot.green { background: #4ade80; box-shadow: 0 0 4px rgba(74,222,128,0.5); }
+
+        /* Explainer */
+        #oni3d-explainer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 40;
+            background: rgba(13, 17, 23, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px 28px;
+            text-align: center;
+            font-size: 14px;
+            color: #c9d1d9;
+            max-width: 360px;
+            transition: opacity 0.4s ease;
+        }
+        #oni3d-explainer.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #oni3d-explainer p {
+            margin: 0 0 12px;
+            line-height: 1.5;
+        }
+        #oni3d-explainer .hint {
+            font-size: 11px;
+            color: #8b949e;
+        }
+        #oni3d-explainer-close {
+            background: rgba(88, 166, 255, 0.15);
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+            padding: 6px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 12px;
+            transition: all 0.15s;
+        }
+        #oni3d-explainer-close:hover {
+            background: rgba(88, 166, 255, 0.25);
+        }
+
+        /* Footer */
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px 24px;
+            text-align: center;
+            font-size: 11px;
+            color: #484f58;
+            z-index: 5;
+            pointer-events: none;
+        }
+        #footer span { color: #f0883e; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            #header {
+                padding: 10px 16px;
+            }
+            .header-left h1 { font-size: 18px; }
+            .header-right .header-stat { display: none; }
+            .header-right .header-divider { display: none; }
+
+            #layer-sidebar {
+                left: 50%;
+                top: auto;
+                bottom: 44px;
+                transform: translateX(-50%);
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                max-width: 95vw;
+                padding: 6px 8px;
+                gap: 2px;
+            }
+            .sidebar-zone-label {
+                width: 100%;
+                padding: 2px 0;
+                font-size: 7px;
+            }
+            .layer-badge {
+                width: 28px;
+                height: 22px;
+                font-size: 9px;
+            }
+
+            #detail-panel {
+                width: 100vw;
+                max-width: 100vw;
+                height: 60vh;
+                top: auto;
+                bottom: 0;
+                border-left: none;
+                border-top: 1px solid #21262d;
+                border-radius: 16px 16px 0 0;
+                transform: translateY(0);
+            }
+            #detail-panel.hidden {
+                transform: translateY(100%);
+            }
+
+            .oni3d-label { font-size: 8px; }
+            .oni3d-label-silicon { top: 15%; right: 8%; }
+            .oni3d-label-gateway { right: 5%; }
+            .oni3d-label-biology { bottom: 35%; right: 8%; }
+
+            #oni3d-signal-log {
+                bottom: 110px;
+                left: 8px;
+                max-width: 240px;
+            }
+            .oni3d-log-entry { font-size: 9px; }
+
+            #signal-legend {
+                bottom: 42px;
+                right: 8px;
+                left: auto;
+                transform: none;
+                gap: 8px;
+                padding: 4px 10px;
+            }
+            .legend-item { font-size: 8px; }
+
+            #footer { display: none; }
         }
     </style>
 </head>
 <body>
-    <canvas id="wave-canvas"></canvas>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useCallback } = React;
+    <!-- Header -->
+    <header id="header">
+        <div class="header-left">
+            <div class="header-label">NEURAL SECURITY STANDARD</div>
+            <h1>ONI Framework</h1>
+            <div class="header-sub">The OSI of Mind &mdash; 14 Layer Security Model</div>
+        </div>
+        <div class="header-right">
+            <div class="header-stat">
+                <div class="stat-val" style="color: #58a6ff">14</div>
+                <div class="stat-label">LAYERS</div>
+            </div>
+            <div class="header-divider"></div>
+            <div class="header-stat">
+                <div class="stat-val" style="color: #f85149">25+</div>
+                <div class="stat-label">THREAT SIGNATURES</div>
+            </div>
+            <div class="header-divider"></div>
+            <a href="../" class="header-back">&larr; Back to ONI</a>
+        </div>
+    </header>
 
-        const ONIFrameworkViz = () => {
-          const [activeLayer, setActiveLayer] = useState(null);
-          const [signalPhase, setSignalPhase] = useState(0);
-          const [isAnimating, setIsAnimating] = useState(true);
-          const [direction, setDirection] = useState('up');
-          const [selectedAttack, setSelectedAttack] = useState(null);
+    <!-- 3D Container -->
+    <div id="oni-3d-container">
+        <div class="oni3d-label oni3d-label-silicon">L1-L7 Silicon</div>
+        <div class="oni3d-label oni3d-label-gateway">L8 Neural Gateway</div>
+        <div class="oni3d-label oni3d-label-biology">L9-L14 Biology</div>
+    </div>
 
-          // ONI Framework 14 Layers with 25+ Attack Signatures
-          const layers = [
-            {
-              id: 1,
-              name: 'Physical',
-              category: 'silicon',
-              osi: 'Physical',
-              description: 'Transmission of raw bits over medium: copper, fiber optics, RF, electrode interfaces',
-              attacks: [
+    <!-- Layer Sidebar -->
+    <div id="layer-sidebar"></div>
+
+    <!-- Detail Panel -->
+    <div id="detail-panel" class="hidden">
+        <button id="detail-close">&times;</button>
+        <div id="detail-content"></div>
+    </div>
+
+    <!-- Signal Log -->
+    <div id="oni3d-signal-log"></div>
+
+    <!-- Signal Legend -->
+    <div id="signal-legend">
+        <span class="legend-item"><span class="legend-dot blue"></span> Normal</span>
+        <span class="legend-item"><span class="legend-dot red"></span> Threat</span>
+        <span class="legend-item"><span class="legend-dot green"></span> Stimulation</span>
+    </div>
+
+    <!-- Explainer Popup -->
+    <div id="oni3d-explainer">
+        <p>Click any shell to select a layer and inject a signal.</p>
+        <p class="hint">Watch how wavefronts propagate through the 14-layer security model.<br>Threats are blocked at the L8 Neural Gateway.</p>
+        <button id="oni3d-explainer-close">Got it</button>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer">
+        ONI Framework &mdash; Open Neurosecurity Interoperability &mdash;
+        <span>"Only life's most important connections deserve the most thought"</span>
+    </div>
+
+    <script>
+    // ====================================
+    // ONI Framework 3D Visualization
+    // 14-Layer Security Model with
+    // Three.js Concentric Shell Rendering
+    // ====================================
+
+    // --- Layer Data Model (preserved from original) ---
+    var layers = [
+        {
+            id: 1, name: 'Physical', category: 'silicon', osi: 'Physical',
+            description: 'Transmission of raw bits over medium: copper, fiber optics, RF, electrode interfaces',
+            attacks: [
                 { id: 'T1.1', name: 'EM Side-Channel Capture', tactic: 'Reconnaissance', description: 'Passive electromagnetic emanation capture to extract neural signal patterns without direct access' },
                 { id: 'T1.2', name: 'Signal Injection', tactic: 'Initial Access', description: 'Inject malicious signals through physical medium to corrupt or spoof neural readings' },
                 { id: 'T1.3', name: 'Hardware Implant', tactic: 'Persistence', description: 'Physical modification or implantation of malicious components in BCI hardware' },
-              ]
-            },
-            {
-              id: 2,
-              name: 'Data Link',
-              category: 'silicon',
-              osi: 'Data Link',
-              description: 'Framing, MAC addressing, local delivery: Ethernet, Wi-Fi, Bluetooth',
-              attacks: [
+            ]
+        },
+        {
+            id: 2, name: 'Data Link', category: 'silicon', osi: 'Data Link',
+            description: 'Framing, MAC addressing, local delivery: Ethernet, Wi-Fi, Bluetooth',
+            attacks: [
                 { id: 'T2.1', name: 'MAC Spoofing', tactic: 'Initial Access', description: 'Impersonate legitimate BCI device by spoofing MAC address to inject unauthorized commands' },
                 { id: 'T2.2', name: 'Frame Injection', tactic: 'Execution', description: 'Inject malicious frames into data link layer to corrupt or hijack communication' },
-              ]
-            },
-            {
-              id: 3,
-              name: 'Network',
-              category: 'silicon',
-              osi: 'Network',
-              description: 'Logical addressing and routing: IP, ICMP, BGP',
-              attacks: [
+            ]
+        },
+        {
+            id: 3, name: 'Network', category: 'silicon', osi: 'Network',
+            description: 'Logical addressing and routing: IP, ICMP, BGP',
+            attacks: [
                 { id: 'T3.1', name: 'Route Hijacking', tactic: 'Collection', description: 'Redirect neural data streams through attacker-controlled network paths via BGP/routing attacks' },
                 { id: 'T3.2', name: 'IP Spoofing', tactic: 'Defense Evasion', description: 'Mask attack origin by spoofing source IP addresses in BCI network traffic' },
-              ]
-            },
-            {
-              id: 4,
-              name: 'Transport',
-              category: 'silicon',
-              osi: 'Transport',
-              description: 'Reliable delivery, flow control, segmentation, QoS for neural streams',
-              attacks: [
+            ]
+        },
+        {
+            id: 4, name: 'Transport', category: 'silicon', osi: 'Transport',
+            description: 'Reliable delivery, flow control, segmentation, QoS for neural streams',
+            attacks: [
                 { id: 'T4.1', name: 'Neural DoS', tactic: 'Impact', description: 'Overwhelm transport layer with malformed packets causing denial of neural service' },
                 { id: 'T4.2', name: 'Stream Injection', tactic: 'Execution', description: 'Insert malicious payloads into active neural data transport streams' },
-              ]
-            },
-            {
-              id: 5,
-              name: 'Session',
-              category: 'silicon',
-              osi: 'Session',
-              description: 'Connection management, synchronization, handshake protocols',
-              attacks: [
+            ]
+        },
+        {
+            id: 5, name: 'Session', category: 'silicon', osi: 'Session',
+            description: 'Connection management, synchronization, handshake protocols',
+            attacks: [
                 { id: 'T5.1', name: 'BCI Session Hijacking', tactic: 'Credential Access', description: 'Take over authenticated BCI sessions to gain unauthorized neural interface access' },
                 { id: 'T5.2', name: 'Neural Replay Attack', tactic: 'Initial Access', description: 'Capture and replay valid neural session tokens to bypass authentication' },
-              ]
-            },
-            {
-              id: 6,
-              name: 'Presentation',
-              category: 'silicon',
-              osi: 'Presentation',
-              description: 'Data encryption, compression, neural data formatting',
-              attacks: [
+            ]
+        },
+        {
+            id: 6, name: 'Presentation', category: 'silicon', osi: 'Presentation',
+            description: 'Data encryption, compression, neural data formatting',
+            attacks: [
                 { id: 'T6.1', name: 'Encryption Downgrade', tactic: 'Defense Evasion', description: 'Force use of weak or null encryption to expose raw neural data in transit' },
                 { id: 'T6.2', name: 'Neural Format Exploit', tactic: 'Execution', description: 'Exploit neural data format parsing vulnerabilities for arbitrary code execution' },
-              ]
-            },
-            {
-              id: 7,
-              name: 'Application',
-              category: 'silicon',
-              osi: 'Application',
-              description: 'User-facing network services: HTTP, REST APIs, BCI applications',
-              attacks: [
+            ]
+        },
+        {
+            id: 7, name: 'Application', category: 'silicon', osi: 'Application',
+            description: 'User-facing network services: HTTP, REST APIs, BCI applications',
+            attacks: [
                 { id: 'T7.1', name: 'BCI API Exploitation', tactic: 'Initial Access', description: 'Exploit vulnerabilities in brain-computer interface application APIs' },
                 { id: 'T7.2', name: 'Neural Command Injection', tactic: 'Execution', description: 'Inject malicious commands through API calls to manipulate BCI behavior' },
-              ]
-            },
-            {
-              id: 8,
-              name: 'Neural Gateway',
-              category: 'gateway',
-              osi: 'Firewall',
-              description: 'Critical security boundary between silicon and biology - the NSAM checkpoint',
-              attacks: [
+            ]
+        },
+        {
+            id: 8, name: 'Neural Gateway', category: 'gateway', osi: 'Firewall',
+            description: 'Critical security boundary between silicon and biology \u2014 the NSAM checkpoint',
+            attacks: [
                 { id: 'T8.1', name: 'Gateway Bypass', tactic: 'Defense Evasion', description: 'Circumvent neural gateway security controls through protocol-level manipulation' },
                 { id: 'T8.2', name: 'NSAM Baseline Poisoning', tactic: 'Persistence', description: 'Gradually corrupt Neural Signal Assurance Model training baselines over time' },
                 { id: 'T8.3', name: 'Coherence Metric Spoofing', tactic: 'Defense Evasion', description: 'Forge valid Cs coherence scores to pass NSAM security inspection undetected' },
                 { id: 'T8.4', name: 'Bidirectional Channel Exploit', tactic: 'Lateral Movement', description: 'Exploit read/write neural interface capabilities for full bidirectional compromise' },
-              ]
-            },
-            {
-              id: 9,
-              name: 'Signal Processing',
-              category: 'biology',
-              osi: 'Filtering',
-              description: 'Neural noise filtering, signal isolation, sensory gating mechanisms',
-              attacks: [
+            ]
+        },
+        {
+            id: 9, name: 'Signal Processing', category: 'biology', osi: 'Filtering',
+            description: 'Neural noise filtering, signal isolation, sensory gating mechanisms',
+            attacks: [
                 { id: 'T9.1', name: 'Sensory Overload', tactic: 'Impact', description: 'Overwhelm neural signal processing capacity with excessive artificial stimulation' },
                 { id: 'T9.2', name: 'Neural Filter Bypass', tactic: 'Defense Evasion', description: 'Craft signals specifically designed to evade natural neural filtering mechanisms' },
-              ]
-            },
-            {
-              id: 10,
-              name: 'Neural Protocol',
-              category: 'biology',
-              osi: 'Encoding',
-              description: 'Spike timing, neural encoding schemes, rate coding, temporal coding patterns',
-              attacks: [
+            ]
+        },
+        {
+            id: 10, name: 'Neural Protocol', category: 'biology', osi: 'Encoding',
+            description: 'Spike timing, neural encoding schemes, rate coding, temporal coding patterns',
+            attacks: [
                 { id: 'T10.1', name: 'Spike Timing Attack', tactic: 'Execution', description: 'Alter precise spike timing patterns to corrupt or change neural message meaning' },
                 { id: 'T10.2', name: 'False Rate Pattern Injection', tactic: 'Impact', description: 'Inject fabricated firing rate patterns to create phantom neural signals' },
-              ]
-            },
-            {
-              id: 11,
-              name: 'Cognitive Transport',
-              category: 'biology',
-              osi: 'Delivery',
-              description: 'Neurotransmitter pathways, synaptic transmission, neural circuit routing',
-              attacks: [
+            ]
+        },
+        {
+            id: 11, name: 'Cognitive Transport', category: 'biology', osi: 'Delivery',
+            description: 'Neurotransmitter pathways, synaptic transmission, neural circuit routing',
+            attacks: [
                 { id: 'T11.1', name: 'Neural Pathway Hijack', tactic: 'Lateral Movement', description: 'Redirect cognitive signals through unintended neural pathways for interception' },
                 { id: 'T11.2', name: 'Synaptic Timing Disruption', tactic: 'Impact', description: 'Interfere with precise neurotransmitter release timing and reuptake mechanisms' },
-              ]
-            },
-            {
-              id: 12,
-              name: 'Cognitive Session',
-              category: 'biology',
-              osi: 'Context',
-              description: 'Working memory, attention binding, cognitive state management',
-              attacks: [
+            ]
+        },
+        {
+            id: 12, name: 'Cognitive Session', category: 'biology', osi: 'Context',
+            description: 'Working memory, attention binding, cognitive state management',
+            attacks: [
                 { id: 'T12.1', name: 'Working Memory Poisoning', tactic: 'Impact', description: 'Inject false contextual information directly into active working memory' },
                 { id: 'T12.2', name: 'Attention Capture Attack', tactic: 'Collection', description: 'Force cognitive attention toward attacker-chosen stimuli, thoughts, or concepts' },
-              ]
-            },
-            {
-              id: 13,
-              name: 'Semantic Layer',
-              category: 'biology',
-              osi: 'Intent',
-              description: 'Meaning extraction, conceptual processing, intention formation',
-              attacks: [
+            ]
+        },
+        {
+            id: 13, name: 'Semantic Layer', category: 'biology', osi: 'Intent',
+            description: 'Meaning extraction, conceptual processing, intention formation',
+            attacks: [
                 { id: 'T13.1', name: 'Semantic Interference', tactic: 'Impact', description: 'Induce systematic misinterpretation of perceived information and abstract concepts' },
                 { id: 'T13.2', name: 'Intent Subversion', tactic: 'Execution', description: 'Subtly manipulate the formation of user intentions and decision-making processes' },
-              ]
-            },
-            {
-              id: 14,
-              name: 'Identity Layer',
-              category: 'biology',
-              osi: 'Self',
-              description: 'Self-model, sense of agency, consciousness boundary, identity integrity',
-              attacks: [
+            ]
+        },
+        {
+            id: 14, name: 'Identity Layer', category: 'biology', osi: 'Self',
+            description: 'Self-model, sense of agency, consciousness boundary, identity integrity',
+            attacks: [
                 { id: 'T14.1', name: 'Identity Fragmentation', tactic: 'Impact', description: 'Disrupt coherent sense of self, personal continuity, and identity boundaries' },
                 { id: 'T14.2', name: 'Agency Manipulation', tactic: 'Impact', description: 'Compromise user sense of authorship and voluntary control over their own actions' },
                 { id: 'T14.3', name: 'Self-Model Corruption', tactic: 'Persistence', description: 'Gradually alter internal self-representation to accept foreign signals as authentic' },
-              ]
-            },
-          ];
+            ]
+        },
+    ];
 
-          const tacticColors = {
-            'Reconnaissance': '#a371f7',
-            'Initial Access': '#f85149',
-            'Execution': '#f0883e',
-            'Persistence': '#d29922',
-            'Privilege Escalation': '#7ee787',
-            'Defense Evasion': '#3fb950',
-            'Credential Access': '#39d353',
-            'Collection': '#2f81f7',
-            'Lateral Movement': '#58a6ff',
-            'Impact': '#ff7b72',
-          };
+    var tacticColors = {
+        'Reconnaissance': '#a371f7',
+        'Initial Access': '#f85149',
+        'Execution': '#f0883e',
+        'Persistence': '#d29922',
+        'Privilege Escalation': '#7ee787',
+        'Defense Evasion': '#3fb950',
+        'Credential Access': '#39d353',
+        'Collection': '#2f81f7',
+        'Lateral Movement': '#58a6ff',
+        'Impact': '#ff7b72',
+    };
 
-          useEffect(() => {
-            if (!isAnimating) return;
-            const interval = setInterval(() => {
-              setSignalPhase(prev => {
-                const next = prev + 1;
-                if (next > 15) {
-                  setDirection(d => d === 'up' ? 'down' : 'up');
-                  return 0;
+    // --- UI State ---
+    var state = {
+        selectedLayerId: null,
+        selectedAttackId: null,
+        highlightShellFn: null // set after 3D init
+    };
+
+    var detailPanel = document.getElementById('detail-panel');
+    var detailContent = document.getElementById('detail-content');
+    var detailClose = document.getElementById('detail-close');
+    var sidebarEl = document.getElementById('layer-sidebar');
+
+    // --- Build Layer Sidebar ---
+    function buildLayerSidebar() {
+        var html = '';
+        var reversed = layers.slice().reverse(); // L14 at top, L1 at bottom
+
+        for (var i = 0; i < reversed.length; i++) {
+            var layer = reversed[i];
+
+            // Zone headers
+            if (layer.id === 14) {
+                html += '<div class="sidebar-zone-label bio">BIO</div>';
+            } else if (layer.id === 8) {
+                html += '<div class="sidebar-zone-label gw">GW</div>';
+            } else if (layer.id === 7) {
+                html += '<div class="sidebar-zone-label si">SI</div>';
+            }
+
+            html += '<div class="layer-badge ' + layer.category + '" data-layer-id="' + layer.id + '">L' + layer.id + '</div>';
+        }
+
+        sidebarEl.innerHTML = html;
+
+        // Attach click handlers
+        var badges = sidebarEl.querySelectorAll('.layer-badge');
+        badges.forEach(function(badge) {
+            badge.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var id = parseInt(this.getAttribute('data-layer-id'));
+                selectLayer(state.selectedLayerId === id ? null : id);
+            });
+        });
+    }
+
+    // --- Select Layer ---
+    function selectLayer(layerId) {
+        state.selectedLayerId = layerId;
+        state.selectedAttackId = null;
+
+        // Update sidebar
+        var badges = sidebarEl.querySelectorAll('.layer-badge');
+        badges.forEach(function(b) {
+            b.classList.toggle('active', parseInt(b.getAttribute('data-layer-id')) === layerId);
+        });
+
+        // Update 3D shell highlight
+        if (state.highlightShellFn) {
+            state.highlightShellFn(layerId);
+        }
+
+        // Update detail panel
+        if (layerId) {
+            renderDetailPanel(layerId);
+            detailPanel.classList.remove('hidden');
+        } else {
+            detailPanel.classList.add('hidden');
+        }
+    }
+
+    // --- Render Detail Panel ---
+    function renderDetailPanel(layerId) {
+        var layer = layers.find(function(l) { return l.id === layerId; });
+        if (!layer) return;
+
+        var catColors = {
+            silicon: '#58a6ff',
+            gateway: '#f0883e',
+            biology: '#3fb950'
+        };
+        var catLabel = {
+            silicon: 'Silicon Layer',
+            gateway: 'Neural Gateway',
+            biology: 'Biology Layer'
+        };
+        var accent = catColors[layer.category];
+
+        var html = '';
+
+        // Header
+        html += '<div class="detail-header" style="border-bottom-color: ' + accent + '">';
+        html += 'LAYER ' + layer.id + ' \u2014 ' + layer.category.toUpperCase();
+        html += '<span class="layer-name" style="color: ' + accent + '">' + layer.name + '</span>';
+        html += '</div>';
+
+        // Function card
+        html += '<div class="detail-card detail-card-accent" style="border-left-color: ' + accent + '">';
+        html += '<div class="detail-card-label">FUNCTION</div>';
+        html += '<div class="detail-card-text">' + layer.description + '</div>';
+        html += '</div>';
+
+        // OSI Mapping card
+        html += '<div class="detail-card detail-card-accent" style="border-left-color: #8b949e">';
+        html += '<div class="detail-card-label">OSI MAPPING</div>';
+        html += '<div class="detail-card-text"><strong style="color:#f0f6fc">' + layer.osi + '</strong> Layer</div>';
+        html += '<div style="font-size:11px;color:#8b949e;margin-top:6px">';
+        if (layer.category === 'silicon') html += 'Standard OSI network model';
+        else if (layer.category === 'gateway') html += 'Security perimeter control';
+        else html += 'Cognitive system extension';
+        html += '</div></div>';
+
+        // Attack vectors
+        html += '<div class="attacks-header"><span style="font-size:14px">\u26A0</span> ATTACK VECTORS (' + layer.attacks.length + ')</div>';
+
+        layer.attacks.forEach(function(attack) {
+            var tc = tacticColors[attack.tactic] || '#8b949e';
+            html += '<div class="attack-card" data-attack-id="' + attack.id + '" onclick="toggleAttack(\'' + attack.id + '\', this)">';
+            html += '<div class="attack-card-top">';
+            html += '<div><span class="attack-id">' + attack.id + '</span><span class="attack-name">' + attack.name + '</span></div>';
+            html += '<span class="attack-tactic" style="background:' + tc + '20;color:' + tc + '">' + attack.tactic + '</span>';
+            html += '</div>';
+            html += '<div class="attack-desc">' + attack.description + '</div>';
+            html += '</div>';
+        });
+
+        // Key concepts for L8
+        if (layer.id === 8) {
+            html += '<div style="margin-top:20px;padding:14px;background:rgba(240,136,62,0.08);border-radius:8px;border:1px solid rgba(240,136,62,0.2)">';
+            html += '<div style="font-size:9px;letter-spacing:0.15em;color:#f0883e;margin-bottom:8px">KEY CONCEPTS</div>';
+            html += '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px">';
+            html += '<div style="font-size:14px;font-weight:600;color:#3fb950;min-width:32px">C\u209B</div>';
+            html += '<div><div style="font-size:12px;color:#c9d1d9;font-weight:500">Coherence Metric</div>';
+            html += '<div style="font-size:10px;color:#8b949e;margin-top:2px">C\u209B = e^(\u2212(\u03C3\u00B2\u03C6 + \u03C3\u00B2\u03C4 + \u03C3\u00B2\u03B3))</div></div></div>';
+            html += '<div style="display:flex;gap:10px;align-items:flex-start">';
+            html += '<div style="font-size:12px;font-weight:600;color:#f0883e;min-width:32px">NSAM</div>';
+            html += '<div><div style="font-size:12px;color:#c9d1d9;font-weight:500">Neural Signal Assurance Model</div>';
+            html += '<div style="font-size:10px;color:#8b949e;margin-top:2px">ML-trained baseline for anomaly detection at L8</div></div></div>';
+            html += '</div>';
+        }
+
+        detailContent.innerHTML = html;
+    }
+
+    // --- Toggle Attack Card ---
+    function toggleAttack(attackId, el) {
+        if (state.selectedAttackId === attackId) {
+            state.selectedAttackId = null;
+            el.classList.remove('expanded');
+        } else {
+            // Close previous
+            var prev = detailContent.querySelector('.attack-card.expanded');
+            if (prev) prev.classList.remove('expanded');
+            state.selectedAttackId = attackId;
+            el.classList.add('expanded');
+        }
+    }
+
+    // --- Detail Panel Close ---
+    detailClose.addEventListener('click', function() {
+        selectLayer(null);
+    });
+
+    // --- Three.js 3D Visualization ---
+    function initONI3D() {
+        var container = document.getElementById('oni-3d-container');
+        if (!container || typeof THREE === 'undefined') return;
+
+        var isMobile = window.innerWidth <= 768;
+
+        // --- Fresnel Shader ---
+        var fresnelVert = [
+            'varying vec3 vNormal;',
+            'varying vec3 vViewPos;',
+            'void main() {',
+            '  vNormal = normalize(normalMatrix * normal);',
+            '  vec4 mv = modelViewMatrix * vec4(position, 1.0);',
+            '  vViewPos = -mv.xyz;',
+            '  gl_Position = projectionMatrix * mv;',
+            '}'
+        ].join('\n');
+
+        var fresnelFrag = [
+            'uniform vec3 uColor;',
+            'uniform float uOpacity;',
+            'uniform float uFresnelPower;',
+            'uniform float uGlowIntensity;',
+            'uniform float uTime;',
+            'varying vec3 vNormal;',
+            'varying vec3 vViewPos;',
+            'void main() {',
+            '  vec3 vd = normalize(vViewPos);',
+            '  float fresnel = pow(1.0 - abs(dot(vd, vNormal)), uFresnelPower);',
+            '  float shimmer = 1.0 + 0.08 * sin(uTime * 2.0 + vNormal.x * 12.0);',
+            '  float alpha = fresnel * uOpacity * shimmer;',
+            '  vec3 col = uColor * (1.0 + fresnel * uGlowIntensity);',
+            '  gl_FragColor = vec4(col, alpha);',
+            '}'
+        ].join('\n');
+
+        // --- Gateway Shader ---
+        var gatewayFrag = [
+            'uniform vec3 uColor;',
+            'uniform float uOpacity;',
+            'uniform float uTime;',
+            'varying vec3 vNormal;',
+            'varying vec3 vViewPos;',
+            'void main() {',
+            '  vec3 vd = normalize(vViewPos);',
+            '  float fresnel = pow(1.0 - abs(dot(vd, vNormal)), 2.5);',
+            '  float pulse = 0.6 + 0.4 * sin(uTime * 3.0);',
+            '  float energy = fresnel * pulse;',
+            '  float scan = 0.5 + 0.5 * sin(vNormal.y * 20.0 + uTime * 4.0);',
+            '  energy += scan * 0.15 * fresnel;',
+            '  vec3 col = uColor * (1.0 + energy * 2.0);',
+            '  gl_FragColor = vec4(col, energy * uOpacity);',
+            '}'
+        ].join('\n');
+
+        // --- Renderer ---
+        var renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: !isMobile,
+            powerPreference: 'high-performance'
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0x0a0f1a, 1);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.insertBefore(renderer.domElement, container.firstChild);
+
+        // --- Scene & Camera ---
+        var scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0a0f1a, 0.04);
+
+        var camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+        camera.position.set(0, 0.3, 7);
+
+        // --- Groups ---
+        var autoRotateGroup = new THREE.Group();
+        var parallaxGroup = new THREE.Group();
+        scene.add(autoRotateGroup);
+        autoRotateGroup.add(parallaxGroup);
+
+        // --- Lighting ---
+        scene.add(new THREE.AmbientLight(0x1a2744, 0.3));
+
+        var keyLight = new THREE.PointLight(0x3b82f6, 2.0, 25);
+        keyLight.position.set(4, 3, 5);
+        scene.add(keyLight);
+
+        var fillLight = new THREE.PointLight(0x8b5cf6, 1.2, 20);
+        fillLight.position.set(-3, -2, 3);
+        scene.add(fillLight);
+
+        var rimLight = new THREE.PointLight(0x06b6d4, 1.5, 20);
+        rimLight.position.set(0, 1, -5);
+        scene.add(rimLight);
+
+        var gatewayLight = new THREE.PointLight(0xf59e0b, 1.0, 12);
+        gatewayLight.position.set(0, 0, 3);
+        scene.add(gatewayLight);
+
+        // --- Layer Config ---
+        var allLayers = [
+            { id:'L1',  r:2.90, c:[0.145,0.388,0.922], zone:'silicon',  fp:3.5, dataLayerId:1 },
+            { id:'L2',  r:2.72, c:[0.173,0.424,0.941], zone:'silicon',  fp:3.2, dataLayerId:2 },
+            { id:'L3',  r:2.55, c:[0.200,0.463,0.953], zone:'silicon',  fp:3.0, dataLayerId:3 },
+            { id:'L4',  r:2.38, c:[0.231,0.510,0.965], zone:'silicon',  fp:2.8, dataLayerId:4 },
+            { id:'L5',  r:2.22, c:[0.271,0.561,0.969], zone:'silicon',  fp:2.6, dataLayerId:5 },
+            { id:'L6',  r:2.06, c:[0.310,0.612,0.976], zone:'silicon',  fp:2.5, dataLayerId:6 },
+            { id:'L7',  r:1.90, c:[0.376,0.647,0.980], zone:'silicon',  fp:2.4, dataLayerId:7 },
+            { id:'L8',  r:1.72, c:[0.961,0.620,0.043], zone:'gateway',  fp:2.0, dataLayerId:8 },
+            { id:'L9',  r:1.52, c:[0.063,0.725,0.506], zone:'biology',  fp:2.8, dataLayerId:9 },
+            { id:'L10', r:1.38, c:[0.204,0.827,0.600], zone:'biology',  fp:2.6, dataLayerId:10 },
+            { id:'L11', r:1.24, c:[0.431,0.906,0.718], zone:'biology',  fp:2.4, dataLayerId:11 },
+            { id:'L12', r:1.10, c:[0.655,0.545,0.984], zone:'biology',  fp:2.3, dataLayerId:12 },
+            { id:'L13', r:0.96, c:[0.753,0.518,0.988], zone:'biology',  fp:2.2, dataLayerId:13 },
+            { id:'L14', r:0.82, c:[0.925,0.282,0.600], zone:'biology',  fp:2.0, dataLayerId:14 },
+        ];
+
+        var mobileIdx = [0,2,4,6,7,9,11,13];
+        var activeLayers = isMobile ? mobileIdx.map(function(i){return allLayers[i];}) : allLayers;
+
+        // --- Shells ---
+        var shellGeo = new THREE.SphereGeometry(1, 64, 48);
+        var shellMeshes = [], shellUniforms = [];
+        var defaultOpacities = [], defaultGlowIntensities = [];
+
+        activeLayers.forEach(function(layer) {
+            var isGW = layer.zone === 'gateway';
+            var defOpacity = isGW ? 0.7 : 0.45;
+            var defGlow = isGW ? 2.5 : 1.2;
+            defaultOpacities.push(defOpacity);
+            defaultGlowIntensities.push(defGlow);
+
+            var u = {
+                uColor: { value: new THREE.Vector3(layer.c[0], layer.c[1], layer.c[2]) },
+                uOpacity: { value: defOpacity },
+                uFresnelPower: { value: layer.fp },
+                uGlowIntensity: { value: defGlow },
+                uTime: { value: 0 }
+            };
+            var mat = new THREE.ShaderMaterial({
+                uniforms: u,
+                vertexShader: fresnelVert,
+                fragmentShader: isGW ? gatewayFrag : fresnelFrag,
+                transparent: true,
+                side: THREE.FrontSide,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+            });
+            var mesh = new THREE.Mesh(shellGeo, mat);
+            mesh.scale.setScalar(layer.r);
+            mesh.userData = layer;
+            parallaxGroup.add(mesh);
+            shellMeshes.push(mesh);
+            shellUniforms.push(u);
+        });
+
+        // --- Wireframe overlays ---
+        var wireIndices = isMobile ? [0,3,5,7] : [0,3,6,7,10,13];
+        var wireGeo = new THREE.IcosahedronGeometry(1, 2);
+        wireIndices.forEach(function(idx) {
+            if (idx >= activeLayers.length) return;
+            var L = activeLayers[idx];
+            var wm = new THREE.MeshBasicMaterial({
+                color: new THREE.Color(L.c[0], L.c[1], L.c[2]),
+                wireframe: true, transparent: true,
+                opacity: L.zone === 'gateway' ? 0.12 : 0.05,
+                depthWrite: false,
+            });
+            var wMesh = new THREE.Mesh(wireGeo, wm);
+            wMesh.scale.setScalar(L.r * 1.002);
+            parallaxGroup.add(wMesh);
+        });
+
+        // --- Brain Core ---
+        var coreGeo = new THREE.SphereGeometry(0.55, 48, 36);
+        var cp = coreGeo.attributes.position;
+        for (var i = 0; i < cp.count; i++) {
+            var x = cp.getX(i), y = cp.getY(i), z = cp.getZ(i);
+            var n1 = Math.sin(x*6)*Math.cos(y*7)*Math.sin(z*5)*0.04;
+            var n2 = Math.sin(x*12+1)*Math.cos(y*11+2)*0.02;
+            var n3 = Math.cos(z*15+x*8)*0.012;
+            var len = Math.sqrt(x*x+y*y+z*z);
+            var s = (0.55+n1+n2+n3)/len;
+            cp.setXYZ(i, x*s, y*s*0.85, z*s);
+        }
+        coreGeo.computeVertexNormals();
+
+        var coreVert = [
+            'varying vec3 vNormal; varying vec3 vViewPos; varying vec3 vWP;',
+            'void main() {',
+            '  vNormal = normalize(normalMatrix * normal);',
+            '  vec4 mv = modelViewMatrix * vec4(position,1.0);',
+            '  vViewPos = -mv.xyz; vWP = position;',
+            '  gl_Position = projectionMatrix * mv;',
+            '}'
+        ].join('\n');
+
+        var coreFrag = [
+            'uniform float uTime;',
+            'varying vec3 vNormal; varying vec3 vViewPos; varying vec3 vWP;',
+            'void main() {',
+            '  vec3 vd = normalize(vViewPos);',
+            '  float fresnel = pow(1.0-abs(dot(vd,vNormal)),2.0);',
+            '  float sss = pow(max(0.0,dot(vd,-vNormal)),1.5)*0.4;',
+            '  float wave = sin(vWP.x*8.0+uTime*2.5)*sin(vWP.z*8.0+uTime*1.8);',
+            '  wave = wave*0.5+0.5;',
+            '  vec3 base = vec3(0.85,0.2,0.45);',
+            '  vec3 glow = vec3(0.5,0.15,0.65);',
+            '  vec3 col = mix(base,glow,fresnel);',
+            '  col += vec3(0.3,0.1,0.4)*sss;',
+            '  col += vec3(0.2,0.05,0.3)*wave*0.3;',
+            '  gl_FragColor = vec4(col, 0.7+fresnel*0.3);',
+            '}'
+        ].join('\n');
+
+        var coreU = { uTime:{value:0} };
+        var coreMat = new THREE.ShaderMaterial({
+            uniforms: coreU,
+            vertexShader: coreVert,
+            fragmentShader: coreFrag,
+            transparent: true, depthWrite: true,
+        });
+        var coreMesh = new THREE.Mesh(coreGeo, coreMat);
+        parallaxGroup.add(coreMesh);
+
+        // Inner glow
+        var glowMat = new THREE.MeshBasicMaterial({
+            color: 0xec4899, transparent: true, opacity: 0.15,
+            depthWrite: false, blending: THREE.AdditiveBlending,
+        });
+        var glowMesh = new THREE.Mesh(new THREE.SphereGeometry(0.45,24,16), glowMat);
+        parallaxGroup.add(glowMesh);
+
+        // --- Neural Nodes ---
+        var nodeCount = isMobile ? 60 : 120;
+        var nPos = new Float32Array(nodeCount*3);
+        var nSizes = new Float32Array(nodeCount);
+        for (var i=0; i<nodeCount; i++) {
+            var theta = Math.random()*Math.PI*2;
+            var phi = Math.acos(2*Math.random()-1);
+            var r = 0.50+Math.random()*0.06;
+            nPos[i*3]   = r*Math.sin(phi)*Math.cos(theta);
+            nPos[i*3+1] = r*Math.sin(phi)*Math.sin(theta)*0.85;
+            nPos[i*3+2] = r*Math.cos(phi);
+            nSizes[i] = 0.02+Math.random()*0.03;
+        }
+        var nodeGeo = new THREE.BufferGeometry();
+        nodeGeo.setAttribute('position', new THREE.BufferAttribute(nPos,3));
+        nodeGeo.setAttribute('size', new THREE.BufferAttribute(nSizes,1));
+
+        var nodeVert = [
+            'attribute float size; uniform float uTime; varying float vAlpha;',
+            'void main() {',
+            '  vec4 mv = modelViewMatrix * vec4(position,1.0);',
+            '  float flicker = 0.5+0.5*sin(uTime*3.0+position.x*20.0+position.z*15.0);',
+            '  vAlpha = flicker;',
+            '  gl_PointSize = size * 300.0 / -mv.z * flicker;',
+            '  gl_Position = projectionMatrix * mv;',
+            '}'
+        ].join('\n');
+
+        var nodeFrag = [
+            'varying float vAlpha;',
+            'void main() {',
+            '  float d = length(gl_PointCoord-vec2(0.5));',
+            '  if(d>0.5) discard;',
+            '  float glow = exp(-d*6.0);',
+            '  vec3 col = mix(vec3(1.0,0.6,0.8),vec3(0.8,0.9,1.0),d);',
+            '  gl_FragColor = vec4(col, glow*vAlpha*0.9);',
+            '}'
+        ].join('\n');
+
+        var nodeU = { uTime:{value:0} };
+        var nodeMat = new THREE.ShaderMaterial({
+            uniforms: nodeU, vertexShader: nodeVert, fragmentShader: nodeFrag,
+            transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+        });
+        var nodeCloud = new THREE.Points(nodeGeo, nodeMat);
+        parallaxGroup.add(nodeCloud);
+
+        // --- Synapse Lines ---
+        var linePos = [];
+        var lc = 0, maxD = 0.35;
+        for (var i=0; i<nodeCount && lc<80; i++) {
+            for (var j=i+1; j<nodeCount && lc<80; j++) {
+                var dx=nPos[i*3]-nPos[j*3], dy=nPos[i*3+1]-nPos[j*3+1], dz=nPos[i*3+2]-nPos[j*3+2];
+                if (Math.sqrt(dx*dx+dy*dy+dz*dz) < maxD) {
+                    linePos.push(nPos[i*3],nPos[i*3+1],nPos[i*3+2]);
+                    linePos.push(nPos[j*3],nPos[j*3+1],nPos[j*3+2]);
+                    lc++;
                 }
-                return next;
-              });
-            }, 400);
-            return () => clearInterval(interval);
-          }, [isAnimating]);
+            }
+        }
+        var synapseLines = null;
+        if (linePos.length > 0) {
+            var lineGeo = new THREE.BufferGeometry();
+            lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePos,3));
+            synapseLines = new THREE.LineSegments(lineGeo, new THREE.LineBasicMaterial({
+                color: 0xec4899, transparent: true, opacity: 0.15,
+                depthWrite: false, blending: THREE.AdditiveBlending,
+            }));
+            parallaxGroup.add(synapseLines);
+        }
 
-          const getSignalLayer = useCallback(() => {
-            if (signalPhase === 0 || signalPhase > 14) return null;
-            return direction === 'up' ? signalPhase : 15 - signalPhase;
-          }, [signalPhase, direction]);
+        // --- Ambient Dust ---
+        var dustCount = isMobile ? 100 : 250;
+        var dPos = new Float32Array(dustCount*3);
+        for (var i=0; i<dustCount; i++) {
+            dPos[i*3]   = (Math.random()-0.5)*10;
+            dPos[i*3+1] = (Math.random()-0.5)*8;
+            dPos[i*3+2] = (Math.random()-0.5)*6;
+        }
+        var dustGeo = new THREE.BufferGeometry();
+        dustGeo.setAttribute('position', new THREE.BufferAttribute(dPos,3));
+        var dustCloud = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+            color: 0x60a5fa, size: 0.015, transparent: true, opacity: 0.3,
+            depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true,
+        }));
+        scene.add(dustCloud);
 
-          const signalLayer = getSignalLayer();
-          const selectedLayerData = activeLayer ? layers.find(l => l.id === activeLayer) : null;
-          const totalAttacks = layers.reduce((sum, layer) => sum + layer.attacks.length, 0);
+        // --- Shell Highlight ---
+        function highlightShell(layerDataId) {
+            shellMeshes.forEach(function(mesh, i) {
+                var isSelected = activeLayers[i].dataLayerId === layerDataId;
+                shellUniforms[i].uOpacity.value = isSelected ? 0.85 : defaultOpacities[i];
+                shellUniforms[i].uGlowIntensity.value = isSelected ? 3.5 : defaultGlowIntensities[i];
+            });
+        }
+        state.highlightShellFn = highlightShell;
 
-          return (
-            <div style={{
-              minHeight: '100vh',
-              background: 'transparent',
-              fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              color: '#c9d1d9',
-              position: 'relative',
-              overflow: 'hidden'
-            }}>
+        // --- Interaction ---
+        var mouseX = 0, mouseY = 0;
+        var clock = new THREE.Clock();
+        var isVisible = true;
 
-              {/* Header */}
-              <header style={{
-                padding: '24px 40px',
-                borderBottom: '1px solid #21262d',
-                background: 'rgba(13, 17, 23, 0.8)',
-                backdropFilter: 'blur(10px)',
-                position: 'sticky',
-                top: 0,
-                zIndex: 100
-              }}>
-                <div style={{
-                  maxWidth: '1400px',
-                  margin: '0 auto',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  gap: '20px'
-                }}>
-                  <div>
-                    <div style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#58a6ff', marginBottom: '4px' }}>
-                      NEURAL SECURITY STANDARD
-                    </div>
-                    <h1 style={{ fontSize: '28px', fontWeight: 600, margin: 0, color: '#f0f6fc' }}>
-                      ONI Framework
-                    </h1>
-                    <div style={{ fontSize: '14px', color: '#8b949e', marginTop: '2px' }}>
-                      The OSI of Mind — 14 Layer Security Model
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '24px', fontWeight: 600, color: '#58a6ff' }}>14</div>
-                      <div style={{ fontSize: '10px', color: '#8b949e', letterSpacing: '0.1em' }}>LAYERS</div>
-                    </div>
-                    <div style={{ width: '1px', height: '40px', background: '#21262d' }} />
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '24px', fontWeight: 600, color: '#f85149' }}>{totalAttacks}+</div>
-                      <div style={{ fontSize: '10px', color: '#8b949e', letterSpacing: '0.1em' }}>THREAT SIGNATURES</div>
-                    </div>
-                    <div style={{ width: '1px', height: '40px', background: '#21262d' }} />
-                    <a href="../" style={{
-                      color: '#58a6ff',
-                      textDecoration: 'none',
-                      fontSize: '13px',
-                      padding: '8px 16px',
-                      border: '1px solid #21262d',
-                      borderRadius: '6px',
-                      transition: 'all 0.2s'
-                    }}>
-                      ← Back to ONI
-                    </a>
-                  </div>
-                </div>
-              </header>
+        if (!isMobile) {
+            document.addEventListener('mousemove', function(e) {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+        }
 
-              {/* Main Content */}
-              <main style={{
-                maxWidth: '1400px',
-                margin: '0 auto',
-                padding: '30px 40px',
-                display: 'grid',
-                gridTemplateColumns: 'minmax(320px, 380px) 1fr',
-                gap: '30px'
-              }}>
-                {/* Left Panel - Layer Stack */}
-                <div>
-                  {/* Biology Zone Header */}
-                  <div style={{
-                    padding: '12px 16px',
-                    background: 'linear-gradient(90deg, rgba(63, 185, 80, 0.1), transparent)',
-                    borderLeft: '3px solid #3fb950',
-                    marginBottom: '8px',
-                    borderRadius: '0 8px 8px 0'
-                  }}>
-                    <div style={{ fontSize: '11px', letterSpacing: '0.15em', color: '#3fb950' }}>
-                      BIOLOGY LAYERS L9-L14
-                    </div>
-                    <div style={{ fontSize: '12px', color: '#8b949e' }}>Cognitive Systems</div>
-                  </div>
+        var visObs = new IntersectionObserver(function(entries) {
+            isVisible = entries[0].isIntersecting;
+        }, { threshold: 0 });
+        visObs.observe(container);
 
-                  {/* Layer Stack */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    {[...layers].reverse().map((layer) => {
-                      const isActive = signalLayer === layer.id;
-                      const isSelected = activeLayer === layer.id;
+        function onResize() {
+            var w = container.clientWidth, h = container.clientHeight;
+            if (!w || !h) return;
+            camera.aspect = w/h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w,h);
+        }
+        window.addEventListener('resize', onResize);
 
-                      const categoryStyles = {
-                        biology: { accent: '#3fb950', bg: 'rgba(63, 185, 80, 0.1)' },
-                        gateway: { accent: '#f0883e', bg: 'rgba(240, 136, 62, 0.15)' },
-                        silicon: { accent: '#58a6ff', bg: 'rgba(88, 166, 255, 0.1)' }
-                      };
-                      const style = categoryStyles[layer.category];
+        // =============================================
+        // WAVEFRONT SIGNAL SYSTEM
+        // =============================================
+        var activeSignals = [];
+        var signalLog = document.getElementById('oni3d-signal-log');
 
-                      return (
-                        <React.Fragment key={layer.id}>
-                          {/* Gateway Header */}
-                          {layer.id === 8 && (
-                            <div style={{
-                              padding: '12px 16px',
-                              background: 'linear-gradient(90deg, rgba(240, 136, 62, 0.15), transparent)',
-                              borderLeft: '3px solid #f0883e',
-                              margin: '12px 0 8px 0',
-                              borderRadius: '0 8px 8px 0'
-                            }}>
-                              <div style={{ fontSize: '11px', letterSpacing: '0.15em', color: '#f0883e' }}>
-                                NEURAL GATEWAY L8
-                              </div>
-                              <div style={{ fontSize: '12px', color: '#8b949e' }}>Security Firewall / NSAM Checkpoint</div>
-                            </div>
-                          )}
-
-                          {/* Silicon Header */}
-                          {layer.id === 7 && (
-                            <div style={{
-                              padding: '12px 16px',
-                              background: 'linear-gradient(90deg, rgba(88, 166, 255, 0.1), transparent)',
-                              borderLeft: '3px solid #58a6ff',
-                              margin: '12px 0 8px 0',
-                              borderRadius: '0 8px 8px 0'
-                            }}>
-                              <div style={{ fontSize: '11px', letterSpacing: '0.15em', color: '#58a6ff' }}>
-                                SILICON LAYERS L1-L7
-                              </div>
-                              <div style={{ fontSize: '12px', color: '#8b949e' }}>OSI Model Extension</div>
-                            </div>
-                          )}
-
-                          {/* Layer Item */}
-                          <div
-                            onClick={() => {
-                              setActiveLayer(activeLayer === layer.id ? null : layer.id);
-                              setSelectedAttack(null);
-                            }}
-                            style={{
-                              display: 'grid',
-                              gridTemplateColumns: '50px 1fr 24px',
-                              alignItems: 'center',
-                              gap: '12px',
-                              padding: layer.id === 8 ? '14px 16px' : '10px 16px',
-                              background: isSelected ? style.bg : isActive ? 'rgba(48, 54, 61, 0.5)' : '#161b22',
-                              borderRadius: '8px',
-                              border: `1px solid ${isSelected ? '#ffffff' : isActive ? 'rgba(139, 148, 158, 0.3)' : '#21262d'}`,
-                              cursor: 'pointer',
-                              transition: 'all 0.15s ease',
-                              boxShadow: isActive ? `0 0 20px ${style.accent}30` : 'none'
-                            }}
-                          >
-                            <div style={{
-                              background: isSelected || isActive ? style.accent : '#21262d',
-                              borderRadius: '6px',
-                              padding: '6px',
-                              textAlign: 'center',
-                              fontSize: '13px',
-                              fontWeight: 600,
-                              color: isSelected || isActive ? '#0d1117' : '#8b949e',
-                              transition: 'all 0.15s ease'
-                            }}>
-                              L{layer.id}
-                            </div>
-                            <div>
-                              <div style={{
-                                fontSize: '14px',
-                                fontWeight: 500,
-                                color: isSelected ? '#f0f6fc' : '#c9d1d9'
-                              }}>
-                                {layer.name}
-                              </div>
-                              <div style={{ fontSize: '11px', color: '#8b949e' }}>
-                                {layer.osi}
-                              </div>
-                            </div>
-                            <div style={{
-                              width: '8px',
-                              height: '8px',
-                              borderRadius: '50%',
-                              background: isActive ? style.accent : 'transparent',
-                              boxShadow: isActive ? `0 0 8px ${style.accent}` : 'none'
-                            }} />
-                          </div>
-                        </React.Fragment>
-                      );
-                    })}
-                  </div>
-
-                  {/* Signal Flow Controls */}
-                  <div style={{
-                    marginTop: '20px',
-                    padding: '16px',
-                    background: '#161b22',
-                    borderRadius: '8px',
-                    border: '1px solid #21262d'
-                  }}>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}>
-                      <div>
-                        <div style={{ fontSize: '10px', color: '#8b949e', letterSpacing: '0.1em' }}>SIGNAL FLOW</div>
-                        <div style={{ fontSize: '13px', color: direction === 'up' ? '#3fb950' : '#58a6ff', marginTop: '4px' }}>
-                          {direction === 'up' ? 'BIOLOGY → SILICON' : 'SILICON → BIOLOGY'}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => setIsAnimating(!isAnimating)}
-                        style={{
-                          background: isAnimating ? 'rgba(248, 81, 73, 0.1)' : 'rgba(63, 185, 80, 0.1)',
-                          border: `1px solid ${isAnimating ? '#f85149' : '#3fb950'}`,
-                          color: isAnimating ? '#f85149' : '#3fb950',
-                          padding: '8px 16px',
-                          borderRadius: '6px',
-                          cursor: 'pointer',
-                          fontSize: '12px',
-                          fontWeight: 500
-                        }}
-                      >
-                        {isAnimating ? 'PAUSE' : 'PLAY'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Panel - Details & Attack Matrix */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  {/* Layer Detail Card */}
-                  <div style={{
-                    background: '#161b22',
-                    borderRadius: '12px',
-                    border: '1px solid #21262d',
-                    overflow: 'hidden',
-                    flex: selectedLayerData ? 'none' : 1
-                  }}>
-                    <div style={{
-                      padding: '16px 20px',
-                      borderBottom: '1px solid #21262d',
-                      background: '#0d1117'
-                    }}>
-                      <h2 style={{ margin: 0, fontSize: '14px', color: '#8b949e', letterSpacing: '0.1em' }}>
-                        {selectedLayerData ? `LAYER ${selectedLayerData.id} — ${selectedLayerData.name.toUpperCase()}` : 'SELECT A LAYER TO EXPLORE'}
-                      </h2>
-                    </div>
-
-                    {selectedLayerData ? (
-                      <div style={{ padding: '20px' }}>
-                        {/* Layer Info Grid */}
-                        <div style={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr 1fr',
-                          gap: '16px',
-                          marginBottom: '20px'
-                        }}>
-                          <div style={{
-                            padding: '14px',
-                            background: '#0d1117',
-                            borderRadius: '8px',
-                            borderLeft: `3px solid ${
-                              selectedLayerData.category === 'silicon' ? '#58a6ff' :
-                              selectedLayerData.category === 'gateway' ? '#f0883e' : '#3fb950'
-                            }`
-                          }}>
-                            <div style={{ fontSize: '10px', color: '#8b949e', letterSpacing: '0.1em', marginBottom: '6px' }}>
-                              FUNCTION
-                            </div>
-                            <div style={{ fontSize: '13px', color: '#c9d1d9', lineHeight: 1.5 }}>
-                              {selectedLayerData.description}
-                            </div>
-                          </div>
-                          <div style={{
-                            padding: '14px',
-                            background: '#0d1117',
-                            borderRadius: '8px',
-                            borderLeft: '3px solid #8b949e'
-                          }}>
-                            <div style={{ fontSize: '10px', color: '#8b949e', letterSpacing: '0.1em', marginBottom: '6px' }}>
-                              OSI MAPPING
-                            </div>
-                            <div style={{ fontSize: '13px', color: '#c9d1d9' }}>
-                              <span style={{ color: '#f0f6fc', fontWeight: 500 }}>{selectedLayerData.osi}</span>
-                              <span style={{ color: '#8b949e' }}> Layer</span>
-                            </div>
-                            <div style={{ fontSize: '11px', color: '#8b949e', marginTop: '8px' }}>
-                              {selectedLayerData.category === 'silicon' && 'Standard OSI network model'}
-                              {selectedLayerData.category === 'gateway' && 'Security perimeter control'}
-                              {selectedLayerData.category === 'biology' && 'Cognitive system extension'}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Attack Mappings */}
-                        <div>
-                          <div style={{
-                            fontSize: '11px',
-                            letterSpacing: '0.15em',
-                            color: '#f85149',
-                            marginBottom: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                          }}>
-                            <span style={{ fontSize: '14px' }}>⚠</span>
-                            ATTACK VECTORS ({selectedLayerData.attacks.length})
-                          </div>
-
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            {selectedLayerData.attacks.map((attack) => (
-                              <div
-                                key={attack.id}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedAttack(selectedAttack === attack.id ? null : attack.id);
-                                }}
-                                style={{
-                                  padding: '12px 16px',
-                                  background: selectedAttack === attack.id ? '#21262d' : '#0d1117',
-                                  borderRadius: '8px',
-                                  border: `1px solid ${selectedAttack === attack.id ? '#ffffff' : '#21262d'}`,
-                                  cursor: 'pointer',
-                                  transition: 'all 0.15s ease'
-                                }}
-                              >
-                                <div style={{
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                  alignItems: 'flex-start',
-                                  marginBottom: selectedAttack === attack.id ? '10px' : 0
-                                }}>
-                                  <div>
-                                    <span style={{ fontSize: '11px', color: '#8b949e', marginRight: '8px' }}>
-                                      {attack.id}
-                                    </span>
-                                    <span style={{ fontSize: '14px', fontWeight: 500, color: '#f0f6fc' }}>
-                                      {attack.name}
-                                    </span>
-                                  </div>
-                                  <span style={{
-                                    fontSize: '10px',
-                                    padding: '3px 8px',
-                                    borderRadius: '4px',
-                                    background: `${tacticColors[attack.tactic]}20`,
-                                    color: tacticColors[attack.tactic],
-                                    fontWeight: 500,
-                                    whiteSpace: 'nowrap'
-                                  }}>
-                                    {attack.tactic}
-                                  </span>
-                                </div>
-                                {selectedAttack === attack.id && (
-                                  <div style={{
-                                    fontSize: '13px',
-                                    color: '#8b949e',
-                                    lineHeight: 1.5,
-                                    paddingTop: '10px',
-                                    borderTop: '1px solid #21262d'
-                                  }}>
-                                    {attack.description}
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div style={{ padding: '30px 20px' }}>
-                        {/* Welcome State */}
-                        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                          <div style={{
-                            fontSize: '64px',
-                            marginBottom: '16px',
-                            opacity: 0.2,
-                            fontWeight: 300,
-                            background: 'linear-gradient(90deg, #58a6ff, #f0883e, #3fb950)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent'
-                          }}>
-                            L1-L14
-                          </div>
-                          <div style={{ color: '#8b949e', marginBottom: '8px' }}>Click on any layer to explore attack vectors</div>
-                          <div style={{ fontSize: '12px', color: '#484f58' }}>Each layer maps to specific threat signatures</div>
-                        </div>
-
-                        {/* Layer Overview Cards */}
-                        <div style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(3, 1fr)',
-                          gap: '12px',
-                          marginBottom: '24px'
-                        }}>
-                          <div style={{
-                            padding: '16px',
-                            background: 'rgba(88, 166, 255, 0.05)',
-                            borderRadius: '8px',
-                            border: '1px solid rgba(88, 166, 255, 0.2)',
-                            textAlign: 'center'
-                          }}>
-                            <div style={{ fontSize: '24px', fontWeight: 600, color: '#58a6ff' }}>L1-L7</div>
-                            <div style={{ fontSize: '11px', color: '#8b949e', marginTop: '4px' }}>Silicon Layers</div>
-                            <div style={{ fontSize: '10px', color: '#484f58', marginTop: '2px' }}>OSI Model</div>
-                          </div>
-                          <div style={{
-                            padding: '16px',
-                            background: 'rgba(240, 136, 62, 0.08)',
-                            borderRadius: '8px',
-                            border: '1px solid rgba(240, 136, 62, 0.3)',
-                            textAlign: 'center'
-                          }}>
-                            <div style={{ fontSize: '24px', fontWeight: 600, color: '#f0883e' }}>L8</div>
-                            <div style={{ fontSize: '11px', color: '#8b949e', marginTop: '4px' }}>Neural Gateway</div>
-                            <div style={{ fontSize: '10px', color: '#484f58', marginTop: '2px' }}>NSAM Firewall</div>
-                          </div>
-                          <div style={{
-                            padding: '16px',
-                            background: 'rgba(63, 185, 80, 0.05)',
-                            borderRadius: '8px',
-                            border: '1px solid rgba(63, 185, 80, 0.2)',
-                            textAlign: 'center'
-                          }}>
-                            <div style={{ fontSize: '24px', fontWeight: 600, color: '#3fb950' }}>L9-L14</div>
-                            <div style={{ fontSize: '11px', color: '#8b949e', marginTop: '4px' }}>Biology Layers</div>
-                            <div style={{ fontSize: '10px', color: '#484f58', marginTop: '2px' }}>Cognitive Systems</div>
-                          </div>
-                        </div>
-
-                        {/* Tactic Legend */}
-                        <div style={{ marginBottom: '24px' }}>
-                          <div style={{ fontSize: '11px', color: '#8b949e', letterSpacing: '0.1em', marginBottom: '12px' }}>
-                            THREAT TACTICS
-                          </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
-                            {Object.entries(tacticColors).map(([tactic, color]) => (
-                              <div key={tactic} style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                padding: '8px 10px',
-                                background: '#0d1117',
-                                borderRadius: '6px'
-                              }}>
-                                <div style={{ width: '10px', height: '10px', borderRadius: '3px', background: color }} />
-                                <span style={{ fontSize: '11px', color: '#8b949e' }}>{tactic}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Key Concepts */}
-                        <div>
-                          <div style={{ fontSize: '11px', color: '#8b949e', letterSpacing: '0.1em', marginBottom: '12px' }}>
-                            KEY CONCEPTS
-                          </div>
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <div style={{
-                              padding: '12px',
-                              background: '#0d1117',
-                              borderRadius: '8px',
-                              display: 'flex',
-                              gap: '12px',
-                              alignItems: 'flex-start'
-                            }}>
-                              <div style={{ fontSize: '16px', fontWeight: 600, color: '#3fb950', minWidth: '36px' }}>Cs</div>
-                              <div>
-                                <div style={{ fontSize: '12px', color: '#c9d1d9', fontWeight: 500 }}>Coherence Metric</div>
-                                <div style={{ fontSize: '11px', color: '#8b949e', marginTop: '2px' }}>
-                                  Signal trust score: Cs = e^(-(o2phi + o2tau + o2gamma))
-                                </div>
-                              </div>
-                            </div>
-                            <div style={{
-                              padding: '12px',
-                              background: '#0d1117',
-                              borderRadius: '8px',
-                              display: 'flex',
-                              gap: '12px',
-                              alignItems: 'flex-start'
-                            }}>
-                              <div style={{ fontSize: '14px', fontWeight: 600, color: '#f0883e', minWidth: '36px' }}>NSAM</div>
-                              <div>
-                                <div style={{ fontSize: '12px', color: '#c9d1d9', fontWeight: 500 }}>Neural Signal Assurance Model</div>
-                                <div style={{ fontSize: '11px', color: '#8b949e', marginTop: '2px' }}>
-                                  ML-trained baseline for anomaly detection at L8
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Visual Flow Diagram */}
-                  <div style={{
-                    background: '#161b22',
-                    borderRadius: '12px',
-                    border: '1px solid #21262d',
-                    padding: '20px'
-                  }}>
-                    <div style={{ fontSize: '11px', letterSpacing: '0.15em', color: '#8b949e', marginBottom: '16px' }}>
-                      SIGNAL PROPAGATION
-                    </div>
-
-                    <svg viewBox="0 0 700 200" style={{ width: '100%', height: 'auto' }}>
-                      <defs>
-                        <linearGradient id="siliconGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#58a6ff"/>
-                          <stop offset="100%" stopColor="#1f6feb"/>
-                        </linearGradient>
-                        <linearGradient id="bioGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#3fb950"/>
-                          <stop offset="100%" stopColor="#238636"/>
-                        </linearGradient>
-                        <filter id="glow">
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                          <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                        </filter>
-                      </defs>
-
-                      {/* Silicon Zone */}
-                      <rect x="20" y="20" width="280" height="160" fill="rgba(88, 166, 255, 0.05)" rx="8" stroke="#21262d"/>
-                      <text x="35" y="45" fill="#58a6ff" fontSize="10" fontFamily="inherit">SILICON L1-L7</text>
-
-                      {/* Silicon Layers */}
-                      {[1,2,3,4,5,6,7].map((id, i) => {
-                        const isActive = signalLayer === id;
-                        const isSelected = activeLayer === id;
-                        return (
-                          <g key={id}>
-                            <rect
-                              x={35 + i * 36}
-                              y={60}
-                              width={32}
-                              height={100}
-                              rx={4}
-                              fill={isActive ? 'url(#siliconGrad)' : isSelected ? 'rgba(88, 166, 255, 0.3)' : '#21262d'}
-                              stroke={isSelected ? '#ffffff' : isActive ? '#58a6ff' : '#30363d'}
-                              strokeWidth={isSelected ? 2 : 1}
-                              filter={isActive ? 'url(#glow)' : 'none'}
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => setActiveLayer(activeLayer === id ? null : id)}
-                            />
-                            <text
-                              x={51 + i * 36}
-                              y={115}
-                              fill={isActive || isSelected ? '#fff' : '#8b949e'}
-                              fontSize="11"
-                              fontFamily="inherit"
-                              textAnchor="middle"
-                              style={{ pointerEvents: 'none' }}
-                            >
-                              L{id}
-                            </text>
-                          </g>
-                        );
-                      })}
-
-                      {/* Gateway */}
-                      {(() => {
-                        const isSelected = activeLayer === 8;
-                        return (
-                          <g>
-                            <rect
-                              x="320" y="60" width="60" height="100" rx="8"
-                              fill={signalLayer === 8 ? '#f0883e' : isSelected ? 'rgba(240, 136, 62, 0.4)' : 'rgba(240, 136, 62, 0.2)'}
-                              stroke={isSelected ? '#ffffff' : '#f0883e'}
-                              strokeWidth={isSelected ? 2 : signalLayer === 8 ? 2 : 1}
-                              filter={signalLayer === 8 ? 'url(#glow)' : 'none'}
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => setActiveLayer(activeLayer === 8 ? null : 8)}
-                            />
-                            <text x="350" y="100" fill={signalLayer === 8 ? '#0d1117' : '#f0883e'} fontSize="12" fontFamily="inherit" textAnchor="middle" fontWeight="600" style={{ pointerEvents: 'none' }}>L8</text>
-                            <text x="350" y="120" fill={signalLayer === 8 ? '#0d1117' : '#8b949e'} fontSize="8" fontFamily="inherit" textAnchor="middle" style={{ pointerEvents: 'none' }}>GATEWAY</text>
-                            <text x="350" y="145" fill={signalLayer === 8 ? '#0d1117' : '#8b949e'} fontSize="8" fontFamily="inherit" textAnchor="middle" style={{ pointerEvents: 'none' }}>NSAM</text>
-                          </g>
-                        );
-                      })()}
-
-                      {/* Biology Zone */}
-                      <rect x="400" y="20" width="280" height="160" fill="rgba(63, 185, 80, 0.05)" rx="8" stroke="#21262d"/>
-                      <text x="415" y="45" fill="#3fb950" fontSize="10" fontFamily="inherit">BIOLOGY L9-L14</text>
-
-                      {/* Biology Layers */}
-                      {[9,10,11,12,13,14].map((id, i) => {
-                        const isActive = signalLayer === id;
-                        const isSelected = activeLayer === id;
-                        return (
-                          <g key={id}>
-                            <rect
-                              x={415 + i * 42}
-                              y={60}
-                              width={38}
-                              height={100}
-                              rx={4}
-                              fill={isActive ? 'url(#bioGrad)' : isSelected ? 'rgba(63, 185, 80, 0.3)' : '#21262d'}
-                              stroke={isSelected ? '#ffffff' : isActive ? '#3fb950' : '#30363d'}
-                              strokeWidth={isSelected ? 2 : 1}
-                              filter={isActive ? 'url(#glow)' : 'none'}
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => setActiveLayer(activeLayer === id ? null : id)}
-                            />
-                            <text
-                              x={434 + i * 42}
-                              y={115}
-                              fill={isActive || isSelected ? '#fff' : '#8b949e'}
-                              fontSize="11"
-                              fontFamily="inherit"
-                              textAnchor="middle"
-                              style={{ pointerEvents: 'none' }}
-                            >
-                              L{id}
-                            </text>
-                          </g>
-                        );
-                      })}
-
-                      {/* Flow arrows */}
-                      <path d="M 295 110 L 315 110" stroke="#f0883e" strokeWidth="2" opacity="0.5"/>
-                      <path d="M 385 110 L 405 110" stroke="#f0883e" strokeWidth="2" opacity="0.5"/>
-                    </svg>
-                  </div>
-                </div>
-              </main>
-
-              {/* Footer */}
-              <footer style={{
-                padding: '20px 40px',
-                borderTop: '1px solid #21262d',
-                textAlign: 'center',
-                marginTop: '40px'
-              }}>
-                <p style={{ margin: 0, fontSize: '12px', color: '#8b949e' }}>
-                  ONI Framework — Open Neurosecurity Interoperability —
-                  <span style={{ color: '#f0883e' }}> "Only life's most important connections deserve the most thought"</span>
-                </p>
-              </footer>
-            </div>
-          );
+        var layerNames = {
+            'L1':'Physical Carrier','L2':'Data Link','L3':'Network',
+            'L4':'Transport','L5':'Session','L6':'Presentation','L7':'Application',
+            'L8':'Neural Gateway',
+            'L9':'Signal Processing','L10':'Neural Protocol','L11':'Cognitive Transport',
+            'L12':'Cognitive Session','L13':'Semantic Layer','L14':'Identity Layer'
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<ONIFrameworkViz />);
-    </script>
-    <script>
-        // Flowing wave background animation
-        function initWaveBackground() {
-            const canvas = document.getElementById('wave-canvas');
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            let time = 0;
+        var SIGNAL_TYPES = {
+            normal:      { color: [0.376, 0.647, 0.980], speed: 0.8, passGateway: true,  label: 'NORMAL' },
+            threat:      { color: [0.973, 0.443, 0.443], speed: 1.2, passGateway: false, label: 'THREAT' },
+            stimulation: { color: [0.290, 0.855, 0.498], speed: 0.6, passGateway: true,  label: 'STIM' }
+        };
 
-            const lineCount = 12;
-            const color = '88, 166, 255'; // accent-blue RGB
-            const speed = 0.008;
+        // Ripple ring shader
+        var rippleVert = [
+            'varying vec2 vUv;',
+            'void main() {',
+            '  vUv = uv;',
+            '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);',
+            '}'
+        ].join('\n');
 
-            function resize() {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-            }
+        var rippleFrag = [
+            'uniform float uProgress;',
+            'uniform vec3 uColor;',
+            'uniform float uDirection;',
+            'varying vec2 vUv;',
+            'void main() {',
+            '  vec2 center = vec2(0.5);',
+            '  float d = distance(vUv, center) * 2.0;',
+            '  float ring = uDirection > 0.0 ? uProgress : 1.0 - uProgress;',
+            '  float width = 0.12;',
+            '  float intensity = exp(-pow((d - ring) / width, 2.0) * 4.0);',
+            '  float fade = 1.0 - uProgress;',
+            '  float alpha = intensity * fade * 1.5;',
+            '  gl_FragColor = vec4(uColor * (1.0 + intensity), alpha);',
+            '}'
+        ].join('\n');
 
-            function drawWave(yOffset, amplitude, frequency, phase, opacity) {
-                ctx.beginPath();
-                ctx.moveTo(0, height / 2 + yOffset);
+        function createSignal(injectionLayerIndex, type, direction) {
+            var sigType = SIGNAL_TYPES[type] || SIGNAL_TYPES.normal;
+            var startLayer = activeLayers[injectionLayerIndex];
+            if (!startLayer) return;
 
-                for (let x = 0; x <= width; x += 3) {
-                    const y = height / 2 + yOffset +
-                        Math.sin(x * frequency + phase) * amplitude +
-                        Math.sin(x * frequency * 0.5 + phase * 1.3) * (amplitude * 0.5);
-                    ctx.lineTo(x, y);
-                }
+            var dir = direction || 'inward';
 
-                ctx.strokeStyle = `rgba(${color}, ${opacity})`;
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-            }
+            var signal = {
+                type: type,
+                sigType: sigType,
+                startLayerIdx: injectionLayerIndex,
+                startRadius: startLayer.r,
+                direction: dir,
+                progress: 0,
+                speed: sigType.speed,
+                alive: true,
+                blocked: false,
+                ripples: [],
+                reachedCore: false,
+                gatewayChecked: false
+            };
 
-            function animate() {
-                ctx.fillStyle = '#0a0f1a';
-                ctx.fillRect(0, 0, width, height);
-
-                for (let i = 0; i < lineCount; i++) {
-                    const yOffset = (i - lineCount / 2) * 60;
-                    const amplitude = 20 + Math.sin(time + i * 0.5) * 10;
-                    const frequency = 0.003 + i * 0.0002;
-                    const phase = time * (1 + i * 0.1);
-                    const opacity = 0.15 + (1 - Math.abs(i - lineCount / 2) / (lineCount / 2)) * 0.2;
-
-                    drawWave(yOffset, amplitude, frequency, phase, opacity);
-                }
-
-                time += speed;
-                requestAnimationFrame(animate);
-            }
-
-            window.addEventListener('resize', resize);
-            resize();
-            animate();
+            addRipple(signal, startLayer.r);
+            activeSignals.push(signal);
+            logSignalEvent(sigType.label + ' signal injected at ' + startLayer.id + ' \u2014 ' + layerNames[startLayer.id], sigType.color);
+            return signal;
         }
-        initWaveBackground();
+
+        function addRipple(signal, radius) {
+            var ringGeo = new THREE.RingGeometry(radius * 0.92, radius * 1.08, 64);
+            var u = {
+                uProgress: { value: 0 },
+                uColor: { value: new THREE.Vector3(signal.sigType.color[0], signal.sigType.color[1], signal.sigType.color[2]) },
+                uDirection: { value: signal.direction === 'inward' ? 1.0 : -1.0 }
+            };
+            var mat = new THREE.ShaderMaterial({
+                uniforms: u,
+                vertexShader: rippleVert,
+                fragmentShader: rippleFrag,
+                transparent: true,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+            });
+            var ring = new THREE.Mesh(ringGeo, mat);
+            ring.rotation.x = Math.random() * Math.PI;
+            ring.rotation.y = Math.random() * Math.PI;
+            parallaxGroup.add(ring);
+            signal.ripples.push({ mesh: ring, uniforms: u, birthProgress: signal.progress });
+        }
+
+        function updateSignals(dt, t) {
+            for (var s = activeSignals.length - 1; s >= 0; s--) {
+                var sig = activeSignals[s];
+                if (!sig.alive) continue;
+
+                sig.progress += dt * sig.speed * 0.3;
+
+                var targetRadius, currentRadius;
+                if (sig.direction === 'inward') {
+                    targetRadius = 0.55;
+                    currentRadius = sig.startRadius - (sig.startRadius - targetRadius) * sig.progress;
+                } else {
+                    targetRadius = 3.2;
+                    currentRadius = sig.startRadius + (targetRadius - sig.startRadius) * sig.progress;
+                }
+
+                // Gateway check
+                var gatewayR = 1.72;
+                if (!sig.gatewayChecked) {
+                    var crossingGateway = (sig.direction === 'inward' && currentRadius <= gatewayR + 0.1 && currentRadius >= gatewayR - 0.1) ||
+                                          (sig.direction === 'outward' && currentRadius >= gatewayR - 0.1 && currentRadius <= gatewayR + 0.1);
+                    if (crossingGateway) {
+                        sig.gatewayChecked = true;
+                        if (!sig.sigType.passGateway) {
+                            sig.blocked = true;
+                            sig.speed = 0;
+                            logSignalEvent('L8 GATEWAY: Threat blocked \u2014 anomaly in coherence score', [0.973, 0.443, 0.443]);
+                            flashShell(7, [1.0, 0.3, 0.3], 0.6);
+                            setTimeout(function() { sig.alive = false; }, 1500);
+                        } else {
+                            logSignalEvent('L8 GATEWAY: Signal verified \u2014 coherence C\u209B > 0.85', [0.290, 0.855, 0.498]);
+                            flashShell(7, [0.290, 0.855, 0.498], 0.4);
+                        }
+                    }
+                }
+
+                // Core reached
+                if (sig.direction === 'inward' && currentRadius <= 0.6 && !sig.reachedCore && !sig.blocked) {
+                    sig.reachedCore = true;
+                    logSignalEvent('Signal reached neural core \u2014 ' + (sig.type === 'stimulation' ? 'stimulation applied' : 'data received'), sig.sigType.color);
+                    flashCore(sig.sigType.color);
+                }
+
+                // Update ripples
+                sig.ripples.forEach(function(rip) {
+                    var localP = Math.min(1, (sig.progress - rip.birthProgress) * 2);
+                    rip.uniforms.uProgress.value = localP;
+                    var scale = currentRadius / sig.startRadius;
+                    rip.mesh.scale.setScalar(scale);
+                });
+
+                if (sig.progress >= 1.0) sig.alive = false;
+
+                // Cleanup
+                if (!sig.alive && sig.progress > 1.2) {
+                    sig.ripples.forEach(function(rip) {
+                        parallaxGroup.remove(rip.mesh);
+                        rip.mesh.geometry.dispose();
+                        rip.mesh.material.dispose();
+                    });
+                    activeSignals.splice(s, 1);
+                }
+            }
+        }
+
+        function flashShell(shellIdx, color, intensity) {
+            if (shellIdx >= shellUniforms.length) return;
+            var u = shellUniforms[shellIdx];
+            var origOpacity = u.uOpacity.value;
+            var origColor = { x: u.uColor.value.x, y: u.uColor.value.y, z: u.uColor.value.z };
+            u.uColor.value.set(color[0], color[1], color[2]);
+            u.uOpacity.value = intensity;
+            setTimeout(function() {
+                u.uColor.value.set(origColor.x, origColor.y, origColor.z);
+                u.uOpacity.value = origOpacity;
+            }, 400);
+        }
+
+        function flashCore(color) {
+            var origOpacity = glowMat.opacity;
+            glowMat.color.setRGB(color[0], color[1], color[2]);
+            glowMat.opacity = 0.5;
+            setTimeout(function() {
+                glowMat.color.setHex(0xec4899);
+                glowMat.opacity = origOpacity;
+            }, 500);
+        }
+
+        function logSignalEvent(text, color) {
+            if (!signalLog) return;
+            var entry = document.createElement('div');
+            entry.className = 'oni3d-log-entry';
+            var c = Array.isArray(color) ? color : [0.5, 0.5, 0.5];
+            entry.style.color = 'rgb(' + Math.round(c[0]*255) + ',' + Math.round(c[1]*255) + ',' + Math.round(c[2]*255) + ')';
+            entry.style.borderLeft = '2px solid rgb(' + Math.round(c[0]*255) + ',' + Math.round(c[1]*255) + ',' + Math.round(c[2]*255) + ')';
+            entry.textContent = '> ' + text;
+            signalLog.appendChild(entry);
+            while (signalLog.children.length > 4) {
+                signalLog.removeChild(signalLog.firstChild);
+            }
+            setTimeout(function() {
+                entry.classList.add('fade');
+                setTimeout(function() {
+                    if (entry.parentNode) entry.parentNode.removeChild(entry);
+                }, 600);
+            }, 5000);
+        }
+
+        // --- Click-to-inject & Layer Select ---
+        var raycaster = new THREE.Raycaster();
+        var clickMouse = new THREE.Vector2();
+
+        container.addEventListener('click', function(e) {
+            // Skip if explainer visible
+            var expl = document.getElementById('oni3d-explainer');
+            if (expl && !expl.classList.contains('hidden')) {
+                expl.classList.add('hidden');
+                return;
+            }
+
+            // Skip clicks on UI elements
+            if (e.target.closest('#layer-sidebar') || e.target.closest('#detail-panel') ||
+                e.target.closest('#signal-legend') || e.target.closest('#header')) return;
+
+            var rect = container.getBoundingClientRect();
+            clickMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            clickMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(clickMouse, camera);
+            var hits = raycaster.intersectObjects(shellMeshes);
+
+            if (hits.length > 0) {
+                var hit = hits[0];
+                var layerIdx = shellMeshes.indexOf(hit.object);
+                if (layerIdx >= 0) {
+                    var dataId = activeLayers[layerIdx].dataLayerId;
+                    selectLayer(state.selectedLayerId === dataId ? null : dataId);
+
+                    // Inject signal
+                    var rand = Math.random();
+                    var type = rand < 0.6 ? 'normal' : (rand < 0.85 ? 'threat' : 'stimulation');
+                    createSignal(layerIdx, type, 'inward');
+                }
+            } else {
+                selectLayer(null);
+                createSignal(0, Math.random() < 0.7 ? 'normal' : 'threat', 'inward');
+            }
+        });
+
+        // --- Auto-signals ---
+        var lastAutoSignal = 0;
+        var autoSignalInterval = 4;
+
+        function maybeAutoSignal(t) {
+            if (t - lastAutoSignal > autoSignalInterval) {
+                lastAutoSignal = t;
+                var idx = Math.floor(Math.random() * activeLayers.length);
+                var rand = Math.random();
+                var type = rand < 0.5 ? 'normal' : (rand < 0.8 ? 'threat' : 'stimulation');
+                var dir = idx > activeLayers.length / 2 ? 'outward' : 'inward';
+                createSignal(idx, type, dir);
+                autoSignalInterval = 3 + Math.random() * 4;
+            }
+        }
+
+        // --- Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            if (!isVisible) return;
+
+            var dt = clock.getDelta();
+            var t = clock.getElapsedTime();
+
+            // Shader uniforms
+            shellUniforms.forEach(function(u) { u.uTime.value = t; });
+            coreU.uTime.value = t;
+            nodeU.uTime.value = t;
+
+            // Auto-rotation
+            autoRotateGroup.rotation.y += 0.002;
+            autoRotateGroup.rotation.x = Math.sin(t*0.15)*0.08;
+
+            // Mouse parallax
+            if (!isMobile) {
+                parallaxGroup.rotation.x += (mouseY*0.2 - parallaxGroup.rotation.x)*0.04;
+                parallaxGroup.rotation.y += (mouseX*0.3 - parallaxGroup.rotation.y)*0.04;
+            }
+
+            // Brain pulse
+            var pulse = 1 + Math.sin(t*1.2)*0.025;
+            coreMesh.scale.set(pulse, pulse*0.85, pulse);
+            nodeCloud.scale.set(pulse, pulse*0.85, pulse);
+            if (synapseLines) synapseLines.scale.set(pulse, pulse*0.85, pulse);
+
+            // Inner glow
+            glowMat.opacity = 0.12 + Math.sin(t*1.8)*0.05;
+            glowMesh.scale.setScalar(0.45 + Math.sin(t*1.2)*0.02);
+
+            // Shell breathing
+            shellMeshes.forEach(function(mesh, i) {
+                mesh.scale.setScalar(mesh.userData.r * (1 + Math.sin(t*0.6+i*0.5)*0.006));
+            });
+
+            // Gateway light
+            gatewayLight.intensity = 0.8 + Math.sin(t*3.0)*0.4;
+
+            // Dust drift
+            dustCloud.rotation.y = t*0.02;
+            dustCloud.rotation.x = Math.sin(t*0.1)*0.05;
+
+            // Signals
+            updateSignals(dt, t);
+            maybeAutoSignal(t);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+    }
+
+    // --- Initialize ---
+    buildLayerSidebar();
+    initONI3D();
+
+    // Show zone labels
+    setTimeout(function() {
+        document.querySelectorAll('.oni3d-label').forEach(function(el) {
+            el.classList.add('visible');
+        });
+    }, 1200);
     </script>
 </body>
 </html>
