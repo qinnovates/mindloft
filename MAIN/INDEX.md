@@ -25,12 +25,13 @@ This index connects all research topics, maps dependencies, and provides navigat
 
 | Topic | Description | Documents |
 |-------|-------------|-----------|
-| [ONI Framework](publications/0-oni-framework/) | Foundational 14-layer model | [Blog](publications/0-oni-framework/Blog-ONI_Framework.md) · [TechDoc](publications/0-oni-framework/TechDoc-ONI_Framework.md) |
+| [ONI Framework](publications/0-oni-framework/) | Foundational 14-layer model | [**Whitepaper**](publications/0-oni-framework/ONI_Whitepaper.md) · [Blog](publications/0-oni-framework/Blog-ONI_Framework.md) · [TechDoc](publications/0-oni-framework/TechDoc-ONI_Framework.md) |
 | [Coherence Metric](publications/coherence-metric/) | Signal trust scoring (Cₛ formula) | [Blog](publications/coherence-metric/Blog-Coherence_Metric.md) · [TechDoc](publications/coherence-metric/TechDoc-Coherence_Metric_Detailed.md) |
 | [Scale-Frequency](publications/scale-frequency/) | Cross-scale invariants (f × S ≈ k) | [Blog](publications/scale-frequency/Blog-Scale_Frequency.md) · [TechDoc](publications/scale-frequency/TechDoc-Scale_Frequency.md) |
 | [Neural Firewall](publications/neural-firewall/) | Zero-trust security at L8 | [Blog](publications/neural-firewall/Blog-Neural_Firewall.md) · [TechDoc](publications/neural-firewall/TechDoc-Neural_Firewall_Architecture.md) |
 | [Neural Ransomware](publications/neural-ransomware/) | Threat analysis & defense | [Blog](publications/neural-ransomware/Blog-Neural_Ransomware.md) · [TechDoc](publications/neural-ransomware/TechDoc-Neural_Ransomware.md) |
 | [Quantum Encryption](publications/quantum-encryption/) | Quantum threats, QKD, TTT, QPUFs | [Blog-QSec](publications/quantum-encryption/Blog-Quantum_Security.md) · [Blog-QKeys](publications/quantum-encryption/Blog-Quantum_Keys.md) · [Blog-TTT](publications/quantum-encryption/Blog-Tunneling_Traversal_Time.md) · [TechDoc-QEnc](publications/quantum-encryption/TechDoc-Quantum_Encryption.md) · [TechDoc-TTT](publications/quantum-encryption/TechDoc-Tunneling_Traversal_Time.md) |
+| [Mathematical Foundations](publications/mathematical-foundations/) | Equations reference, mathematical audit, corrected physics | [Equations Reference](publications/mathematical-foundations/TechDoc-Equations_Reference.md) · [Audit](publications/mathematical-foundations/TechDoc-Mathematical_Audit.md) · [Foundations](publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md) |
 | [Detection Theory](publications/detection-theory/) | Mathematical detection algorithms & privacy-preserving ML | [TechDoc](publications/detection-theory/TechDoc-Detection_Theory.md) |
 
 ---
@@ -179,7 +180,7 @@ See [RELATED_WORK.md](RELATED_WORK.md#moabb-mother-of-all-bci-benchmarks) for ci
 
 | Topic | Purpose | Documents | Status |
 |-------|---------|-----------|--------|
-| [ONI Framework](publications/0-oni-framework/) | 14-layer biological extension of OSI model | [Blog](publications/0-oni-framework/Blog-ONI_Framework.md) · [TechDoc](publications/0-oni-framework/TechDoc-ONI_Framework.md) | Published |
+| [ONI Framework](publications/0-oni-framework/) | 14-layer biological extension of OSI model | [**Whitepaper**](publications/0-oni-framework/ONI_Whitepaper.md) · [Blog](publications/0-oni-framework/Blog-ONI_Framework.md) · [TechDoc](publications/0-oni-framework/TechDoc-ONI_Framework.md) | Published |
 
 ### Signal Processing
 

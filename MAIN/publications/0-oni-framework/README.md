@@ -42,6 +42,7 @@ By providing a common vocabulary across neuroscience, security engineering, and 
 
 | Type | Document | Description |
 |------|----------|-------------|
+| **Whitepaper** | [**ONI_Whitepaper.md**](ONI_Whitepaper.md) | **Flagship document** — complete framework overview with market analysis, 8 figures, and regulatory alignment ([Web version](https://qikevinl.github.io/ONI/whitepaper/)) |
 | Blog | [Blog-ONI_Framework.md](Blog-ONI_Framework.md) | Accessible introduction with real-world context ([Original on Medium](https://medium.com/@qikevinl/the-osi-of-mind-securing-human-ai-interfaces-3ca381b95c29)) |
 | TechDoc | [TechDoc-ONI_Framework.md](TechDoc-ONI_Framework.md) | Complete layer specifications and academic methodology |
 
@@ -53,6 +54,7 @@ By providing a common vocabulary across neuroscience, security engineering, and 
 |---------|------------|
 | 14-Layer Model | Extension of OSI's 7 layers to include 7 biological layers |
 | Neural Gateway (L8) | Critical boundary layer where BCI hardware meets neural tissue |
+| Layer-Aware Coherence Cₛ(S) | Unified metric combining Cₛ and f × S ≈ k — frequency-weighted, spatially-aware signal verification |
 | Attack Surface | Each layer introduces distinct vulnerabilities requiring layer-specific defenses |
 | Cross-Layer Threats | Attacks that propagate between biological and silicon domains |
 

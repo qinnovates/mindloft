@@ -192,11 +192,40 @@
     },
     {
       "id": "brainflow-integration",
-      "description": "Add BrainFlow integration for real-time hardware support",
+      "description": "Add BrainFlow integration for real-time hardware support. BrainFlow provides uniform API for 20+ biosensor boards (OpenBCI, Muse, BrainBit, etc). Use as primary data acquisition layer for live Cₛ(S) computation.",
       "status": "pending",
-      "exit_condition": "tara/data/brainflow_adapter.py exists with OpenBCI Cyton support",
-      "priority": "low",
-      "rationale": "Enables real-time security testing with physical OpenBCI hardware"
+      "exit_condition": "tara/data/brainflow_adapter.py exists with OpenBCI Cyton support; can stream live EEG into coherence pipeline",
+      "priority": "high",
+      "rationale": "Required data acquisition layer for layer-aware coherence metric implementation. BrainFlow supports 20+ boards with uniform API.",
+      "depends_on": ["layer-aware-coherence-implementation"],
+      "libraries": ["brainflow"],
+      "notes": "BrainFlow is BSD-3 licensed. Supports Python, C++, Java, C#. Board-agnostic API means one adapter works for all supported hardware."
+    },
+    {
+      "id": "layer-aware-coherence-implementation",
+      "description": "Implement the unified layer-aware coherence metric Cₛ(S) in Python. Core equation: Cₛ(S) = e^(−Σ_f w(f,S)·(σ²φ(f) + σ²τ(f) + σ²γ(f))). Requires: (1) per-frequency STFT decomposition, (2) per-frequency variance computation for phase/transport/gain, (3) weighting function w(f,S) with configurable layer spatial scales, (4) real-time scoring pipeline. Use BrainFlow or Neuromore for data acquisition, MOABB for offline validation.",
+      "status": "pending",
+      "exit_condition": "oni/coherence.py exports LayerAwareCoherence class; computes Cₛ(S) on live or recorded EEG; validated against MOABB datasets with documented precision/recall",
+      "priority": "high",
+      "rationale": "The unified metric (Whitepaper §8) is currently theoretical. Implementation on real EEG data is the critical next step for framework credibility.",
+      "depends_on": ["moabb-coherence-benchmark"],
+      "libraries": ["brainflow", "neuromore", "mne-python", "scipy"],
+      "subtasks": [
+        "Implement per-frequency STFT pipeline (scipy.signal.stft)",
+        "Compute σ²φ(f), σ²τ(f), σ²γ(f) from consecutive STFT windows",
+        "Implement w(f,S) weighting function with configurable per-layer spatial scales",
+        "Compute Cₛ(S) = e^(−Σ_f w(f,S)·σ²(f)) in real-time",
+        "Calibrate weighting parameters (α, δ) against MOABB baseline data",
+        "Benchmark: inject synthetic attacks, measure detection accuracy",
+        "BrainFlow adapter for live streaming into the pipeline",
+        "Neuromore integration for neurofeedback-style real-time display"
+      ],
+      "open_questions": [
+        "What STFT window size balances temporal resolution vs frequency resolution?",
+        "How to handle non-stationarity in neural signals (adaptive baseline)?",
+        "Can w(f,S) be learned from data rather than manually specified?",
+        "What is the minimum hardware latency for real-time Cₛ(S) on embedded systems?"
+      ]
     },
     {
       "id": "neurosecurity-implementation",
@@ -513,10 +542,10 @@
   ],
 
   "metrics": {
-    "total_tasks": 27,
+    "total_tasks": 28,
     "completed": 22,
     "in_progress": 0,
-    "pending": 5,
-    "completion_rate": "81%"
+    "pending": 6,
+    "completion_rate": "79%"
   }
 }

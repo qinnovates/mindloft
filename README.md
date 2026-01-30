@@ -35,6 +35,11 @@ One framework to understand, build, and secure brain-computer interfaces. Open. 
   - [ONI Framework (Base)](#️-oni-framework-base)
   - [Quantum Encryption](#-quantum-encryption)
   - [Scale-Frequency](#-scale-frequency)
+  - [Detection Theory](#-detection-theory)
+  - [Mathematical Foundations](#-mathematical-foundations)
+  - [Open Research: Mathematical Foundations & Detection Reliability](#open-research-mathematical-foundations--detection-reliability)
+  - [Lessons Learned: Mathematical Rigor Audit](#lessons-learned-mathematical-rigor-audit-2026-01-29)
+  - [Implementation Plan & Next Steps](#implementation-plan--next-steps)
 - [About the Author](#about-the-author)
 - [Contributing](#contributing)
 - [License](#license)
@@ -51,6 +56,7 @@ One framework to understand, build, and secure brain-computer interfaces. Open. 
 | **[INDEX.md](MAIN/INDEX.md)** | **Main Wiki** — central hub for navigation, dependencies, cross-references, roadmap |
 | **[autodidact/](autodidact/)** | **Learn ONI** — educational ecosystem (ONI Academy, LearnViz, research notes) |
 | **[GLOSSARY.md](GLOSSARY.md)** | **Quick Summary** — auto-generated index with folder descriptions (AI-powered) |
+| **[Read the Whitepaper](https://qikevinl.github.io/ONI/whitepaper/)** | **Flagship document** — the complete ONI Framework overview with 8 figures |
 | **This README** | Public overview — key concepts, quick reference |
 
 > **GLOSSARY.md** is auto-generated when changes are pushed to `MAIN/` or `autodidact/`. Uses GitHub Models (GPT-4o-mini) to summarize the repository structure. Updates are submitted as PRs for review before merging.
@@ -192,7 +198,9 @@ ONI builds directly on pioneering research from leading institutions in BCI secu
 | Privacy concepts remain theoretical | `BCIAnonymizer` provides executable implementation |
 | No standard threat taxonomy | Kohno CIA model + attack pattern library in TARA |
 | Layer-by-layer attack surface undefined | ONI explicitly maps attacks to layers L1-L14 |
-| Coherence/integrity unmeasured | Cₛ metric provides quantifiable signal trust |
+| Coherence/integrity unmeasured | Cₛ metric provides quantifiable signal trust (design choice, [audited](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md)) |
+| No active defense mechanism for WRITE-path attacks | Destructive interference via Fourier anti-phase cancellation ([details](docs/SIGNAL_VISUALIZATION_DESIGN.md)) |
+| Mathematical claims unaudited in BCI security | Self-audit with 7 findings, corrections, and expansion roadmap ([audit](MAIN/publications/mathematical-foundations/)) |
 | Neurorights lack technical enforcement | Framework translates rights to technical controls |
 
 🎯 **[Explore Interactive Gap Analysis →](https://qikevinl.github.io/ONI/visualizations/03-academic-alignment.html)**
@@ -391,15 +399,36 @@ Cₛ = e^(−(σ²φ + σ²τ + σ²γ))
 | **Transport** | σ²τ | Pathway reliability | Flags signals bypassing biological routes |
 | **Gain** | σ²γ | Amplitude stability | Catches over/under-powered attacks |
 
-**Why Exponential Decay?** The formula models biological threshold behaviors from information theory. Total variance (σ²φ + σ²τ + σ²γ) represents Shannon entropy—the uncertainty across all signal dimensions. The exponential form creates sharp transitions: coherence remains high at low variance but collapses rapidly as variance increases, mirroring how neural systems gate signals for downstream propagation.
+**Why Exponential Decay?** The exponential form is a **design choice** that produces sharp threshold behavior: coherence remains high at low variance but collapses rapidly as variance increases, mirroring biological all-or-nothing signal gating. The form `e^(−σ²)` can be interpreted as a Gaussian likelihood (the probability of zero deviation given observed variance) or as a radial basis function — both producing the desired bounded [0, 1] output with smooth differentiability. (Note: previous versions described the variance sum as "Shannon entropy" — this was incorrect. Variance and entropy are different mathematical quantities; see [Mathematical Audit, Finding 3](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md).)
+
+**The Fourier Connection:** The three variance components are **designed to measure** properties of a signal's Fourier decomposition. By Fourier's theorem, any finite-energy neural signal can be decomposed into a sum of sine waves (spinning circles), each with a frequency, amplitude, and phase:
+
+```
+Signal(t) = Σ Aₙ · sin(fₙt + φₙ)
+```
+
+The coherence metric measures the stability of these Fourier components across consecutive time windows:
+
+| Cₛ Component | Fourier Property | What It Checks |
+|---------------|------------------|----------------|
+| **σ²φ** (Phase variance) | **Starting angle** of each spinning circle (φₙ) | Are the circles starting where expected? |
+| **σ²τ** (Transport variance) | **Frequency/speed** of each spinning circle (fₙ) | Are the circles spinning at the right speed? |
+| **σ²γ** (Gain variance) | **Radius/amplitude** of each spinning circle (Aₙ) | Are the circles the right size? |
+
+This is why the approach works: a legitimate neural signal has characteristic Fourier components — specific frequencies at specific amplitudes with specific phase relationships. An injected signal, no matter how carefully crafted, must match *all three properties simultaneously* across *all frequency components*. The exponential form means even small mismatches compound into rapid coherence collapse.
+
+> **Design vs. derivation:** Cₛ is *designed using* Fourier analysis — it is not mathematically *derived from* it. The exponential form is one of several valid choices (see [Mathematical Audit, Finding 5](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md) for alternatives). What makes it effective is the Fourier decomposition it operates on, not the specific formula.
+
+See [Why Waves Are Circles](docs/WHY_WAVES_ARE_CIRCLES.md) for the pedagogical chain from trigonometry through Fourier analysis, and [Mathematical Foundations](MAIN/publications/mathematical-foundations/) for the rigorous treatment.
 
 **Anomaly Detection Approach:**
-1. **Baseline Establishment** — ML models trained on authentic neural signatures establish per-user variance thresholds for phase, transport, and gain
-2. **Statistical Monitoring** — Incoming signals are continuously evaluated against learned baselines
-3. **Deviation Flagging** — Signals exceeding standard deviation bounds trigger coherence score degradation
-4. **Threshold Enforcement** — Cₛ below configurable threshold (default: 0.6) triggers rejection or enhanced scrutiny
+1. **Baseline Establishment** — ML models trained on authentic neural signatures establish per-user Fourier baselines: expected frequency bands, amplitude envelopes, and phase relationships
+2. **Fourier Decomposition** — Incoming signals are decomposed into constituent sine waves (spinning circles) via Short-Time FFT across consecutive time windows
+3. **Component Comparison** — Each Fourier component is compared against baseline: phase (σ²φ), frequency/timing (σ²τ), amplitude (σ²γ) — variance computed across windows
+4. **Coherence Scoring** — Cₛ = e^(−(σ²φ + σ²τ + σ²γ)) computed from the total deviation across all components
+5. **Threshold Enforcement** — Cₛ below configurable threshold (default: 0.6) triggers rejection or enhanced scrutiny
 
-**Interpretation:** Cₛ ranges from 0 (untrusted) to 1 (fully coherent). Signals below threshold are rejected before reaching neural tissue.
+**Interpretation:** Cₛ ranges from 0 (untrusted) to 1 (fully coherent). Signals below threshold are rejected before reaching neural tissue. (Full specification of STFT parameters — windowing, overlap, sample count — is an [open research item](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md).)
 
 ### Neural Signal Assurance Model (NSAM)
 
@@ -484,6 +513,7 @@ Core ONI architecture, 14-layer model extending OSI into biological territory. *
 
 | Document | Summary |
 |----------|----------|
+| [**ONI_Whitepaper**](MAIN/publications/0-oni-framework/ONI_Whitepaper.md) | *The OSI of Mind: Why BCIs Need a Universal Security Standard — flagship overview with 8 figures.* ([Web version](https://qikevinl.github.io/ONI/whitepaper/)) |
 | [Blog-ONI_Framework](MAIN/publications/0-oni-framework/Blog-ONI_Framework.md) | *If you've worked in IT, you know the OSI model.* |
 | [TechDoc-ONI_Framework](MAIN/publications/0-oni-framework/TechDoc-ONI_Framework.md) | *A Unified Neuro-Computational Stack for Secure Bio-Digital Integration.* |
 
@@ -508,6 +538,18 @@ Cross-scale neural patterns, frequency invariants, and information compression.
 | [Blog-Scale_Frequency](MAIN/publications/scale-frequency/Blog-Scale_Frequency.md) | *From millisecond spikes to lifetime memories.* |
 | [TechDoc-Scale_Frequency](MAIN/publications/scale-frequency/TechDoc-Scale_Frequency.md) | *Mathematical Foundations for Hierarchical Neural Processing in the ONI Framework.* |
 
+**The f × S ≈ k relationship:** The qualitative observation that higher-frequency neural signals operate at smaller spatial scales is empirically well-documented (Buzsáki & Draguhn, 2004) — gamma oscillations (~30-100 Hz) involve cortical columns (~1mm), while delta oscillations (~0.5-4 Hz) span whole-brain regions. This follows from neural circuit anatomy: larger circuits have longer conduction delays and thus slower oscillation frequencies.
+
+```
+Outer shells (L1-L7):  high frequency × small scale ≈ k  (fast digital signals)
+Gateway (L8):          transition point where frequency-scale relationship shifts
+Inner shells (L9-L14): low frequency × large scale ≈ k   (slow neural oscillations)
+```
+
+> **Accuracy note:** The original derivation assumed constant propagation speed (v = fλ, v = const → f × S = const). Neural tissue is actually **dispersive** — dielectric properties are frequency-dependent (Cole-Cole model), so v varies with frequency and f × S is not strictly constant. The relationship should be understood as an approximate scaling law, not an exact invariant. A dispersion-corrected formulation is an [open research item](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md). See [Mathematical Audit, Finding 4](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md).
+
+A threat signal targeting a specific layer can be detected if its frequency profile deviates from the expected range for that layer — providing a per-layer validation that complements the Cₛ coherence check. Together, **Cₛ validates the Fourier components** (are the signal's frequency/phase/amplitude patterns stable?) while **layer frequency profiles validate the physical context** (is this signal operating at the right frequency range for this layer?).
+
 ### 🎯 Detection Theory — [Overview](MAIN/publications/detection-theory/)
 
 Mathematical frameworks for threat detection in neural systems, including signature-based, anomaly-based, and behavioral detection with privacy-preserving implementations.
@@ -515,6 +557,165 @@ Mathematical frameworks for threat detection in neural systems, including signat
 | Document | Summary |
 |----------|----------|
 | [TechDoc-Detection_Theory](MAIN/publications/detection-theory/TechDoc-Detection_Theory.md) | *Mathematical Framework for Neural Signal Threat Detection with differential privacy, federated learning, and secure multi-party computation.* |
+
+### 🔵 Mathematical Foundations — [Overview](MAIN/publications/mathematical-foundations/)
+
+The mathematical chain connecting trigonometry, Fourier analysis, and the ONI security primitives — plus a rigorous audit identifying what's established math, what's ONI design, and what needs further research.
+
+```
+Right Triangle → Unit Circle → Sine Wave → Fourier Transform → Coherence Metric (Cₛ) [design]
+                                                              → Scale-Frequency (f×S≈k) [approx.]
+```
+
+| Document | Summary |
+|----------|----------|
+| [TechDoc-Equations_Reference](MAIN/publications/mathematical-foundations/TechDoc-Equations_Reference.md) | *Master catalog of all equations — Maxwell, Boltzmann, Nernst, Einstein, Hodgkin-Huxley, Cole-Cole, Fourier → Cₛ(S).* |
+| [TechDoc-Mathematical_Audit](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md) | *Rigorous audit of every mathematical claim — what's valid, what's wrong, and what's open.* |
+| [TechDoc-Mathematical_Foundations](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md) | *Corrected physics with empirically accurate models, labeled hypotheses, and expansion stubs.* |
+| [Why Waves Are Circles](docs/WHY_WAVES_ARE_CIRCLES.md) | *Pedagogical primer — from right triangles to Fourier transforms (with accuracy notes).* |
+| [Signal Visualization Design](docs/SIGNAL_VISUALIZATION_DESIGN.md) | *Why wavefronts were chosen as a pedagogical model for the 3D visualization.* |
+
+**The chain — what's established vs. what's ONI design:**
+
+```
+sin(θ), cos(θ)           ← ESTABLISHED: triangle ratios define circular motion
+       ↓
+x² + y² = 1              ← ESTABLISHED: unit circle = Pythagorean theorem
+       ↓
+sin(ωt)                   ← ESTABLISHED: circle unrolled over time = sine wave
+       ↓
+Signal = Σ Aₙsin(fₙt+φₙ) ← ESTABLISHED: Fourier decomposition (Dirichlet/Carleson convergence)
+       ↓                          ↓
+Cₛ = e^(−(σ²φ+σ²τ+σ²γ))  f × S ≈ k
+       ↓                          ↓
+  ONI DESIGN:              ONI HYPOTHESIS:
+  Measures Fourier          Approximate scaling law
+  component stability       (qualitative, not exact —
+  (formula is a choice,     tissue is dispersive,
+  not a derivation)         v(f) ≠ const)
+```
+
+**Two complementary checks using one mathematical foundation:**
+
+| Check | Formula | What It Validates | Status |
+|-------|---------|-------------------|--------|
+| **Coherence Metric** | Cₛ = e^(−(σ²φ + σ²τ + σ²γ)) | Are the signal's Fourier components stable over time? | **Design choice** — uses Fourier analysis but is not derived from it |
+| **Layer Frequency Profile** | f × S ≈ k | Is the signal's frequency appropriate for the target layer? | **Approximate** — qualitatively correct but requires dispersion correction |
+| **Layer-Aware Coherence** *(new)* | Cₛ(S) = e^(−Σ_f w(f,S)·σ²) | Unified: are components stable AND at the right frequency for this layer? | **Proposed** — unifies Cₛ + f×S; grounded in Maxwell→Boltzmann→Fourier chain |
+| **Spatial Signature** *(new)* | Volume conduction model | Does the potential distribution match expected tissue geometry? | **Hypothesis** — enabled by corrected quasi-static physics |
+| **Active Cancellation** *(new)* | Destructive interference (π phase shift) | Can a detected injection be neutralized before reaching neural tissue? | **Established physics** — same principle as noise-cancelling headphones, applied to BCI |
+
+Together they form a multi-dimensional defense system:
+- **Detection:** Cₛ checks *what the signal is made of* (Fourier component stability), layer frequency profiles check *where the signal belongs* (frequency-scale context), and spatial signatures check *where the signal came from* (conductivity tensor match)
+- **Active defense:** Once a malicious injection is detected and its Fourier components identified, the gateway can generate an anti-phase counterpart (shifted by π radians) to neutralize the signal through destructive interference — the same principle behind noise-cancelling headphones, cochlear implant artifact rejection, and 5G OFDM encoding
+
+All four capabilities use the same trigonometric-Fourier foundation. The key insight: **the same decomposition that enables detection also enables cancellation.** See [Signal Visualization Design — Destructive Interference](docs/SIGNAL_VISUALIZATION_DESIGN.md) for cross-domain references (ANC, cochlear implants, MRI artifact removal, 5G OFDM).
+
+> **TARA Integration Note:** Further work is required to integrate these corrected foundations into TARA's real-time detection pipeline. Priorities: (1) specify STFT parameters for implementable Cₛ, (2) compute dispersion-corrected f × S using Cole-Cole tissue models, (3) prototype volume-conduction-based spatial signatures, (4) validate on public EEG datasets (PhysioNet). See [TechDoc-Mathematical_Foundations, Section 7](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md) for the full TARA integration roadmap and [open research questions below](#open-research-mathematical-foundations--detection-reliability).
+
+---
+
+### Open Research: Mathematical Foundations & Detection Reliability
+
+The following mathematical concepts and open questions identify gaps between the current theoretical framework and a production-ready detection system. These are areas for further exploration to make the coherence metric more reliable and fool-proof.
+
+#### Mathematical Concepts to Explore
+
+| Concept | Relevance to ONI | Gap It Addresses |
+|---------|-------------------|-----------------|
+| **Wavelet Transforms** | Unlike FFT (fixed-window), wavelets provide time-frequency resolution — critical for detecting transient injection attacks that are brief and localized | Current Cₛ uses variance over a window; wavelets could detect sub-window anomalies |
+| **Hilbert Transform & Analytic Signal** | Extracts instantaneous phase and amplitude from a signal — could provide real-time phase tracking for σ²φ without windowed FFT | More precise phase variance measurement |
+| **Cross-Frequency Coupling (CFC)** | Biological neural signals exhibit phase-amplitude coupling (e.g., gamma amplitude locked to theta phase). Artificial signals likely lack this coupling | A biometric fingerprint that attackers cannot easily replicate |
+| **Granger Causality / Transfer Entropy** | Measures directional information flow between channels. Injected signals may lack causal relationships that natural neural activity exhibits | Multi-channel coherence beyond single-signal Cₛ |
+| **Information Theory (Shannon Entropy, Mutual Information)** | Quantifies information content and redundancy in signals. Healthy neural signals have characteristic entropy profiles | Anomaly detection via entropy deviation from baseline |
+| **Empirical Mode Decomposition (EMD)** | Data-driven decomposition (no predefined basis functions like FFT). Better suited to non-stationary biological signals | Adaptive decomposition that tracks neural signal drift |
+| **Kalman Filtering / State-Space Models** | Predictive filtering that models expected signal trajectory. Deviations from predicted state flag anomalies in real-time | Real-time prediction-based anomaly detection |
+| **Topological Data Analysis (TDA)** | Persistent homology can detect structural changes in signal topology that survive noise. May identify attack signatures invisible to frequency analysis | Noise-robust anomaly detection |
+
+#### Open Questions for Detection Reliability
+
+These questions should guide research toward making the coherence metric and TARA detection pipeline more robust:
+
+1. **Adaptive Baselines:** How should Cₛ baselines adapt over time? Neural signals change with sleep, medication, aging, and neuroplasticity. What is the optimal balance between sensitivity (detecting attacks) and specificity (avoiding false positives from natural drift)?
+
+2. **Adversarial Fourier Attacks:** If an attacker knows the Cₛ formula, they could craft signals with matching phase, timing, and amplitude variance. What additional signal properties (cross-frequency coupling, causal structure, entropy profile) would be needed to detect adversarial signals that are designed to pass coherence checks?
+
+3. **Latency vs. Accuracy Tradeoff:** The coherence metric requires a time window to compute variance. Shorter windows mean faster detection but noisier estimates. What is the minimum window size that provides reliable Cₛ at the <1ms latency required for real-time blocking?
+
+4. **Multi-Channel Coherence:** Current Cₛ evaluates single-channel signals. Real BCI arrays have 1,024+ channels. How should inter-channel coherence be computed? Should the gateway maintain a spatial coherence map across the electrode array?
+
+5. **Biometric Neural Signatures:** Can the Fourier decomposition of a person's neural signals serve as a biometric identifier? If each brain has a unique frequency fingerprint (like a voiceprint), could L8 authenticate signals based on spectral identity rather than just statistical consistency?
+
+6. **Non-Stationary Detection:** Neural signals are inherently non-stationary (they change with cognitive state, attention, emotion). How should the detection system distinguish between natural non-stationarity and malicious signal injection? Is wavelet analysis or EMD better suited than FFT for this?
+
+7. **Hardware Feasibility:** Can FFT-based coherence scoring run within the 3-5mW power budget of an implanted BCI? What approximations (e.g., fixed-point arithmetic, reduced FFT bins) are acceptable without compromising detection accuracy?
+
+8. **Active Cancellation Latency:** Destructive interference requires generating an anti-phase signal faster than the malicious signal can reach neural tissue. What is the minimum detection-to-cancellation latency achievable in implanted hardware? Can the cancellation signal itself cause unintended neural effects?
+
+---
+
+### Lessons Learned: Mathematical Rigor Audit (2026-01-29)
+
+During the development of the mathematical foundations documentation, a rigorous self-audit revealed seven issues in the framework's mathematical claims. This section documents the key lessons for transparency and to guide future work.
+
+**What we got wrong:**
+
+| Error | What We Claimed | What's Actually True | Impact |
+|-------|----------------|---------------------|--------|
+| **Wavefront propagation** | BCI electrode fields propagate as spherical wavefronts | At BCI frequencies (<10 kHz), λ ≈ 950m — fields are quasi-static (volume conduction, Laplace equation), not propagating waves | Visualization is pedagogical, not literal physics |
+| **Isotropic tissue** | Wavefronts are circular because tissue is uniform | Neural tissue is anisotropic — white matter conductivity ratio ~10:1 (Tuch et al., 2001) | Equipotential surfaces are ellipsoidal, not spherical |
+| **Shannon entropy** | σ²φ + σ²τ + σ²γ "represents Shannon entropy" | Variance ≠ entropy. H = −Σp(x)log p(x) vs. σ² = E[(X−μ)²]. Different quantities entirely | Replaced with accurate Gaussian likelihood motivation |
+| **Constant propagation speed** | v = const → f × S = const | Neural tissue is dispersive (Cole-Cole model); v(f) varies with frequency | f × S ≈ k is an approximate scaling law, not an exact invariant |
+
+**What we got right:**
+- Triangle → circle → sine wave chain (standard mathematics)
+- Fourier decomposition of neural signals (standard signal processing)
+- Using variance of signal properties for anomaly detection (valid approach)
+- Qualitative frequency-scale relationship in neuroscience (Buzsáki & Draguhn, 2004)
+- Destructive interference for active signal cancellation (established physics across multiple domains)
+
+**What we learned:**
+1. **Label epistemic status explicitly.** Every claim should be tagged: *Established* (peer-reviewed), *Hypothesis* (ONI contribution), or *Stub* (needs research). This prevents pedagogical simplifications from being mistaken for proven physics.
+2. **Design ≠ derivation.** Cₛ is *designed using* Fourier analysis, not *derived from* it. The distinction matters for credibility and for identifying what can be changed vs. what is constrained by physics.
+3. **Correcting errors opens new capabilities.** The volume conduction correction enabled a new detection method (spatial signatures from anisotropic conductivity tensors) that was invisible in the wavefront model.
+4. **Self-audit builds credibility.** Publishing what's wrong alongside what's right is more valuable than presenting a flawless-looking framework. The [Mathematical Audit](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md) is now a public document inviting scrutiny.
+
+**Full audit:** [TechDoc-Mathematical_Audit](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md) — 7 findings with severity ratings, correct physics, references, and resolution roadmap.
+
+---
+
+### Implementation Plan & Next Steps
+
+#### Phase 1: Specification (Current Priority)
+
+| Task | Description | Depends On | Output |
+|------|-------------|------------|--------|
+| **Specify Cₛ STFT parameters** | Define window function, window length, overlap, frequency bands, and statistical test for computing σ²φ, σ²τ, σ²γ | None | Implementable algorithm specification |
+| **Compute Cole-Cole dispersion** | Use Gabriel et al. (1996) tissue parameters to compute v(f) from 0.5 Hz to 100 kHz | None | Frequency-dependent velocity curve for neural tissue |
+| **Reformulate f × S** | Replace constant k with dispersion-corrected k(f) | Cole-Cole computation | Corrected scale-frequency relationship |
+| **Define layer frequency profiles** | Specify expected frequency ranges for each ONI layer (L1-L14) | f × S reformulation | Per-layer frequency acceptance criteria |
+
+#### Phase 2: Validation (On Public Data)
+
+| Task | Description | Depends On | Output |
+|------|-------------|------------|--------|
+| **Implement Cₛ on real EEG** | Test specified Cₛ on PhysioNet / BNCI Horizon 2020 datasets | Phase 1 specs | ROC curves, false positive/negative rates |
+| **Compare Cₛ formulations** | Test exponential vs. Lorentzian vs. sigmoid vs. likelihood ratio | Cₛ implementation | Optimal formula selection with evidence |
+| **Validate frequency profiles** | Compare defined layer profiles against known EEG norms | Layer definitions | Confirmed or adjusted frequency boundaries |
+| **Prototype CFC detection** | Compute phase-amplitude coupling from authentic EEG | Cₛ implementation | Feasibility assessment for biometric fingerprinting |
+| **Prototype active cancellation** | Simulate injection detection → anti-phase generation on recorded signals | Cₛ implementation | Cancellation latency and residual measurements |
+
+#### Phase 3: TARA Integration
+
+| Task | Description | Depends On | Output |
+|------|-------------|------------|--------|
+| **Update `tara_mvp/core/coherence.py`** | Implement validated Cₛ with STFT parameters | Phase 2 validation | Production-ready coherence scoring |
+| **Add wavelet-based Cₛ option** | Alternative for non-stationary detection | Phase 2 CFC prototype | Configurable detection engine |
+| **Add spatial signature check** | Volume conduction model for electrode geometry verification | Phase 1 Cole-Cole | Directional anomaly detection |
+| **Add active cancellation module** | Real-time anti-phase signal generation for WRITE-path defense | Phase 2 cancellation prototype | `tara_mvp/defense/cancellation.py` |
+| **Validate on OpenBCI hardware** | End-to-end test on live EEG streams | All Phase 3 modules | Hardware validation report |
+
+**Tracking:** Each phase maps to expansion stubs in [TechDoc-Mathematical_Foundations](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md). As stubs are resolved, they become full sections with methods, results, and references.
 
 ---
 
@@ -561,6 +762,7 @@ See [CONTRIBUTING.md](MAIN/CONTRIBUTING.md) for guidelines.
 
 **Seeking input from:**
 - **Neuroscientists** — Validate biological assumptions
+- **Mathematicians / Signal Processing Researchers** — Validate coherence metric formulation, Fourier analysis approach, and dispersion models (see [Mathematical Audit](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md))
 - **Security Engineers** — Identify attack vectors
 - **Hardware Engineers** — Assess implementation constraints
 - **Ethicists** — Address governance gaps
@@ -576,5 +778,5 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 ---
 
 *Auto-published from research pipeline*
-*Last update: 2026-01-28*
-*Documents: 17 | Topics: 7 | Python Packages: oni-framework v0.2.0, oni-tara v0.8.0*
+*Last update: 2026-01-29*
+*Documents: 21 | Topics: 8 | Python Packages: oni-framework v0.2.0, oni-tara v0.8.0*

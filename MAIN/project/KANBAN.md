@@ -3,7 +3,7 @@
 > **Visual task board for tracking work in progress.**
 > Synced with `prd.json` — update both when tasks move.
 
-**Last Updated:** 2026-01-26
+**Last Updated:** 2026-01-29
 **Sprint:** Q1 2026
 
 ---
@@ -16,14 +16,14 @@
 |   (Prioritized)  |  (Ready to Start)|   (Active Work)  |  (Needs Verify)  |   (Completed)    |
 +------------------+------------------+------------------+------------------+------------------+
 |                  |                  |                  |                  |                  |
-| [P3] BrainFlow   | [P2] CHANGELOG   |                  |                  | [P0] Layer       |
-| Integration      |                  |                  |                  | Validation       |
+| [P1] Layer-Aware | [P2] CHANGELOG   |                  |                  | [P0] Layer       |
+| Coherence Impl   |                  |                  |                  | Validation       |
 |                  | [P1] Python      |                  |                  |                  |
-| [P2] MOABB       | Code Sync        |                  |                  | [P0] Editor      |
-| Benchmarks       |                  |                  |                  | Agent            |
+| [P1] BrainFlow   | Code Sync        |                  |                  | [P0] Editor      |
+| Integration      |                  |                  |                  | Agent            |
 |                  | [P2] MOABB       |                  |                  |                  |
 | [P2] MOABB       | Attack Scenarios |                  |                  | [P0] PM Agent    |
-| Attack Scenarios |                  |                  |                  |                  |
+| Benchmarks       |                  |                  |                  |                  |
 |                  |                  |                  |                  | [P0] ONI Layer   |
 |                  |                  |                  |                  | Correction       |
 |                  |                  |                  |                  |                  |
@@ -35,7 +35,7 @@
 |                  |                  |                  |                  | ...+15 more      |
 |                  |                  |                  |                  |                  |
 +------------------+------------------+------------------+------------------+------------------+
-     3 items            3 items           0 items           0 items           21 items
+     4 items            3 items           0 items           0 items           21 items
 ```
 
 ---
@@ -54,11 +54,28 @@
 
 ## Backlog (Prioritized)
 
-### [P3] brainflow-integration
-- **Description:** Add BrainFlow integration for real-time hardware support
-- **Exit Condition:** `tara/data/brainflow_adapter.py` exists with OpenBCI Cyton support
-- **Risk:** Low (nice-to-have feature)
-- **Dependencies:** None
+### [P1] layer-aware-coherence-implementation ⭐ NEW
+- **Description:** Implement the unified layer-aware coherence metric Cₛ(S) in Python using BrainFlow/Neuromore for data acquisition, MOABB for offline validation
+- **Exit Condition:** `oni/coherence.py` exports `LayerAwareCoherence` class; computes Cₛ(S) on live or recorded EEG; validated against MOABB with precision/recall
+- **Risk:** High (critical for framework credibility — moves from theory to implementation)
+- **Dependencies:** moabb-coherence-benchmark
+- **Libraries:** `brainflow`, `neuromore`, `mne-python`, `scipy`
+- **Key subtasks:**
+  1. Per-frequency STFT pipeline (`scipy.signal.stft`)
+  2. Compute σ²φ(f), σ²τ(f), σ²γ(f) from consecutive windows
+  3. Implement w(f,S) weighting function with per-layer spatial scales
+  4. Compute Cₛ(S) = e^(−Σ_f w(f,S)·σ²(f)) in real-time
+  5. Calibrate weighting parameters (α, δ) against MOABB baselines
+  6. Benchmark: inject synthetic attacks, measure detection accuracy
+  7. BrainFlow adapter for live streaming
+  8. Neuromore integration for real-time neurofeedback display
+- **Estimate:** Large effort
+
+### [P1] brainflow-integration ⬆️ UPGRADED from P3
+- **Description:** Add BrainFlow integration for real-time hardware support. BrainFlow provides uniform API for 20+ biosensor boards (OpenBCI, Muse, BrainBit, etc). Use as primary data acquisition layer for live Cₛ(S) computation.
+- **Exit Condition:** `tara/data/brainflow_adapter.py` exists with OpenBCI Cyton support; can stream live EEG into coherence pipeline
+- **Risk:** Medium (hardware dependency — need physical board for testing)
+- **Dependencies:** layer-aware-coherence-implementation
 - **Estimate:** Medium effort
 
 ### [P2] moabb-coherence-benchmark
