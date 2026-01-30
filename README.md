@@ -738,7 +738,7 @@ The ONI Framework is actively seeking partnerships to move from research to real
 | **Open-Source Hardware** | Validate on real BCIs | OpenBCI, BrainFlow |
 | **Academic Research** | Peer review, validation | UW Kohno Lab, Rice SIMS |
 | **Industry Engagement** | Commercial adoption | BCI companies |
-| **Standards Integration** | Shape BCI security standards | IEEE, FDA, ISO |
+| **Technical Implementation** | Build on current science, identify gaps, derive future directions through the framework | FDA, ISO, research institutions |
 
 ### Priority: OpenBCI Integration
 
@@ -756,7 +756,7 @@ We're building `oni-openbci` — a hardware adapter to demonstrate ONI concepts 
 | **Researchers** | Use ONI, validate assumptions, co-author papers |
 | **Engineers** | Contribute code, build hardware adapters |
 | **Industry** | Pilot programs, integration, sponsorship |
-| **Standards Bodies** | Review, invite participation, reference |
+| **Domain Experts** | Validate science, identify gaps, co-develop solutions |
 
 ---
 

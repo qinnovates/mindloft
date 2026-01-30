@@ -427,14 +427,14 @@ To move ONI from research to implementation, we're pursuing four parallel tracks
 
 **Approach:** Security consulting, pilot programs, architecture reviews.
 
-### Standards Integration (Priority 4)
+### Technical Implementation & Gap Analysis (Priority 4)
 
-| Body | Initiative | ONI Alignment |
-|------|------------|---------------|
-| **IEEE** | Brain Initiative Standards | Layer model proposal |
-| **FDA** | BCI Guidance Documents | Security checkpoint mapping |
-| **ISO/IEC** | Medical device security | Framework implementation |
-| **OECD** | Neurotechnology Governance | Ethics alignment |
+| Domain | Approach | ONI Alignment |
+|--------|----------|---------------|
+| **Current Science** | Map what exists today into the 14-layer model | Grounded implementation |
+| **Gap Identification** | Use the framework to surface missing pieces | Research roadmap |
+| **Formal Derivation** | Apply math and science to develop solutions for identified gaps | Scale-frequency, coherence metric |
+| **Regulatory Alignment** | FDA, ISO/IEC medical device security | Security checkpoint mapping |
 
 **Full details:** [PARTNERSHIPS.md](PARTNERSHIPS.md)
 
