@@ -377,8 +377,8 @@
             z-index: 1;
             background: linear-gradient(180deg,
                 rgba(5, 10, 20, 0) 0%,
-                rgba(5, 10, 20, 1) 15%,
-                rgba(5, 10, 20, 1) 85%,
+                rgba(5, 10, 20, 0.5) 15%,
+                rgba(5, 10, 20, 0.5) 85%,
                 rgba(5, 10, 20, 0) 100%);
         }
 
@@ -472,11 +472,11 @@
         }
 
         .framework-panel.layer-panel {
-            min-height: 40vh;
+            min-height: 25vh;
         }
 
         .framework-panel.layer-panel[data-layer="L8"] {
-            min-height: 55vh;
+            min-height: 35vh;
         }
 
         .framework-panel.closing-panel {
@@ -1309,94 +1309,53 @@
                         <p>ONI extends the OSI model beyond Layer 7 into the biological domain. Seven silicon layers handle traditional digital security. A Neural Gateway bridges machine and mind. Six biological layers map the neural processing pipeline from ion channels to identity.</p>
                     </div>
 
-                    <!-- L1: Physical Carrier -->
+                    <!-- L1-L7: Silicon Layers -->
                     <div class="framework-panel layer-panel" data-layer="L1" data-zone="silicon">
                         <div class="layer-header">
                             <span class="layer-badge silicon">L1</span>
                             <span class="layer-name">Physical Carrier</span>
                         </div>
-                        <p class="layer-desc">The hardware that touches your body &mdash; electrodes, wires, wireless signals carrying neural data from brain to device.</p>
-                        <div class="layer-context">
-                            <span class="context-tag osi">OSI: Physical Layer</span>
-                            <span class="context-example">Think: the cables and radio waves that carry internet traffic</span>
-                        </div>
                     </div>
 
-                    <!-- L2: Signal Processing -->
                     <div class="framework-panel layer-panel" data-layer="L2" data-zone="silicon">
                         <div class="layer-header">
                             <span class="layer-badge silicon">L2</span>
                             <span class="layer-name">Signal Processing</span>
                         </div>
-                        <p class="layer-desc">Cleaning raw brain signals &mdash; filtering noise, amplifying patterns, organizing data into usable frames.</p>
-                        <div class="layer-context">
-                            <span class="context-tag osi">OSI: Data Link</span>
-                            <span class="context-example">Think: Ethernet frames that package raw data for delivery</span>
-                        </div>
                     </div>
 
-                    <!-- L3: Protocol -->
                     <div class="framework-panel layer-panel" data-layer="L3" data-zone="silicon">
                         <div class="layer-header">
                             <span class="layer-badge silicon">L3</span>
                             <span class="layer-name">Protocol</span>
                         </div>
-                        <p class="layer-desc">Routing rules for neural data &mdash; which signals go where, how packets are addressed across the interface.</p>
-                        <div class="layer-context">
-                            <span class="context-tag osi">OSI: Network</span>
-                            <span class="context-example">Think: IP addresses that route traffic across the internet</span>
-                        </div>
                     </div>
 
-                    <!-- L4: Transport -->
                     <div class="framework-panel layer-panel" data-layer="L4" data-zone="silicon">
                         <div class="layer-header">
                             <span class="layer-badge silicon">L4</span>
                             <span class="layer-name">Transport</span>
                         </div>
-                        <p class="layer-desc">Ensuring neural data arrives complete and in order &mdash; reliable delivery between device and processing systems.</p>
-                        <div class="layer-context">
-                            <span class="context-tag osi">OSI: Transport</span>
-                            <span class="context-example">Think: TCP ensuring your web page loads without missing pieces</span>
-                        </div>
                     </div>
 
-                    <!-- L5: Session -->
                     <div class="framework-panel layer-panel" data-layer="L5" data-zone="silicon">
                         <div class="layer-header">
                             <span class="layer-badge silicon">L5</span>
                             <span class="layer-name">Session</span>
                         </div>
-                        <p class="layer-desc">Managing the conversation between device and brain &mdash; connection lifecycle, state management, synchronization.</p>
-                        <div class="layer-context">
-                            <span class="context-tag osi">OSI: Session</span>
-                            <span class="context-example">Think: staying logged in while you browse a website</span>
-                        </div>
                     </div>
 
-                    <!-- L6: Presentation -->
                     <div class="framework-panel layer-panel" data-layer="L6" data-zone="silicon">
                         <div class="layer-header">
                             <span class="layer-badge silicon">L6</span>
                             <span class="layer-name">Presentation</span>
                         </div>
-                        <p class="layer-desc">Translating neural data into formats software understands &mdash; encoding, compression, encryption.</p>
-                        <div class="layer-context">
-                            <span class="context-tag osi">OSI: Presentation</span>
-                            <span class="context-example">Think: SSL encryption and data formatting for secure communication</span>
-                        </div>
                     </div>
 
-                    <!-- L7: Application Interface -->
                     <div class="framework-panel layer-panel" data-layer="L7" data-zone="silicon">
                         <div class="layer-header">
                             <span class="layer-badge silicon">L7</span>
                             <span class="layer-name">Application Interface</span>
-                        </div>
-                        <p class="layer-desc">The software layer &mdash; BCI apps, prosthetic control panels, neurofeedback dashboards.</p>
-                        <div class="layer-context">
-                            <span class="context-tag osi">OSI: Application</span>
-                            <span class="context-example">Think: the apps and browsers you use every day</span>
                         </div>
                     </div>
 
@@ -1406,90 +1365,48 @@
                             <span class="layer-badge gateway">L8</span>
                             <span class="layer-name">Neural Gateway</span>
                         </div>
-                        <p class="layer-desc">The firewall between machine and mind. Every signal crossing this boundary is measured against the Coherence Metric &mdash; a mathematical signature of signal integrity.</p>
-                        <div class="formula">C&#x209B; = e<sup>&minus;(&sigma;&sup2;&phi; + &sigma;&sup2;&tau; + &sigma;&sup2;&gamma;)</sup></div>
-                        <p class="layer-desc" style="margin-top:1rem;">Phase variance, transport variance, gain variance. If coherence drops below threshold, the signal is rejected before it reaches biology.</p>
-                        <div class="layer-context">
-                            <span class="context-tag novel">New to ONI</span>
-                            <span class="context-example">No equivalent in traditional networking &mdash; networks don't connect to living tissue</span>
-                        </div>
                     </div>
 
-                    <!-- L9: Signal Processing (Bio) -->
+                    <!-- L9-L14: Biology Layers -->
                     <div class="framework-panel layer-panel" data-layer="L9" data-zone="biology">
                         <div class="layer-header">
                             <span class="layer-badge biology">L9</span>
                             <span class="layer-name">Signal Processing</span>
                         </div>
-                        <p class="layer-desc">Your brain's own noise filter &mdash; how neurons clean, amplify, and gate the signals they receive from the interface.</p>
-                        <div class="layer-context">
-                            <span class="context-tag novel">New to ONI</span>
-                            <span class="context-example">Biological filtering at the ion channel level</span>
-                        </div>
                     </div>
 
-                    <!-- L10: Neural Protocol -->
                     <div class="framework-panel layer-panel" data-layer="L10" data-zone="biology">
                         <div class="layer-header">
                             <span class="layer-badge biology">L10</span>
                             <span class="layer-name">Neural Protocol</span>
                         </div>
-                        <p class="layer-desc">How your brain encodes information &mdash; the electrochemical language neurons use to communicate with each other.</p>
-                        <div class="layer-context">
-                            <span class="context-tag novel">New to ONI</span>
-                            <span class="context-example">Neurotransmitter signaling and spike-timing patterns</span>
-                        </div>
                     </div>
 
-                    <!-- L11: Cognitive Transport -->
                     <div class="framework-panel layer-panel" data-layer="L11" data-zone="biology">
                         <div class="layer-header">
                             <span class="layer-badge biology">L11</span>
                             <span class="layer-name">Cognitive Transport</span>
                         </div>
-                        <p class="layer-desc">How thoughts travel across brain regions &mdash; the neural highways connecting perception, memory, and action.</p>
-                        <div class="layer-context">
-                            <span class="context-tag novel">New to ONI</span>
-                            <span class="context-example">White matter tracts and cross-regional neural routing</span>
-                        </div>
                     </div>
 
-                    <!-- L12: Cognitive Session -->
                     <div class="framework-panel layer-panel" data-layer="L12" data-zone="biology">
                         <div class="layer-header">
                             <span class="layer-badge biology">L12</span>
                             <span class="layer-name">Cognitive Session</span>
                         </div>
-                        <p class="layer-desc">Your brain's working memory and attention &mdash; the context window that makes thoughts coherent and meaningful.</p>
-                        <div class="layer-context">
-                            <span class="context-tag novel">New to ONI</span>
-                            <span class="context-example">Prefrontal cortex state management and attentional gating</span>
-                        </div>
                     </div>
 
-                    <!-- L13: Semantic Layer -->
                     <div class="framework-panel layer-panel" data-layer="L13" data-zone="biology">
                         <div class="layer-header">
                             <span class="layer-badge biology">L13</span>
                             <span class="layer-name">Semantic Layer</span>
                         </div>
-                        <p class="layer-desc">Where signals become meaning &mdash; how your brain turns neural patterns into understanding, intention, and decisions.</p>
-                        <div class="layer-context">
-                            <span class="context-tag novel">New to ONI</span>
-                            <span class="context-example">Higher-order cognition, intent formation, and decision-making</span>
-                        </div>
                     </div>
 
-                    <!-- L14: Identity Layer -->
                     <div class="framework-panel layer-panel" data-layer="L14" data-zone="biology">
                         <div class="layer-header">
                             <span class="layer-badge biology">L14</span>
                             <span class="layer-name">Identity Layer</span>
-                        </div>
-                        <p class="layer-desc">Your sense of self &mdash; consciousness, personality, the subjective "you" that experiences everything. The deepest layer to protect.</p>
-                        <div class="layer-context">
-                            <span class="context-tag novel">New to ONI</span>
-                            <span class="context-example">Neural correlates of consciousness and personal identity</span>
                         </div>
                     </div>
 
