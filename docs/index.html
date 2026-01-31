@@ -3229,6 +3229,21 @@
                             stackY -= pullAmount;
                         }
 
+                        // Scroll compression: as user scrolls down toward Foundations,
+                        // L14→L1 compress downward — same quadratic ratio as spring coil
+                        // L1 is anchor (bottom), L14 moves most (top)
+                        var scrollCompressAmt = closingShrink.value;
+                        if (scrollCompressAmt > 0.001 && i > 0) {
+                            var stepsFromBottom = i; // L1=0 (anchor), L14=13 (moves most)
+                            var maxScrollSteps = totalLayers - 1; // 13
+                            var scrollRatio = (stepsFromBottom / maxScrollSteps);
+                            scrollRatio = scrollRatio * scrollRatio; // quadratic — L14 compresses most
+                            // Pull toward L1's Y position
+                            var l1Y = (0 - (totalLayers - 1) / 2) * stackSpacing - 0.15;
+                            var scrollPull = (stackY - l1Y) * scrollRatio * scrollCompressAmt;
+                            stackY -= scrollPull;
+                        }
+
                         // Intro expand: override Y during intro animation
                         if (introYTarget > -999) {
                             stackY = introYTarget;
