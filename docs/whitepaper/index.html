@@ -535,7 +535,7 @@ WRITE PATH: Cloud → Wireless RX → Validation → Electrical Stimulation → 
             <thead><tr><th>Domain</th><th>Pre-Standard Cost</th><th>Post-Standard Cost</th><th>Catalyst</th></tr></thead>
             <tbody>
                 <tr><td>Internet (pre-TLS)</td><td>$0 (no encryption)</td><td>$3.86M avg breach</td><td>E-commerce fraud</td></tr>
-                <tr><td>Medical devices</td><td>Minimal security</td><td>$10M+ per recall</td><td>Pacemaker hacking (2017)</td></tr>
+                <tr><td>Medical devices</td><td>Minimal security</td><td>$10M+ per recall</td><td>Pacemaker vulnerability demos (2012–2017)</td></tr>
                 <tr><td>Industrial control</td><td>$0 (air-gapped)</td><td>$1B+ (Colonial Pipeline)</td><td>Critical infrastructure attacks</td></tr>
                 <tr><td><strong>BCIs (today)</strong></td><td><strong>No standard exists</strong></td><td><strong>Unknown — stakes are human</strong></td><td><strong>?</strong></td></tr>
             </tbody>
@@ -862,7 +862,7 @@ Threshold for acceptance: C<sub>s</sub> &gt; 0.6 (with valid authentication)</pr
             </tbody>
         </table>
 
-        <p>This fits within a Neuralink-class device's ~5 mW security budget (out of 25 mW total).</p>
+        <p>At 2.8 mW total, this is designed to fit within the tight power budgets of implantable BCIs (typically 5–25 mW total device power depending on architecture).</p>
 
         <h3>8.2 Decision Matrix</h3>
 
@@ -903,10 +903,12 @@ Threshold for acceptance: C<sub>s</sub> &gt; 0.6 (with valid authentication)</pr
 
     <!-- Section 9 -->
     <section class="wp-section" id="tara">
-        <h2><span class="sec-num">10.</span> TARA: Real-Time Neural Security</h2>
+        <h2><span class="sec-num">10.</span> TARA: From Framework to Implementation</h2>
 
         <h3>9.1 What TARA Is</h3>
-        <p><strong>TARA</strong> — Telemetry Analysis &amp; Response Automation — is the ONI Framework's implementation layer. TARA provides real-time signal monitoring, attack simulation, automated response, and Neural Signal Assurance Monitoring (NSAM).</p>
+        <p><strong>TARA</strong> — Telemetry Analysis &amp; Response Automation — is a proof-of-concept demonstrating how ONI's mathematical foundations translate into working security logic. Named after the Buddhist goddess of protection, TARA explores real-time signal monitoring, attack simulation, automated response patterns, and Neural Signal Assurance Monitoring (NSAM).</p>
+
+        <blockquote><p><strong>Important:</strong> TARA is not a production system. It is a research prototype that validates ONI's theoretical framework is technically implementable. The vision is a system that learns each person's unique neural patterns and continuously validates signal integrity — but achieving that requires research collaboration, real BCI hardware, and clinical validation.</p></blockquote>
 
         <h3>9.2 Architecture</h3>
 
@@ -930,13 +932,14 @@ Threshold for acceptance: C<sub>s</sub> &gt; 0.6 (with valid authentication)</pr
         <table>
             <thead><tr><th>Module</th><th>Function</th><th>Status</th></tr></thead>
             <tbody>
-                <tr><td><code>oni-framework</code></td><td>14-layer model, coherence, scale-frequency</td><td>Published (pip install)</td></tr>
-                <tr><td><code>oni-tara</code></td><td>Attack simulation, signal analysis, NSAM</td><td>Published (pip install)</td></tr>
-                <tr><td><code>oni-academy</code></td><td>Educational neurosecurity curriculum</td><td>Published (pip install)</td></tr>
+                <tr><td><code>oni-framework</code></td><td>14-layer model, coherence, scale-frequency</td><td>Research prototype (pip install)</td></tr>
+                <tr><td><code>oni-tara</code></td><td>Attack simulation, signal analysis, NSAM</td><td>Research prototype (pip install)</td></tr>
+                <tr><td><code>oni-academy</code></td><td>Educational neurosecurity curriculum</td><td>Research prototype (pip install)</td></tr>
                 <tr><td>Visualizations</td><td>Interactive demos and dashboards</td><td><a href="../visualizations/">Live</a></td></tr>
             </tbody>
         </table>
 
+        <blockquote><p><strong>Note:</strong> TARA is a research prototype demonstrating that ONI's mathematical foundations are technically implementable. Production deployment would require clinical validation, real BCI hardware testing, and regulatory review.</p></blockquote>
         <blockquote><p><strong>Try it:</strong> Install with <code>pip install oni-framework oni-tara</code> or explore the <a href="https://github.com/qikevinl/ONI/tree/main/MAIN/tara-nsec-platform">TARA platform</a>.</p></blockquote>
     </section>
 
@@ -1011,7 +1014,7 @@ Threshold for acceptance: C<sub>s</sub> &gt; 0.6 (with valid authentication)</pr
                 <tr><td>Scale-Frequency Invariant</td><td>Physics-grounded layer validation</td></tr>
                 <tr><td>Layer-Aware Coherence C<sub>s</sub>(S)</td><td>Unified metric — frequency-weighted, spatially-aware signal verification</td></tr>
                 <tr><td>Neural Firewall architecture</td><td>2.8 mW, &lt;370 μs — fits in existing implants</td></tr>
-                <tr><td>TARA security stack</td><td>Real-time monitoring, attack simulation, response</td></tr>
+                <tr><td>TARA proof-of-concept</td><td>Research prototype demonstrating real-time monitoring, attack simulation, and response automation</td></tr>
                 <tr><td>Regulatory mapping</td><td>Direct alignment with FDA, IEC, ISO, HIPAA</td></tr>
                 <tr><td>Quantum readiness</td><td>Protection against harvest-now-decrypt-later</td></tr>
             </tbody>

@@ -23,7 +23,7 @@ Independent Researcher | qikevinl@github
 6. [The Coherence Metric](#6-the-coherence-metric)
 7. [The Scale-Frequency Invariant](#7-the-scale-frequency-invariant)
 8. [The Neural Firewall](#8-the-neural-firewall)
-9. [TARA: Real-Time Neural Security](#9-tara-real-time-neural-security)
+9. [TARA: From Framework to Implementation](#9-tara-from-framework-to-implementation)
 10. [Regulatory Alignment](#10-regulatory-alignment)
 11. [Quantum-Ready Security](#11-quantum-ready-security)
 12. [Conclusion](#12-conclusion)
@@ -119,7 +119,7 @@ History teaches a consistent lesson: security standards adopted *after* exploita
 | Domain | Pre-Standard Cost | Post-Standard Cost | Catalyst for Standard |
 |--------|------------------|--------------------|----------------------|
 | Internet (pre-TLS) | $0 (no encryption) | $3.86M avg breach (IBM, 2023) | E-commerce fraud epidemic |
-| Medical devices (pre-FDA guidance) | Minimal security spend | $10M+ per recall | Pacemaker hacking demos (2017) |
+| Medical devices (pre-FDA guidance) | Minimal security spend | $10M+ per recall | Pacemaker vulnerability demos (2012–2017) |
 | Industrial control (pre-IEC 62443) | $0 (air-gapped assumption) | $1B+ (Colonial Pipeline) | Critical infrastructure attacks |
 | **BCIs (today)** | **Minimal — no standard exists** | **Unknown — but the stakes are human** | **?** |
 
@@ -456,7 +456,7 @@ The Neural Firewall operates at L8 — the Neural Gateway. It implements Zero-Tr
 | Decision Logic | Accept/reject/flag | 0.2 mW | <10 μs |
 | **Total** | | **2.8 mW** | **<370 μs** |
 
-This fits within a Neuralink-class device's ~5 mW security budget (out of 25 mW total).
+At 2.8 mW total, this is designed to fit within the tight power budgets of implantable BCIs (typically 5–25 mW total device power depending on architecture).
 
 ### 8.2 Decision Matrix
 
@@ -489,16 +489,18 @@ These bounds are enforced in **analog circuitry** — they operate even when dig
 
 ---
 
-## 10. TARA: Real-Time Neural Security
+## 10. TARA: From Framework to Implementation
 
 ### 9.1 What TARA Is
 
-**TARA** — Telemetry Analysis & Response Automation — is the ONI Framework's implementation layer. Named after the Buddhist goddess of protection, TARA provides:
+**TARA** — Telemetry Analysis & Response Automation — is a proof-of-concept demonstrating how ONI's mathematical foundations translate into working security logic. Named after the Buddhist goddess of protection, TARA explores:
 
 - **Real-time signal monitoring** aligned to the 14-layer model
-- **Attack simulation** for testing BCI defenses
-- **Automated response** for detected threats
-- **Neural Signal Assurance Monitoring (NSAM)** — the neural equivalent of a SIEM
+- **Attack simulation** for testing BCI defense concepts
+- **Automated response** patterns for detected threats
+- **Neural Signal Assurance Monitoring (NSAM)** — a research prototype of the neural equivalent of a SIEM
+
+> **Important:** TARA is not a production system. It is a research prototype that validates ONI's theoretical framework is technically implementable. The vision is a system that learns each person's unique neural patterns and continuously validates signal integrity — but achieving that requires research collaboration, real BCI hardware, and clinical validation.
 
 ### 9.2 Architecture
 
@@ -526,11 +528,13 @@ These bounds are enforced in **analog circuitry** — they operate even when dig
 
 | Module | Function | Status |
 |--------|----------|--------|
-| `oni-framework` | 14-layer model, coherence calculation, scale-frequency validation | Published (pip install) |
-| `oni-tara` | Attack simulation, signal analysis, NSAM monitoring | Published (pip install) |
-| `oni-academy` | Educational curriculum for BCI security | Published (pip install) |
+| `oni-framework` | 14-layer model, coherence calculation, scale-frequency validation | Research prototype (pip install) |
+| `oni-tara` | Attack simulation, signal analysis, NSAM monitoring | Research prototype (pip install) |
+| `oni-academy` | Educational curriculum for BCI security | Research prototype (pip install) |
 | Visualizations | Interactive 14-layer model, threat dashboards | Live (GitHub Pages) |
 
+> **Note:** TARA is a research prototype demonstrating that ONI's mathematical foundations are technically implementable. Production deployment would require clinical validation, real BCI hardware testing, and regulatory review.
+>
 > **Try it:** Install with `pip install oni-framework oni-tara` or explore the [TARA platform documentation](../../tara-nsec-platform/README.md).
 
 ---
@@ -647,7 +651,7 @@ The ONI Framework provides that standard.
 | Scale-Frequency Invariant | Physics-grounded layer validation |
 | Layer-Aware Coherence Cₛ(S) | Unified metric — frequency-weighted, spatially-aware signal verification |
 | Neural Firewall architecture | 2.8 mW, <370 μs — fits in existing implants |
-| TARA security stack | Real-time monitoring, attack simulation, response automation |
+| TARA proof-of-concept | Research prototype demonstrating real-time monitoring, attack simulation, and response automation |
 | Regulatory mapping | Alignment with FDA, NIST, HIPAA, state neurorights laws, UNESCO 2025, Chile, EU |
 | Neuroethics integration | 9 governance documents mapping framework to neurorights principles |
 | Quantum readiness | Protection against harvest-now-decrypt-later attacks |
