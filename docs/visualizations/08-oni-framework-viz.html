@@ -965,15 +965,15 @@
             top: 64px;
             left: 0;
             right: 0;
-            height: 48px;
-            background: rgba(13, 17, 23, 0.9);
+            min-height: 48px;
+            background: rgba(13, 17, 23, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid #21262d;
             z-index: 99;
             display: none;
             align-items: center;
-            padding: 0 24px;
+            padding: 8px 24px;
             gap: 16px;
         }
         #scenario-bar.active { display: flex; }
@@ -1001,6 +1001,7 @@
         .scenario-desc {
             font-size: 11px;
             color: #8b949e;
+            line-height: 1.4;
         }
         .scenario-btns {
             display: flex;
