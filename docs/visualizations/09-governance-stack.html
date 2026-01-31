@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONI Governance Stack | Regulatory & Neurorights Mapping</title>
+    <meta name="description" content="Interactive visualization mapping ONI's 14-layer model to regulatory frameworks, neurorights principles, and governance controls.">
+    <style>
+        :root {
+            --oni-dark: #0a0e17;
+            --oni-darker: #060912;
+            --oni-blue: #00d4ff;
+            --oni-purple: #8b5cf6;
+            --oni-pink: #ec4899;
+            --oni-green: #10b981;
+            --oni-yellow: #f59e0b;
+            --oni-red: #ef4444;
+            --oni-orange: #f97316;
+            --oni-gray: #1e293b;
+            --oni-light: #e2e8f0;
+            --oni-cyan: #06b6d4;
+
+            --zone-silicon: #3b82f6;
+            --zone-gateway: #f59e0b;
+            --zone-biology: #10b981;
+
+            --nr-liberty: #8b5cf6;
+            --nr-privacy: #06b6d4;
+            --nr-integrity: #10b981;
+            --nr-continuity: #f59e0b;
+            --nr-authenticity: #ec4899;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--oni-dark);
+            color: var(--oni-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            padding: 1.5rem 2rem;
+            background: var(--oni-darker);
+            border-bottom: 1px solid var(--oni-gray);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--oni-blue), var(--oni-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header .subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--oni-blue); }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid var(--oni-gray);
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--oni-blue);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--oni-gray);
+        }
+
+        /* Filter Pills */
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--oni-gray);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-right: 0.5rem;
+        }
+
+        .filter-pill {
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid var(--oni-gray);
+            background: transparent;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-pill:hover {
+            border-color: var(--oni-blue);
+            color: var(--oni-light);
+        }
+
+        .filter-pill.active {
+            background: var(--oni-blue);
+            border-color: var(--oni-blue);
+            color: white;
+        }
+
+        /* Main Layout */
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            min-height: calc(100vh - 260px);
+        }
+
+        /* Layer Stack */
+        .layer-stack {
+            padding: 1.5rem 2rem;
+            overflow-y: auto;
+        }
+
+        .zone-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.5rem 0;
+            margin-top: 0.75rem;
+        }
+
+        .zone-label:first-child { margin-top: 0; }
+
+        .zone-label.biology { color: var(--zone-biology); }
+        .zone-label.gateway { color: var(--zone-gateway); }
+        .zone-label.silicon { color: var(--zone-silicon); }
+
+        .layer-row {
+            display: grid;
+            grid-template-columns: 60px 1fr auto auto auto;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            margin-bottom: 2px;
+        }
+
+        .layer-row:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .layer-row.selected {
+            background: rgba(59, 130, 246, 0.08);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .layer-row.gateway {
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: rgba(245, 158, 11, 0.05);
+            padding: 0.85rem 1rem;
+            margin: 4px 0;
+        }
+
+        .layer-row.gateway.selected {
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(245, 158, 11, 0.5);
+        }
+
+        .layer-id {
+            font-weight: 700;
+            font-size: 0.85rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        .layer-id.silicon { color: var(--zone-silicon); }
+        .layer-id.gateway { color: var(--zone-gateway); }
+        .layer-id.biology { color: var(--zone-biology); }
+
+        .layer-name {
+            font-size: 0.9rem;
+            color: var(--oni-light);
+        }
+
+        .layer-pills {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .layer-pill {
+            padding: 0.15rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .layer-pill.regs {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+
+        .layer-pill.rights {
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+        }
+
+        /* Density bar */
+        .density-bar-container {
+            width: 80px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .density-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .density-bar.silicon { background: var(--zone-silicon); }
+        .density-bar.gateway { background: var(--zone-gateway); }
+        .density-bar.biology { background: var(--zone-biology); }
+
+        /* Detail Panel */
+        .detail-panel {
+            border-left: 1px solid var(--oni-gray);
+            background: var(--oni-darker);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .detail-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #475569;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .detail-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--oni-gray);
+        }
+
+        .detail-header h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-header .zone-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .zone-badge.silicon { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .zone-badge.gateway { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .zone-badge.biology { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Regulation Cards */
+        .reg-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .reg-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .reg-card.dimmed {
+            opacity: 0.3;
+        }
+
+        .reg-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.35rem;
+        }
+
+        .reg-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--oni-light);
+        }
+
+        .reg-scope {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .reg-scope.us-federal { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .reg-scope.us-state { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .reg-scope.international { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+
+        .reg-provision {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .reg-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.35rem;
+        }
+
+        .reg-status.aligned { background: var(--oni-green); }
+        .reg-status.partial { background: var(--oni-yellow); }
+
+        /* Neuroright Badges */
+        .neuroright-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .neuroright-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .neuroright-badge.cognitive-liberty { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
+        .neuroright-badge.mental-privacy { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+        .neuroright-badge.mental-integrity { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .neuroright-badge.psychological-continuity { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .neuroright-badge.cognitive-authenticity { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+
+        .neuroright-badge .nr-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* Control Cards */
+        .control-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .control-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--oni-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .control-desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* UNESCO Footer */
+        .footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--oni-gray);
+            background: var(--oni-darker);
+        }
+
+        .unesco-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .unesco-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--oni-light);
+        }
+
+        .unesco-bar-container {
+            flex: 1;
+            min-width: 200px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            gap: 2px;
+        }
+
+        .unesco-segment {
+            flex: 1;
+            border-radius: 3px;
+            transition: opacity 0.3s;
+        }
+
+        .unesco-segment.filled { background: var(--oni-green); }
+        .unesco-segment.partial { background: var(--oni-yellow); }
+        .unesco-segment.empty { background: rgba(255, 255, 255, 0.05); }
+
+        .unesco-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--oni-green);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--oni-blue); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-panel {
+                border-left: none;
+                border-top: 1px solid var(--oni-gray);
+                max-height: 50vh;
+            }
+
+            .layer-row {
+                grid-template-columns: 50px 1fr auto auto;
+            }
+
+            .density-bar-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div>
+                <h1>ONI Governance Stack</h1>
+                <p class="subtitle">How each ONI layer maps to regulations, neurorights, and governance controls</p>
+            </div>
+            <a href="index.html" class="back-link">&larr; All Visualizations</a>
+        </div>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-value">5</span>
+            <span class="stat-label">Neurorights</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-value" id="regCount">12</span>
+            <span class="stat-label">Regulations</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-value">14</span>
+            <span class="stat-label">Layers Mapped</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-value" style="color: var(--oni-green);">15/17</span>
+            <span class="stat-label">UNESCO Aligned</span>
+        </div>
+    </div>
+
+    <div class="filters">
+        <span class="filter-label">Filter by scope:</span>
+        <button class="filter-pill active" data-scope="all">All</button>
+        <button class="filter-pill" data-scope="US Federal">US Federal</button>
+        <button class="filter-pill" data-scope="US State">US State</button>
+        <button class="filter-pill" data-scope="International">International</button>
+    </div>
+
+    <div class="main">
+        <div class="layer-stack" id="layerStack"></div>
+        <div class="detail-panel" id="detailPanel">
+            <div class="detail-empty">Select a layer to see its governance mapping.<br>L8 (Neural Gateway) is the governance hotspot.</div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="unesco-row">
+            <span class="unesco-label">UNESCO Recommendation Alignment</span>
+            <div class="unesco-bar-container" id="unescoBar"></div>
+            <span class="unesco-score">15/17</span>
+        </div>
+        <div class="footer-links">
+            <a href="index.html">&larr; Visualization Suite</a>
+            <a href="https://github.com/qikevinl/ONI/tree/main/MAIN/governance" target="_blank">Governance Docs</a>
+            <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/governance/UNESCO_ALIGNMENT.md" target="_blank">UNESCO Alignment</a>
+            <a href="https://github.com/qikevinl/ONI/blob/main/MAIN/governance/REGULATORY_COMPLIANCE.md" target="_blank">Regulatory Compliance</a>
+        </div>
+    </footer>
+
+    <script>
+    const GOVERNANCE_DATA = {
+        neurorights: {
+            "cognitive-liberty": { name: "Cognitive Liberty", desc: "Mental self-determination — the right to choose what enters neural space", color: "#8b5cf6" },
+            "mental-privacy": { name: "Mental Privacy", desc: "Neural data confidentiality — keep thoughts and neural patterns private", color: "#06b6d4" },
+            "mental-integrity": { name: "Mental Integrity", desc: "Protection from unauthorized alteration of neural function", color: "#10b981" },
+            "psychological-continuity": { name: "Psychological Continuity", desc: "Maintain personal identity and sense of self over time", color: "#f59e0b" },
+            "cognitive-authenticity": { name: "Cognitive Authenticity", desc: "Know which thoughts are genuinely yours vs. externally induced", color: "#ec4899" }
+        },
+        layers: [
+            {
+                id: "L14", name: "Identity & Ethics", zone: "biology",
+                regulations: [
+                    { id: "unesco", name: "UNESCO Recommendation", scope: "International", provision: "Freedom of thought, psychological continuity, identity protection", status: "aligned" },
+                    { id: "chile", name: "Chile Neurorights Amendment", scope: "International", provision: "Constitutional protection of mental identity and cognitive liberty", status: "aligned" },
+                    { id: "ca", name: "California SB 1223", scope: "US State", provision: "Neural data classified as sensitive personal information", status: "aligned" },
+                    { id: "mind", name: "MIND Act (S. 2925)", scope: "US Federal", provision: "Federal neurotechnology standards for identity protection", status: "aligned" }
+                ],
+                neurorights: ["psychological-continuity", "cognitive-authenticity"],
+                controls: [
+                    { name: "L14 Identity Layer", desc: "Longitudinal monitoring for identity drift detection" },
+                    { name: "Coherence Metric (Cs)", desc: "Validates signal authenticity — distinguishes endogenous from exogenous signals" }
+                ]
+            },
+            {
+                id: "L13", name: "Semantic", zone: "biology",
+                regulations: [
+                    { id: "unesco", name: "UNESCO Recommendation", scope: "International", provision: "Protection of meaning construction and intent interpretation", status: "aligned" },
+                    { id: "co", name: "Colorado H.B. 24-1058", scope: "US State", provision: "Opt-in consent required for neural data collection", status: "aligned" },
+                    { id: "ca", name: "California SB 1223", scope: "US State", provision: "Right to delete neural data, restrict processing", status: "aligned" }
+                ],
+                neurorights: ["cognitive-authenticity", "mental-integrity"],
+                controls: [
+                    { name: "Semantic Analysis", desc: "Monitors meaning-level signal patterns for manipulation" },
+                    { name: "Coherence Metric (Cs)", desc: "Frequency-weighted verification at semantic processing scale" }
+                ]
+            },
+            {
+                id: "L12", name: "Cognitive Session", zone: "biology",
+                regulations: [
+                    { id: "unesco", name: "UNESCO Recommendation", scope: "International", provision: "Protection of cognitive processes and attention", status: "aligned" },
+                    { id: "hipaa", name: "HIPAA", scope: "US Federal", provision: "Cognitive data classified as protected health information", status: "aligned" },
+                    { id: "ct", name: "Connecticut SB 1295", scope: "US State", provision: "Consumer protection for neurotechnology data", status: "aligned" }
+                ],
+                neurorights: ["mental-integrity", "cognitive-liberty"],
+                controls: [
+                    { name: "Session Monitoring", desc: "Detects attention hijacking and context manipulation" },
+                    { name: "Working Memory Protection", desc: "Guards cognitive session state from external interference" }
+                ]
+            },
+            {
+                id: "L11", name: "Cognitive Transport", zone: "biology",
+                regulations: [
+                    { id: "hipaa", name: "HIPAA", scope: "US Federal", provision: "Privacy and security rules for neural data in transit", status: "aligned" },
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Data protection controls for neural telemetry", status: "aligned" },
+                    { id: "gdpr", name: "GDPR", scope: "International", provision: "Neural data as special category requiring explicit consent", status: "aligned" },
+                    { id: "mt", name: "Montana SB 163", scope: "US State", provision: "Neural data classified as protected health information", status: "aligned" }
+                ],
+                neurorights: ["mental-privacy"],
+                controls: [
+                    { name: "Transport Variance (sigma-tau)", desc: "Detects unauthorized access pathways via pathway reliability monitoring" },
+                    { name: "End-to-End Encryption", desc: "Protects neural data confidentiality during transport" },
+                    { name: "BCI Anonymizer", desc: "Strips personally identifiable neural patterns before transmission" }
+                ]
+            },
+            {
+                id: "L10", name: "Neural Protocol", zone: "biology",
+                regulations: [
+                    { id: "fda", name: "FDA Cybersecurity Guidance", scope: "US Federal", provision: "Protocol-level security for neural data formatting", status: "aligned" },
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Protocol validation and integrity checks", status: "aligned" }
+                ],
+                neurorights: ["mental-integrity"],
+                controls: [
+                    { name: "Neural Protocol Validation", desc: "Verifies data format integrity at the neural codec layer" },
+                    { name: "Scale-Frequency Check", desc: "Validates frequency content matches expected neural protocol band (8-30 Hz)" }
+                ]
+            },
+            {
+                id: "L9", name: "Signal Processing", zone: "biology",
+                regulations: [
+                    { id: "fda", name: "FDA Cybersecurity Guidance", scope: "US Federal", provision: "Signal integrity and processing safety requirements", status: "aligned" },
+                    { id: "fcc", name: "FCC", scope: "US Federal", provision: "Electromagnetic compatibility for implanted signal processors", status: "aligned" }
+                ],
+                neurorights: ["mental-integrity"],
+                controls: [
+                    { name: "Signal Processing Bounds", desc: "Enforces amplitude and frequency limits at the bio-signal layer" },
+                    { name: "Gain Variance (sigma-gamma)", desc: "Monitors amplitude stability for anomaly detection" }
+                ]
+            },
+            {
+                id: "L8", name: "Neural Gateway", zone: "gateway",
+                regulations: [
+                    { id: "fda", name: "FDA Cybersecurity Guidance", scope: "US Federal", provision: "Threat modeling, security by design, vulnerability management at the device boundary", status: "aligned" },
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Identify/Protect/Detect/Respond/Recover lifecycle at the gateway", status: "aligned" },
+                    { id: "hipaa", name: "HIPAA", scope: "US Federal", provision: "Access control and breach detection at the bio-digital boundary", status: "aligned" },
+                    { id: "mind", name: "MIND Act (S. 2925)", scope: "US Federal", provision: "Cybersecurity requirements for neurotechnology devices", status: "aligned" },
+                    { id: "unesco", name: "UNESCO Recommendation", scope: "International", provision: "All 15 implemented elements converge at the gateway enforcement point", status: "aligned" },
+                    { id: "chile", name: "Chile Neurorights Amendment", scope: "International", provision: "Constitutional enforcement point for neurorights protections", status: "aligned" },
+                    { id: "eu_ai", name: "EU AI Act", scope: "International", provision: "High-risk AI system transparency requirements for BCI gateways", status: "aligned" },
+                    { id: "co", name: "Colorado H.B. 24-1058", scope: "US State", provision: "Neural data consent enforcement at collection point", status: "aligned" },
+                    { id: "ca", name: "California SB 1223", scope: "US State", provision: "CCPA sensitive data protections enforced at gateway", status: "aligned" },
+                    { id: "mt", name: "Montana SB 163", scope: "US State", provision: "Health information protections at data boundary", status: "aligned" },
+                    { id: "ct", name: "Connecticut SB 1295", scope: "US State", provision: "Consumer neurotechnology protections at gateway", status: "aligned" }
+                ],
+                neurorights: ["cognitive-liberty", "mental-privacy", "mental-integrity", "psychological-continuity", "cognitive-authenticity"],
+                controls: [
+                    { name: "Neural Firewall", desc: "Zero-trust enforcement: no signal crosses without policy, trust, and security validation" },
+                    { name: "Coherence Metric (Cs)", desc: "Real-time signal trustworthiness scoring — Cs = e^(-(sigma-phi + sigma-tau + sigma-gamma))" },
+                    { name: "Stimulation Safety Bounds", desc: "Hardware-enforced limits: amplitude 0-5mA, frequency 0.1-500Hz, charge density <30 uC/cm2/phase" },
+                    { name: "Authentication & Authorization", desc: "Source validation before any signal crosses the bio-digital boundary" },
+                    { name: "NSAM Monitoring", desc: "Neural Signal Assurance Monitoring — continuous anomaly detection" }
+                ]
+            },
+            {
+                id: "L7", name: "Application", zone: "silicon",
+                regulations: [
+                    { id: "fda", name: "FDA Cybersecurity Guidance", scope: "US Federal", provision: "Software transparency, SBOM requirements for BCI applications", status: "aligned" },
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Application-level security controls and access management", status: "aligned" },
+                    { id: "eu_ai", name: "EU AI Act", scope: "International", provision: "Transparency requirements for high-risk AI-powered BCI applications", status: "aligned" }
+                ],
+                neurorights: [],
+                controls: [
+                    { name: "Application Security", desc: "Standard application-layer security controls for BCI software" },
+                    { name: "SBOM Management", desc: "Software Bill of Materials for vulnerability tracking" }
+                ]
+            },
+            {
+                id: "L6", name: "Presentation", zone: "silicon",
+                regulations: [
+                    { id: "hipaa", name: "HIPAA", scope: "US Federal", provision: "Encryption requirements for neural data at rest and in transit", status: "aligned" },
+                    { id: "gdpr", name: "GDPR", scope: "International", provision: "Data protection by design — encryption and pseudonymization", status: "aligned" },
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Cryptographic protection controls", status: "aligned" }
+                ],
+                neurorights: ["mental-privacy"],
+                controls: [
+                    { name: "Encryption Layer", desc: "End-to-end encryption for neural data encoding and compression" },
+                    { name: "Quantum-Ready Crypto", desc: "Post-quantum cryptography readiness for lifetime neural data protection" }
+                ]
+            },
+            {
+                id: "L5", name: "Session", zone: "silicon",
+                regulations: [
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Session management and connection lifecycle controls", status: "aligned" },
+                    { id: "iec", name: "IEC 62443", scope: "International", provision: "Industrial cybersecurity session management", status: "aligned" }
+                ],
+                neurorights: [],
+                controls: [
+                    { name: "Session Security", desc: "Connection lifecycle management between BCI and cloud/compute" }
+                ]
+            },
+            {
+                id: "L4", name: "Transport", zone: "silicon",
+                regulations: [
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Transport-layer security and flow control", status: "aligned" },
+                    { id: "iec", name: "IEC 62443", scope: "International", provision: "End-to-end delivery security for industrial systems", status: "aligned" }
+                ],
+                neurorights: [],
+                controls: [
+                    { name: "Transport Security", desc: "End-to-end delivery, flow control, and integrity verification" }
+                ]
+            },
+            {
+                id: "L3", name: "Network", zone: "silicon",
+                regulations: [
+                    { id: "nist", name: "NIST CSF 2.0", scope: "US Federal", provision: "Network segmentation and access controls", status: "aligned" },
+                    { id: "fda", name: "FDA Cybersecurity Guidance", scope: "US Federal", provision: "Network architecture security for connected medical devices", status: "aligned" }
+                ],
+                neurorights: [],
+                controls: [
+                    { name: "Network Security", desc: "Logical addressing, routing security, and network segmentation" }
+                ]
+            },
+            {
+                id: "L2", name: "Data Link", zone: "silicon",
+                regulations: [
+                    { id: "fda", name: "FDA Cybersecurity Guidance", scope: "US Federal", provision: "Data link integrity for medical device communications", status: "aligned" },
+                    { id: "fcc", name: "FCC", scope: "US Federal", provision: "RF spectrum compliance and electromagnetic compatibility", status: "aligned" }
+                ],
+                neurorights: [],
+                controls: [
+                    { name: "Link Security", desc: "MAC-level framing and addressing security" }
+                ]
+            },
+            {
+                id: "L1", name: "Physical Carrier", zone: "silicon",
+                regulations: [
+                    { id: "fcc", name: "FCC", scope: "US Federal", provision: "RF emissions limits and spectrum safety for implanted devices", status: "aligned" },
+                    { id: "fda", name: "FDA Cybersecurity Guidance", scope: "US Federal", provision: "Physical security requirements for implanted hardware", status: "aligned" }
+                ],
+                neurorights: [],
+                controls: [
+                    { name: "Physical Security", desc: "Transmission medium protection and hardware tamper resistance" },
+                    { name: "Signal Integrity", desc: "Raw bit-level signal quality assurance" }
+                ]
+            }
+        ]
+    };
+
+    // UNESCO alignment data (17 elements)
+    const UNESCO_ELEMENTS = [
+        { name: "Human Rights & Dignity", status: "filled" },
+        { name: "Human Health & Well-Being", status: "filled" },
+        { name: "Respect for Diversity", status: "filled" },
+        { name: "Sustainability", status: "filled" },
+        { name: "Professional Integrity", status: "filled" },
+        { name: "Proportionality", status: "filled" },
+        { name: "Freedom of Thought", status: "filled" },
+        { name: "Privacy", status: "filled" },
+        { name: "Protection of Children", status: "filled" },
+        { name: "Consumer Protection", status: "filled" },
+        { name: "Enhancement Regulation", status: "partial" },
+        { name: "Workplace Protections", status: "filled" },
+        { name: "Children & Young People", status: "filled" },
+        { name: "Behavioural Influence", status: "filled" },
+        { name: "Health & Well-Being Policy", status: "filled" },
+        { name: "Oversight & Governance", status: "filled" },
+        { name: "Detailed Policy Guidance", status: "partial" }
+    ];
+
+    let currentFilter = 'all';
+    let selectedLayerId = null;
+
+    function getZoneClass(zone) {
+        return zone;
+    }
+
+    function getMaxRegs() {
+        return Math.max(...GOVERNANCE_DATA.layers.map(l => l.regulations.length));
+    }
+
+    function getFilteredRegCount(layer) {
+        if (currentFilter === 'all') return layer.regulations.length;
+        return layer.regulations.filter(r => r.scope === currentFilter).length;
+    }
+
+    function renderLayerStack() {
+        const stack = document.getElementById('layerStack');
+        const maxRegs = getMaxRegs();
+        let html = '';
+        let currentZone = '';
+
+        GOVERNANCE_DATA.layers.forEach(layer => {
+            if (layer.zone !== currentZone) {
+                currentZone = layer.zone;
+                const zoneLabels = { biology: 'Biology Domain (L9-L14)', gateway: 'Neural Gateway (L8)', silicon: 'Silicon Domain (L1-L7)' };
+                html += `<div class="zone-label ${layer.zone}">${zoneLabels[layer.zone]}</div>`;
+            }
+
+            const filteredRegs = currentFilter === 'all' ? layer.regulations : layer.regulations.filter(r => r.scope === currentFilter);
+            const regCount = filteredRegs.length;
+            const rightsCount = layer.neurorights.length;
+            const density = (regCount / maxRegs) * 100;
+            const isGateway = layer.zone === 'gateway' ? ' gateway' : '';
+            const isSelected = layer.id === selectedLayerId ? ' selected' : '';
+
+            html += `
+                <div class="layer-row${isGateway}${isSelected}" data-id="${layer.id}" onclick="selectLayer('${layer.id}')">
+                    <span class="layer-id ${layer.zone}">${layer.id}</span>
+                    <span class="layer-name">${layer.name}</span>
+                    <div class="layer-pills">
+                        ${regCount > 0 ? `<span class="layer-pill regs">${regCount} reg${regCount !== 1 ? 's' : ''}</span>` : ''}
+                        ${rightsCount > 0 ? `<span class="layer-pill rights">${rightsCount} right${rightsCount !== 1 ? 's' : ''}</span>` : ''}
+                    </div>
+                    <div class="density-bar-container">
+                        <div class="density-bar ${layer.zone}" style="width: ${density}%"></div>
+                    </div>
+                </div>
+            `;
+        });
+
+        stack.innerHTML = html;
+    }
+
+    function selectLayer(layerId) {
+        selectedLayerId = layerId;
+        renderLayerStack();
+        renderDetailPanel(layerId);
+    }
+
+    function renderDetailPanel(layerId) {
+        const panel = document.getElementById('detailPanel');
+        const layer = GOVERNANCE_DATA.layers.find(l => l.id === layerId);
+        if (!layer) return;
+
+        const filteredRegs = currentFilter === 'all' ? layer.regulations : layer.regulations.filter(r => r.scope === currentFilter);
+
+        let regsHtml = filteredRegs.map(r => {
+            const scopeClass = r.scope.toLowerCase().replace(/ /g, '-');
+            return `
+                <div class="reg-card">
+                    <div class="reg-card-header">
+                        <span class="reg-name"><span class="reg-status ${r.status}"></span>${r.name}</span>
+                        <span class="reg-scope ${scopeClass}">${r.scope}</span>
+                    </div>
+                    <div class="reg-provision">${r.provision}</div>
+                </div>
+            `;
+        }).join('');
+
+        if (filteredRegs.length === 0) {
+            regsHtml = '<div style="color: #475569; font-size: 0.85rem; padding: 0.5rem 0;">No regulations match the current filter for this layer.</div>';
+        }
+
+        const rightsHtml = layer.neurorights.length > 0
+            ? layer.neurorights.map(nrId => {
+                const nr = GOVERNANCE_DATA.neurorights[nrId];
+                return `
+                    <div class="neuroright-badge ${nrId}" title="${nr.desc}">
+                        <span class="nr-dot" style="background: ${nr.color}"></span>
+                        ${nr.name}
+                    </div>
+                `;
+            }).join('')
+            : '<div style="color: #475569; font-size: 0.85rem;">No direct neuroright mapping — protected via lower/upper layer controls.</div>';
+
+        const controlsHtml = layer.controls.map(c => `
+            <div class="control-card">
+                <div class="control-name">${c.name}</div>
+                <div class="control-desc">${c.desc}</div>
+            </div>
+        `).join('');
+
+        panel.innerHTML = `
+            <div class="detail-header">
+                <h2>${layer.id}: ${layer.name}</h2>
+                <span class="zone-badge ${layer.zone}">${layer.zone === 'gateway' ? 'Neural Gateway' : layer.zone === 'biology' ? 'Biology Domain' : 'Silicon Domain'}</span>
+            </div>
+
+            <div class="detail-section">
+                <h3>Regulations (${filteredRegs.length})</h3>
+                ${regsHtml}
+            </div>
+
+            <div class="detail-section">
+                <h3>Neurorights Protected (${layer.neurorights.length})</h3>
+                <div class="neuroright-badges">
+                    ${rightsHtml}
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>ONI Controls (${layer.controls.length})</h3>
+                ${controlsHtml}
+            </div>
+        `;
+    }
+
+    function renderUnescoBar() {
+        const bar = document.getElementById('unescoBar');
+        bar.innerHTML = UNESCO_ELEMENTS.map(el =>
+            `<div class="unesco-segment ${el.status}" title="${el.name}: ${el.status === 'filled' ? 'Fully Implemented' : 'Partially Implemented'}"></div>`
+        ).join('');
+    }
+
+    function setFilter(scope) {
+        currentFilter = scope;
+        document.querySelectorAll('.filter-pill').forEach(p => {
+            p.classList.toggle('active', p.dataset.scope === scope);
+        });
+        renderLayerStack();
+        if (selectedLayerId) renderDetailPanel(selectedLayerId);
+    }
+
+    // Init
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.addEventListener('click', () => setFilter(pill.dataset.scope));
+    });
+
+    renderLayerStack();
+    renderUnescoBar();
+
+    // Auto-select L8 on load
+    selectLayer('L8');
+    </script>
+</body>
+</html>
