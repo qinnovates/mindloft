@@ -2269,22 +2269,22 @@
                     var targetOpacity;
 
                     if (i === activeLayerIndex) {
-                        // Active layer: grow
-                        scaleTarget = isGW ? 1.8 : 1.4;
-                        targetOpacity = isGW ? 0.95 : 0.8;
+                        // Active layer: grow big
+                        scaleTarget = isGW ? 2.4 : 1.9;
+                        targetOpacity = isGW ? 1.0 : 0.9;
                     } else if (activeLayerIndex === -1) {
                         // No specific layer active (overview/closing) — use zone matching
                         var zoneMatch = (activeZone === 'all') || (activeZone === layer.zone);
                         scaleTarget = 1.0;
                         targetOpacity = zoneMatch ? (isGW ? 0.85 : 0.55) : (isGW ? 0.3 : 0.15);
                     } else {
-                        // Different layer is active: dim
-                        scaleTarget = 1.0;
-                        targetOpacity = isGW ? 0.25 : 0.12;
+                        // Different layer is active: shrink and dim
+                        scaleTarget = 0.85;
+                        targetOpacity = isGW ? 0.18 : 0.08;
                     }
 
-                    // Lerp scale multiplier (slower grow, quicker snap-back)
-                    var lerpFactor = (scaleTarget > shellScaleMultipliers[i]) ? 0.06 : 0.1;
+                    // Lerp scale multiplier (responsive in both directions)
+                    var lerpFactor = (scaleTarget > shellScaleMultipliers[i]) ? 0.12 : 0.15;
                     shellScaleMultipliers[i] += (scaleTarget - shellScaleMultipliers[i]) * lerpFactor;
 
                     if (mp < 0.01) {
@@ -2315,9 +2315,9 @@
                         mesh.scale.set(scaleXZ, scaleY, scaleXZ);
                         mesh.position.y = targetY * mp;
 
-                        // Opacity lerp
+                        // Opacity lerp (responsive)
                         shellUniforms[i].uOpacity.value +=
-                            (targetOpacity - shellUniforms[i].uOpacity.value) * 0.05;
+                            (targetOpacity - shellUniforms[i].uOpacity.value) * 0.1;
 
                         // Active glow lerp (slow ramp up, gentle decay)
                         var glowTarget = (i === activeLayerIndex) ? 1.0 : 0.0;
