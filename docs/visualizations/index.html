@@ -84,6 +84,13 @@
             color: #94a3b8;
         }
 
+        /* Category spacing */
+        .app-grid + .section-header {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--oni-gray);
+        }
+
         /* App Cards Grid */
         .app-grid {
             display: grid;
@@ -214,36 +221,44 @@
 
     <main class="container">
         <section class="section-header">
-            <h2>Applications</h2>
-            <p>New to ONI? Start with the <strong><a href="08-oni-framework-viz.html" style="color: var(--oni-blue); text-decoration: none;">Layer Explorer</a></strong>. Then explore in any order.</p>
+            <p>New to ONI? Start with the <strong><a href="08-oni-framework-viz.html" style="color: var(--oni-blue); text-decoration: none;">ONI Framework Visualization</a></strong>. Then explore in any order.</p>
+        </section>
+
+        <!-- Category: Framework & Architecture -->
+        <section class="section-header">
+            <h2>Framework & Architecture</h2>
+            <p>Explore the ONI 14-layer model and how it maps from silicon to biology.</p>
         </section>
 
         <div class="app-grid">
-            <!-- App 1: Coherence Metric Playground -->
+            <!-- App 8: ONI Framework Visualization -->
             <article class="app-card">
                 <div class="app-preview">
-                    <span class="app-number color-1">01</span>
+                    <span class="app-number" style="background: linear-gradient(135deg, #58a6ff, #f0883e);">08</span>
                     <svg viewBox="0 0 200 100">
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#00d4ff"/>
-                                <stop offset="100%" style="stop-color:#8b5cf6"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M10 50 Q30 20 50 50 T90 50 T130 50 T170 50 T190 50" stroke="url(#grad1)" stroke-width="3" fill="none"/>
-                        <circle cx="100" cy="50" r="20" fill="none" stroke="#00d4ff" stroke-width="2" opacity="0.5"/>
-                        <text x="100" y="55" text-anchor="middle" fill="#00d4ff" font-size="12" font-weight="bold">0.87</text>
+                        <rect x="30" y="5" width="60" height="90" rx="4" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
+                        <rect x="110" y="5" width="60" height="90" rx="4" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+                        <rect x="35" y="10" width="50" height="8" rx="2" fill="#58a6ff" opacity="0.3"/>
+                        <rect x="35" y="20" width="50" height="8" rx="2" fill="#58a6ff" opacity="0.4"/>
+                        <rect x="35" y="30" width="50" height="8" rx="2" fill="#58a6ff" opacity="0.5"/>
+                        <rect x="70" y="45" width="60" height="10" rx="2" fill="#f0883e" opacity="0.8"/>
+                        <rect x="115" y="60" width="50" height="8" rx="2" fill="#3fb950" opacity="0.4"/>
+                        <rect x="115" y="70" width="50" height="8" rx="2" fill="#3fb950" opacity="0.5"/>
+                        <rect x="115" y="80" width="50" height="8" rx="2" fill="#3fb950" opacity="0.6"/>
+                        <text x="60" y="98" text-anchor="middle" fill="#58a6ff" font-size="6">L1-L7</text>
+                        <text x="100" y="58" text-anchor="middle" fill="#f0883e" font-size="6">L8</text>
+                        <text x="140" y="98" text-anchor="middle" fill="#3fb950" font-size="6">L9-L14</text>
                     </svg>
                 </div>
                 <div class="app-content">
-                    <h3 class="app-title">Coherence Metric Playground</h3>
-                    <p class="app-desc">Interactive tool to explore how phase, transport, and gain variance affect signal trustworthiness. See the math come alive.</p>
+                    <h3 class="app-title">ONI Framework Visualization</h3>
+                    <p class="app-desc">Interactive 14-layer model with animated signal flow. Explore 46 threat signatures mapped to ONI layers with MITRE-style tactics.</p>
                     <div class="app-features">
-                        <span class="feature-tag">Real-time calculation</span>
-                        <span class="feature-tag">Waveform comparison</span>
-                        <span class="feature-tag">Attack presets</span>
+                        <span class="feature-tag">14 layers</span>
+                        <span class="feature-tag">46 attacks</span>
+                        <span class="feature-tag">Signal animation</span>
                     </div>
-                    <a href="01-coherence-metric-playground.html" class="app-link">
+                    <a href="08-oni-framework-viz.html" class="app-link">
                         Launch App &rarr;
                     </a>
                 </div>
@@ -273,6 +288,47 @@
                         <span class="feature-tag">Defense mechanisms</span>
                     </div>
                     <a href="08-oni-framework-viz.html" class="app-link">
+                        Launch App &rarr;
+                    </a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Category: Security & Defense -->
+        <section class="section-header">
+            <h2>Security & Defense</h2>
+            <p>Attack vectors, threat modeling, monitoring, and privacy-preserving defense.</p>
+        </section>
+
+        <div class="app-grid">
+            <!-- App 6: ONI Threat Matrix -->
+            <article class="app-card">
+                <div class="app-preview">
+                    <span class="app-number" style="background: linear-gradient(135deg, #ef4444, #f97316);">06</span>
+                    <svg viewBox="0 0 200 100">
+                        <rect x="20" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#ef4444" stroke-width="1"/>
+                        <rect x="48" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#f97316" stroke-width="1"/>
+                        <rect x="76" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+                        <rect x="104" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
+                        <rect x="132" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#ec4899" stroke-width="1"/>
+                        <rect x="160" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#ef4444" stroke-width="1"/>
+                        <rect x="22" y="15" width="21" height="10" rx="1" fill="#ef4444" opacity="0.4"/>
+                        <rect x="22" y="28" width="21" height="10" rx="1" fill="#ef4444" opacity="0.3"/>
+                        <rect x="50" y="15" width="21" height="10" rx="1" fill="#f97316" opacity="0.4"/>
+                        <rect x="78" y="15" width="21" height="10" rx="1" fill="#f59e0b" opacity="0.4"/>
+                        <rect x="134" y="15" width="21" height="10" rx="1" fill="#ec4899" opacity="0.4"/>
+                        <text x="100" y="95" text-anchor="middle" fill="#64748b" font-size="7">10 TACTICS × 46 TECHNIQUES</text>
+                    </svg>
+                </div>
+                <div class="app-content">
+                    <h3 class="app-title">ONI Threat Matrix</h3>
+                    <p class="app-desc">MITRE ATT&CK-inspired framework for neural interfaces. Explore 10 tactics and 46 techniques mapped to ONI layers with Kohno taxonomy integration.</p>
+                    <div class="app-features">
+                        <span class="feature-tag">Neural ATT&CK</span>
+                        <span class="feature-tag">Kohno taxonomy</span>
+                        <span class="feature-tag">Layer mapping</span>
+                    </div>
+                    <a href="06-oni-threat-matrix.html" class="app-link">
                         Launch App &rarr;
                     </a>
                 </div>
@@ -338,78 +394,14 @@
                 </div>
             </article>
 
-            <!-- App 5: Scale-Frequency Navigator -->
-            <article class="app-card">
-                <div class="app-preview">
-                    <span class="app-number color-5">05</span>
-                    <svg viewBox="0 0 200 100">
-                        <rect x="20" y="20" width="160" height="60" rx="4" fill="#0a0e17" stroke="#1e293b"/>
-                        <path d="M30 50 Q50 30 70 50 T110 50 T150 50 T170 50" stroke="#ec4899" stroke-width="2" fill="none" opacity="0.5"/>
-                        <path d="M30 50 Q40 40 50 50 T70 50 T90 50 T110 50 T130 50 T150 50 T170 50" stroke="#8b5cf6" stroke-width="2" fill="none"/>
-                        <text x="30" y="90" fill="#64748b" font-size="8">1ms</text>
-                        <text x="90" y="90" fill="#64748b" font-size="8">1s</text>
-                        <text x="150" y="90" fill="#64748b" font-size="8">1hr</text>
-                    </svg>
-                </div>
-                <div class="app-content">
-                    <h3 class="app-title">Scale-Frequency Navigator</h3>
-                    <p class="app-desc">Zoom from milliseconds to lifetimes. Explore how neural patterns operate across temporal scales and why it matters for security.</p>
-                    <div class="app-features">
-                        <span class="feature-tag">6 time scales</span>
-                        <span class="feature-tag">Frequency bands</span>
-                        <span class="feature-tag">Security context</span>
-                    </div>
-                    <a href="05-scale-frequency-navigator.html" class="app-link">
-                        Launch App &rarr;
-                    </a>
-                </div>
-            </article>
-
-            <!-- App 6: ONI Threat Matrix -->
-            <article class="app-card">
-                <div class="app-preview">
-                    <span class="app-number" style="background: linear-gradient(135deg, #ef4444, #f97316);">06</span>
-                    <svg viewBox="0 0 200 100">
-                        <!-- MITRE-style matrix grid -->
-                        <rect x="20" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#ef4444" stroke-width="1"/>
-                        <rect x="48" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#f97316" stroke-width="1"/>
-                        <rect x="76" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
-                        <rect x="104" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
-                        <rect x="132" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#ec4899" stroke-width="1"/>
-                        <rect x="160" y="10" width="25" height="80" rx="2" fill="#1e293b" stroke="#ef4444" stroke-width="1"/>
-                        <!-- Technique cells -->
-                        <rect x="22" y="15" width="21" height="10" rx="1" fill="#ef4444" opacity="0.4"/>
-                        <rect x="22" y="28" width="21" height="10" rx="1" fill="#ef4444" opacity="0.3"/>
-                        <rect x="50" y="15" width="21" height="10" rx="1" fill="#f97316" opacity="0.4"/>
-                        <rect x="78" y="15" width="21" height="10" rx="1" fill="#f59e0b" opacity="0.4"/>
-                        <rect x="134" y="15" width="21" height="10" rx="1" fill="#ec4899" opacity="0.4"/>
-                        <text x="100" y="95" text-anchor="middle" fill="#64748b" font-size="7">10 TACTICS × 46 TECHNIQUES</text>
-                    </svg>
-                </div>
-                <div class="app-content">
-                    <h3 class="app-title">ONI Threat Matrix</h3>
-                    <p class="app-desc">MITRE ATT&CK-inspired framework for neural interfaces. Explore 10 tactics and 46 techniques mapped to ONI layers with Kohno taxonomy integration.</p>
-                    <div class="app-features">
-                        <span class="feature-tag">Neural ATT&CK</span>
-                        <span class="feature-tag">Kohno taxonomy</span>
-                        <span class="feature-tag">Layer mapping</span>
-                    </div>
-                    <a href="06-oni-threat-matrix.html" class="app-link">
-                        Launch App &rarr;
-                    </a>
-                </div>
-            </article>
-
             <!-- App 7: Privacy-Preserving Monitoring -->
             <article class="app-card">
                 <div class="app-preview">
                     <span class="app-number" style="background: linear-gradient(135deg, #10b981, #06b6d4);">07</span>
                     <svg viewBox="0 0 200 100">
-                        <!-- Shield with lock -->
                         <path d="M100 15 L140 30 L140 55 C140 75 120 90 100 95 C80 90 60 75 60 55 L60 30 Z" fill="none" stroke="#10b981" stroke-width="2"/>
                         <rect x="85" y="45" width="30" height="25" rx="3" fill="none" stroke="#06b6d4" stroke-width="2"/>
                         <circle cx="100" cy="40" r="8" fill="none" stroke="#06b6d4" stroke-width="2"/>
-                        <!-- Data flow arrows -->
                         <path d="M30 50 L50 50" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
                         <path d="M150 50 L170 50" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
                         <text x="30" y="70" fill="#ef4444" font-size="6">RAW</text>
@@ -434,39 +426,67 @@
                     </a>
                 </div>
             </article>
+        </div>
 
-            <!-- App 8: ONI Framework Visualization -->
+        <!-- Category: Signal Science -->
+        <section class="section-header">
+            <h2>Signal Science</h2>
+            <p>The mathematical foundations: coherence scoring and scale-frequency relationships.</p>
+        </section>
+
+        <div class="app-grid">
+            <!-- App 1: Coherence Metric Playground -->
             <article class="app-card">
                 <div class="app-preview">
-                    <span class="app-number" style="background: linear-gradient(135deg, #58a6ff, #f0883e);">08</span>
+                    <span class="app-number color-1">01</span>
                     <svg viewBox="0 0 200 100">
-                        <!-- 14-layer stack representation -->
-                        <rect x="30" y="5" width="60" height="90" rx="4" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
-                        <rect x="110" y="5" width="60" height="90" rx="4" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
-                        <!-- Silicon layers -->
-                        <rect x="35" y="10" width="50" height="8" rx="2" fill="#58a6ff" opacity="0.3"/>
-                        <rect x="35" y="20" width="50" height="8" rx="2" fill="#58a6ff" opacity="0.4"/>
-                        <rect x="35" y="30" width="50" height="8" rx="2" fill="#58a6ff" opacity="0.5"/>
-                        <!-- Gateway -->
-                        <rect x="70" y="45" width="60" height="10" rx="2" fill="#f0883e" opacity="0.8"/>
-                        <!-- Biology layers -->
-                        <rect x="115" y="60" width="50" height="8" rx="2" fill="#3fb950" opacity="0.4"/>
-                        <rect x="115" y="70" width="50" height="8" rx="2" fill="#3fb950" opacity="0.5"/>
-                        <rect x="115" y="80" width="50" height="8" rx="2" fill="#3fb950" opacity="0.6"/>
-                        <text x="60" y="98" text-anchor="middle" fill="#58a6ff" font-size="6">L1-L7</text>
-                        <text x="100" y="58" text-anchor="middle" fill="#f0883e" font-size="6">L8</text>
-                        <text x="140" y="98" text-anchor="middle" fill="#3fb950" font-size="6">L9-L14</text>
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#00d4ff"/>
+                                <stop offset="100%" style="stop-color:#8b5cf6"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M10 50 Q30 20 50 50 T90 50 T130 50 T170 50 T190 50" stroke="url(#grad1)" stroke-width="3" fill="none"/>
+                        <circle cx="100" cy="50" r="20" fill="none" stroke="#00d4ff" stroke-width="2" opacity="0.5"/>
+                        <text x="100" y="55" text-anchor="middle" fill="#00d4ff" font-size="12" font-weight="bold">0.87</text>
                     </svg>
                 </div>
                 <div class="app-content">
-                    <h3 class="app-title">ONI Framework Visualization</h3>
-                    <p class="app-desc">Interactive 14-layer model with animated signal flow. Explore 46 threat signatures mapped to ONI layers with MITRE-style tactics.</p>
+                    <h3 class="app-title">Coherence Metric Playground</h3>
+                    <p class="app-desc">Interactive tool to explore how phase, transport, and gain variance affect signal trustworthiness. See the math come alive.</p>
                     <div class="app-features">
-                        <span class="feature-tag">14 layers</span>
-                        <span class="feature-tag">46 attacks</span>
-                        <span class="feature-tag">Signal animation</span>
+                        <span class="feature-tag">Real-time calculation</span>
+                        <span class="feature-tag">Waveform comparison</span>
+                        <span class="feature-tag">Attack presets</span>
                     </div>
-                    <a href="08-oni-framework-viz.html" class="app-link">
+                    <a href="01-coherence-metric-playground.html" class="app-link">
+                        Launch App &rarr;
+                    </a>
+                </div>
+            </article>
+
+            <!-- App 5: Scale-Frequency Navigator -->
+            <article class="app-card">
+                <div class="app-preview">
+                    <span class="app-number color-5">05</span>
+                    <svg viewBox="0 0 200 100">
+                        <rect x="20" y="20" width="160" height="60" rx="4" fill="#0a0e17" stroke="#1e293b"/>
+                        <path d="M30 50 Q50 30 70 50 T110 50 T150 50 T170 50" stroke="#ec4899" stroke-width="2" fill="none" opacity="0.5"/>
+                        <path d="M30 50 Q40 40 50 50 T70 50 T90 50 T110 50 T130 50 T150 50 T170 50" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+                        <text x="30" y="90" fill="#64748b" font-size="8">1ms</text>
+                        <text x="90" y="90" fill="#64748b" font-size="8">1s</text>
+                        <text x="150" y="90" fill="#64748b" font-size="8">1hr</text>
+                    </svg>
+                </div>
+                <div class="app-content">
+                    <h3 class="app-title">Scale-Frequency Navigator</h3>
+                    <p class="app-desc">Zoom from milliseconds to lifetimes. Explore how neural patterns operate across temporal scales and why it matters for security.</p>
+                    <div class="app-features">
+                        <span class="feature-tag">6 time scales</span>
+                        <span class="feature-tag">Frequency bands</span>
+                        <span class="feature-tag">Security context</span>
+                    </div>
+                    <a href="05-scale-frequency-navigator.html" class="app-link">
                         Launch App &rarr;
                     </a>
                 </div>
