@@ -204,6 +204,19 @@ ONI builds directly on pioneering research from leading institutions in BCI secu
 
 #### Research Gaps ONI Addresses
 
+**Neuroethics & Governance**
+
+| Gap in Current Research | ONI's Contribution |
+|-------------------------|-------------------|
+| Neurorights lack technical enforcement | Framework translates rights (cognitive liberty, mental privacy, mental integrity, psychological continuity) to implementable security controls across L1-L14 |
+| No BCI-specific informed consent architecture | [Informed Consent Framework](MAIN/governance/INFORMED_CONSENT_FRAMEWORK.md) — continuous consent, capacity assessment, pediatric considerations, withdrawal protocols |
+| UNESCO neurotechnology ethics unimplemented | [UNESCO Alignment](MAIN/governance/UNESCO_ALIGNMENT.md) — 15 of 17 elements from the 2025 Recommendation implemented |
+| No unified regulatory mapping for BCI security | [Regulatory Compliance](MAIN/governance/REGULATORY_COMPLIANCE.md) — FDA, HIPAA, NIST, state neurorights laws, MIND Act, Chile, EU mapped to framework |
+| Post-deployment ethical obligations undefined | [Post-Deployment Ethics](MAIN/governance/POST_DEPLOYMENT_ETHICS.md) — device lifecycle, abandonment prevention, post-trial access |
+| Pediatric BCI protections absent | [Pediatric Considerations](MAIN/governance/PEDIATRIC_CONSIDERATIONS.md) — guidelines for minors and individuals with limited capacity |
+
+**Engineering & Security**
+
 | Gap in Current Research | ONI's Contribution |
 |-------------------------|-------------------|
 | No unified security model across BCI types | 14-layer model applicable to invasive, non-invasive, and hybrid BCIs |
@@ -213,7 +226,6 @@ ONI builds directly on pioneering research from leading institutions in BCI secu
 | Coherence/integrity unmeasured | Cₛ metric provides quantifiable signal trust (design choice, [audited](MAIN/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md)) |
 | No active defense mechanism for WRITE-path attacks | Destructive interference via Fourier anti-phase cancellation ([details](docs/SIGNAL_VISUALIZATION_DESIGN.md)) |
 | Mathematical claims unaudited in BCI security | Self-audit with 7 findings, corrections, and expansion roadmap ([audit](MAIN/publications/mathematical-foundations/)) |
-| Neurorights lack technical enforcement | Framework translates rights to technical controls |
 
 🎯 **[Explore Interactive Gap Analysis →](https://qikevinl.github.io/ONI/visualizations/03-academic-alignment.html)**
 

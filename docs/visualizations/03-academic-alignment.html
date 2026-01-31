@@ -728,71 +728,9 @@
         <!-- Research Gap Analysis -->
         <section class="connection-diagram">
             <div class="diagram-title">Research Gaps ONI Addresses</div>
-            <svg class="diagram-svg" viewBox="0 0 1000 400">
+            <svg class="diagram-svg" viewBox="0 0 1000 720">
                 <!-- Background -->
-                <rect x="0" y="0" width="1000" height="400" fill="#060912"/>
-
-                <!-- Gap boxes (left side) -->
-                <g transform="translate(50, 30)">
-                    <text x="0" y="0" fill="#64748b" font-size="12" font-weight="600">EXISTING GAPS</text>
-
-                    <rect x="0" y="20" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
-                    <text x="15" y="50" fill="#fca5a5" font-size="11">No unified security model across BCI types</text>
-
-                    <rect x="0" y="80" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
-                    <text x="15" y="110" fill="#fca5a5" font-size="11">Privacy concepts remain theoretical</text>
-
-                    <rect x="0" y="140" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
-                    <text x="15" y="170" fill="#fca5a5" font-size="11">No standard threat taxonomy</text>
-
-                    <rect x="0" y="200" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
-                    <text x="15" y="230" fill="#fca5a5" font-size="11">Layer-by-layer attack surface undefined</text>
-
-                    <rect x="0" y="260" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
-                    <text x="15" y="290" fill="#fca5a5" font-size="11">Coherence/integrity unmeasured</text>
-
-                    <rect x="0" y="320" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
-                    <text x="15" y="350" fill="#fca5a5" font-size="11">Neurorights lack technical enforcement</text>
-                </g>
-
-                <!-- Arrows -->
-                <g stroke="#64748b" stroke-width="2" fill="none">
-                    <path d="M380 75 L470 75" marker-end="url(#arrow)"/>
-                    <path d="M380 135 L470 135" marker-end="url(#arrow)"/>
-                    <path d="M380 195 L470 195" marker-end="url(#arrow)"/>
-                    <path d="M380 255 L470 255" marker-end="url(#arrow)"/>
-                    <path d="M380 315 L470 315" marker-end="url(#arrow)"/>
-                    <path d="M380 375 L470 375" marker-end="url(#arrow)"/>
-                </g>
-
-                <!-- ONI Solutions (right side) -->
-                <g transform="translate(500, 30)">
-                    <text x="0" y="0" fill="#10b981" font-size="12" font-weight="600">ONI SOLUTIONS</text>
-
-                    <rect x="0" y="20" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
-                    <text x="15" y="45" fill="#6ee7b7" font-size="11">14-layer model applicable to invasive, non-invasive, hybrid BCIs</text>
-                    <text x="380" y="50" fill="#10b981" font-size="10" font-family="monospace">ONI_LAYERS</text>
-
-                    <rect x="0" y="80" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
-                    <text x="15" y="105" fill="#6ee7b7" font-size="11">BCIAnonymizer provides executable implementation</text>
-                    <text x="350" y="110" fill="#10b981" font-size="10" font-family="monospace">BCIAnonymizer.py</text>
-
-                    <rect x="0" y="140" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
-                    <text x="15" y="165" fill="#6ee7b7" font-size="11">Kohno CIA model + attack pattern library in TARA</text>
-                    <text x="320" y="170" fill="#10b981" font-size="10" font-family="monospace">NeurosecurityFirewall</text>
-
-                    <rect x="0" y="200" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
-                    <text x="15" y="225" fill="#6ee7b7" font-size="11">ONI explicitly maps attacks to layers L1-L14</text>
-                    <text x="370" y="230" fill="#10b981" font-size="10" font-family="monospace">TARA Stack</text>
-
-                    <rect x="0" y="260" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
-                    <text x="15" y="280" fill="#6ee7b7" font-size="11">Cₛ = e^(−(σ²φ + σ²τ + σ²γ)) — quantifiable signal trust</text>
-                    <text x="360" y="290" fill="#10b981" font-size="10" font-family="monospace">coherence.py</text>
-
-                    <rect x="0" y="320" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
-                    <text x="15" y="345" fill="#6ee7b7" font-size="11">Framework translates neurorights to technical controls</text>
-                    <text x="350" y="350" fill="#10b981" font-size="10" font-family="monospace">L14 Identity Layer</text>
-                </g>
+                <rect x="0" y="0" width="1000" height="720" fill="#060912"/>
 
                 <!-- Arrow marker -->
                 <defs>
@@ -800,6 +738,129 @@
                         <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
                     </marker>
                 </defs>
+
+                <!-- ===== NEUROETHICS & GOVERNANCE TRACK ===== -->
+
+                <!-- Section Label -->
+                <g transform="translate(50, 20)">
+                    <text x="0" y="0" fill="#06b6d4" font-size="13" font-weight="700" letter-spacing="0.05em">NEUROETHICS & GOVERNANCE GAPS</text>
+                </g>
+                <g transform="translate(500, 20)">
+                    <text x="0" y="0" fill="#06b6d4" font-size="13" font-weight="700" letter-spacing="0.05em">ONI GOVERNANCE SOLUTIONS</text>
+                </g>
+
+                <!-- Gap boxes (left) -->
+                <g transform="translate(50, 35)">
+                    <rect x="0" y="0" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="30" fill="#fca5a5" font-size="11">Neurorights lack technical enforcement</text>
+
+                    <rect x="0" y="60" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="90" fill="#fca5a5" font-size="11">No BCI-specific informed consent architecture</text>
+
+                    <rect x="0" y="120" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="150" fill="#fca5a5" font-size="11">UNESCO neurotech ethics unimplemented</text>
+
+                    <rect x="0" y="180" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="210" fill="#fca5a5" font-size="11">No unified regulatory mapping for BCIs</text>
+                </g>
+
+                <!-- Arrows (neuroethics) -->
+                <g stroke="#06b6d4" stroke-width="2" fill="none">
+                    <path d="M380 60 L470 60" marker-end="url(#arrow)"/>
+                    <path d="M380 120 L470 120" marker-end="url(#arrow)"/>
+                    <path d="M380 180 L470 180" marker-end="url(#arrow)"/>
+                    <path d="M380 240 L470 240" marker-end="url(#arrow)"/>
+                </g>
+
+                <!-- Solution boxes (right) -->
+                <g transform="translate(500, 35)">
+                    <rect x="0" y="0" width="450" height="50" fill="rgba(6, 182, 212, 0.1)" stroke="#06b6d4" stroke-width="1" rx="8"/>
+                    <text x="15" y="25" fill="#67e8f9" font-size="11">Translates cognitive liberty, mental privacy, integrity,</text>
+                    <text x="15" y="40" fill="#67e8f9" font-size="11">continuity to controls across L1-L14</text>
+
+                    <rect x="0" y="60" width="450" height="50" fill="rgba(6, 182, 212, 0.1)" stroke="#06b6d4" stroke-width="1" rx="8"/>
+                    <text x="15" y="85" fill="#67e8f9" font-size="11">Continuous consent, capacity assessment, pediatric protocols</text>
+                    <text x="310" y="95" fill="#06b6d4" font-size="10" font-family="monospace">INFORMED_CONSENT</text>
+
+                    <rect x="0" y="120" width="450" height="50" fill="rgba(6, 182, 212, 0.1)" stroke="#06b6d4" stroke-width="1" rx="8"/>
+                    <text x="15" y="145" fill="#67e8f9" font-size="11">15 of 17 UNESCO 2025 elements implemented</text>
+                    <text x="310" y="155" fill="#06b6d4" font-size="10" font-family="monospace">UNESCO_ALIGNMENT</text>
+
+                    <rect x="0" y="180" width="450" height="50" fill="rgba(6, 182, 212, 0.1)" stroke="#06b6d4" stroke-width="1" rx="8"/>
+                    <text x="15" y="205" fill="#67e8f9" font-size="11">FDA, HIPAA, NIST, state neurorights, MIND Act, EU mapped</text>
+                    <text x="310" y="215" fill="#06b6d4" font-size="10" font-family="monospace">REGULATORY_COMPLIANCE</text>
+                </g>
+
+                <!-- Divider line -->
+                <line x1="50" y1="300" x2="950" y2="300" stroke="#1e293b" stroke-width="1" stroke-dasharray="8,4"/>
+
+                <!-- ===== ENGINEERING & SECURITY TRACK ===== -->
+
+                <!-- Section Label -->
+                <g transform="translate(50, 325)">
+                    <text x="0" y="0" fill="#a78bfa" font-size="13" font-weight="700" letter-spacing="0.05em">ENGINEERING & SECURITY GAPS</text>
+                </g>
+                <g transform="translate(500, 325)">
+                    <text x="0" y="0" fill="#10b981" font-size="13" font-weight="700" letter-spacing="0.05em">ONI TECHNICAL SOLUTIONS</text>
+                </g>
+
+                <!-- Gap boxes (left) -->
+                <g transform="translate(50, 340)">
+                    <rect x="0" y="0" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="30" fill="#fca5a5" font-size="11">No unified security model across BCI types</text>
+
+                    <rect x="0" y="60" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="90" fill="#fca5a5" font-size="11">Privacy concepts remain theoretical</text>
+
+                    <rect x="0" y="120" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="150" fill="#fca5a5" font-size="11">No standard threat taxonomy</text>
+
+                    <rect x="0" y="180" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="210" fill="#fca5a5" font-size="11">Layer-by-layer attack surface undefined</text>
+
+                    <rect x="0" y="240" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="270" fill="#fca5a5" font-size="11">Coherence/integrity unmeasured</text>
+
+                    <rect x="0" y="300" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="1" rx="8"/>
+                    <text x="15" y="330" fill="#fca5a5" font-size="11">Mathematical claims unaudited in BCI security</text>
+                </g>
+
+                <!-- Arrows (engineering) -->
+                <g stroke="#64748b" stroke-width="2" fill="none">
+                    <path d="M380 365 L470 365" marker-end="url(#arrow)"/>
+                    <path d="M380 425 L470 425" marker-end="url(#arrow)"/>
+                    <path d="M380 485 L470 485" marker-end="url(#arrow)"/>
+                    <path d="M380 545 L470 545" marker-end="url(#arrow)"/>
+                    <path d="M380 605 L470 605" marker-end="url(#arrow)"/>
+                    <path d="M380 665 L470 665" marker-end="url(#arrow)"/>
+                </g>
+
+                <!-- Solution boxes (right) -->
+                <g transform="translate(500, 340)">
+                    <rect x="0" y="0" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
+                    <text x="15" y="30" fill="#6ee7b7" font-size="11">14-layer model applicable to invasive, non-invasive, hybrid BCIs</text>
+                    <text x="380" y="35" fill="#10b981" font-size="10" font-family="monospace">ONI_LAYERS</text>
+
+                    <rect x="0" y="60" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
+                    <text x="15" y="90" fill="#6ee7b7" font-size="11">BCIAnonymizer provides executable implementation</text>
+                    <text x="350" y="95" fill="#10b981" font-size="10" font-family="monospace">BCIAnonymizer.py</text>
+
+                    <rect x="0" y="120" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
+                    <text x="15" y="150" fill="#6ee7b7" font-size="11">Kohno CIA model + attack pattern library in TARA</text>
+                    <text x="320" y="155" fill="#10b981" font-size="10" font-family="monospace">NeurosecurityFirewall</text>
+
+                    <rect x="0" y="180" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
+                    <text x="15" y="210" fill="#6ee7b7" font-size="11">ONI explicitly maps attacks to layers L1-L14</text>
+                    <text x="370" y="215" fill="#10b981" font-size="10" font-family="monospace">TARA Stack</text>
+
+                    <rect x="0" y="240" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
+                    <text x="15" y="265" fill="#6ee7b7" font-size="11">Cₛ = e^(−(σ²φ + σ²τ + σ²γ)) — quantifiable signal trust</text>
+                    <text x="360" y="275" fill="#10b981" font-size="10" font-family="monospace">coherence.py</text>
+
+                    <rect x="0" y="300" width="450" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="1" rx="8"/>
+                    <text x="15" y="325" fill="#6ee7b7" font-size="11">Self-audit with 7 findings, corrections, expansion roadmap</text>
+                    <text x="330" y="335" fill="#10b981" font-size="10" font-family="monospace">Mathematical Audit</text>
+                </g>
             </svg>
         </section>
 
