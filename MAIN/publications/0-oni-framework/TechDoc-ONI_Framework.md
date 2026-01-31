@@ -56,7 +56,7 @@ Where:
 
 - f = characteristic frequency (Hz)
 - S = spatial scale (meters)
-- k = scale-frequency constant (approximately 10⁶ m·Hz for neural systems)
+- k = scale-frequency constant (approximately 0.01–25 m·Hz for mammalian neural systems; see [Mathematical Audit](../mathematical-foundations/TechDoc-Mathematical_Audit.md) for dispersion caveats)
 
 ### 2.2 Coherence Metric
 
@@ -258,7 +258,7 @@ This architecture follows Zero Trust principles: no signal is trusted by default
 
 ## 6. Governance and Regulatory Alignment
 
-The ONI Framework is designed to be compatible with existing regulatory frameworks, particularly FDA Class III medical device requirements for brain-computer interfaces (Food and Drug Administration, 2021).
+The ONI Framework is designed to be compatible with existing regulatory frameworks, particularly FDA Class III medical device cybersecurity requirements (Food and Drug Administration, 2023) and emerging neurotechnology legislation including the UNESCO Recommendation on the Ethics of Neurotechnology (2025) and the US MIND Act (S. 2925, 2025).
 
 Key compliance mappings:
 
@@ -318,6 +318,8 @@ The Organic Network Interface (ONI) Framework provides a structured abstraction 
 
 As brain-computer interfaces transition from research to regulated medical devices, frameworks like ONI become essential for ensuring that bio-digital integration proceeds safely and ethically—regardless of the species under study.
 
+The regulatory landscape is evolving rapidly to meet this challenge. The UNESCO Recommendation on the Ethics of Neurotechnology (2025) — the first global normative framework adopted by 194 Member States — establishes principles that ONI implements technically. Four US states have enacted neural data protection laws (Colorado, California, Montana, Connecticut), and the MIND Act (S. 2925) represents the first federal neurotechnology bill. Chile became the first country to constitutionally protect neurorights in 2021. ONI's governance documentation maps the framework to these regulatory requirements — see [REGULATORY_COMPLIANCE.md](../../governance/REGULATORY_COMPLIANCE.md), [UNESCO_ALIGNMENT.md](../../governance/UNESCO_ALIGNMENT.md), and [NEUROETHICS_ALIGNMENT.md](../../governance/NEUROETHICS_ALIGNMENT.md).
+
 > "Intelligence—biological or artificial—fails not when signals disappear, but when structure fails. This is our framework for the future."
 
 ---
@@ -328,7 +330,7 @@ Buzsáki, G. (2006). *Rhythms of the brain*. Oxford University Press.
 
 Dehaene, S., & Changeux, J. P. (2011). Experimental and theoretical approaches to conscious processing. *Neuron*, *70*(2), 200-227.
 
-Food and Drug Administration. (2021). *Guidance for brain-computer interface devices* (21 CFR Part 820). U.S. Department of Health and Human Services.
+Food and Drug Administration. (2023). *Cybersecurity in Medical Devices: Quality System Considerations and Content of Premarket Submissions*. FDA-2023-D-0100. U.S. Department of Health and Human Services.
 
 Friston, K. (2010). The free-energy principle: A unified brain theory? *Nature Reviews Neuroscience*, *11*(2), 127-138.
 
@@ -343,6 +345,16 @@ MITRE Corporation. (n.d.). *ATT&CK framework*. https://attack.mitre.org/
 Musk, E., & Neuralink. (2019). An integrated brain-machine interface platform. *Journal of Medical Internet Research*, *21*(10), e16194.
 
 Tononi, G., & Koch, C. (2015). Consciousness: Here, there and everywhere? *Philosophical Transactions of the Royal Society B: Biological Sciences*, *370*(1668), 20140167.
+
+Ienca, M., & Andorno, R. (2017). Towards new human rights in the age of neuroscience and neurotechnology. *Life Sciences, Society and Policy*, 13(1), 5.
+
+Yuste, R., Goering, S., Arcas, B. A. Y., et al. (2017). Four ethical priorities for neurotechnologies and AI. *Nature*, 551(7679), 159-163.
+
+UNESCO. (2025). *Recommendation on the Ethics of Neurotechnology*. Adopted at the 43rd session of the General Conference.
+
+Denning, T., Matsuoka, Y., & Kohno, T. (2009). Neurosecurity: Security and privacy for neural devices. *Neurosurgical Focus*, 27(1), E7.
+
+Schroder, T., et al. (2025). Cyber risks to next-gen brain-computer interfaces. *arXiv preprint*.
 
 ---
 

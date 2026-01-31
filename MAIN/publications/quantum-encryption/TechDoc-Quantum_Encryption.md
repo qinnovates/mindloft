@@ -496,6 +496,9 @@ At every layer of the architecture, the Scale-Frequency Invariant applies:
 | Your Brain Needs a Firewall | Neural firewall | [Blog-Neural_Firewall.md](../neural-firewall/Blog-Neural_Firewall.md) |
 | Neural Ransomware | Cognitive threats | [Blog-Neural_Ransomware.md](../neural-ransomware/Blog-Neural_Ransomware.md) |
 | The Hidden Equation | Scale-frequency invariant | [Blog-Scale_Frequency.md](../scale-frequency/Blog-Scale_Frequency.md) |
+| Neuroethics Alignment | Ethics-to-framework mapping | [NEUROETHICS_ALIGNMENT.md](../../governance/NEUROETHICS_ALIGNMENT.md) |
+| UNESCO Alignment | UNESCO 2025 Recommendation mapping | [UNESCO_ALIGNMENT.md](../../governance/UNESCO_ALIGNMENT.md) |
+| Regulatory Compliance | US & international regulatory mapping | [REGULATORY_COMPLIANCE.md](../../governance/REGULATORY_COMPLIANCE.md) |
 
 ---
 

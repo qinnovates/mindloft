@@ -287,7 +287,8 @@ Future work should include:
 - Red team exercises with BCI manufacturers (under responsible disclosure)
 - Economic modeling of ransomware viability
 - Patient-centered design of incident response protocols
-- International regulatory harmonization efforts
+- International regulatory harmonization efforts — the UNESCO Recommendation on the Ethics of Neurotechnology (2025) provides a foundation, and the US MIND Act (S. 2925, 2025) proposes federal cybersecurity standards for neural devices
+- Alignment with emerging state-level neural data protection laws (Colorado H.B. 24-1058, California SB 1223, Montana SB 163, Connecticut SB 1295) that mandate security for neural data
 
 ---
 
@@ -297,7 +298,7 @@ Neural ransomware represents a predictable evolution of both ransomware threats 
 
 The BCI industry has a window of opportunity to build defensive architectures before attacks occur. Hardware-enforced safety bounds, cryptographic device identity, local-first operation, and coherence-based signal validation can significantly reduce the attack surface.
 
-But technology alone is insufficient. Regulatory frameworks must evolve to require security as a condition of market access. Patients must be informed about security risks and protections. The security research community must be welcomed rather than threatened.
+But technology alone is insufficient. Regulatory frameworks must evolve to require security as a condition of market access — a direction now supported by the UNESCO Recommendation on the Ethics of Neurotechnology (2025), four US state neurorights laws, and the federal MIND Act (S. 2925). Patients must be informed about security risks and protections — see the ONI [Informed Consent Framework](../../governance/INFORMED_CONSENT_FRAMEWORK.md). The security research community must be welcomed rather than threatened. For the full regulatory and neuroethics mapping, see [REGULATORY_COMPLIANCE.md](../../governance/REGULATORY_COMPLIANCE.md) and [NEUROETHICS_ALIGNMENT.md](../../governance/NEUROETHICS_ALIGNMENT.md).
 
 The brain is becoming a networked system. We must defend it accordingly.
 
@@ -328,6 +329,12 @@ Qi, K. L. (2026). The Organic Network Interface (ONI) Framework: A unified neuro
 Qi, K. L. (2026). The coherence metric for neural signal integrity. *ONI Framework Working Papers*.
 
 Yuste, R., Goering, S., Agüera y Arcas, B., Bi, G., Carmena, J. M., Carter, A., ... & Wolpaw, J. (2017). Four ethical priorities for neurotechnologies and AI. *Nature*, *551*(7679), 159-163.
+
+UNESCO. (2025). *Recommendation on the Ethics of Neurotechnology*. Adopted at the 43rd session of the General Conference.
+
+U.S. Senate. (2025). *S. 2925: Mental-health Innovation and Neurotechnology Development (MIND) Act*.
+
+Ienca, M., & Andorno, R. (2017). Towards new human rights in the age of neuroscience and neurotechnology. *Life Sciences, Society and Policy*, 13(1), 5.
 
 ---
 

@@ -273,6 +273,8 @@ The firewall must be implemented primarily on-implant, with supporting layers in
 
 As BCIs evolve from research tools to consumer medical devices, the Neural Firewall will become as essential as traditional network firewalls are today. The ONI Framework provides the architectural foundation for this critical security infrastructure.
 
+The Neural Firewall's design directly implements the neuroethics principles of cognitive liberty and mental integrity (Ienca & Andorno, 2017). The firewall enforces the user's right to choose what enters their neural space — unauthenticated signals are rejected regardless of coherence, because consent is non-negotiable. This aligns with the UNESCO Recommendation on the Ethics of Neurotechnology (2025), which calls for technical safeguards protecting neural data and cognitive autonomy. Four US states (Colorado, California, Montana, Connecticut) have enacted neural data protection laws, and the federal MIND Act (S. 2925, 2025) proposes cybersecurity requirements for neural devices — requirements that ONI-compliant firewalls are designed to meet or exceed. See [NEUROETHICS_ALIGNMENT.md](../../governance/NEUROETHICS_ALIGNMENT.md) and [REGULATORY_COMPLIANCE.md](../../governance/REGULATORY_COMPLIANCE.md) for full mappings.
+
 > "The brain's firewall is not optional—it is the minimum viable security for any system that touches living neural tissue."
 
 ---
@@ -283,13 +285,19 @@ Black Cell Security. (2024). *Threats of thoughts: Cybersecurity vulnerabilities
 
 Chile Supreme Court. (2024). *Neurodata privacy ruling*.
 
-Food and Drug Administration. (2021). *Guidance for brain-computer interface devices* (21 CFR Part 820). U.S. Department of Health and Human Services.
+Food and Drug Administration. (2023). *Cybersecurity in Medical Devices: Quality System Considerations and Content of Premarket Submissions*. FDA-2023-D-0100.
+
+Ienca, M., & Andorno, R. (2017). Towards new human rights in the age of neuroscience and neurotechnology. *Life Sciences, Society and Policy*, 13(1), 5.
 
 National Institute of Standards and Technology. (2024). *Cybersecurity framework 2.0*. U.S. Department of Commerce.
 
 Neuralink. (2021). *1024-channel simultaneous recording neural SoC* [Technical specification].
 
 Schroder, T., et al. (2025). Cyber risks to next-gen brain-computer interfaces. *arXiv preprint*.
+
+UNESCO. (2025). *Recommendation on the Ethics of Neurotechnology*. Adopted at the 43rd session of the General Conference.
+
+U.S. Senate. (2025). *S. 2925: Mental-health Innovation and Neurotechnology Development (MIND) Act*.
 
 World Economic Forum. (2024). *The BCI market: Risks and opportunities* [Report].
 

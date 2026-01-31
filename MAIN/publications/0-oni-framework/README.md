@@ -3,7 +3,7 @@
 > **The foundational 14-layer architecture extending OSI into biological neural systems for brain-computer interface security.**
 
 **Status:** Published
-**Last Updated:** 2026-01-21
+**Last Updated:** 2026-01-29
 **ONI Layers:** L1-L14 (All)
 
 ---
@@ -35,6 +35,8 @@ By providing a common vocabulary across neuroscience, security engineering, and 
 | [Scale-Frequency](../scale-frequency/) | Cross-layer frequency invariants |
 | [Neural Firewall](../neural-firewall/) | Zero-trust security implementation at L8 |
 | [Neural Ransomware](../neural-ransomware/) | Threat modeling across all layers |
+| [Detection Theory](../detection-theory/) | Mathematical threat detection algorithms |
+| [Mathematical Foundations](../mathematical-foundations/) | Equations reference, physics chain, mathematical audit |
 
 ---
 
@@ -81,6 +83,15 @@ By providing a common vocabulary across neuroscience, security engineering, and 
 
 ---
 
+## Governance & Ethics
+
+| Document | Connection |
+|----------|------------|
+| [Neuroethics Alignment](../../governance/NEUROETHICS_ALIGNMENT.md) | Maps framework components to cognitive liberty, mental privacy, mental integrity principles |
+| [UNESCO Alignment](../../governance/UNESCO_ALIGNMENT.md) | 15 of 17 UNESCO Recommendation (2025) elements implemented |
+| [Regulatory Compliance](../../governance/REGULATORY_COMPLIANCE.md) | US & international regulatory mapping — FDA, state neurorights, MIND Act, UNESCO, Chile, EU |
+| [Informed Consent](../../governance/INFORMED_CONSENT_FRAMEWORK.md) | Consent architecture for BCIs |
+
 ## Related Topics
 
 | Topic | Connection |
@@ -104,7 +115,7 @@ By providing a common vocabulary across neuroscience, security engineering, and 
 
 - [ ] Detailed attack taxonomy per layer
 - [ ] Hardware implementation guidelines for L8
-- [ ] Compliance mapping to FDA/EU medical device regulations
+- [x] Compliance mapping to FDA/EU medical device regulations — see [REGULATORY_COMPLIANCE.md](../../governance/REGULATORY_COMPLIANCE.md)
 - [ ] Inter-BCI communication protocols (L10-L12)
 
 ---
