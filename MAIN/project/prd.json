@@ -1,8 +1,8 @@
 {
   "project": "ONI Framework",
   "version": "0.4.0",
-  "last_updated": "2026-01-26",
-  "loop_iteration": 13,
+  "last_updated": "2026-01-29",
+  "loop_iteration": 14,
 
   "exit_conditions": {
     "global": "All tasks complete, Editor Agent passes with 0 critical issues, ONI layers correct across all docs",
@@ -271,6 +271,60 @@
       "completed_at": "2026-01-26",
       "priority": "high",
       "learnings": "Used # nosec annotations for reviewed patterns: B102 exec() for hardcoded examples, B110 try/except/pass for fault-tolerant callbacks, B311 random for UI jitter, B105 false positives."
+    },
+    {
+      "id": "whitepaper-integration",
+      "description": "Create ONI_Whitepaper.md and styled HTML whitepaper page for GitHub Pages. Update hero CTA from 'Try Interactive Demo' to 'Read Whitepaper'.",
+      "status": "complete",
+      "exit_condition": "ONI_Whitepaper.md exists in publications/0-oni-framework/; docs/whitepaper/index.html serves styled HTML version; hero CTA links to whitepaper",
+      "completed_at": "2026-01-29",
+      "priority": "high",
+      "learnings": "Single-page HTML whitepaper with dark theme matching main site. 8 figures copied to both repo and docs paths. Floating TOC for navigation."
+    },
+    {
+      "id": "mathematical-audit-corrections",
+      "description": "Fix 3 mathematical inconsistencies identified by the Mathematical Audit: (1) Shannon entropy claim, (2) dispersion caveat for f×S, (3) zero entropy phrasing. Applied to both markdown and HTML whitepapers.",
+      "status": "complete",
+      "exit_condition": "No 'Shannon entropy' misattribution in Cₛ context; dispersion caveat present in f×S derivation; 'zero variance' replaces 'zero entropy'",
+      "completed_at": "2026-01-29",
+      "priority": "critical",
+      "learnings": "Variance ≠ Shannon entropy. Cₛ exponent is a Boltzmann factor / Gaussian likelihood, not Shannon entropy. Neural tissue is dispersive (Cole-Cole model), so f×S is approximate. These corrections strengthen credibility."
+    },
+    {
+      "id": "unified-layer-aware-coherence-section",
+      "description": "Add Section 8 to whitepaper: 'The Unified Layer-Aware Coherence Metric' — unifies Cₛ and f×S into single metric Cₛ(S). Includes physics chain (Maxwell→Boltzmann→Nernst-Planck→Einstein→Hodgkin-Huxley→Cole-Cole→Fourier→Cₛ(S)), per-layer spatial scales, domain boundaries, and open research.",
+      "status": "complete",
+      "exit_condition": "Whitepaper Section 8 exists in both markdown and HTML with unified metric equation, physics chain table, and open research items",
+      "completed_at": "2026-01-29",
+      "priority": "high",
+      "learnings": "The unified metric Cₛ(S) = e^(−Σ_f w(f,S)·σ²) addresses the gap between two separate checks. Physics chain establishes credibility by grounding in established science. Domain boundaries important: analog layers only (L1-L2, L8-L14), not digital (L3-L7)."
+    },
+    {
+      "id": "equations-reference-document",
+      "description": "Create TechDoc-Equations_Reference.md — master catalog of all 14 equations used in ONI, with status tracking (Established/Adapted/Proposed/Open), physics chain diagram, and 'What Is NOT Used' section.",
+      "status": "complete",
+      "exit_condition": "TechDoc-Equations_Reference.md exists in publications/mathematical-foundations/ with 14 equations, physics chain, exclusions section",
+      "completed_at": "2026-01-29",
+      "priority": "high",
+      "learnings": "Tracking equation status (Established vs Proposed) is essential for academic credibility. What you exclude (Einstein relativity, Newton directly, Schrödinger) is as important as what you include."
+    },
+    {
+      "id": "external-tools-reference",
+      "description": "Create EXTERNAL_TOOLS.md — central catalog of all external tools, libraries, datasets, and standards used by ONI (BrainFlow, Neuromore, MNE-Python, MOABB, SciPy, Three.js, etc.).",
+      "status": "complete",
+      "exit_condition": "MAIN/resources/EXTERNAL_TOOLS.md exists with 10 sections covering signal processing, benchmarking, visualization, security, ML, physics references, CI/CD, hardware targets, standards",
+      "completed_at": "2026-01-29",
+      "priority": "medium",
+      "learnings": "Centralizing tool references prevents fragmentation across documentation. Integration status tracking (Integrated/Planned/Evaluated/Reference) clarifies development roadmap."
+    },
+    {
+      "id": "github-pages-resources-update",
+      "description": "Add 4 new resource cards to GitHub Pages Documentation & Resources section: Equations Reference, External Tools, Mathematical Audit, and reorganized navigation.",
+      "status": "complete",
+      "exit_condition": "docs/index.html Documentation & Resources grid contains 10 cards (6 original + 4 new)",
+      "completed_at": "2026-01-29",
+      "priority": "medium",
+      "learnings": "Resource cards with short icon abbreviations (Eq, Lib, Au) work well for compact display in the grid layout."
     }
   ],
 
@@ -542,10 +596,10 @@
   ],
 
   "metrics": {
-    "total_tasks": 28,
-    "completed": 22,
+    "total_tasks": 34,
+    "completed": 28,
     "in_progress": 0,
     "pending": 6,
-    "completion_rate": "79%"
+    "completion_rate": "82%"
   }
 }

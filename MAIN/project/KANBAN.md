@@ -32,10 +32,10 @@
 |                  |                  |                  |                  | [P1] ONI_LAYERS  |
 |                  |                  |                  |                  | Reference        |
 |                  |                  |                  |                  |                  |
-|                  |                  |                  |                  | ...+15 more      |
+|                  |                  |                  |                  | ...+21 more      |
 |                  |                  |                  |                  |                  |
 +------------------+------------------+------------------+------------------+------------------+
-     4 items            3 items           0 items           0 items           21 items
+     4 items            3 items           0 items           0 items           27 items
 ```
 
 ---
@@ -176,8 +176,14 @@
 | pm-hub-readme | Project README dashboard | 2026-01-26 | P2 |
 | github-pages-sri-fix | SRI hash fix for GitHub Pages | 2026-01-26 | P0 |
 | pypi-security-scan | Bandit security scan + fixes | 2026-01-26 | P1 |
+| whitepaper-integration | Whitepaper (markdown + HTML + CTA) | 2026-01-29 | P1 |
+| mathematical-audit-corrections | Fix Shannon entropy, dispersion caveat, zero entropy | 2026-01-29 | P0 |
+| unified-layer-aware-coherence-section | Whitepaper §8: Unified Cₛ(S) metric + physics chain | 2026-01-29 | P1 |
+| equations-reference-document | TechDoc-Equations_Reference.md (14 equations) | 2026-01-29 | P1 |
+| external-tools-reference | EXTERNAL_TOOLS.md — tools & libraries catalog | 2026-01-29 | P2 |
+| github-pages-resources-update | 4 new resource cards on GitHub Pages | 2026-01-29 | P2 |
 
-**Total Completed:** 21 tasks
+**Total Completed:** 27 tasks
 
 ---
 
@@ -198,12 +204,13 @@
 ```
 Backlog: brainflow-integration
 To Do: changelog-creation
-Done: editor-agent, pm-agent, images-organization, pm-hub-readme, github-pages-sri-fix, pypi-security-scan
+Done: editor-agent, pm-agent, images-organization, pm-hub-readme, github-pages-sri-fix,
+      pypi-security-scan, github-pages-resources-update, external-tools-reference
 ```
 
 ### Code & Implementation
 ```
-Backlog: moabb-benchmarks, moabb-attacks
+Backlog: layer-aware-coherence-implementation, moabb-benchmarks, moabb-attacks
 To Do: python-code-sync, moabb-attack-scenarios
 Done: siem-to-nsam, consent-validation-module, neurosecurity-implementation, moabb-adapter
 ```
@@ -212,7 +219,9 @@ Done: siem-to-nsam, consent-validation-module, neurosecurity-implementation, moa
 ```
 Done: layer-validation, oni-layer-correction, oni-layers-reference, nsam-external-threats,
       readme-privacy-statement, related-work, consent-framework, post-deployment,
-      pediatric-considerations, neuroethics-expansion
+      pediatric-considerations, neuroethics-expansion, whitepaper-integration,
+      mathematical-audit-corrections, unified-layer-aware-coherence-section,
+      equations-reference-document
 ```
 
 ### Visualization
@@ -237,10 +246,10 @@ Done: hourglass-diagram-prompt
 
 | Metric | Value |
 |--------|-------|
-| Total Tasks | 27 |
-| Completed | 22 (81%) |
+| Total Tasks | 34 |
+| Completed | 28 (82%) |
 | In Progress | 0 |
-| Pending | 5 |
+| Pending | 6 |
 | Blocked | 0 |
 
 ---
