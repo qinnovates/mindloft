@@ -1254,7 +1254,7 @@
         <div class="hero-content">
             <div class="hero-label" id="hero-label">NEUROSECURITY STANDARDS FOR BRAIN-COMPUTER INTERFACES</div>
             <h1 class="hero-title" id="hero-title"></h1>
-            <p class="hero-subtitle" id="hero-subtitle">No standards. No ethics. No security. Until now.</p>
+            <p class="hero-subtitle" id="hero-subtitle">No standards. No ethics. No security. <strong>Until now.</strong></p>
             <a href="whitepaper/index.html" class="hero-cta" id="hero-cta">
                 Read Whitepaper
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -2320,6 +2320,19 @@
             window.addEventListener('resize', onResize);
 
             // =============================================
+            // INTRO: Stack → Sphere (on page load)
+            // =============================================
+            var introProgress = { value: 1.0 }; // Start fully stacked
+
+            // Animate from stack to sphere over 2.5s after a brief pause
+            gsap.to(introProgress, {
+                value: 0,
+                duration: 2.5,
+                delay: 0.8,
+                ease: 'power3.inOut'
+            });
+
+            // =============================================
             // SPHERE → STACK MORPH (GSAP ScrollTrigger)
             // =============================================
             var morphProgress = { value: 0 };
@@ -2418,29 +2431,32 @@
                 coreU.uTime.value = t;
                 nodeU.uTime.value = t;
 
+                // Effective morph: max of intro (collapsing to sphere) and scroll (expanding to stack)
+                var effectiveMorph = Math.max(introProgress.value, morphProgress.value);
+
                 // Auto-rotation (slows during morph)
-                var rotSpeed = 0.002 * (1 - morphProgress.value * 0.6);
+                var rotSpeed = 0.002 * (1 - effectiveMorph * 0.6);
                 autoRotateGroup.rotation.y += rotSpeed;
-                autoRotateGroup.rotation.x = Math.sin(t*0.15)*0.08 * (1 - morphProgress.value * 0.8);
+                autoRotateGroup.rotation.x = Math.sin(t*0.15)*0.08 * (1 - effectiveMorph * 0.8);
 
                 // Mouse parallax
                 if (!isMobile) {
-                    var parallaxStr = 1 - morphProgress.value * 0.7;
+                    var parallaxStr = 1 - effectiveMorph * 0.7;
                     parallaxGroup.rotation.x += (mouseY*0.2*parallaxStr - parallaxGroup.rotation.x)*0.04;
                     parallaxGroup.rotation.y += (mouseX*0.3*parallaxStr - parallaxGroup.rotation.y)*0.04;
                 }
 
                 // Brain pulse
                 var pulse = 1 + Math.sin(t*1.2)*0.025;
-                var coreScale = 1 - morphProgress.value * 0.7; // Shrink during morph
+                var coreScale = 1 - effectiveMorph * 0.7; // Shrink during morph
                 coreMesh.scale.set(pulse*coreScale, pulse*0.85*coreScale, pulse*coreScale);
                 nodeCloud.scale.set(pulse*coreScale, pulse*0.85*coreScale, pulse*coreScale);
                 if (synapseLines) synapseLines.scale.set(pulse*coreScale, pulse*0.85*coreScale, pulse*coreScale);
-                coreMesh.material.opacity = 1 - morphProgress.value;
-                glowMat.opacity = (0.12 + Math.sin(t*1.8)*0.05) * (1 - morphProgress.value);
+                coreMesh.material.opacity = 1 - effectiveMorph;
+                glowMat.opacity = (0.12 + Math.sin(t*1.8)*0.05) * (1 - effectiveMorph);
 
                 // MORPH: Spheres → Flat Discs → Vertical Stack + Per-Layer Grow/Snap
-                var mp = morphProgress.value;
+                var mp = effectiveMorph;
 
                 // Determine per-shell scale targets based on active layer
                 shellMeshes.forEach(function(mesh, i) {
