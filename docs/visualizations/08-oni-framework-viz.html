@@ -513,6 +513,135 @@
             display: none;
         }
 
+        /* Landing Screen */
+        #landing-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 200;
+            background: #0a0f1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        #landing-screen.hidden {
+            display: none;
+        }
+        .landing-label {
+            font-size: 10px;
+            letter-spacing: 0.25em;
+            color: #58a6ff;
+            margin-bottom: 6px;
+        }
+        .landing-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 4px;
+        }
+        .landing-sub {
+            font-size: 14px;
+            color: #8b949e;
+            margin-bottom: 36px;
+        }
+        .landing-prompt {
+            font-size: 13px;
+            color: #c9d1d9;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .landing-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 640px;
+            width: 100%;
+        }
+        .landing-card {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid #21262d;
+            border-radius: 16px;
+            padding: 32px 28px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+        .landing-card:hover {
+            border-color: #58a6ff;
+            background: rgba(22, 27, 34, 1);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+        .landing-card:first-child:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 12px 40px rgba(88, 166, 255, 0.15);
+        }
+        .landing-card:last-child:hover {
+            border-color: #3fb950;
+            box-shadow: 0 12px 40px rgba(63, 185, 80, 0.15);
+        }
+        .landing-card-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .landing-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+        .landing-card p {
+            font-size: 13px;
+            color: #8b949e;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .landing-card .landing-hint {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 11px;
+            color: #58a6ff;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+        .landing-card:last-child .landing-hint {
+            color: #3fb950;
+        }
+        .landing-footer {
+            margin-top: 32px;
+            font-size: 11px;
+            color: #484f58;
+        }
+
+        /* Hide everything when landing is visible */
+        body.view-landing #header,
+        body.view-landing #oni-3d-container,
+        body.view-landing #layer-sidebar,
+        body.view-landing #detail-panel,
+        body.view-landing #oni3d-signal-log,
+        body.view-landing #signal-legend,
+        body.view-landing #oni3d-explainer,
+        body.view-landing #footer,
+        body.view-landing #explorer-container,
+        body.view-landing #explorer-wave-canvas {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .landing-options {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .landing-title { font-size: 22px; }
+            .landing-card { padding: 24px 20px; }
+            .landing-card-icon { font-size: 36px; }
+        }
+
         /* Footer */
         #footer {
             position: fixed;
@@ -612,7 +741,30 @@
         }
     </style>
 </head>
-<body>
+<body class="view-landing">
+
+    <!-- Landing Screen -->
+    <div id="landing-screen">
+        <div class="landing-label">NEURAL SECURITY STANDARD</div>
+        <div class="landing-title">ONI Framework</div>
+        <div class="landing-sub">14-Layer Security Model for Brain-Computer Interfaces</div>
+        <div class="landing-prompt">Choose how to explore the framework</div>
+        <div class="landing-options">
+            <div class="landing-card" onclick="launchView('3d')">
+                <span class="landing-card-icon">🌐</span>
+                <h3>3D Model</h3>
+                <p>Interactive 3D visualization. Click layers to inspect them, watch signals propagate, and see how threats are blocked at the Neural Gateway.</p>
+                <span class="landing-hint">Click &amp; rotate to explore →</span>
+            </div>
+            <div class="landing-card" onclick="launchView('explorer')">
+                <span class="landing-card-icon">📋</span>
+                <h3>Layer Explorer</h3>
+                <p>Scrollable reference with every layer's details, threat vectors, and defenses — all 14 layers at a glance with animated signal flow.</p>
+                <span class="landing-hint">Read &amp; scroll through layers →</span>
+            </div>
+        </div>
+        <div class="landing-footer">You can switch views anytime using the toggle in the header</div>
+    </div>
 
     <!-- Header -->
     <header id="header">
@@ -1662,20 +1814,31 @@
         animate();
     }
 
-    // --- Initialize ---
+    // --- Initialize (deferred until user picks a view) ---
     buildLayerSidebar();
-    initONI3D();
-
-    // Show zone labels
-    setTimeout(function() {
-        document.querySelectorAll('.oni3d-label').forEach(function(el) {
-            el.classList.add('visible');
-        });
-    }, 1200);
-
-    // --- View Switching ---
-    document.body.classList.add('view-3d');
+    var oni3dInitialized = false;
     var explorerInitialized = false;
+
+    function launchView(view) {
+        // Hide landing screen
+        document.getElementById('landing-screen').classList.add('hidden');
+        document.body.classList.remove('view-landing');
+
+        // Switch to chosen view
+        switchView(view);
+    }
+
+    function init3DIfNeeded() {
+        if (!oni3dInitialized) {
+            oni3dInitialized = true;
+            initONI3D();
+            setTimeout(function() {
+                document.querySelectorAll('.oni3d-label').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }, 1200);
+        }
+    }
 
     function switchView(view) {
         // Update toggle buttons
@@ -1697,6 +1860,7 @@
         } else {
             document.body.classList.remove('view-explorer');
             document.body.classList.add('view-3d');
+            init3DIfNeeded();
         }
     }
 
