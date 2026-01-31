@@ -47,8 +47,14 @@
       { "id": "L11", "name": "Cognitive Transport", "zone": "Delivery", "color": "#15803d" },
       { "id": "L12", "name": "Cognitive Session", "zone": "Context", "color": "#16a34a" },
       { "id": "L13", "name": "Semantic Layer", "zone": "Intent", "color": "#22c55e" },
-      { "id": "L14", "name": "Identity Layer", "zone": "Self", "color": "#4ade80" }
+      { "id": "L14", "name": "Identity Layer", "zone": "Self", "color": "#9E61EB" }
     ]
+  },
+  "brand_color": {
+    "_comment": "The teal where L9 and L10 overlap — the color of two biological layers in harmony. The ONI signature.",
+    "hex": "#22C68D",
+    "rgb": [34, 198, 141],
+    "name": "ONI Teal"
   },
   "stats": {
     "_comment": "Manual stats only. Auto-updating stats (commits, tools) are fetched via GitHub API in docs/index.html",
