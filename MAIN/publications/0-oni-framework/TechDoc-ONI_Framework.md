@@ -266,9 +266,7 @@ Key compliance mappings:
 - **IEC 62304 (Medical Device Software):** Software lifecycle requirements for L1-L7
 - **ISO 14971 (Risk Management):** Attack surface analysis per layer
 - **HIPAA:** Data protection requirements for L11-L14 cognitive data
-- **IACUC Protocols:** Animal research compliance for pre-clinical ONI studies
-
-The category-theoretic formalization enables automated compliance verification through functorial mappings between system states and regulatory requirements. Importantly, the ONI Framework's species-agnostic design allows consistent governance from animal research through human clinical trials.
+The category-theoretic formalization enables automated compliance verification through functorial mappings between system states and regulatory requirements.
 
 ---
 
