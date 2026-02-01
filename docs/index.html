@@ -386,8 +386,8 @@
             z-index: 1;
             background: linear-gradient(180deg,
                 rgba(5, 10, 20, 0) 0%,
-                rgba(5, 10, 20, 0.7) 15%,
-                rgba(5, 10, 20, 0.7) 85%,
+                rgba(5, 10, 20, 0.8) 15%,
+                rgba(5, 10, 20, 0.8) 85%,
                 rgba(5, 10, 20, 0) 100%);
         }
 
@@ -548,6 +548,16 @@
             filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.5));
         }
         .easter-egg-heart svg { width: 100%; height: 100%; }
+        @keyframes btnPulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(212,175,55,0.2), 0 0 20px rgba(212,175,55,0.1);
+                border-color: rgba(212,175,55,0.4);
+            }
+            50% {
+                box-shadow: 0 0 14px rgba(212,175,55,0.5), 0 0 35px rgba(212,175,55,0.25);
+                border-color: rgba(212,175,55,0.7);
+            }
+        }
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
             15% { transform: scale(1.15); }
@@ -1498,11 +1508,15 @@
          SCENE 1: HERO
          ============================================= -->
     <section id="scene-hero" class="scene">
-        <div id="hero-osi-tagline" style="position: fixed; z-index: 2; text-align: center; top: 25%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 520px; transition: opacity 0.3s;">
-            <p style="font-family: 'Inter', sans-serif; font-size: 1.1rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin: 0;">The OSI of Mind</p>
+        <div id="hero-osi-tagline-top" style="position: fixed; z-index: 2; text-align: center; top: 88%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 750px; opacity: 0;">
+            <p id="hero-neuro-line" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.85); margin: 0; line-height: 1.8; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out;">Neurosecurity Standards for<br>Brain-Computer Interfaces</p>
+            <p id="hero-osi-line" style="font-family: 'Inter', sans-serif; font-size: 1.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin: 0.6rem 0 0 0; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out;">The OSI of Mind</p>
+            <a id="hero-author-line" href="whitepaper/index.html" style="display: inline-block; font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,55,0.9); text-decoration: none; border: 1px solid rgba(212,175,55,0.4); padding: 0.5rem 1.5rem; margin: 1rem 0 0 0; border-radius: 2rem; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out, border-color 0.3s, color 0.3s; animation: btnPulseGlow 2.5s ease-in-out infinite;" onmouseover="this.style.borderColor='rgba(212,175,55,0.8)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.borderColor='rgba(212,175,55,0.4)';this.style.color='rgba(212,175,55,0.9)';">Read Whitepaper <span style="margin-left:0.3em;">&rarr;</span></a>
+        </div>
+        <div id="hero-quote-overlay" style="position: fixed; z-index: 2; text-align: center; top: 70%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 800px; opacity: 0; pointer-events: none;">
+            <p style="font-family: 'SF Pro Display', 'Inter', -apple-system, sans-serif; font-size: clamp(1.3rem, 3vw, 2.2rem); font-weight: 300; font-style: italic; letter-spacing: 0.04em; color: rgba(255,255,255,0.85); margin: 0; line-height: 1.6;">The mind is the greatest frontier of our time.</p>
         </div>
         <div class="hero-scroll-indicator" id="scroll-indicator">
-            <p style="font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.85); margin: 0 0 0.8rem 0;">Neurosecurity Standards for Brain-Computer Interfaces</p>
             <span class="hero-scroll-text">Scroll to explore the framework</span>
             <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
@@ -1546,30 +1560,21 @@
          SCENE 2: THE PROBLEM
          ============================================= -->
     <section id="scene-problem" class="scene">
-        <div class="hero-content" style="margin-bottom: 3rem;">
-            <div class="hero-label" id="hero-label">NEUROSECURITY STANDARDS FOR BRAIN-COMPUTER INTERFACES</div>
-            <h1 class="hero-title" id="hero-title"></h1>
-            <p class="hero-subtitle" id="hero-subtitle">No standards. No ethics. No security. <strong>Until now.</strong></p>
-            <a href="whitepaper/index.html" class="hero-cta" id="hero-cta">
-                Read Whitepaper
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-        </div>
         <div class="scene-inner">
             <div class="problem-grid">
                 <div class="problem-text">
                     <div class="section-label fade-up">The Problem</div>
                     <h2 class="fade-up">BCIs are here.<br>Security standards aren't.</h2>
-                    <p class="fade-up">The gap between BCI capability and security infrastructure is widening. Foundational researchers &mdash; Kohno, Bonaci, Yuste, Ienca &mdash; identified threats over a decade ago. But no unified, implementable framework exists. ONI fills that gap.</p>
+                    <p class="fade-up">244,000+ patients have wirelessly accessible deep brain implants &mdash; and researchers have shown their communications are neither encrypted nor authenticated. Foundational researchers &mdash; Kohno, Bonaci, Yuste, Ienca &mdash; identified threats over a decade ago. But no unified, implementable framework exists. ONI fills that gap.</p>
                 </div>
                 <div class="problem-stats">
                     <div class="stat-item">
-                        <div class="stat-number blue" data-target="6.2" data-prefix="$" data-suffix="B">$0</div>
+                        <div class="stat-number blue" data-target="6.5" data-prefix="$" data-suffix="B">$0</div>
                         <div class="stat-desc">BCI market by 2030</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number amber" data-target="400" data-suffix="K+">0</div>
-                        <div class="stat-desc">Patients with neural implants</div>
+                        <div class="stat-number amber" data-target="244" data-suffix="K+">0</div>
+                        <div class="stat-desc">Patients with deep brain implants</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number red" data-target="0" data-static="true">0</div>
@@ -2010,31 +2015,7 @@
         // =============================================
         // HERO TEXT ANIMATION
         // =============================================
-        var heroTitle = document.getElementById('hero-title');
-        var titleText = 'The mind is the greatest frontier of our time.';
-        var words = titleText.split(' ');
-        heroTitle.innerHTML = words.map(function(w) {
-            return '<span class="word">' + w + '</span>';
-        }).join(' ');
-
-        // Hero elements appear instantly
-        gsap.set('#hero-label', { opacity: 1 });
-        gsap.set('.hero-title .word', { opacity: 1, y: 0 });
-        gsap.set('#hero-subtitle', { opacity: 1 });
-        gsap.set('#hero-cta', { opacity: 1 });
         gsap.set('#scroll-indicator', { opacity: 1 });
-
-        // Fade in hero content as user scrolls to problem section
-        gsap.from('.hero-content', {
-            scrollTrigger: {
-                trigger: '#scene-problem',
-                start: 'top 80%',
-                end: 'top 30%',
-                scrub: 1
-            },
-            opacity: 0,
-            y: 40
-        });
 
         gsap.to('#scroll-indicator', {
             scrollTrigger: {
@@ -2174,6 +2155,7 @@
             var parallaxGroup = new THREE.Group();
             scene.add(autoRotateGroup);
             autoRotateGroup.add(parallaxGroup);
+            autoRotateGroup.position.y = 0.5;
 
             // Lighting
             scene.add(new THREE.AmbientLight(0x1a2744, 0.3));
@@ -2542,7 +2524,17 @@
             var springArtOverlay = document.getElementById('spring-art-overlay');
             var springEggEl = document.getElementById('spring-egg');
             var seizureWarningEl = document.getElementById('seizure-warning');
-            var heroOsiTagline = document.getElementById('hero-osi-tagline');
+            var heroOsiTaglineTop = document.getElementById('hero-osi-tagline-top');
+            var heroNeuroLine = document.getElementById('hero-neuro-line');
+            var heroOsiLine = document.getElementById('hero-osi-line');
+            // Text intro: driven by animation loop, not setTimeout
+            var heroAuthorLine = document.getElementById('hero-author-line');
+            var heroQuoteOverlay = document.getElementById('hero-quote-overlay');
+            window._introSeqStarted = false;
+            window._introSeqTime = 0;
+            // Position text at L8 initially (will be updated in animate)
+            heroOsiTaglineTop.style.top = '50%';
+            heroOsiTaglineTop.style.opacity = '0';
             var seizureWarningDismissed = false;
             springEggEl.addEventListener('click', function() {
                 if (springEggActive) {
@@ -2867,6 +2859,19 @@
                 ease: 'none'
             });
 
+            // Problem collapse: biology layers merge downward L14→L13→...→L8
+            var problemCollapse = { value: 0 };
+            gsap.to(problemCollapse, {
+                value: 1,
+                scrollTrigger: {
+                    trigger: '#scene-problem',
+                    start: 'top 80%',
+                    end: 'top 20%',
+                    scrub: 1
+                },
+                ease: 'none'
+            });
+
             // centerTilt disabled (end scene removed)
             var centerTilt = { value: 0 };
 
@@ -3165,7 +3170,6 @@
                         lerpX = 0.12;
                         lerpY = 0.10;
                     }
-                    // During spring: disable group-level parallax (per-layer handles it)
                     if (springCompress < 0.05) {
                         // Auto-breathe tilt + mouse-driven tilt
                         var autoTiltX = Math.sin(t * 0.25) * 0.04 + pyInput * tiltMultX * parallaxStr;
@@ -3632,23 +3636,22 @@
                             scaleTarget *= tunnelScale;
                         }
 
-                        // Cascade collapse: L1 moves up to L2, then both move to L3, etc.
-                        // Bottom-up: L1 starts first, accumulates layers as they reach L8
-                        if (cascadeCompress > 0.001 && gwIdx >= 0 && i < gwIdx) {
-                            // L8 target Y
-                            var gwTargetY = (gwIdx - (totalLayers - 1) / 2) * stackSpacing;
-                            // Step from bottom: L1=0 (moves first), L7=6 (moves last)
-                            var stepFromBottom = i;
-                            var totalSteps = gwIdx; // 7
-                            var sliceSize = 1.0 / totalSteps;
-                            // L1 starts at 0, L2 starts after L1's slice, etc.
-                            var snapStart = stepFromBottom * sliceSize;
-                            var snapProgress = Math.max(0, Math.min(1, (cascadeCompress - snapStart) / (1.0 - snapStart)));
-                            // Cubic ease for snappy collapse
-                            snapProgress = snapProgress * snapProgress * (3 - 2 * snapProgress);
-                            // Move toward L8's Y
-                            stackY = stackY + (gwTargetY - stackY) * snapProgress;
+                        // Silicon layers emerge from L14's position and cascade down to their stack positions
+                        // L7 appears first (nearest to L14), L1 last (farthest)
+                        if (gwIdx >= 0 && i < gwIdx) {
+                            var stepsBelow = gwIdx - 1 - i; // 0=L7, 6=L1
+                            var scrollStart = 0.05 + stepsBelow * 0.10;
+                            var scrollEnd = scrollStart + 0.25; // longer travel duration
+                            var descendProgress = Math.max(0, Math.min(1, (rawMorph - scrollStart) / (scrollEnd - scrollStart)));
+                            // Cubic ease-out for smooth landing
+                            descendProgress = descendProgress * descendProgress * (3 - 2 * descendProgress);
+                            // L14's stack Y position (where bio layers collapsed to)
+                            var l14StackY = ((totalLayers - 1) - (totalLayers - 1) / 2) * stackSpacing + 0.15;
+                            // Lerp from L14's Y down to this layer's own stackY
+                            stackY = l14StackY + (stackY - l14StackY) * descendProgress;
                         }
+
+                        // Cascade collapse removed — L1-L7 now expand and stay visible
 
                         // Scroll compression: as user scrolls down toward Foundations,
                         // L14→L1 compress downward — same quadratic ratio as spring coil
@@ -3663,6 +3666,26 @@
                             var l1Y = (0 - (totalLayers - 1) / 2) * stackSpacing - 0.15;
                             var scrollPull = (stackY - l1Y) * scrollRatio * scrollCompressAmt;
                             stackY -= scrollPull;
+                        }
+
+                        // Problem collapse: L8→L9→L10→...all merge up to L14
+                        // L8 starts moving first, L9 follows, etc. All target L14's position.
+                        if (problemCollapse.value > 0.001 && gwIdx >= 0 && i >= gwIdx && i < totalLayers - 1) {
+                            var numMoving = totalLayers - 1 - gwIdx; // 6 layers move (L8-L13)
+                            var stepFromGw = i - gwIdx; // L8=0, L9=1, ..., L13=5
+                            // Stagger: L8 starts at 0, L9 at 0.1, L10 at 0.2, etc.
+                            var collapseStart = stepFromGw * 0.1;
+                            // Duration for each layer to complete its move
+                            var collapseDur = 0.4;
+                            var snapProgress = Math.max(0, Math.min(1,
+                                (problemCollapse.value - collapseStart) / collapseDur));
+                            // Cubic ease
+                            snapProgress = snapProgress * snapProgress * (3 - 2 * snapProgress);
+                            // L14's fixed stack Y
+                            var l14StackY = ((totalLayers - 1) - (totalLayers - 1) / 2) * stackSpacing + 0.15;
+                            stackY = stackY + (l14StackY - stackY) * snapProgress;
+                            // Slight opacity fade as layers merge
+                            shellUniforms[i].uOpacity.value *= (1.0 - snapProgress * 0.3);
                         }
 
                         // Intro expand: override Y during intro animation
@@ -3951,6 +3974,8 @@
                             var layerNorm = i / (totalLayers - 1);
                             var spinSpeed = 0.03 + layerNorm * 0.05; // gentle orbital drift
                             mesh.rotation.y = t * spinSpeed * spinDir;
+                            // Snap X rotation back to 0 when returning to hero
+                            mesh.rotation.x *= 0.9;
                         }
 
                         // L8 spin: X-axis rotation only after sphere fully forms
@@ -4057,7 +4082,8 @@
                             var layerRatio = i / (totalLayers - 1); // 0=L1(bottom), 1=L14(top)
                             var expCompress = Math.pow(layerRatio, 2.5); // exponential: bottom ~0, top ~1
                             var accPhase = i * 0.35;
-                            var accBreath = Math.sin(t * 0.4 - accPhase) * (0.012 + expCompress * 0.16);
+                            var accBreathAmp = (0.012 + expCompress * 0.16);
+                            var accBreath = Math.sin(t * 0.4 - accPhase) * accBreathAmp;
                             mesh.position.y += accBreath;
 
                             // Track total stack compression distance this frame
@@ -4370,20 +4396,258 @@
                     niOverlay.style.opacity = niOpacity;
                 }
 
-                // "The OSI of Mind" tagline: fade out as spring compresses
-                heroOsiTagline.style.opacity = Math.max(0, 1 - springCompress * 4);
+                // === INTRO SEQUENCE: cascade → text emerges from L8 ===
+                if (!window._introSeqStarted && introProgress.value > 0.95) {
+                    window._introSeqStarted = true;
+                    window._introSeqTime = t;
+                }
+                if (window._introSeqStarted && !window._introSeqDone) {
+                    var seqT = t - window._introSeqTime;
+                    var l14Idx = activeLayers.length - 1;
+                    var numBioLayers = l14Idx - gwIdxGlobal; // L8 to L14
+
+                    // Phase 0: L14 glows gold — gentle pulse
+                    var l14BaseScale = activeLayers[l14Idx].r;
+                    if (seqT < 0.8) {
+                        var goldPulse = (Math.sin(seqT * 5.0) + 1.0) * 0.5 * (1.0 - seqT / 0.8);
+                        var l14c = shellUniforms[l14Idx].uColor.value;
+                        l14c.set(
+                            l14c.x + (0.95 - l14c.x) * goldPulse * 0.7,
+                            l14c.y + (0.80 - l14c.y) * goldPulse * 0.7,
+                            l14c.z + (0.15 - l14c.z) * goldPulse * 0.7
+                        );
+                        shellUniforms[l14Idx].uGlowIntensity.value = 2.0 + goldPulse * 6.0;
+                        shellUniforms[l14Idx].uOpacity.value = 0.5 + goldPulse * 0.4;
+                        if (shellUniforms[l14Idx].uBubbleMix) {
+                            shellUniforms[l14Idx].uBubbleMix.value = 0.80 * (1.0 - goldPulse * 0.6);
+                        }
+                        // Gentle breath on XZ (multiply, don't override)
+                        var expandMult = 1.0 + goldPulse * 0.1;
+                        shellMeshes[l14Idx].scale.x *= expandMult;
+                        shellMeshes[l14Idx].scale.z *= expandMult;
+                    } else if (seqT < 1.1) {
+                        if (shellUniforms[l14Idx].uBubbleMix) {
+                            shellUniforms[l14Idx].uBubbleMix.value += (0.80 - shellUniforms[l14Idx].uBubbleMix.value) * 0.1;
+                        }
+                    }
+
+                    // Phase 1: Color cycle cascade L14 → L8
+                    var magentaStart = 0.8; // start after gold pulse
+                    // Color cycle palette: each layer rapidly cycles through all colors during its flash
+                    var cycleColors = [
+                        [0.85, 0.15, 0.75],  // magenta
+                        [0.85, 0.70, 0.20],  // gold
+                        [0.15, 0.80, 0.75],  // teal
+                        [0.25, 0.40, 0.90],  // blue
+                        [0.65, 0.30, 0.85],  // purple
+                        [0.55, 0.85, 0.55]   // pastel green
+                    ];
+                    for (var mi = l14Idx; mi >= gwIdxGlobal; mi--) {
+                        var mDelay = magentaStart + (l14Idx - mi) * 0.15;
+                        var mAge = seqT - mDelay;
+                        if (mAge > 0 && mAge < 0.8) {
+                            var mInt = Math.sin(mAge / 0.8 * Math.PI);
+                            // Rapid cycle through all 5 colors during flash
+                            var cyclePos = (mAge / 0.8) * cycleColors.length; // cycles through all colors
+                            var cLow = Math.floor(cyclePos) % cycleColors.length;
+                            var cHigh = (cLow + 1) % cycleColors.length;
+                            var cFrac = cyclePos - Math.floor(cyclePos);
+                            var cr = cycleColors[cLow][0] + (cycleColors[cHigh][0] - cycleColors[cLow][0]) * cFrac;
+                            var cg = cycleColors[cLow][1] + (cycleColors[cHigh][1] - cycleColors[cLow][1]) * cFrac;
+                            var cb = cycleColors[cLow][2] + (cycleColors[cHigh][2] - cycleColors[cLow][2]) * cFrac;
+                            var mc = shellUniforms[mi].uColor.value;
+                            mc.set(
+                                mc.x + (cr - mc.x) * mInt,
+                                mc.y + (cg - mc.y) * mInt,
+                                mc.z + (cb - mc.z) * mInt
+                            );
+                            shellUniforms[mi].uGlowIntensity.value += mInt * 5.0;
+                            shellUniforms[mi].uOpacity.value = Math.min(1.0, shellUniforms[mi].uOpacity.value + mInt * 0.5);
+                            // Breathing: multiply current XZ scale (don't override)
+                            var breathMult = 1.0 + mInt * 0.06;
+                            shellMeshes[mi].scale.x *= breathMult;
+                            shellMeshes[mi].scale.z *= breathMult;
+                            // Y stays unchanged — keep disc flat on same plane
+                            // Magenta point light on L14 during its flash
+                            if (mi === l14Idx && !window._introMagLight) {
+                                window._introMagLight = new THREE.PointLight(0xdd11dd, 0, 8);
+                                scene.add(window._introMagLight);
+                            }
+                            if (mi === l14Idx && window._introMagLight) {
+                                window._introMagLight.position.copy(shellMeshes[l14Idx].position);
+                                window._introMagLight.intensity = mInt * 4.0;
+                            }
+                        }
+                    }
+
+                    // Quote overlay: fade in during gold pulse, hold during cascade, fade out before text
+                    // Timeline: fade in 0→0.6s, hold 0.6→2.0s, fade out 2.0→2.8s
+                    if (seqT < 0.6) {
+                        heroQuoteOverlay.style.opacity = (seqT / 0.6);
+                    } else if (seqT < 2.0) {
+                        heroQuoteOverlay.style.opacity = 1;
+                    } else if (seqT < 2.8) {
+                        heroQuoteOverlay.style.opacity = 1 - ((seqT - 2.0) / 0.8);
+                    } else {
+                        heroQuoteOverlay.style.opacity = 0;
+                    }
+
+                    // Phase 2: L8 blinks white after cascade reaches it
+                    var l8BlinkStart = magentaStart + numBioLayers * 0.15 + 0.8;
+                    var l8BlinkAge = seqT - l8BlinkStart;
+                    if (l8BlinkAge > 0 && l8BlinkAge < 0.3) {
+                        var l8Blink = Math.sin(l8BlinkAge / 0.3 * Math.PI); // single pulse up and down
+                        var l8c = shellUniforms[gwIdxGlobal].uColor.value;
+                        l8c.set(
+                            l8c.x + (1.0 - l8c.x) * l8Blink,
+                            l8c.y + (1.0 - l8c.y) * l8Blink,
+                            l8c.z + (1.0 - l8c.z) * l8Blink
+                        );
+                        shellUniforms[gwIdxGlobal].uGlowIntensity.value += l8Blink * 6.0;
+                    }
+
+                    // Phase 3: Text emerges from L8, slides down as it fades in
+                    var textStart = l8BlinkStart + 0.3;
+                    var textAge = seqT - textStart;
+                    if (textAge > 0) {
+                        // Get L8 screen Y
+                        var l8Pos = new THREE.Vector3().setFromMatrixPosition(shellMeshes[gwIdxGlobal].matrixWorld);
+                        l8Pos.project(camera);
+                        var l8ScrY = (-l8Pos.y * 0.5 + 0.5) * 100;
+                        var textStartY = 10; // start near top of page
+                        var textEndY = 88; // end below animation
+                        var textProgress = Math.min(1, textAge / 2.0); // 2s to reach final position
+                        var eased = 1 - Math.pow(1 - textProgress, 3); // ease-out cubic
+                        var textY = textStartY + (textEndY - textStartY) * eased;
+                        // Fade in: starts transparent, increases opacity as it moves down
+                        var containerOpacity = Math.min(1, eased); // opacity follows position progress
+                        heroOsiTaglineTop.style.top = textY + '%';
+                        heroOsiTaglineTop.style.opacity = containerOpacity;
+                        heroOsiTaglineTop.style.transform = 'translate(-50%, -50%)';
+
+                        // Stagger each line within the container
+                        var line1P = Math.min(1, Math.max(0, (textAge - 0.3) / 1.0));
+                        var line2P = Math.min(1, Math.max(0, (textAge - 0.7) / 1.0));
+                        var line3P = Math.min(1, Math.max(0, (textAge - 1.1) / 1.0));
+                        heroNeuroLine.style.opacity = line1P;
+                        heroNeuroLine.style.transform = 'translateY(' + ((1 - line1P) * -20) + 'px)';
+                        heroOsiLine.style.opacity = line2P;
+                        heroOsiLine.style.transform = 'translateY(' + ((1 - line2P) * -20) + 'px)';
+                        heroAuthorLine.style.opacity = line3P;
+                        heroAuthorLine.style.transform = 'translateY(' + ((1 - line3P) * -20) + 'px)';
+
+                        if (textProgress >= 1 && line3P >= 1) {
+                            window._introSeqDone = true;
+                            // Clean up intro lights
+                            if (window._introMagLight) {
+                                window._introMagLight.intensity = 0;
+                            }
+                            // Ensure quote overlay is hidden
+                            heroQuoteOverlay.style.opacity = 0;
+                            heroQuoteOverlay.style.display = 'none';
+                        }
+                    }
+                }
+
+                // Tagline: slide up toward L8 and fade through it
+                var scrollFade = Math.min(1, window.scrollY / 600);
+                var taglineFade = Math.max(springCompress * 2, rawMorph * 4, scrollFade);
+                if (taglineFade > 0.01 && gwIdxGlobal >= 0 && gwIdxGlobal < shellMeshes.length) {
+                    var l8TagPos = new THREE.Vector3().setFromMatrixPosition(shellMeshes[gwIdxGlobal].matrixWorld);
+                    l8TagPos.project(camera);
+                    var l8ScreenY = (-l8TagPos.y * 0.5 + 0.5) * 100; // as % of viewport
+                    var startY = 88;
+                    var targetY = l8ScreenY;
+                    // Linear slide for most of the journey, only accelerate at end
+                    var slideProgress = Math.min(1, taglineFade);
+                    var currentY = startY + (targetY - startY) * slideProgress;
+                    // Only start fading when close to L8 (last 30% of journey)
+                    var fadeStart = 0.6;
+                    var taglineOpacity = taglineFade < fadeStart ? 1.0 : Math.max(0, 1 - (taglineFade - fadeStart) / (1 - fadeStart));
+                    heroOsiTaglineTop.style.top = currentY + '%';
+                    heroOsiTaglineTop.style.transform = 'translate(-50%, -50%)';
+                    heroOsiTaglineTop.style.opacity = taglineOpacity;
+                    heroOsiTaglineTop.style.display = taglineOpacity < 0.01 ? 'none' : 'block';
+
+                    // Green flash cascade: triggers when text opacity hits ~50%
+                    if (!window._greenFlashTriggered && taglineOpacity <= 0.5 && taglineOpacity > 0.01) {
+                        window._greenFlashTriggered = true;
+                        window._greenFlashTime = t;
+                    }
+                } else {
+                    heroOsiTaglineTop.style.opacity = Math.max(0, 1 - taglineFade);
+                    heroOsiTaglineTop.style.top = '88%';
+                    heroOsiTaglineTop.style.transform = 'translate(-50%, -50%)';
+                    heroOsiTaglineTop.style.display = (1 - taglineFade) < 0.01 ? 'none' : 'block';
+                    // Reset flash trigger when scrolled back to top
+                    if (taglineFade < 0.1) window._greenFlashTriggered = false;
+                }
+
+                // Green flash cascade: L8 first, then L9, L10, etc.
+                if (window._greenFlashTriggered && window._greenFlashTime) {
+                    var flashElapsed = t - window._greenFlashTime;
+                    var greenColor = [0.1, 0.9, 0.3];
+                    for (var fi = 0; fi < activeLayers.length; fi++) {
+                        var flashDelay = 0;
+                        if (fi === gwIdxGlobal) {
+                            flashDelay = 0; // L8 first
+                        } else if (fi > gwIdxGlobal) {
+                            flashDelay = (fi - gwIdxGlobal) * 0.15; // L9, L10... cascade up
+                        } else {
+                            continue; // skip silicon layers
+                        }
+                        var flashAge = flashElapsed - flashDelay;
+                        if (flashAge > 0 && flashAge < 1.0) {
+                            var flashIntensity = Math.sin(flashAge / 1.0 * Math.PI); // rise and fall
+                            flashIntensity *= 1.0;
+                            var cur = shellUniforms[fi].uColor.value;
+                            cur.set(
+                                cur.x + (greenColor[0] - cur.x) * flashIntensity,
+                                cur.y + (greenColor[1] - cur.y) * flashIntensity,
+                                cur.z + (greenColor[2] - cur.z) * flashIntensity
+                            );
+                            shellUniforms[fi].uGlowIntensity.value += flashIntensity * 5.0;
+                            shellUniforms[fi].uOpacity.value = Math.min(1.0, shellUniforms[fi].uOpacity.value + flashIntensity * 0.5);
+                        }
+                    }
+                    // L14 teal blink: starts after green cascade finishes at L14
+                    var l14Idx = activeLayers.length - 1;
+                    var l14FlashEnd = (l14Idx - gwIdxGlobal) * 0.15 + 1.0; // when L14's green flash ends
+                    var blinkStart = flashElapsed - l14FlashEnd;
+                    if (blinkStart > 0 && blinkStart < 1.5) {
+                        var blinkRate = Math.sin(blinkStart * 25.0); // rapid oscillation
+                        var blinkIntensity = Math.max(0, blinkRate) * (1.0 - blinkStart / 1.5); // fade out over 1.5s
+                        var tealColor = [0.1, 0.85, 0.8];
+                        var l14c = shellUniforms[l14Idx].uColor.value;
+                        l14c.set(
+                            l14c.x + (tealColor[0] - l14c.x) * blinkIntensity,
+                            l14c.y + (tealColor[1] - l14c.y) * blinkIntensity,
+                            l14c.z + (tealColor[2] - l14c.z) * blinkIntensity
+                        );
+                        shellUniforms[l14Idx].uGlowIntensity.value += blinkIntensity * 6.0;
+                        shellUniforms[l14Idx].uOpacity.value = Math.min(1.0, shellUniforms[l14Idx].uOpacity.value + blinkIntensity * 0.6);
+                        // Magenta outer glow on L14 mesh via CSS filter on canvas
+                        var l14Mesh = shellMeshes[l14Idx];
+                        if (!window._l14GlowLight) {
+                            window._l14GlowLight = new THREE.PointLight(0xff00ff, 0, 8);
+                            scene.add(window._l14GlowLight);
+                        }
+                        window._l14GlowLight.position.copy(l14Mesh.position);
+                        window._l14GlowLight.intensity = blinkIntensity * 4.0;
+                        window._l14GlowLight.color.setRGB(0.9, 0.1, 0.85); // magenta
+                    } else if (window._l14GlowLight) {
+                        window._l14GlowLight.intensity *= 0.85; // fade out
+                    }
+                }
 
                 // Seizure warning: shows at springCompress ~1.0, fades out once dismissed or passed
                 if (!seizureWarningDismissed && springCompress > 1.5 && springCompress < 1.95) {
                     var warnBlend = Math.min(1, (springCompress - 1.5) / 0.15);
                     var warnFade = springCompress > 1.8 ? Math.max(0, 1 - (springCompress - 1.8) / 0.15) : 1;
                     seizureWarningEl.style.opacity = warnBlend * warnFade;
-                    // Position at L14 center
-                    var warnL14 = shellMeshes[activeLayers.length - 1];
-                    var warnPos = new THREE.Vector3().copy(warnL14.position);
-                    warnPos.project(camera);
-                    seizureWarningEl.style.left = ((warnPos.x * 0.5 + 0.5) * window.innerWidth) + 'px';
-                    seizureWarningEl.style.top = ((-warnPos.y * 0.5 + 0.5) * window.innerHeight) + 'px';
+                    // Center on screen
+                    seizureWarningEl.style.left = '50%';
+                    seizureWarningEl.style.top = '60%';
                     if (springCompress > 1.9) seizureWarningDismissed = true;
                 } else {
                     var warnCurOp = parseFloat(seizureWarningEl.style.opacity || 0);
