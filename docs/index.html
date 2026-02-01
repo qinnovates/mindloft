@@ -1556,6 +1556,38 @@
         ">A unified standard built with <span style="color: #8b5cf6;">neurosecurity</span> and <span style="color: #06b6d4;">neuroethics</span> as its foundation.</p>
     </div>
 
+    <!-- OSI layer labels — positioned next to each layer during pyramid unstack -->
+    <div id="osi-layer-labels" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 4; pointer-events: none; opacity: 0;">
+        <div class="osi-label" data-osi="0" style="position: absolute; white-space: nowrap; opacity: 0; transform: translateX(20px); transition: opacity 0.3s, transform 0.3s;">
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(212,175,55,0.9);">L1</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Physical</span>
+        </div>
+        <div class="osi-label" data-osi="1" style="position: absolute; white-space: nowrap; opacity: 0; transform: translateX(20px); transition: opacity 0.3s, transform 0.3s;">
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(212,175,55,0.9);">L2</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Data Link</span>
+        </div>
+        <div class="osi-label" data-osi="2" style="position: absolute; white-space: nowrap; opacity: 0; transform: translateX(20px); transition: opacity 0.3s, transform 0.3s;">
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(212,175,55,0.9);">L3</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Network</span>
+        </div>
+        <div class="osi-label" data-osi="3" style="position: absolute; white-space: nowrap; opacity: 0; transform: translateX(20px); transition: opacity 0.3s, transform 0.3s;">
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(212,175,55,0.9);">L4</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Transport</span>
+        </div>
+        <div class="osi-label" data-osi="4" style="position: absolute; white-space: nowrap; opacity: 0; transform: translateX(20px); transition: opacity 0.3s, transform 0.3s;">
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(212,175,55,0.9);">L5</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Session</span>
+        </div>
+        <div class="osi-label" data-osi="5" style="position: absolute; white-space: nowrap; opacity: 0; transform: translateX(20px); transition: opacity 0.3s, transform 0.3s;">
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(212,175,55,0.9);">L6</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Presentation</span>
+        </div>
+        <div class="osi-label" data-osi="6" style="position: absolute; white-space: nowrap; opacity: 0; transform: translateX(20px); transition: opacity 0.3s, transform 0.3s;">
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(212,175,55,0.9);">L7</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Application</span>
+        </div>
+    </div>
+
     <!-- =============================================
          SCENE 2: THE PROBLEM
          ============================================= -->
@@ -2131,6 +2163,8 @@
             var isMobile = window.innerWidth <= 768;
             var isTablet = window.innerWidth <= 1024;
             var osiBlurbEl = document.getElementById('osi-blurb');
+            var osiLabelsContainer = document.getElementById('osi-layer-labels');
+            var osiLabelEls = osiLabelsContainer ? osiLabelsContainer.querySelectorAll('.osi-label') : [];
 
             // Renderer
             var renderer = new THREE.WebGLRenderer({
@@ -2379,13 +2413,6 @@
 
             // Layer Config
             var allLayers = [
-                { id:'L1',  r:2.90, c:[1.00,1.00,1.00], zone:'silicon',  fp:3.5 },
-                { id:'L2',  r:2.72, c:[1.00,1.00,1.00], zone:'silicon',  fp:3.2 },
-                { id:'L3',  r:2.55, c:[1.00,1.00,1.00], zone:'silicon',  fp:3.0 },
-                { id:'L4',  r:2.38, c:[1.00,1.00,1.00], zone:'silicon',  fp:2.8 },
-                { id:'L5',  r:2.22, c:[1.00,1.00,1.00], zone:'silicon',  fp:2.6 },
-                { id:'L6',  r:2.06, c:[1.00,1.00,1.00], zone:'silicon',  fp:2.5 },
-                { id:'L7',  r:1.90, c:[1.00,1.00,1.00], zone:'silicon',  fp:2.4 },
                 { id:'L8',  r:1.72, c:[0.20,0.55,0.60], zone:'gateway',  fp:2.0 },
                 { id:'L9',  r:1.52, c:[0.20,0.87,0.87], zone:'biology',  fp:2.8 },
                 { id:'L10', r:1.38, c:[0.50,0.93,0.93], zone:'biology',  fp:2.6 },
@@ -2395,7 +2422,7 @@
                 { id:'L14', r:0.82, c:[0.80,0.55,0.75], zone:'biology',  fp:2.0 },
             ];
 
-            var mobileIdx = [0,2,4,6,7,9,11,13];
+            var mobileIdx = [0,2,4,6]; // L8, L10, L12, L14
             var activeLayers = (isMobile || isTablet) ? mobileIdx.map(function(i){return allLayers[i];}) : allLayers;
 
             // Shells
@@ -2434,6 +2461,24 @@
                 parallaxGroup.add(mesh);
                 shellMeshes.push(mesh);
                 shellUniforms.push(u);
+            });
+
+            // Mirror meshes for hourglass formation (bottom half)
+            var mirrorMeshes = [], mirrorUniforms = [];
+            activeLayers.forEach(function(layer, idx) {
+                var origMat = shellMeshes[idx].material.clone();
+                var mu = {};
+                for (var key in origMat.uniforms) {
+                    mu[key] = { value: origMat.uniforms[key].value };
+                }
+                if (mu.uColor) mu.uColor = { value: mu.uColor.value.clone() };
+                origMat.uniforms = mu;
+                var mirror = new THREE.Mesh(shellGeo, origMat);
+                mirror.scale.setScalar(layer.r);
+                mirror.visible = false;
+                parallaxGroup.add(mirror);
+                mirrorMeshes.push(mirror);
+                mirrorUniforms.push(mu);
             });
 
             // Laser-etched frosted glass labels for each layer disc
@@ -3102,16 +3147,12 @@
 
                 // OSI blurb: visible when L7 starts appearing (0.05), fades out when L1 appears (0.65)
                 if (osiBlurbEl) {
-                    var blurbIn = Math.max(0, Math.min(1, (rawMorph - 0.03) / 0.08)); // fade in 0.03→0.11
-                    var blurbOut = Math.max(0, Math.min(1, (rawMorph - 0.55) / 0.10)); // fade out 0.55→0.65
+                    var blurbIn = Math.max(0, Math.min(1, (rawMorph - 0.78) / 0.10)); // fade in after pyramid unstack
+                    var blurbOut = Math.max(0, Math.min(1, (rawMorph - 0.92) / 0.08)); // fade out near end
                     var blurbOpacity = blurbIn * (1 - blurbOut);
                     osiBlurbEl.style.opacity = blurbOpacity;
                     osiBlurbEl.style.transform = 'translateY(' + ((1 - blurbIn) * 30 - blurbOut * 30) + 'px)';
                 }
-
-                // Scroll-driven cascade compression: after L1 appears (rawMorph > 0.65),
-                // L1→L7 compress upward into L8 like tension spring
-                var cascadeCompress = Math.max(0, Math.min(1, (rawMorph - 0.65) / 0.22)); // 0→1 over 0.65→0.87
 
                 // Effective morph: force full stack (morphCap) whenever intro is active or done
                 // introVal goes 0→1 and stays at 1. Scroll morph also goes 0→morphCap.
@@ -3409,20 +3450,7 @@
                     var isGW = layer.zone === 'gateway';
                     var breathing = 1 + Math.sin(t*0.6+i*0.5)*0.006;
 
-                    // Progressive reveal: L1-L7 hidden on load
-                    // Appear via scroll-down (rawMorph) OR spring tension (springCompress)
-                    // L7 first, then L6, L5... L1 last
-                    var layerRevealed = true;
-                    if (gwIdx >= 0 && i < gwIdx) {
-                        var stepsBelow = gwIdx - 1 - i; // 0=L7, 6=L1
-                        // Scroll-down reveal: spread across rawMorph 0.05→0.75
-                        var scrollThreshold = 0.05 + stepsBelow * 0.10;
-                        // Spring tension reveal: same stagger on springCompress
-                        var springThreshold = 0.08 + stepsBelow * 0.12;
-                        layerRevealed = rawMorph >= scrollThreshold || springCompress >= springThreshold;
-                    }
-                    mesh.visible = layerRevealed;
-                    if (!layerRevealed) return; // skip all processing for hidden layers
+                    mesh.visible = true;
 
                     // Compute targets for this shell
                     var scaleTarget = 1.0;
@@ -3606,23 +3634,17 @@
                         // Stack position: evenly distribute layers vertically
                         var stackY = (i - (totalLayers - 1) / 2) * stackSpacing;
 
-                        // L8 gets extra gap
-                        if (gwIdx >= 0) {
-                            if (i < gwIdx) stackY -= 0.15;
-                            if (i > gwIdx) stackY += 0.15;
-                        }
-
                         // Spring coil: compress L8-L14 downward toward L7 on scroll-up at top
                         // L7 is the anchor — doesn't move
                         // Spring ratio: layers further from L7 compress more (quadratic)
-                        if (springCompress > 0.001 && gwIdx >= 0 && i >= gwIdx) {
-                            var stepsAboveAnchor = i - (gwIdx - 1); // L8=1, L9=2, ... L14=7
-                            var maxSteps = totalLayers - gwIdx; // 7
+                        if (springCompress > 0.001 && i > 0) {
+                            var stepsAboveAnchor = i; // L8=0 (anchor), L9=1, ... L14=6
+                            var maxSteps = totalLayers - 1; // 6
                             // Quadratic spring: top layers compress proportionally more
                             var springRatio = (stepsAboveAnchor / maxSteps);
                             springRatio = springRatio * springRatio; // quadratic — L14 moves most
-                            // Pull layer Y toward L7's Y position (one below gateway)
-                            var anchorY = ((gwIdx - 1) - (totalLayers - 1) / 2) * stackSpacing;
+                            // Pull layer Y toward L8's Y position (anchor)
+                            var anchorY = (0 - (totalLayers - 1) / 2) * stackSpacing;
                             var pullAmount = (stackY - anchorY) * springRatio * springCompress;
                             stackY -= pullAmount;
                         }
@@ -3636,23 +3658,6 @@
                             var tunnelScale = 1 + springCompress * (baseGrow + depthRatio * extraGrow);
                             scaleTarget *= tunnelScale;
                         }
-
-                        // Silicon layers emerge from L14's position and cascade down to their stack positions
-                        // L7 appears first (nearest to L14), L1 last (farthest)
-                        if (gwIdx >= 0 && i < gwIdx) {
-                            var stepsBelow = gwIdx - 1 - i; // 0=L7, 6=L1
-                            var scrollStart = 0.05 + stepsBelow * 0.10;
-                            var scrollEnd = scrollStart + 0.25; // longer travel duration
-                            var descendProgress = Math.max(0, Math.min(1, (rawMorph - scrollStart) / (scrollEnd - scrollStart)));
-                            // Cubic ease-out for smooth landing
-                            descendProgress = descendProgress * descendProgress * (3 - 2 * descendProgress);
-                            // L14's stack Y position (where bio layers collapsed to)
-                            var l14StackY = ((totalLayers - 1) - (totalLayers - 1) / 2) * stackSpacing + 0.15;
-                            // Lerp from L14's Y down to this layer's own stackY
-                            stackY = l14StackY + (stackY - l14StackY) * descendProgress;
-                        }
-
-                        // Cascade collapse removed — L1-L7 now expand and stay visible
 
                         // Scroll compression: as user scrolls down toward Foundations,
                         // L14→L1 compress downward — same quadratic ratio as spring coil
@@ -3687,6 +3692,40 @@
                             stackY = stackY + (l14StackY - stackY) * snapProgress;
                             // Slight opacity fade as layers merge
                             shellUniforms[i].uOpacity.value *= (1.0 - snapProgress * 0.3);
+                        }
+
+                        // Inverted pyramid: biology layers unstack from L14's collapsed position
+                        // L14 stays at bottom (point), L8 fans out to the top (widest)
+                        var pyramidProgress = Math.max(0, Math.min(1, (rawMorph - 0.55) / 0.20));
+                        if (pyramidProgress > 0.001 && i >= 0) {
+                            var pp = pyramidProgress * pyramidProgress * (3 - 2 * pyramidProgress);
+                            var stepsFromL14 = (totalLayers - 1) - i; // L14=0, L13=1, ..., L8=6
+                            var l14Y = ((totalLayers - 1) - (totalLayers - 1) / 2) * stackSpacing;
+                            var pyramidSpacing = 0.45;
+                            var pyramidTargetY = l14Y - stepsFromL14 * pyramidSpacing;
+                            stackY = stackY + (pyramidTargetY - stackY) * pp;
+                        }
+
+                        // Inverted stack: after labels disappear, spread into even upside-down stack
+                        // L8 at very top, L14 at bottom — fully separated
+                        var invertProgress = Math.max(0, Math.min(1, (rawMorph - 0.85) / 0.12));
+                        if (invertProgress > 0.001 && i >= 0) {
+                            var ip = invertProgress * invertProgress * (3 - 2 * invertProgress);
+                            // Inverted stack: L8 (i=0) at top, L14 (i=6) at bottom
+                            // Even spacing, flipped from original
+                            var invertSpacing = 0.4;
+                            var invertTopY = ((totalLayers - 1) / 2) * invertSpacing;
+                            var invertTargetY = invertTopY - i * invertSpacing;
+                            stackY = stackY + (invertTargetY - stackY) * ip;
+                        }
+
+                        // Hourglass phase: slide original stack upward
+                        var hourglassVal = closingShrink.value;
+                        if (hourglassVal > 0.001) {
+                            var hp = Math.min(1, hourglassVal / 0.5);
+                            hp = hp * hp * (3 - 2 * hp);
+                            var halfStack = (totalLayers - 1) * 0.4 / 2;
+                            stackY += hp * halfStack;
                         }
 
                         // Intro expand: override Y during intro animation
@@ -3985,22 +4024,8 @@
                             mesh.rotation.x = t * 0.4 * spinAmt;
                         }
 
-                        // Progressive reveal opacity: L7→L1 — use whichever is stronger (scroll or spring)
+                        // Progressive reveal opacity: L1→L7 (hourglass order) — use whichever is stronger
                         var revealOpacity = 1.0;
-                        if (gwIdx >= 0 && i < gwIdx) {
-                            var stepsBelow = gwIdx - 1 - i; // 0=L7, 6=L1
-                            // Scroll-down fade
-                            var scrollStart = 0.05 + stepsBelow * 0.10;
-                            var scrollEnd = scrollStart + 0.12;
-                            var scrollReveal = Math.max(0, Math.min(1, (rawMorph - scrollStart) / (scrollEnd - scrollStart)));
-                            // Spring tension fade
-                            var springStart = 0.08 + stepsBelow * 0.12;
-                            var springEnd = springStart + 0.10;
-                            var springReveal = Math.max(0, Math.min(1, (springCompress - springStart) / (springEnd - springStart)));
-                            // Use whichever reveals more
-                            revealOpacity = Math.max(scrollReveal, springReveal);
-                            revealOpacity = revealOpacity * revealOpacity * (3 - 2 * revealOpacity);
-                        }
 
                         // Per-layer brightness: scrollBrightness cascades L14→L1
                         // stepsFromTop: 0=L14 (restores first), 13=L1 (restores last)
@@ -4762,6 +4787,74 @@
                 // Dust drift
                 dustCloud.rotation.y = t*0.02;
                 dustCloud.rotation.x = Math.sin(t*0.1)*0.05;
+
+                // OSI layer labels: position next to each layer during pyramid phase
+                // Maps: L8→OSI L1 (Physical), L9→L2, ..., L14→OSI L7 (Application)
+                if (osiLabelsContainer && osiLabelEls.length === 7) {
+                    // Labels appear during pyramid unstack (rawMorph 0.60→0.85)
+                    var labelsActive = rawMorph > 0.58 && rawMorph < 0.95;
+                    osiLabelsContainer.style.opacity = labelsActive ? '1' : '0';
+                    if (labelsActive) {
+                        for (var li = 0; li < 7; li++) {
+                            var labelEl = osiLabelEls[li];
+                            // Stagger: L8 (li=0) appears first, L14 (li=6) last
+                            var labelStart = 0.60 + li * 0.03;
+                            var labelProgress = Math.max(0, Math.min(1, (rawMorph - labelStart) / 0.05));
+                            // Fade out near end
+                            var labelFadeOut = rawMorph > 0.88 ? Math.max(0, 1 - (rawMorph - 0.88) / 0.06) : 1;
+                            var finalOpacity = labelProgress * labelFadeOut;
+                            // Project mesh position to screen
+                            var lPos = new THREE.Vector3().setFromMatrixPosition(shellMeshes[li].matrixWorld);
+                            lPos.project(camera);
+                            var screenX = (lPos.x * 0.5 + 0.5) * window.innerWidth;
+                            var screenY = (-lPos.y * 0.5 + 0.5) * window.innerHeight;
+                            // Position label to the right of the layer
+                            labelEl.style.left = (screenX + 60) + 'px';
+                            labelEl.style.top = screenY + 'px';
+                            labelEl.style.transform = 'translateY(-50%) translateX(' + ((1 - labelProgress) * 20) + 'px)';
+                            labelEl.style.opacity = finalOpacity;
+                        }
+                    }
+                }
+
+                // Mirror meshes: form bottom half of hourglass
+                var hourglassVal = closingShrink.value;
+                mirrorMeshes.forEach(function(mirror, i) {
+                    if (hourglassVal < 0.01) {
+                        mirror.visible = false;
+                        return;
+                    }
+                    mirror.visible = true;
+                    var hp = Math.min(1, hourglassVal / 0.5);
+                    hp = hp * hp * (3 - 2 * hp);
+
+                    // Mirror index: i=0 is L8 mirror (largest), i=6 is L14 mirror (smallest)
+                    // For hourglass: L14 mirror sits just below original L14 (waist)
+                    // then L13 mirror below that, etc. L8 mirror at very bottom
+                    var mirrorIdx = (totalLayers - 1) - i; // L8→6, L14→0
+                    var invertSpacing = 0.4;
+                    var waistY = shellMeshes[totalLayers - 1].position.y;
+                    var mirrorTargetY = waistY - (mirrorIdx + 1) * invertSpacing * hp;
+
+                    // Stagger appearance: L14 mirror (i=6) first, L8 mirror (i=0) last
+                    var stagger = (totalLayers - 1 - i) * 0.06;
+                    var mirrorAppear = Math.max(0, Math.min(1, (hourglassVal - stagger) / 0.15));
+
+                    mirror.position.copy(shellMeshes[i].position);
+                    mirror.position.y = mirrorTargetY;
+                    mirror.rotation.copy(shellMeshes[i].rotation);
+                    mirror.scale.copy(shellMeshes[i].scale);
+
+                    // Update mirror uniforms to match original
+                    mirrorUniforms[i].uTime.value = shellUniforms[i].uTime.value;
+                    mirrorUniforms[i].uColor.value.copy(shellUniforms[i].uColor.value);
+                    mirrorUniforms[i].uOpacity.value = shellUniforms[i].uOpacity.value * mirrorAppear;
+                    mirrorUniforms[i].uGlowIntensity.value = shellUniforms[i].uGlowIntensity.value;
+                    mirrorUniforms[i].uFresnelPower.value = shellUniforms[i].uFresnelPower.value;
+                    if (mirrorUniforms[i].uBubbleMix) {
+                        mirrorUniforms[i].uBubbleMix.value = shellUniforms[i].uBubbleMix.value;
+                    }
+                });
 
                 renderer.render(scene, camera);
             }
