@@ -697,6 +697,27 @@
             margin-top: 0.15rem;
         }
 
+        /* Seizure warning */
+        #seizure-warning {
+            position: fixed;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0;
+            text-align: center;
+            font-family: 'Inter', Arial, sans-serif;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            transform: translate(-50%, -50%);
+        }
+        .seizure-warning-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .seizure-warning-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
         /* Spring egg */
         #spring-egg {
             position: fixed;
@@ -1604,6 +1625,12 @@
     <!-- ONI closing text: vector NI overlay -->
     <div id="oni-ni-overlay">NI</div>
 
+    <!-- Seizure warning prompt -->
+    <div id="seizure-warning">
+        <div class="seizure-warning-icon">&#x26A0;</div>
+        <div class="seizure-warning-text">Photosensitivity Warning</div>
+    </div>
+
     <!-- Spring art mode: title + artist overlay -->
     <div id="spring-art-overlay">
         <div class="spring-art-title">&ldquo;Spatial Synesthesia&rdquo;</div>
@@ -2391,6 +2418,8 @@
             // Spring art overlay
             var springArtOverlay = document.getElementById('spring-art-overlay');
             var springEggEl = document.getElementById('spring-egg');
+            var seizureWarningEl = document.getElementById('seizure-warning');
+            var seizureWarningDismissed = false;
             springEggEl.addEventListener('click', function() {
                 if (springEggActive) {
                     window.location.href = 'mai' + 'lto:' + _demail();
@@ -2637,6 +2666,10 @@
             var rippleIntensity = 0; // current ripple brightness — spikes on scroll, decays per frame
             // Spring egg: appears from L14 center at extreme compression
             var springEggActive = false;
+            var springEggWasActive = false; // tracks previous frame
+            var rainbowRippleTime = -1; // timestamp when ripple starts, -1 = inactive
+            var springPeakCompress = 0; // tracks highest springCompress reached
+            var colorResetPending = false; // true after egg, waiting for L8 to shrink
             // Obfuscated email — assembled at runtime, never in plaintext
             var _eparts = [107,101,118,105,110,113,105,99,111,100,101,64,103,109,97,105,108,46,99,111,109];
             function _demail() { return _eparts.map(function(c){return String.fromCharCode(c)}).join(''); }
@@ -3141,7 +3174,29 @@
                 // Ripple wave: decay intensity when not scrolling
                 rippleIntensity *= 0.93;
                 if (springCompress < 0.2) { rippleWavePos = 0; rippleIntensity = 0; }
+                var prevEggActive = springEggWasActive;
                 springEggActive = springCompress > 1.95;
+                // Track peak compression while egg is active
+                if (springEggActive) springPeakCompress = springCompress;
+                // Detect egg disappearing — trigger rainbow ripple + color reset pending
+                if (prevEggActive && !springEggActive) {
+                    rainbowRippleTime = t;
+                    colorResetPending = true;
+                }
+                // Color reset: when L8 starts shrinking (spring dropping well below peak)
+                if (colorResetPending && springCompress < springPeakCompress - 0.3) {
+                    colorResetPending = false;
+                    springPeakCompress = 0;
+                    rainbowRippleTime = -1;
+                    // Snap all layers back to defaults
+                    for (var ri = 0; ri < shellUniforms.length; ri++) {
+                        if (shellUniforms[ri]) {
+                            shellUniforms[ri].uGlowIntensity.value = 1.2;
+                            shellUniforms[ri].uActiveGlow.value = 0;
+                        }
+                    }
+                }
+                springEggWasActive = springEggActive;
                 // Track peak spring for progressive L7→L1 reveal
                 springRevealLevel = Math.max(springRevealLevel, springCompress);
 
@@ -3587,7 +3642,9 @@
                             var maxSteps = (totalLayers - 1) - gwIdx; // 6
                             var layerPhase = stepsFromL14 / maxSteps * 0.35;
                             // Position: compression + time drift + per-layer offset
-                            var mtPos = (springCompress * 0.6 + t * 0.25 + layerPhase) % 1.0;
+                            // L14 cycles faster as spring tension increases
+                            var l14SpeedBoost = (stepsFromL14 === 0) ? springCompress * springCompress * 1.5 : 0;
+                            var mtPos = (springCompress * 0.6 + t * (0.25 + l14SpeedBoost) + layerPhase) % 1.0;
                             var mtSeg = mtPos * 6;
                             var mtIdx = Math.min(5, Math.floor(mtSeg));
                             var mtFrac = mtSeg - mtIdx;
@@ -3603,6 +3660,13 @@
                                 bc[1] + (mtG - bc[1]) * blend,
                                 bc[2] + (mtB - bc[2]) * blend
                             );
+                            // L14 glow pulse speeds up with tension
+                            if (stepsFromL14 === 0 && springCompress > 0.3) {
+                                var l14PulseSpeed = 2.0 + springCompress * springCompress * 6.0;
+                                var l14Pulse = 0.5 + 0.5 * Math.sin(t * l14PulseSpeed);
+                                shellUniforms[i].uGlowIntensity.value += l14Pulse * (1.0 + springCompress * 1.5);
+                                shellUniforms[i].uActiveGlow.value = Math.max(shellUniforms[i].uActiveGlow.value, l14Pulse * springCompress * 0.4);
+                            }
                         }
 
                         // L8 spring: scale up toward perfect circle + cycling spectrum
@@ -3625,8 +3689,9 @@
                                 [0.20, 0.90, 0.90],  // bright teal
                                 [0.90, 0.15, 0.75]   // magenta (loop)
                             ];
-                            // Position driven by compression + slow time drift
-                            var l8Pos = (springCompress * 0.7 + t * 0.3) % 1.0;
+                            // Position driven by compression + time drift scaled by rotation speed
+                            var l8SpinSpeed = (springCompress > 1.0) ? Math.min(1, (springCompress - 1.0) / 0.3) * 0.4 : 0;
+                            var l8Pos = (springCompress * 0.7 + t * (0.3 + l8SpinSpeed * 2.5)) % 1.0;
                             var l8Seg = l8Pos * 6; // 6 segments between 7 stops
                             var l8Idx = Math.min(5, Math.floor(l8Seg));
                             var l8Frac = l8Seg - l8Idx;
@@ -3825,17 +3890,70 @@
                                 (glowTarget - shellUniforms[i].uActiveGlow.value) * glowLerp;
                         }
 
-                        // Spring egg: L14 glows red and pulses at extreme compression
-                        if (springEggActive && i === activeLayers.length - 1) {
+                        // Spring egg: L14 + neighbors glow vibrant red, spreading with eggBlend
+                        if (springEggActive) {
                             var eggBlend = Math.min(1, (springCompress - 1.95) / 0.05);
                             var eggPulse = 0.5 + 0.5 * Math.sin(t * 5.0);
-                            var ec = shellUniforms[i].uColor.value;
-                            // Push toward bright red
-                            ec.x += (1.0 - ec.x) * eggBlend * 0.7;
-                            ec.y *= (1.0 - eggBlend * 0.8);
-                            ec.z *= (1.0 - eggBlend * 0.8);
-                            shellUniforms[i].uGlowIntensity.value = Math.min(shellUniforms[i].uGlowIntensity.value + eggBlend * eggPulse * 1.2, 4.0);
-                            shellUniforms[i].uOpacity.value = Math.min(shellUniforms[i].uOpacity.value + eggBlend * 0.08, 1.0);
+                            var l14i = activeLayers.length - 1;
+                            // How many layers from L14 should glow red (0=just L14, up to 5 at full)
+                            var redSpread = Math.floor(eggBlend * 5);
+                            var distFromL14 = l14i - i;
+                            if (distFromL14 >= 0 && distFromL14 <= redSpread) {
+                                var falloff = 1.0 - (distFromL14 / (redSpread + 1)) * 0.6;
+                                var whiteAmt = eggBlend * falloff;
+                                if (distFromL14 === 0) {
+                                    // L14: override to pulsating white glow
+                                    shellUniforms[i].uColor.value.x = 0.9 + eggPulse * 0.1;
+                                    shellUniforms[i].uColor.value.y = 0.9 + eggPulse * 0.1;
+                                    shellUniforms[i].uColor.value.z = 0.95 + eggPulse * 0.05;
+                                    shellUniforms[i].uOpacity.value = 0.7 + eggBlend * 0.3;
+                                    shellUniforms[i].uGlowIntensity.value = 3.5 + eggPulse * 2.5;
+                                    shellUniforms[i].uActiveGlow.value = 0.5 + eggPulse * 0.5;
+                                } else {
+                                    // Neighbors blend toward white
+                                    shellUniforms[i].uColor.value.x += (1.0 - shellUniforms[i].uColor.value.x) * whiteAmt;
+                                    shellUniforms[i].uColor.value.y += (1.0 - shellUniforms[i].uColor.value.y) * whiteAmt;
+                                    shellUniforms[i].uColor.value.z += (1.0 - shellUniforms[i].uColor.value.z) * whiteAmt;
+                                    shellUniforms[i].uOpacity.value = Math.min(shellUniforms[i].uOpacity.value + whiteAmt * 0.15, 1.0);
+                                    shellUniforms[i].uGlowIntensity.value = Math.max(shellUniforms[i].uGlowIntensity.value, (3.0 + eggPulse * 2.0) * whiteAmt);
+                                    shellUniforms[i].uActiveGlow.value = Math.max(shellUniforms[i].uActiveGlow.value, (0.4 + eggPulse * 0.5) * whiteAmt);
+                                }
+                            }
+                        }
+
+                        // Rainbow ripple: spectrum wave radiates outward from L14 after egg disappears
+                        if (rainbowRippleTime > 0 && shellUniforms[i]) {
+                            var rippleAge = t - rainbowRippleTime;
+                            var rippleDuration = 3.0; // seconds
+                            if (rippleAge < rippleDuration) {
+                                var totalLrs = activeLayers.length;
+                                var layerPos = (totalLrs - 1 - i) / (totalLrs - 1); // 0=L14(center), 1=L1(outer)
+                                // Wave front expands outward from center over time
+                                var waveFront = rippleAge / rippleDuration * 1.4;
+                                var dist = Math.abs(layerPos - waveFront);
+                                var wave = Math.exp(-dist * dist * 25) * Math.max(0, 1 - rippleAge / rippleDuration);
+                                // Hue cycles through spectrum based on layer position + time
+                                var hue = (layerPos * 0.8 + rippleAge * 0.5) % 1.0;
+                                // HSV to RGB (s=1, v=1)
+                                var hi = Math.floor(hue * 6);
+                                var f = hue * 6 - hi;
+                                var q = 1 - f;
+                                var rr, gg, bb;
+                                switch (hi % 6) {
+                                    case 0: rr=1; gg=f; bb=0; break;
+                                    case 1: rr=q; gg=1; bb=0; break;
+                                    case 2: rr=0; gg=1; bb=f; break;
+                                    case 3: rr=0; gg=q; bb=1; break;
+                                    case 4: rr=f; gg=0; bb=1; break;
+                                    case 5: rr=1; gg=0; bb=q; break;
+                                }
+                                var c = shellUniforms[i].uColor.value;
+                                c.x += (rr - c.x) * wave * 0.85;
+                                c.y += (gg - c.y) * wave * 0.85;
+                                c.z += (bb - c.z) * wave * 0.85;
+                                shellUniforms[i].uGlowIntensity.value += wave * 3.0;
+                                shellUniforms[i].uOpacity.value = Math.min(shellUniforms[i].uOpacity.value + wave * 0.2, 1.0);
+                            }
                         }
 
                         // Position laser-etched label to match disc
@@ -3963,6 +4081,27 @@
                     niOverlay.style.opacity = niOpacity;
                 }
 
+                // Seizure warning: shows at springCompress ~1.0, fades out once dismissed or passed
+                if (!seizureWarningDismissed && springCompress > 1.5 && springCompress < 1.95) {
+                    var warnBlend = Math.min(1, (springCompress - 1.5) / 0.15);
+                    var warnFade = springCompress > 1.8 ? Math.max(0, 1 - (springCompress - 1.8) / 0.15) : 1;
+                    seizureWarningEl.style.opacity = warnBlend * warnFade;
+                    // Position at L14 center
+                    var warnL14 = shellMeshes[activeLayers.length - 1];
+                    var warnPos = new THREE.Vector3().copy(warnL14.position);
+                    warnPos.project(camera);
+                    seizureWarningEl.style.left = ((warnPos.x * 0.5 + 0.5) * window.innerWidth) + 'px';
+                    seizureWarningEl.style.top = ((-warnPos.y * 0.5 + 0.5) * window.innerHeight) + 'px';
+                    if (springCompress > 1.9) seizureWarningDismissed = true;
+                } else {
+                    var warnCurOp = parseFloat(seizureWarningEl.style.opacity || 0);
+                    if (warnCurOp > 0.01) {
+                        seizureWarningEl.style.opacity = Math.max(0, warnCurOp * 0.9);
+                    }
+                }
+                // Reset dismissed flag when spring fully releases
+                if (springCompress < 0.2) seizureWarningDismissed = false;
+
                 // Spring art overlay: fades in above L8 sphere at high compression
                 if (springCompress > 1.1) {
                     var artBlendRaw = Math.min(1, (springCompress - 1.1) / 0.3); // 0→1 over 1.1→1.4
@@ -3989,13 +4128,15 @@
                     springEggEl.style.left = eggX + 'px';
                     springEggEl.style.top = eggY + 'px';
                     // Start as tiny white dot (0.2rem), grow to small egg (1.6rem max)
-                    var eggSize = 0.2 + eggSmooth * 1.4;
+                    var eggSize = 0.2 + eggSmooth * 2.68;
                     springEggEl.style.fontSize = eggSize + 'rem';
                     springEggEl.style.opacity = 0.3 + eggSmooth * 0.7;
                     springEggEl.style.transform = 'translate(-50%, -50%) scale(' + (0.15 + eggSmooth * 0.85) + ')';
-                    // Early phase: white dot via CSS filter brightness boost
-                    var dotPhase = Math.max(0, 1 - eggBlend * 3); // 1→0 over first third
-                    springEggEl.style.filter = 'drop-shadow(0 0 12px rgba(255,255,255,0.6)) drop-shadow(0 0 30px rgba(255,200,100,0.3)) brightness(' + (1 + dotPhase * 8) + ')';
+                    // Early phase: white dot via brightness boost; red shadows grow with egg
+                    var dotPhase = Math.max(0, 1 - eggBlend * 3);
+                    var glowShadowSize = Math.round(10 + eggSmooth * 40);
+                    var glowOuterSize = Math.round(20 + eggSmooth * 80);
+                    springEggEl.style.filter = 'drop-shadow(0 0 ' + glowShadowSize + 'px rgba(255,255,255,' + (0.3 + eggSmooth * 0.5) + ')) drop-shadow(0 0 ' + glowOuterSize + 'px rgba(220,230,255,' + (0.15 + eggSmooth * 0.4) + ')) brightness(' + (1 + dotPhase * 8) + ')';
                     springEggEl.style.pointerEvents = 'auto';
                     springEggEl.style.cursor = 'pointer';
                 } else {
