@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNPBK7CRGG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XNPBK7CRGG');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack & Defense Flow Visualizer | ONI Framework</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --bg-deeper: #060912;
+            --surface: #0d1117;
+            --surface-2: #161b22;
+            --border: #21262d;
+            --border-light: #30363d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #484f58;
+            --blue: #58a6ff;
+            --green: #3fb950;
+            --red: #f85149;
+            --orange: #f0883e;
+            --amber: #d29922;
+            --purple: #a371f7;
+            --pink: #ec4899;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============ HEADER ============ */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-left a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .header-left a:hover { color: var(--blue); }
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .header-title span { color: var(--red); }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .info-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .info-btn:hover { color: var(--text); border-color: var(--border-light); }
+
+        /* ============ INFO BOX ============ */
+        .info-box {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 24px;
+            width: 360px;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 100;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        }
+        .info-box.visible { display: block; }
+        .info-box h3 { font-size: 14px; margin-bottom: 10px; color: var(--text); }
+        .info-box p { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; }
+        .info-box kbd {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 1px 5px;
+            font-size: 11px;
+            font-family: monospace;
+            color: var(--text);
+        }
+
+        /* ============ MAIN LAYOUT ============ */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 360px;
+            height: calc(100vh - 49px);
+            overflow: hidden;
+        }
+
+        /* ============ LEFT SIDEBAR ============ */
+        .sidebar {
+            background: var(--bg-deeper);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .sidebar-header h3 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .filter-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        .filter-select {
+            flex: 1;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238b949e'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 22px;
+        }
+        .filter-select:focus { outline: none; border-color: var(--blue); }
+
+        .chain-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .chain-list::-webkit-scrollbar { width: 6px; }
+        .chain-list::-webkit-scrollbar-track { background: transparent; }
+        .chain-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .chain-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid transparent;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chain-card:hover {
+            border-color: var(--border-light);
+            background: var(--surface-2);
+        }
+        .chain-card.active {
+            background: var(--surface-2);
+            border-color: var(--border-light);
+        }
+        .chain-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .chain-card-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .chain-card-badges {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-critical { background: rgba(248,81,73,0.15); color: var(--red); }
+        .badge-high { background: rgba(240,136,62,0.15); color: var(--orange); }
+        .badge-medium { background: rgba(210,153,34,0.15); color: var(--amber); }
+        .badge-low { background: rgba(63,185,80,0.15); color: var(--green); }
+        .badge-read { background: rgba(88,166,255,0.12); color: var(--blue); }
+        .badge-write { background: rgba(248,81,73,0.12); color: var(--red); }
+        .badge-both { background: rgba(163,113,247,0.12); color: var(--purple); }
+        .chain-card-path {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+        .chain-card-path .layer-pip {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 700;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+        }
+        .chain-card-path .arrow-sym {
+            color: var(--text-muted);
+            font-size: 9px;
+        }
+
+        /* ============ CENTER VIZ ============ */
+        .center-panel {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        .viz-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            padding: 16px 24px;
+        }
+        .layer-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        .domain-group {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .domain-group-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 2px 0 2px 8px;
+        }
+        .layer-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            min-height: 36px;
+        }
+        .layer-row:hover {
+            border-color: var(--border-light);
+            background: var(--surface-2);
+        }
+        .layer-row.under-attack {
+            border-color: var(--red);
+            box-shadow: 0 0 12px rgba(248,81,73,0.15);
+        }
+        .layer-row.compromised {
+            border-color: var(--orange);
+            background: rgba(240,136,62,0.05);
+            box-shadow: 0 0 12px rgba(240,136,62,0.15);
+        }
+        .layer-row.defended {
+            border-color: var(--green);
+            box-shadow: 0 0 16px rgba(63,185,80,0.2);
+        }
+        .layer-row.breached {
+            border-color: var(--red);
+            background: rgba(248,81,73,0.08);
+            box-shadow: 0 0 20px rgba(248,81,73,0.3);
+            animation: breach-pulse 1s ease-in-out infinite;
+        }
+        @keyframes breach-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(248,81,73,0.3); }
+            50% { box-shadow: 0 0 35px rgba(248,81,73,0.5); }
+        }
+        .domain-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .domain-dot.silicon { background: var(--blue); }
+        .domain-dot.gateway { background: var(--amber); }
+        .domain-dot.biology { background: var(--green); }
+        .layer-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            width: 28px;
+            flex-shrink: 0;
+        }
+        .layer-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text);
+            flex: 1;
+        }
+        .layer-defense-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        .defense-icon {
+            width: 14px;
+            height: 14px;
+            fill: var(--text-muted);
+        }
+        .layer-status {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .layer-status.secure { color: var(--green); background: rgba(63,185,80,0.1); }
+        .layer-status.under-attack { color: var(--red); background: rgba(248,81,73,0.1); }
+        .layer-status.compromised { color: var(--orange); background: rgba(240,136,62,0.1); }
+        .layer-status.defended { color: var(--green); background: rgba(63,185,80,0.15); }
+        .layer-status.breached { color: var(--red); background: rgba(248,81,73,0.2); font-weight: 700; }
+
+        /* SVG Overlay */
+        .svg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* ============ CONTROLS BAR ============ */
+        .controls-bar {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .control-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .control-btn:hover { border-color: var(--border-light); background: var(--border); }
+        .control-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .control-btn.primary {
+            background: rgba(88,166,255,0.12);
+            border-color: rgba(88,166,255,0.3);
+            color: var(--blue);
+        }
+        .control-btn.primary:hover { background: rgba(88,166,255,0.2); }
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+        .speed-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .speed-slider {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--border);
+            outline: none;
+        }
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--blue);
+            cursor: pointer;
+        }
+        .progress-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            min-width: 70px;
+            text-align: right;
+        }
+
+        /* ============ RIGHT TIMELINE ============ */
+        .timeline-panel {
+            background: var(--bg-deeper);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .timeline-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .timeline-header h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .timeline-events {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 16px;
+        }
+        .timeline-events::-webkit-scrollbar { width: 6px; }
+        .timeline-events::-webkit-scrollbar-track { background: transparent; }
+        .timeline-events::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .timeline-event {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 4px;
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+        .timeline-event:hover { background: rgba(255,255,255,0.02); }
+        .timeline-dot-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 4px;
+        }
+        .timeline-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .timeline-dot.attack { background: var(--red); }
+        .timeline-dot.compromise { background: var(--orange); }
+        .timeline-dot.defense { background: var(--green); }
+        .timeline-dot.breach { background: var(--red); animation: breach-pulse-dot 1s ease-in-out infinite; }
+        @keyframes breach-pulse-dot {
+            0%, 100% { box-shadow: 0 0 4px rgba(248,81,73,0.4); }
+            50% { box-shadow: 0 0 10px rgba(248,81,73,0.8); }
+        }
+        .timeline-line {
+            width: 2px;
+            flex: 1;
+            background: var(--border);
+            margin-top: 4px;
+        }
+        .timeline-event-content {
+            flex: 1;
+        }
+        .timeline-event-label {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .timeline-event-label.attack { color: var(--red); }
+        .timeline-event-label.compromise { color: var(--orange); }
+        .timeline-event-label.defense { color: var(--green); }
+        .timeline-event-label.breach { color: var(--red); }
+        .timeline-event-desc {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        .timeline-event-layer {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .timeline-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* ============ TTP DETAIL PANEL ============ */
+        .ttp-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 440px;
+            height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            z-index: 200;
+            box-shadow: -8px 0 40px rgba(0,0,0,0.5);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+        .ttp-overlay.visible {
+            display: block;
+            transform: translateX(0);
+        }
+        .ttp-close {
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1;
+        }
+        .ttp-close-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .ttp-close-btn:hover { color: var(--text); border-color: var(--border-light); }
+        .ttp-close-label { font-size: 11px; color: var(--text-muted); }
+        .ttp-content {
+            padding: 20px;
+        }
+        .ttp-id {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .ttp-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .ttp-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .ttp-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .ttp-section {
+            margin-bottom: 20px;
+        }
+        .ttp-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .ttp-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .variance-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .variance-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            width: 24px;
+        }
+        .variance-bar-track {
+            flex: 1;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .variance-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        .variance-value {
+            font-size: 11px;
+            color: var(--text-muted);
+            width: 36px;
+            text-align: right;
+        }
+        .coherence-score {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .coherence-formula {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+        .firewall-decision {
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 8px;
+        }
+        .firewall-accept {
+            background: rgba(63,185,80,0.12);
+            color: var(--green);
+            border: 1px solid rgba(63,185,80,0.3);
+        }
+        .firewall-flag {
+            background: rgba(210,153,34,0.12);
+            color: var(--amber);
+            border: 1px solid rgba(210,153,34,0.3);
+        }
+        .firewall-reject {
+            background: rgba(248,81,73,0.12);
+            color: var(--red);
+            border: 1px solid rgba(248,81,73,0.3);
+        }
+        .ttp-narrative {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-style: italic;
+            padding: 10px 14px;
+            border-left: 3px solid var(--border-light);
+            background: rgba(255,255,255,0.02);
+            border-radius: 0 6px 6px 0;
+        }
+        .defense-list {
+            list-style: none;
+        }
+        .defense-list li {
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        .defense-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+        .mitigation-list {
+            list-style: none;
+        }
+        .mitigation-list li {
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        .mitigation-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 2px;
+            background: var(--blue);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+                height: auto;
+            }
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                max-height: 250px;
+            }
+            .chain-list { max-height: 150px; }
+            .timeline-panel {
+                border-left: none;
+                border-top: 1px solid var(--border);
+                max-height: 300px;
+            }
+            .ttp-overlay { width: 100%; }
+            .header { flex-wrap: wrap; gap: 8px; }
+            .legend { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-left">
+        <a href="index.html">&larr; Back to Visualizations</a>
+        <div class="header-title"><span>Attack</span> & Defense Flow Visualizer</div>
+    </div>
+    <div class="header-right">
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Attack</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div> Compromise</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Defense</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> Read</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> Breach</div>
+        </div>
+        <button class="info-btn" id="infoToggle">? Info</button>
+    </div>
+</div>
+
+<!-- INFO BOX -->
+<div class="info-box" id="infoBox">
+    <h3>How to Use</h3>
+    <p>Select an attack chain from the left sidebar to visualize how multi-layer attacks propagate through the ONI 14-layer stack.</p>
+    <p>Use the controls to <kbd>Play</kbd>, <kbd>Step</kbd>, or <kbd>Reset</kbd> the animation. Click any layer during the animation to see TTP details.</p>
+    <p><strong>Keyboard:</strong> <kbd>Space</kbd> Play/Pause, <kbd>&rarr;</kbd> Step, <kbd>R</kbd> Reset, <kbd>Esc</kbd> Close panels</p>
+    <p>Chain 11 (Coherence Spoofing) demonstrates a breach of the L8 Neural Gateway -- the most critical scenario in the ONI threat model.</p>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Attack Chains</h3>
+            <div class="filter-row">
+                <select class="filter-select" id="filterDomain">
+                    <option value="">All Domains</option>
+                    <option value="network">Network</option>
+                    <option value="gateway">Gateway</option>
+                    <option value="neural">Neural</option>
+                    <option value="cognitive">Cognitive</option>
+                    <option value="multi-domain">Multi-Domain</option>
+                </select>
+                <select class="filter-select" id="filterSeverity">
+                    <option value="">All Severity</option>
+                    <option value="critical">Critical</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                </select>
+            </div>
+            <div class="filter-row">
+                <select class="filter-select" id="filterDirection">
+                    <option value="">All Directions</option>
+                    <option value="write">Write</option>
+                    <option value="read">Read</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+        </div>
+        <div class="chain-list" id="chainList"></div>
+    </div>
+
+    <!-- CENTER VIZ -->
+    <div class="center-panel">
+        <div class="viz-container" id="vizContainer">
+            <svg class="svg-overlay" id="svgOverlay">
+                <defs>
+                    <filter id="glowRed" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                    <filter id="glowBlue" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                    <filter id="glowGreen" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                    <filter id="glowOrange" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                </defs>
+            </svg>
+            <div class="layer-stack" id="layerStack"></div>
+        </div>
+        <div class="controls-bar">
+            <button class="control-btn primary" id="btnPlay" disabled>&#9654; Play</button>
+            <button class="control-btn" id="btnStep" disabled>&#9654;| Step</button>
+            <button class="control-btn" id="btnReset" disabled>&#8634; Reset</button>
+            <span class="progress-text" id="progressText">No chain selected</span>
+            <div class="speed-control">
+                <span class="speed-label">Speed:</span>
+                <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="3" step="0.25" value="1">
+                <span class="speed-label" id="speedValue">1x</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT TIMELINE -->
+    <div class="timeline-panel">
+        <div class="timeline-header">
+            <h3>Event Timeline</h3>
+        </div>
+        <div class="timeline-events" id="timelineEvents">
+            <div class="timeline-empty">
+                Select an attack chain and press <strong>Play</strong> or <strong>Step</strong> to see events appear here.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- TTP DETAIL PANEL -->
+<div class="ttp-overlay" id="ttpPanel">
+    <div class="ttp-close">
+        <span class="ttp-close-label">TTP Detail</span>
+        <button class="ttp-close-btn" id="ttpCloseBtn">&times;</button>
+    </div>
+    <div class="ttp-content" id="ttpContent"></div>
+</div>
+
+<script>
+(function() {
+    "use strict";
+
+    // ==================== DATA ====================
+
+    var tacticColors = {
+        'Reconnaissance': '#a371f7',
+        'Initial Access': '#f85149',
+        'Execution': '#f0883e',
+        'Persistence': '#d29922',
+        'Privilege Escalation': '#7ee787',
+        'Defense Evasion': '#3fb950',
+        'Credential Access': '#39d353',
+        'Collection': '#2f81f7',
+        'Lateral Movement': '#58a6ff',
+        'Impact': '#ff7b72'
+    };
+
+    var layerDefs = [
+        { num: 14, name: 'Identity & Ethics', domain: 'biology' },
+        { num: 13, name: 'Semantic Layer', domain: 'biology' },
+        { num: 12, name: 'Cognitive Session', domain: 'biology' },
+        { num: 11, name: 'Cognitive Transport', domain: 'biology' },
+        { num: 10, name: 'Neural Protocol', domain: 'biology' },
+        { num: 9, name: 'Signal Processing', domain: 'biology' },
+        { num: 8, name: 'Neural Gateway', domain: 'gateway' },
+        { num: 7, name: 'Application', domain: 'silicon' },
+        { num: 6, name: 'Presentation', domain: 'silicon' },
+        { num: 5, name: 'Session', domain: 'silicon' },
+        { num: 4, name: 'Transport', domain: 'silicon' },
+        { num: 3, name: 'Network', domain: 'silicon' },
+        { num: 2, name: 'Data Link', domain: 'silicon' },
+        { num: 1, name: 'Physical', domain: 'silicon' }
+    ];
+
+    var layerDefenses = {
+        1: ['FHSS', 'AES-128 encrypted RF', 'EM shielding in titanium housing', 'Signal strength anomaly detection'],
+        2: ['Cryptographic frame authentication (HMAC)', 'Sequence number validation', 'Rolling codes', 'Hardware-bound device certificates'],
+        3: ['IPsec', 'Network segmentation (BCI on isolated VLAN)', 'Ingress filtering', 'Static ARP entries'],
+        4: ['TLS 1.3', 'SYN cookies', 'Random initial sequence numbers', 'Rate limiting'],
+        5: ['Cryptographically random session tokens', 'Short session timeouts (15-30 min)', 'Re-authentication for sensitive ops', 'Token binding to hardware'],
+        6: ['AES-256-GCM authenticated encryption', 'Strict format validation', 'No protocol version fallback (TLS 1.3 only)', 'Disable compression for sensitive data'],
+        7: ['Strict input validation on all API endpoints', 'Memory-safe languages (Rust)', 'Code signing for firmware', 'Least privilege permissions'],
+        8: ['ONI Firewall with Coherence validation (Cs = e^-(pV+tV+gV))', 'Zero-trust architecture', 'Hardware-bound cryptographic attestation', 'Physical isolation of read/write channels'],
+        9: ['Hardware-level signal authentication', 'Redundant processing pipelines', 'Anomaly detection on signal statistics', 'Tamper-evident processing logs'],
+        10: ['Schema validation with strict type checking', 'Cryptographic message authentication (HMAC)', 'Fuzz testing to harden parsers', 'Version control with secure rollback'],
+        11: ['End-to-end encryption of cognitive data', 'Sequence numbers for replay/reorder detection', 'Integrity hashes at each hop', 'Temporal freshness guarantees'],
+        12: ['Context integrity verification against baseline', 'Attention anomaly detection', 'Session tokens with cryptographic binding', 'Cross-reference with long-term memory'],
+        13: ['Intent verification against behavioral baseline', 'Goal consistency checking over time', 'Semantic anomaly detection (meaning drift)', 'Human confirmation for critical decisions'],
+        14: ['Long-term baseline tracking ("identity signature")', 'Rate limiting on personality-affecting stimulation', 'Cross-layer coherence validation', 'Human-in-the-loop sovereignty checks']
+    };
+
+    var techniques = {
+        'T1.1': { id:'T1.1', name:'EM Side-Channel Capture', tactic:'Reconnaissance', layer:1, description:'Passive electromagnetic emanation capture to extract neural signal patterns without direct access', direction:'read', pV:0.15, tV:0.10, gV:0.08, auth:false, narrative:'The attacker positions sensitive EM receivers near the target to passively capture electromagnetic emanations from BCI hardware, extracting neural signal patterns without making physical contact.', severity:'medium', mitigations:['EM shielding in titanium housing','Signal strength anomaly detection','TEMPEST-grade emissions controls'] },
+        'T1.2': { id:'T1.2', name:'Signal Injection', tactic:'Initial Access', layer:1, description:'Inject malicious signals through physical medium to corrupt or spoof neural readings', direction:'write', pV:0.80, tV:0.60, gV:0.50, auth:false, narrative:'Through carefully crafted RF signals, the attacker introduces malicious waveforms that mimic legitimate neural patterns, corrupting readings at the physical layer.', severity:'high', mitigations:['FHSS frequency hopping','AES-128 encrypted RF link','Signal authentication at hardware level'] },
+        'T1.3': { id:'T1.3', name:'Hardware Implant', tactic:'Persistence', layer:1, description:'Physical modification or implantation of malicious components in BCI hardware', direction:'write', pV:0.30, tV:0.25, gV:0.20, auth:false, narrative:'A supply chain or physical access attack plants a rogue component inside the BCI device, enabling persistent monitoring and signal manipulation.', severity:'high', mitigations:['Tamper-evident housing','Hardware attestation on boot','Supply chain verification'] },
+        'T2.1': { id:'T2.1', name:'MAC Spoofing', tactic:'Initial Access', layer:2, description:'Impersonate legitimate BCI device by spoofing MAC address', direction:'write', pV:0.40, tV:0.35, gV:0.15, auth:false, narrative:'By cloning the MAC address of a trusted BCI device, the attacker gains initial access to the data link layer, appearing as an authorized device.', severity:'medium', mitigations:['Hardware-bound device certificates','Rolling codes','Cryptographic frame authentication'] },
+        'T2.2': { id:'T2.2', name:'Frame Injection', tactic:'Execution', layer:2, description:'Inject malicious frames into data link layer', direction:'write', pV:0.55, tV:0.45, gV:0.30, auth:false, narrative:'Malicious data frames are injected at the link layer to execute unauthorized commands or corrupt data in transit.', severity:'high', mitigations:['HMAC on all frames','Sequence number validation','Strict frame format checking'] },
+        'T3.1': { id:'T3.1', name:'Route Hijacking', tactic:'Collection', layer:3, description:'Redirect neural data streams through attacker-controlled network paths', direction:'read', pV:0.20, tV:0.50, gV:0.10, auth:false, narrative:'The attacker manipulates routing tables to redirect neural data streams through compromised network nodes for passive collection.', severity:'medium', mitigations:['IPsec tunnel encryption','Network segmentation','Ingress filtering'] },
+        'T3.2': { id:'T3.2', name:'IP Spoofing', tactic:'Defense Evasion', layer:3, description:'Mask attack origin by spoofing source IP', direction:'write', pV:0.35, tV:0.30, gV:0.20, auth:false, narrative:'Source IP addresses are forged to evade network-layer defenses and mask the true origin of the attack.', severity:'medium', mitigations:['Ingress filtering','Static ARP entries','Network anomaly detection'] },
+        'T4.1': { id:'T4.1', name:'Neural DoS', tactic:'Impact', layer:4, description:'Overwhelm transport layer with malformed packets', direction:'write', pV:1.50, tV:1.20, gV:0.80, auth:false, narrative:'A flood of malformed packets overwhelms the transport layer, causing denial of service and disrupting all BCI communication.', severity:'critical', mitigations:['SYN cookies','Rate limiting','Random initial sequence numbers'] },
+        'T4.2': { id:'T4.2', name:'Stream Injection', tactic:'Execution', layer:4, description:'Insert malicious payloads into active neural transport streams', direction:'write', pV:0.45, tV:0.50, gV:0.25, auth:false, narrative:'The attacker inserts malicious payloads into active transport streams, exploiting the bidirectional nature of neural data flow.', severity:'high', mitigations:['TLS 1.3 encryption','Sequence number validation','Stream integrity checks'] },
+        'T5.1': { id:'T5.1', name:'BCI Session Hijacking', tactic:'Credential Access', layer:5, description:'Take over authenticated BCI sessions', direction:'write', pV:0.08, tV:0.06, gV:0.04, auth:true, narrative:'By capturing or predicting session tokens, the attacker takes over an authenticated BCI session, gaining full access to the neural interface.', severity:'critical', mitigations:['Cryptographically random session tokens','Short session timeouts','Re-authentication for sensitive operations'] },
+        'T5.2': { id:'T5.2', name:'Neural Replay Attack', tactic:'Initial Access', layer:5, description:'Capture and replay valid neural session tokens', direction:'write', pV:0.12, tV:0.10, gV:0.05, auth:true, narrative:'Valid session initialization sequences are captured and replayed to establish unauthorized sessions.', severity:'high', mitigations:['Nonce-based authentication','Token binding to hardware','Temporal freshness checks'] },
+        'T6.1': { id:'T6.1', name:'Encryption Downgrade', tactic:'Defense Evasion', layer:6, description:'Force use of weak or null encryption', direction:'write', pV:0.35, tV:0.40, gV:0.30, auth:false, narrative:'The attacker forces a protocol downgrade to weaken or eliminate encryption, exposing neural data in transit.', severity:'high', mitigations:['No protocol version fallback (TLS 1.3 only)','Strict format validation','Compression disabled'] },
+        'T6.2': { id:'T6.2', name:'Neural Format Exploit', tactic:'Execution', layer:6, description:'Exploit neural data format parsing vulnerabilities', direction:'write', pV:0.50, tV:0.35, gV:0.25, auth:false, narrative:'Maliciously crafted neural data payloads exploit parsing vulnerabilities in the presentation layer.', severity:'high', mitigations:['Strict format validation','Memory-safe parsing','Input length limits'] },
+        'T7.1': { id:'T7.1', name:'BCI API Exploitation', tactic:'Initial Access', layer:7, description:'Exploit BCI application API vulnerabilities', direction:'write', pV:0.25, tV:0.20, gV:0.15, auth:false, narrative:'Vulnerabilities in the BCI application API are exploited to gain unauthorized access to neural interface controls.', severity:'high', mitigations:['Strict input validation on all API endpoints','Memory-safe languages (Rust)','Rate limiting'] },
+        'T7.2': { id:'T7.2', name:'Neural Command Injection', tactic:'Execution', layer:7, description:'Inject malicious commands through API calls', direction:'write', pV:0.40, tV:0.30, gV:0.20, auth:false, narrative:'Malicious commands are injected through the API to execute unauthorized neural interface operations.', severity:'high', mitigations:['Input sanitization','Command whitelisting','Parameterized interfaces'] },
+        'T7.3': { id:'T7.3', name:'Brain Spyware', tactic:'Collection', layer:7, description:'Malicious BCI app silently exfiltrating neural data', direction:'read', pV:0.05, tV:0.04, gV:0.03, auth:true, narrative:'A seemingly legitimate BCI application covertly collects and exfiltrates neural data to attacker-controlled infrastructure.', severity:'high', mitigations:['App sandboxing','Network traffic monitoring','Data access audit logs'] },
+        'T7.4': { id:'T7.4', name:'Firmware Privilege Escalation', tactic:'Privilege Escalation', layer:7, description:'Escalate from app-level to firmware-level device control', direction:'write', pV:0.15, tV:0.12, gV:0.08, auth:true, narrative:'The attacker escalates privileges from the application layer to firmware level, gaining low-level control over the BCI device.', severity:'critical', mitigations:['Code signing for firmware','Least privilege permissions','Secure boot chain'] },
+        'T8.1': { id:'T8.1', name:'Gateway Bypass', tactic:'Defense Evasion', layer:8, description:'Circumvent neural gateway security controls', direction:'write', pV:0.20, tV:0.15, gV:0.10, auth:true, narrative:'The attacker attempts to bypass the Neural Gateway -- the critical bridge between silicon and biology -- by evading coherence checks.', severity:'critical', mitigations:['ONI Firewall coherence validation','Zero-trust architecture','Hardware-bound attestation'] },
+        'T8.2': { id:'T8.2', name:'NSAM Baseline Poisoning', tactic:'Persistence', layer:8, description:'Gradually corrupt NSAM training baselines', direction:'write', pV:0.10, tV:0.08, gV:0.06, auth:true, narrative:'Over time, subtle manipulations gradually shift the NSAM baseline, enabling future attacks to pass coherence checks.', severity:'critical', mitigations:['Immutable baseline snapshots','Statistical drift detection','Multi-source baseline verification'] },
+        'T8.3': { id:'T8.3', name:'Coherence Metric Spoofing', tactic:'Defense Evasion', layer:8, description:'Forge valid Cs coherence scores to pass NSAM inspection undetected', direction:'write', pV:0.03, tV:0.04, gV:0.02, auth:true, narrative:'The most dangerous technique: the attacker forges valid coherence scores (Cs), making malicious signals appear legitimate to the ONI Firewall. This represents the fundamental threat the coherence metric is designed to prevent.', severity:'critical', mitigations:['Hardware-rooted coherence computation','Multi-sensor cross-validation','Tamper-evident coherence logs','Real-time anomaly correlation'] },
+        'T8.4': { id:'T8.4', name:'Bidirectional Channel Exploit', tactic:'Lateral Movement', layer:8, description:'Exploit read/write neural interface for full bidirectional compromise', direction:'write', pV:0.18, tV:0.15, gV:0.10, auth:true, narrative:'The attacker exploits the bidirectional nature of the neural gateway to pivot between reading neural data and writing stimulation commands.', severity:'critical', mitigations:['Physical isolation of read/write channels','Directional data diodes','Separate authentication per channel'] },
+        'T9.1': { id:'T9.1', name:'Sensory Overload', tactic:'Impact', layer:9, description:'Overwhelm neural signal processing with excessive stimulation', direction:'write', pV:0.90, tV:0.70, gV:0.60, auth:false, narrative:'Excessive signal input overwhelms the neural signal processing pipeline, causing disruption to the biological interface.', severity:'critical', mitigations:['Hardware-level signal authentication','Redundant processing pipelines','Amplitude limiting circuits'] },
+        'T9.2': { id:'T9.2', name:'Neural Filter Bypass', tactic:'Defense Evasion', layer:9, description:'Craft signals that slip through sensory gating', direction:'write', pV:0.15, tV:0.12, gV:0.08, auth:false, narrative:'Carefully crafted signals are designed to bypass neural filtering mechanisms, slipping through sensory gating undetected.', severity:'high', mitigations:['Multi-stage signal validation','Anomaly detection on signal statistics','Tamper-evident processing logs'] },
+        'T9.3': { id:'T9.3', name:'Neural Topology Scanning', tactic:'Reconnaissance', layer:9, description:'Systematic probe to map signal processing pathways', direction:'read', pV:0.10, tV:0.08, gV:0.05, auth:false, narrative:'Systematic probing maps the neural signal processing topology, providing intelligence for targeted future attacks.', severity:'medium', mitigations:['Probe detection algorithms','Rate limiting on diagnostic interfaces','Honeypot signal paths'] },
+        'T9.4': { id:'T9.4', name:'Neural Jamming', tactic:'Impact', layer:9, description:'Targeted inhibition suppressing legitimate neural activity', direction:'write', pV:0.60, tV:0.50, gV:0.40, auth:false, narrative:'Targeted interference patterns suppress legitimate neural activity, effectively jamming the biological signal processing layer.', severity:'high', mitigations:['Redundant processing pipelines','Jamming detection algorithms','Automatic failsafe shutdown'] },
+        'T10.1': { id:'T10.1', name:'Spike Timing Attack', tactic:'Execution', layer:10, description:'Alter spike timing patterns to corrupt neural message meaning', direction:'write', pV:0.55, tV:0.20, gV:0.15, auth:false, narrative:'By manipulating the precise timing of neural spikes, the attacker corrupts the temporal coding that carries meaning in neural protocols.', severity:'high', mitigations:['Schema validation with strict type checking','Temporal integrity verification','Spike pattern authentication'] },
+        'T10.2': { id:'T10.2', name:'False Rate Pattern Injection', tactic:'Impact', layer:10, description:'Inject fabricated firing rate patterns', direction:'write', pV:0.40, tV:0.35, gV:0.30, auth:false, narrative:'Fabricated neural firing rate patterns are injected to produce false sensory experiences or motor commands.', severity:'high', mitigations:['Rate pattern validation','Cross-reference with expected patterns','Cryptographic message authentication'] },
+        'T10.3': { id:'T10.3', name:'Neural Codec Interception', tactic:'Collection', layer:10, description:'Intercept and decode neural encoding patterns', direction:'read', pV:0.08, tV:0.06, gV:0.04, auth:false, narrative:'The attacker intercepts neural protocol messages and decodes the encoding scheme to extract the semantic content of neural communications.', severity:'medium', mitigations:['End-to-end neural encoding encryption','Protocol obfuscation','Decoy signal injection'] },
+        'T10.4': { id:'T10.4', name:'Neural Spoofing', tactic:'Defense Evasion', layer:10, description:'Inject false neural signals mimicking legitimate patterns', direction:'write', pV:0.12, tV:0.10, gV:0.08, auth:false, narrative:'False neural signals that perfectly mimic legitimate patterns are injected to evade protocol-level defenses.', severity:'high', mitigations:['Cryptographic message authentication (HMAC)','Multi-factor signal validation','Behavioral baseline comparison'] },
+        'T11.1': { id:'T11.1', name:'Neural Pathway Hijack', tactic:'Lateral Movement', layer:11, description:'Redirect cognitive signals through unintended neural pathways', direction:'write', pV:0.30, tV:0.45, gV:0.20, auth:false, narrative:'Cognitive signals are redirected through unintended neural pathways, enabling the attacker to intercept or modify thoughts in transit.', severity:'high', mitigations:['End-to-end encryption of cognitive data','Pathway integrity verification','Route anomaly detection'] },
+        'T11.2': { id:'T11.2', name:'Synaptic Timing Disruption', tactic:'Impact', layer:11, description:'Interfere with neurotransmitter release timing', direction:'write', pV:0.25, tV:0.55, gV:0.15, auth:false, narrative:'Precise interference with synaptic timing disrupts the temporal coordination of neurotransmitter release, degrading cognitive transport fidelity.', severity:'high', mitigations:['Temporal freshness guarantees','Integrity hashes at each hop','Timing anomaly detection'] },
+        'T11.3': { id:'T11.3', name:'Memory Trace Interception', tactic:'Collection', layer:11, description:'Intercept signals during hippocampal memory consolidation', direction:'read', pV:0.06, tV:0.05, gV:0.03, auth:true, narrative:'During the vulnerable window of hippocampal memory consolidation, the attacker intercepts the neural signals encoding new memories.', severity:'critical', mitigations:['Encryption during consolidation windows','Temporal access restrictions','Memory consolidation monitoring'] },
+        'T11.4': { id:'T11.4', name:'Neural Selective Forwarding', tactic:'Execution', layer:11, description:'Selectively stimulate some neural pathways while inhibiting others', direction:'write', pV:0.35, tV:0.30, gV:0.20, auth:false, narrative:'The attacker selectively amplifies certain neural pathways while suppressing others, subtly biasing cognitive processing without triggering obvious anomalies.', severity:'high', mitigations:['Sequence numbers for replay/reorder detection','Pathway balance monitoring','Cross-pathway integrity checks'] },
+        'T12.1': { id:'T12.1', name:'Working Memory Poisoning', tactic:'Impact', layer:12, description:'Inject false info into active working memory', direction:'write', pV:0.45, tV:0.30, gV:0.25, auth:false, narrative:'False information is injected directly into the working memory buffer, contaminating active cognitive processing with attacker-controlled data.', severity:'critical', mitigations:['Context integrity verification against baseline','Working memory checksums','Source authentication for memory inputs'] },
+        'T12.2': { id:'T12.2', name:'Attention Capture Attack', tactic:'Collection', layer:12, description:'Force attention toward attacker-chosen stimuli', direction:'read', pV:0.10, tV:0.08, gV:0.05, auth:true, narrative:'The attacker manipulates attention mechanisms to force focus on specific stimuli, enabling extraction of neural responses to chosen inputs.', severity:'high', mitigations:['Attention anomaly detection','Voluntary attention verification','Stimulus source authentication'] },
+        'T12.3': { id:'T12.3', name:'P300 Interrogation', tactic:'Credential Access', layer:12, description:'Present subliminal stimuli to extract P300 responses', direction:'read', pV:0.04, tV:0.05, gV:0.03, auth:true, narrative:'Subliminal stimuli are presented to evoke P300 event-related potentials, which are then analyzed to extract private information such as PINs, passwords, or personal knowledge.', severity:'critical', mitigations:['Subliminal stimulus detection','P300 response masking','Attention anomaly detection'] },
+        'T12.4': { id:'T12.4', name:'Cognitive State Spoofing', tactic:'Defense Evasion', layer:12, description:'Forge cognitive state indicators', direction:'write', pV:0.10, tV:0.08, gV:0.06, auth:true, narrative:'Cognitive state indicators are forged to make the system believe the user is in a different mental state than reality, evading state-based security controls.', severity:'high', mitigations:['Cross-reference with long-term memory','Multi-modal state verification','Historical state pattern matching'] },
+        'T13.1': { id:'T13.1', name:'Semantic Interference', tactic:'Impact', layer:13, description:'Induce misinterpretation of perceived information', direction:'write', pV:0.50, tV:0.35, gV:0.30, auth:false, narrative:'Targeted interference at the semantic layer causes the user to misinterpret perceived information, seeing meanings that were not intended.', severity:'critical', mitigations:['Semantic anomaly detection (meaning drift)','Context consistency checking','Multi-source verification prompts'] },
+        'T13.2': { id:'T13.2', name:'Intent Subversion', tactic:'Execution', layer:13, description:'Manipulate formation of user intentions', direction:'write', pV:0.08, tV:0.06, gV:0.05, auth:true, narrative:'The attacker subtly manipulates the neural processes underlying intention formation, causing the user to form intentions that serve the attacker\'s goals.', severity:'critical', mitigations:['Intent verification against behavioral baseline','Goal consistency checking over time','Human confirmation for critical decisions'] },
+        'T13.3': { id:'T13.3', name:'Thought Decoding', tactic:'Collection', layer:13, description:'Decode semantic representations from neural activity', direction:'read', pV:0.05, tV:0.04, gV:0.03, auth:true, narrative:'Advanced signal analysis decodes the semantic content of thoughts from neural activity patterns, extracting meaning directly from cognitive processing.', severity:'critical', mitigations:['Neural encoding encryption','Semantic noise injection','Access control on semantic-level data'] },
+        'T13.4': { id:'T13.4', name:'Neural Sinkhole', tactic:'Lateral Movement', layer:13, description:'Attract semantic signals to compromised region', direction:'write', pV:0.25, tV:0.20, gV:0.15, auth:false, narrative:'A compromised neural region is configured to attract semantic signals, acting as a sinkhole that captures cognitive processing for analysis or manipulation.', severity:'high', mitigations:['Signal routing verification','Sinkhole detection algorithms','Distributed processing validation'] },
+        'T14.1': { id:'T14.1', name:'Identity Fragmentation', tactic:'Impact', layer:14, description:'Disrupt coherent sense of self', direction:'write', pV:0.60, tV:0.45, gV:0.40, auth:false, narrative:'Coordinated disruption across multiple cognitive layers fragments the user\'s coherent sense of self, the most devastating attack in the ONI threat model.', severity:'critical', mitigations:['Long-term baseline tracking','Identity coherence monitoring','Emergency disconnect protocols'] },
+        'T14.2': { id:'T14.2', name:'Agency Manipulation', tactic:'Impact', layer:14, description:'Compromise user sense of voluntary control', direction:'write', pV:0.35, tV:0.25, gV:0.20, auth:false, narrative:'The user\'s sense of voluntary control is compromised, making them uncertain whether their actions are self-initiated or externally controlled.', severity:'critical', mitigations:['Rate limiting on personality-affecting stimulation','Agency verification protocols','Human-in-the-loop sovereignty checks'] },
+        'T14.3': { id:'T14.3', name:'Self-Model Corruption', tactic:'Persistence', layer:14, description:'Gradually alter internal self-representation', direction:'write', pV:0.06, tV:0.05, gV:0.04, auth:true, narrative:'Over extended periods, the attacker subtly alters the user\'s internal self-model, a slow-burn persistence technique that is extremely difficult to detect.', severity:'critical', mitigations:['Long-term baseline tracking ("identity signature")','Periodic self-model audits','Cross-layer coherence validation'] },
+        'T14.4': { id:'T14.4', name:'Brainprint Theft', tactic:'Credential Access', layer:14, description:'Extract unique neural authentication signature', direction:'read', pV:0.02, tV:0.02, gV:0.01, auth:true, narrative:'The user\'s unique neural authentication signature -- their "brainprint" -- is extracted, enabling permanent impersonation of their neural identity.', severity:'critical', mitigations:['Multi-factor neural authentication','Brainprint rotation protocols','Extraction attempt detection'] },
+        'T14.5': { id:'T14.5', name:'Neural Sybil Attack', tactic:'Defense Evasion', layer:14, description:'One source impersonates multiple neural signal origins', direction:'write', pV:0.30, tV:0.25, gV:0.20, auth:false, narrative:'A single malicious source impersonates multiple neural signal origins, overwhelming identity verification systems with conflicting identity claims.', severity:'high', mitigations:['Cross-layer coherence validation','Source diversity verification','Signal origin authentication'] }
+    };
+
+    var chains = [
+        {
+            id: 'blueborne', name: 'BlueBorne Exploit', domain: 'network', severity: 'high', direction: 'write', slug: 'blueborne',
+            steps: [
+                { type: 'attack', layer: 1, technique: 'T1.2', label: 'RF Probe & Signal Injection' },
+                { type: 'compromise', layer: 1 },
+                { type: 'attack', layer: 2, technique: 'T2.1', label: 'MAC Spoofing' },
+                { type: 'compromise', layer: 2 },
+                { type: 'attack', layer: 7, technique: 'T7.2', label: 'Payload Delivery' },
+                { type: 'defense', layer: 7, label: 'Code Signing Verification' }
+            ]
+        },
+        {
+            id: 'signal-injection', name: 'Signal Injection', domain: 'gateway', severity: 'high', direction: 'write', slug: 'signal-injection',
+            steps: [
+                { type: 'attack', layer: 8, technique: 'T8.1', label: 'Electrode Access' },
+                { type: 'compromise', layer: 8 },
+                { type: 'attack', layer: 9, technique: 'T9.1', label: 'LFP Manipulation' },
+                { type: 'defense', layer: 9, label: 'Coherence Check' }
+            ]
+        },
+        {
+            id: 'replay-attack', name: 'Replay Attack', domain: 'network', severity: 'medium', direction: 'read', slug: 'replay-attack',
+            steps: [
+                { type: 'attack', layer: 3, technique: 'T3.1', label: 'Packet Capture' },
+                { type: 'compromise', layer: 3 },
+                { type: 'attack', layer: 4, technique: 'T4.2', label: 'Session Replay' },
+                { type: 'defense', layer: 4, label: 'Nonce Validation' }
+            ]
+        },
+        {
+            id: 'cognitive-dos', name: 'Cognitive DoS', domain: 'neural', severity: 'high', direction: 'write', slug: 'cognitive-dos',
+            steps: [
+                { type: 'attack', layer: 10, technique: 'T10.1', label: 'Theta Flood' },
+                { type: 'compromise', layer: 10 },
+                { type: 'attack', layer: 11, technique: 'T11.2', label: 'Memory Overflow' },
+                { type: 'defense', layer: 11, label: 'Rate Limiting' }
+            ]
+        },
+        {
+            id: 'identity-drift', name: 'Identity Drift', domain: 'cognitive', severity: 'critical', direction: 'write', slug: 'identity-drift',
+            steps: [
+                { type: 'attack', layer: 11, technique: 'T11.4', label: 'Subtle Encoding' },
+                { type: 'compromise', layer: 11 },
+                { type: 'attack', layer: 12, technique: 'T12.2', label: 'Attention Bias' },
+                { type: 'compromise', layer: 12 },
+                { type: 'attack', layer: 13, technique: 'T13.2', label: 'Decision Influence' },
+                { type: 'defense', layer: 13, label: 'Baseline Deviation' }
+            ]
+        },
+        {
+            id: 'motor-hijacking', name: 'Motor Hijacking', domain: 'multi-domain', severity: 'critical', direction: 'write', slug: 'motor-hijacking',
+            steps: [
+                { type: 'attack', layer: 7, technique: 'T7.2', label: 'Unauthorized Movement Commands' },
+                { type: 'compromise', layer: 7 },
+                { type: 'attack', layer: 8, technique: 'T8.1', label: 'Gateway Penetration' },
+                { type: 'defense', layer: 8, label: 'ONI Firewall Coherence Validation' }
+            ]
+        },
+        {
+            id: 'sensory-override', name: 'Sensory Override', domain: 'multi-domain', severity: 'high', direction: 'write', slug: 'sensory-override',
+            steps: [
+                { type: 'attack', layer: 8, technique: 'T8.4', label: 'Stimulation Channel Access' },
+                { type: 'compromise', layer: 8 },
+                { type: 'attack', layer: 9, technique: 'T9.2', label: 'Fake Sensory Input' },
+                { type: 'defense', layer: 9, label: 'Hardware Signal Authentication' }
+            ]
+        },
+        {
+            id: 'closed-loop-poisoning', name: 'Closed-Loop Poisoning', domain: 'multi-domain', severity: 'critical', direction: 'both', slug: 'closed-loop-poisoning',
+            steps: [
+                { type: 'attack', layer: 8, technique: 'T8.2', label: 'Feedback System Access' },
+                { type: 'compromise', layer: 8 },
+                { type: 'attack', layer: 9, technique: 'T9.2', label: 'Filter Manipulation' },
+                { type: 'compromise', layer: 9 },
+                { type: 'attack', layer: 10, technique: 'T10.4', label: 'Protocol Corruption' },
+                { type: 'defense', layer: 10, label: 'Schema Validation' }
+            ]
+        },
+        {
+            id: 'cognitive-state-manipulation', name: 'Cognitive State Manipulation', domain: 'cognitive', severity: 'critical', direction: 'both', slug: 'cognitive-state-manipulation',
+            steps: [
+                { type: 'attack', layer: 11, technique: 'T11.1', label: 'Neural Pathway Redirect' },
+                { type: 'compromise', layer: 11 },
+                { type: 'attack', layer: 12, technique: 'T12.1', label: 'Working Memory Inject' },
+                { type: 'compromise', layer: 12 },
+                { type: 'attack', layer: 13, technique: 'T13.1', label: 'Semantic Corruption' },
+                { type: 'compromise', layer: 13 },
+                { type: 'attack', layer: 14, technique: 'T14.2', label: 'Agency Override' },
+                { type: 'defense', layer: 14, label: 'Long-term Baseline Tracking' }
+            ]
+        },
+        {
+            id: 'brain-spyware', name: 'Brain Spyware Exfiltration', domain: 'multi-domain', severity: 'high', direction: 'read', slug: 'brain-spyware',
+            steps: [
+                { type: 'attack', layer: 7, technique: 'T7.3', label: 'SDK Data Collection' },
+                { type: 'compromise', layer: 7 },
+                { type: 'attack', layer: 8, technique: 'T8.1', label: 'Gateway Read Bypass' },
+                { type: 'defense', layer: 8, label: 'Zero-trust Architecture' }
+            ]
+        },
+        {
+            id: 'coherence-spoofing', name: 'Coherence Spoofing', domain: 'multi-domain', severity: 'critical', direction: 'write', slug: 'coherence-spoofing',
+            steps: [
+                { type: 'attack', layer: 7, technique: 'T7.1', label: 'API Entry Point' },
+                { type: 'compromise', layer: 7 },
+                { type: 'attack', layer: 8, technique: 'T8.3', label: 'Coherence Score Forgery' },
+                { type: 'breach', layer: 8, label: 'Forged Cs passes inspection!' },
+                { type: 'attack', layer: 9, technique: 'T9.2', label: 'Signal Processing Bypass' },
+                { type: 'compromise', layer: 9 },
+                { type: 'attack', layer: 10, technique: 'T10.4', label: 'Neural Protocol Spoofing' },
+                { type: 'compromise', layer: 10 },
+                { type: 'attack', layer: 11, technique: 'T11.4', label: 'Selective Forwarding' },
+                { type: 'defense', layer: 11, label: 'End-to-End Encryption Mismatch' }
+            ]
+        },
+        {
+            id: 'p300-interrogation', name: 'P300 Interrogation', domain: 'cognitive', severity: 'high', direction: 'read', slug: 'p300-interrogation',
+            steps: [
+                { type: 'attack', layer: 8, technique: 'T8.4', label: 'Subliminal Stimulus Delivery' },
+                { type: 'compromise', layer: 8 },
+                { type: 'attack', layer: 9, technique: 'T9.3', label: 'Evoked Response Capture' },
+                { type: 'compromise', layer: 9 },
+                { type: 'attack', layer: 12, technique: 'T12.3', label: 'P300 ERP Extraction' },
+                { type: 'defense', layer: 12, label: 'Attention Anomaly Detection' }
+            ]
+        },
+        {
+            id: 'neural-sybil', name: 'Neural Sybil Attack', domain: 'multi-domain', severity: 'high', direction: 'write', slug: 'neural-sybil',
+            steps: [
+                { type: 'attack', layer: 8, technique: 'T14.5', label: 'Multi-Source Impersonation' },
+                { type: 'compromise', layer: 8 },
+                { type: 'attack', layer: 14, technique: 'T14.5', label: 'Identity Verification Fragmentation' },
+                { type: 'defense', layer: 14, label: 'Cross-layer Coherence Validation' }
+            ]
+        },
+        {
+            id: 'firmware-escalation', name: 'Firmware Escalation', domain: 'network', severity: 'high', direction: 'write', slug: 'firmware-escalation',
+            steps: [
+                { type: 'attack', layer: 7, technique: 'T7.4', label: 'App-to-Firmware Escalation' },
+                { type: 'defense', layer: 7, label: 'Code Signing & Least Privilege' }
+            ]
+        },
+        {
+            id: 'full-stack-penetration', name: 'Full Stack Penetration', domain: 'multi-domain', severity: 'critical', direction: 'write', slug: 'full-stack-penetration',
+            steps: [
+                { type: 'attack', layer: 1, technique: 'T1.2', label: 'Physical Access' },
+                { type: 'compromise', layer: 1 },
+                { type: 'attack', layer: 2, technique: 'T2.1', label: 'Link Layer Bypass' },
+                { type: 'compromise', layer: 2 },
+                { type: 'attack', layer: 3, technique: 'T3.2', label: 'Network Spoof' },
+                { type: 'compromise', layer: 3 },
+                { type: 'attack', layer: 4, technique: 'T4.2', label: 'Transport Injection' },
+                { type: 'compromise', layer: 4 },
+                { type: 'attack', layer: 5, technique: 'T5.1', label: 'Session Takeover' },
+                { type: 'compromise', layer: 5 },
+                { type: 'attack', layer: 6, technique: 'T6.1', label: 'Encryption Strip' },
+                { type: 'compromise', layer: 6 },
+                { type: 'attack', layer: 7, technique: 'T7.1', label: 'API Exploitation' },
+                { type: 'compromise', layer: 7 },
+                { type: 'attack', layer: 8, technique: 'T8.1', label: 'Gateway Assault' },
+                { type: 'defense', layer: 8, label: 'ONI Firewall -- Last Line of Defense' }
+            ]
+        }
+    ];
+
+    // ==================== STATE ====================
+
+    var currentChain = null;
+    var currentStepIndex = -1;
+    var isPlaying = false;
+    var speed = 1;
+    var animationFrame = null;
+    var playTimeout = null;
+    var activeParticles = [];
+    var layerRowElements = {};
+    var ttpPanelOpen = false;
+
+    // ==================== INIT ====================
+
+    function init() {
+        buildLayerStack();
+        buildChainCards('');
+        wireEvents();
+        parseDeepLink();
+    }
+
+    function buildLayerStack() {
+        var stack = document.getElementById('layerStack');
+        var html = '';
+
+        var domainGroups = [
+            { label: 'COGNITIVE / BIOLOGY', layers: [14, 13, 12, 11] },
+            { label: 'NEURAL / BIOLOGY', layers: [10, 9] },
+            { label: 'GATEWAY', layers: [8] },
+            { label: 'SILICON', layers: [7, 6, 5, 4, 3, 2, 1] }
+        ];
+
+        for (var g = 0; g < domainGroups.length; g++) {
+            var group = domainGroups[g];
+            html += '<div class="domain-group">';
+            html += '<div class="domain-group-label">' + group.label + '</div>';
+            for (var i = 0; i < group.layers.length; i++) {
+                var lNum = group.layers[i];
+                var lDef = getLayerDef(lNum);
+                html += '<div class="layer-row" id="layer-row-' + lNum + '" data-layer="' + lNum + '">';
+                html += '<div class="domain-dot ' + lDef.domain + '"></div>';
+                html += '<div class="layer-label">L' + lNum + '</div>';
+                html += '<div class="layer-name">' + lDef.name + '</div>';
+                html += '<div class="layer-defense-indicator">';
+                html += '<svg class="defense-icon" viewBox="0 0 16 16"><path d="M8 1L2 4v4c0 3.5 2.6 6.8 6 7.5 3.4-.7 6-4 6-7.5V4L8 1z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
+                html += '</div>';
+                html += '<div class="layer-status secure" id="layer-status-' + lNum + '">Secure</div>';
+                html += '</div>';
+            }
+            html += '</div>';
+        }
+        stack.innerHTML = html;
+
+        for (var n = 1; n <= 14; n++) {
+            layerRowElements[n] = document.getElementById('layer-row-' + n);
+        }
+    }
+
+    function getLayerDef(num) {
+        for (var i = 0; i < layerDefs.length; i++) {
+            if (layerDefs[i].num === num) return layerDefs[i];
+        }
+        return null;
+    }
+
+    function buildChainCards(filterDomain, filterSeverity, filterDirection) {
+        var list = document.getElementById('chainList');
+        var html = '';
+        for (var i = 0; i < chains.length; i++) {
+            var c = chains[i];
+            if (filterDomain && c.domain !== filterDomain) continue;
+            if (filterSeverity && c.severity !== filterSeverity) continue;
+            if (filterDirection && c.direction !== filterDirection) continue;
+
+            var borderColor = c.severity === 'critical' ? 'var(--red)' : c.severity === 'high' ? 'var(--orange)' : 'var(--amber)';
+            var activeClass = (currentChain && currentChain.id === c.id) ? ' active' : '';
+            var activeBorder = (currentChain && currentChain.id === c.id) ? 'border-left-color:' + borderColor + ';' : '';
+
+            html += '<div class="chain-card' + activeClass + '" data-chain="' + c.id + '" style="' + activeBorder + '">';
+            html += '<div class="chain-card-header">';
+            html += '<div class="chain-card-name">' + c.name + '</div>';
+            html += '<div class="chain-card-badges">';
+            html += '<span class="badge badge-' + c.severity + '">' + c.severity + '</span>';
+            html += '<span class="badge badge-' + c.direction + '">' + (c.direction === 'write' ? '&#9650;' : c.direction === 'read' ? '&#9660;' : '&#9670;') + ' ' + c.direction + '</span>';
+            html += '</div></div>';
+            html += '<div class="chain-card-path">';
+            var seenLayers = {};
+            for (var j = 0; j < c.steps.length; j++) {
+                var s = c.steps[j];
+                if (!seenLayers[s.layer]) {
+                    if (Object.keys(seenLayers).length > 0) html += '<span class="arrow-sym">&rarr;</span>';
+                    var pipColor = s.type === 'defense' ? 'border-color:var(--green);color:var(--green)' : s.type === 'breach' ? 'border-color:var(--red);color:var(--red);background:rgba(248,81,73,0.15)' : '';
+                    html += '<span class="layer-pip" style="' + pipColor + '">L' + s.layer + '</span>';
+                    seenLayers[s.layer] = true;
+                }
+            }
+            html += '</div></div>';
+        }
+        list.innerHTML = html;
+
+        // Wire clicks
+        var cards = list.querySelectorAll('.chain-card');
+        for (var k = 0; k < cards.length; k++) {
+            cards[k].addEventListener('click', function() {
+                selectChain(this.getAttribute('data-chain'));
+            });
+        }
+    }
+
+    function selectChain(chainId) {
+        for (var i = 0; i < chains.length; i++) {
+            if (chains[i].id === chainId) {
+                currentChain = chains[i];
+                break;
+            }
+        }
+        if (!currentChain) return;
+
+        reset();
+        // Highlight card
+        var cards = document.querySelectorAll('.chain-card');
+        for (var j = 0; j < cards.length; j++) {
+            var cid = cards[j].getAttribute('data-chain');
+            if (cid === chainId) {
+                cards[j].classList.add('active');
+                var borderColor = currentChain.severity === 'critical' ? 'var(--red)' : currentChain.severity === 'high' ? 'var(--orange)' : 'var(--amber)';
+                cards[j].style.borderLeftColor = borderColor;
+            } else {
+                cards[j].classList.remove('active');
+                cards[j].style.borderLeftColor = 'transparent';
+            }
+        }
+
+        document.getElementById('btnPlay').disabled = false;
+        document.getElementById('btnStep').disabled = false;
+        document.getElementById('btnReset').disabled = false;
+        updateProgress();
+    }
+
+    function wireEvents() {
+        document.getElementById('btnPlay').addEventListener('click', function() {
+            if (isPlaying) { pause(); } else { play(); }
+        });
+        document.getElementById('btnStep').addEventListener('click', function() { step(); });
+        document.getElementById('btnReset').addEventListener('click', function() { reset(); selectChain(currentChain.id); });
+        document.getElementById('speedSlider').addEventListener('input', function() {
+            speed = parseFloat(this.value);
+            document.getElementById('speedValue').textContent = speed + 'x';
+        });
+        document.getElementById('infoToggle').addEventListener('click', function() {
+            document.getElementById('infoBox').classList.toggle('visible');
+        });
+        document.getElementById('ttpCloseBtn').addEventListener('click', function() { closeTTP(); });
+
+        // Layer row clicks
+        for (var n = 1; n <= 14; n++) {
+            (function(num) {
+                var row = document.getElementById('layer-row-' + num);
+                if (row) {
+                    row.addEventListener('click', function() {
+                        if (!currentChain || currentStepIndex < 0) return;
+                        // Find the technique for this layer
+                        for (var s = currentStepIndex; s >= 0; s--) {
+                            var step = currentChain.steps[s];
+                            if (step.layer === num && step.technique) {
+                                openTTP(step.technique);
+                                return;
+                            }
+                        }
+                    });
+                }
+            })(n);
+        }
+
+        // Filter changes
+        document.getElementById('filterDomain').addEventListener('change', applyFilters);
+        document.getElementById('filterSeverity').addEventListener('change', applyFilters);
+        document.getElementById('filterDirection').addEventListener('change', applyFilters);
+
+        // Keyboard
+        document.addEventListener('keydown', function(e) {
+            if (e.code === 'Space' && currentChain) {
+                e.preventDefault();
+                if (isPlaying) pause(); else play();
+            }
+            if (e.code === 'ArrowRight' && currentChain) {
+                e.preventDefault();
+                step();
+            }
+            if (e.code === 'KeyR' && currentChain && !e.metaKey && !e.ctrlKey) {
+                e.preventDefault();
+                reset();
+                selectChain(currentChain.id);
+            }
+            if (e.code === 'Escape') {
+                closeTTP();
+                document.getElementById('infoBox').classList.remove('visible');
+            }
+        });
+    }
+
+    function parseDeepLink() {
+        var params = new URLSearchParams(window.location.search);
+        var chainParam = params.get('chain');
+        var techParam = params.get('technique');
+
+        if (chainParam) {
+            for (var i = 0; i < chains.length; i++) {
+                if (chains[i].slug === chainParam || chains[i].id === chainParam) {
+                    selectChain(chains[i].id);
+                    break;
+                }
+            }
+        }
+        if (techParam) {
+            openTTP(techParam);
+        }
+    }
+
+    // ==================== ANIMATION ====================
+
+    function play() {
+        if (!currentChain) return;
+        isPlaying = true;
+        document.getElementById('btnPlay').innerHTML = '&#9646;&#9646; Pause';
+        autoStep();
+    }
+
+    function pause() {
+        isPlaying = false;
+        document.getElementById('btnPlay').innerHTML = '&#9654; Play';
+        if (playTimeout) { clearTimeout(playTimeout); playTimeout = null; }
+    }
+
+    function autoStep() {
+        if (!isPlaying || !currentChain) return;
+        if (currentStepIndex >= currentChain.steps.length - 1) {
+            pause();
+            return;
+        }
+        step();
+        var delay = 1200 / speed;
+        playTimeout = setTimeout(autoStep, delay);
+    }
+
+    function step() {
+        if (!currentChain) return;
+        if (currentStepIndex >= currentChain.steps.length - 1) {
+            pause();
+            return;
+        }
+        currentStepIndex++;
+        executeStep(currentStepIndex);
+        updateProgress();
+    }
+
+    function reset() {
+        pause();
+        currentStepIndex = -1;
+        // Reset layers
+        for (var n = 1; n <= 14; n++) {
+            setLayerStatus(n, 'secure');
+        }
+        clearSVG();
+        clearTimeline();
+        updateProgress();
+    }
+
+    function executeStep(stepIndex) {
+        var s = currentChain.steps[stepIndex];
+        var layerRow = layerRowElements[s.layer];
+        if (!layerRow) return;
+
+        if (s.type === 'attack') {
+            setLayerStatus(s.layer, 'under-attack');
+            // Determine from layer (previous step layer or start)
+            var fromLayer = s.layer;
+            if (stepIndex > 0) {
+                fromLayer = currentChain.steps[stepIndex - 1].layer;
+            }
+            var color = currentChain.direction === 'read' ? '#58a6ff' : '#f85149';
+            if (currentChain.direction === 'both') color = '#a371f7';
+            animateParticle(fromLayer, s.layer, color);
+            addTimelineEvent(s, stepIndex, 'attack');
+        } else if (s.type === 'compromise') {
+            setLayerStatus(s.layer, 'compromised');
+            addTimelineEvent(s, stepIndex, 'compromise');
+        } else if (s.type === 'defense') {
+            setLayerStatus(s.layer, 'defended');
+            showDefenseBarrier(s.layer);
+            showShieldBurst(s.layer);
+            addTimelineEvent(s, stepIndex, 'defense');
+        } else if (s.type === 'breach') {
+            setLayerStatus(s.layer, 'breached');
+            showBreachEffect(s.layer);
+            addTimelineEvent(s, stepIndex, 'breach');
+        }
+    }
+
+    function animateParticle(fromLayerNum, toLayerNum, color) {
+        var svg = document.getElementById('svgOverlay');
+        var fromY = getLayerY(fromLayerNum);
+        var toY = getLayerY(toLayerNum);
+        var centerX = svg.clientWidth / 2;
+
+        if (fromY === toY) {
+            // Same layer, just flash
+            return;
+        }
+
+        var particle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        particle.setAttribute('cx', centerX);
+        particle.setAttribute('cy', fromY);
+        particle.setAttribute('r', '6');
+        particle.setAttribute('fill', color);
+        particle.setAttribute('filter', color === '#f85149' ? 'url(#glowRed)' : color === '#58a6ff' ? 'url(#glowBlue)' : 'url(#glowOrange)');
+        particle.setAttribute('opacity', '0.9');
+        svg.appendChild(particle);
+
+        // Trail
+        var trail = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        trail.setAttribute('x1', centerX);
+        trail.setAttribute('y1', fromY);
+        trail.setAttribute('x2', centerX);
+        trail.setAttribute('y2', fromY);
+        trail.setAttribute('stroke', color);
+        trail.setAttribute('stroke-width', '2');
+        trail.setAttribute('opacity', '0.4');
+        svg.appendChild(trail);
+
+        var startTime = performance.now();
+        var duration = 400 / speed;
+
+        function animate(now) {
+            var elapsed = now - startTime;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = easeInOutCubic(progress);
+            var currentY = fromY + (toY - fromY) * eased;
+
+            particle.setAttribute('cy', currentY);
+            trail.setAttribute('y2', currentY);
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                // Fade out
+                particle.setAttribute('opacity', '0');
+                trail.setAttribute('opacity', '0');
+                setTimeout(function() {
+                    if (particle.parentNode) particle.parentNode.removeChild(particle);
+                    if (trail.parentNode) trail.parentNode.removeChild(trail);
+                }, 300);
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function showDefenseBarrier(layerNum) {
+        var svg = document.getElementById('svgOverlay');
+        var y = getLayerY(layerNum);
+        var width = svg.clientWidth;
+
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', 40);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', width - 40);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', '#3fb950');
+        line.setAttribute('stroke-width', '3');
+        line.setAttribute('filter', 'url(#glowGreen)');
+        line.setAttribute('stroke-dasharray', (width - 80));
+        line.setAttribute('stroke-dashoffset', (width - 80));
+        line.setAttribute('opacity', '0.8');
+        svg.appendChild(line);
+
+        // Animate deploy
+        var startTime = performance.now();
+        var duration = 500 / speed;
+        function animateDeploy(now) {
+            var elapsed = now - startTime;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = easeInOutCubic(progress);
+            line.setAttribute('stroke-dashoffset', (width - 80) * (1 - eased));
+            if (progress < 1) {
+                requestAnimationFrame(animateDeploy);
+            } else {
+                // Fade after 2s
+                setTimeout(function() {
+                    var fadeStart = performance.now();
+                    function fadeOut(now2) {
+                        var fp = Math.min((now2 - fadeStart) / 1000, 1);
+                        line.setAttribute('opacity', 0.8 * (1 - fp));
+                        if (fp < 1) requestAnimationFrame(fadeOut);
+                        else if (line.parentNode) line.parentNode.removeChild(line);
+                    }
+                    requestAnimationFrame(fadeOut);
+                }, 2000);
+            }
+        }
+        requestAnimationFrame(animateDeploy);
+    }
+
+    function showShieldBurst(layerNum) {
+        var svg = document.getElementById('svgOverlay');
+        var y = getLayerY(layerNum);
+        var cx = svg.clientWidth / 2;
+
+        var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', cx);
+        circle.setAttribute('cy', y);
+        circle.setAttribute('r', '10');
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', '#3fb950');
+        circle.setAttribute('stroke-width', '2');
+        circle.setAttribute('filter', 'url(#glowGreen)');
+        circle.setAttribute('opacity', '0.9');
+        svg.appendChild(circle);
+
+        var startTime = performance.now();
+        var duration = 600 / speed;
+        function animateBurst(now) {
+            var elapsed = now - startTime;
+            var progress = Math.min(elapsed / duration, 1);
+            var radius = 10 + 60 * progress;
+            var opacity = 0.9 * (1 - progress);
+            circle.setAttribute('r', radius);
+            circle.setAttribute('opacity', opacity);
+            circle.setAttribute('stroke-width', 2 * (1 - progress * 0.7));
+            if (progress < 1) {
+                requestAnimationFrame(animateBurst);
+            } else {
+                if (circle.parentNode) circle.parentNode.removeChild(circle);
+            }
+        }
+        requestAnimationFrame(animateBurst);
+    }
+
+    function showBreachEffect(layerNum) {
+        var svg = document.getElementById('svgOverlay');
+        var y = getLayerY(layerNum);
+        var cx = svg.clientWidth / 2;
+
+        // Red expanding ring
+        for (var ring = 0; ring < 3; ring++) {
+            (function(delay) {
+                setTimeout(function() {
+                    var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', cx);
+                    circle.setAttribute('cy', y);
+                    circle.setAttribute('r', '5');
+                    circle.setAttribute('fill', 'none');
+                    circle.setAttribute('stroke', '#f85149');
+                    circle.setAttribute('stroke-width', '3');
+                    circle.setAttribute('filter', 'url(#glowRed)');
+                    circle.setAttribute('opacity', '1');
+                    svg.appendChild(circle);
+
+                    var startTime = performance.now();
+                    function animateRing(now) {
+                        var elapsed = now - startTime;
+                        var progress = Math.min(elapsed / 800, 1);
+                        circle.setAttribute('r', 5 + 80 * progress);
+                        circle.setAttribute('opacity', 1 - progress);
+                        circle.setAttribute('stroke-width', 3 * (1 - progress * 0.5));
+                        if (progress < 1) requestAnimationFrame(animateRing);
+                        else if (circle.parentNode) circle.parentNode.removeChild(circle);
+                    }
+                    requestAnimationFrame(animateRing);
+                }, delay);
+            })(ring * 200);
+        }
+
+        // Breach text
+        var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', cx);
+        text.setAttribute('y', y - 25);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', '#f85149');
+        text.setAttribute('font-size', '14');
+        text.setAttribute('font-weight', '700');
+        text.setAttribute('font-family', 'Inter, sans-serif');
+        text.setAttribute('filter', 'url(#glowRed)');
+        text.setAttribute('letter-spacing', '3');
+        text.textContent = 'BREACHED';
+        svg.appendChild(text);
+
+        // Fade out text after 3s
+        setTimeout(function() {
+            var startTime = performance.now();
+            function fadeText(now) {
+                var progress = Math.min((now - startTime) / 1500, 1);
+                text.setAttribute('opacity', 1 - progress);
+                if (progress < 1) requestAnimationFrame(fadeText);
+                else if (text.parentNode) text.parentNode.removeChild(text);
+            }
+            requestAnimationFrame(fadeText);
+        }, 3000);
+    }
+
+    function setLayerStatus(layerNum, status) {
+        var row = layerRowElements[layerNum];
+        var statusEl = document.getElementById('layer-status-' + layerNum);
+        if (!row || !statusEl) return;
+
+        row.className = 'layer-row';
+        statusEl.className = 'layer-status';
+
+        if (status === 'secure') {
+            statusEl.classList.add('secure');
+            statusEl.textContent = 'Secure';
+        } else if (status === 'under-attack') {
+            row.classList.add('under-attack');
+            statusEl.classList.add('under-attack');
+            statusEl.textContent = 'Attack';
+        } else if (status === 'compromised') {
+            row.classList.add('compromised');
+            statusEl.classList.add('compromised');
+            statusEl.textContent = 'Compromised';
+        } else if (status === 'defended') {
+            row.classList.add('defended');
+            statusEl.classList.add('defended');
+            statusEl.textContent = 'Defended';
+        } else if (status === 'breached') {
+            row.classList.add('breached');
+            statusEl.classList.add('breached');
+            statusEl.textContent = 'BREACHED';
+        }
+    }
+
+    function getLayerY(layerNum) {
+        var row = layerRowElements[layerNum];
+        if (!row) return 0;
+        var container = document.getElementById('vizContainer');
+        var containerRect = container.getBoundingClientRect();
+        var rowRect = row.getBoundingClientRect();
+        return rowRect.top - containerRect.top + rowRect.height / 2;
+    }
+
+    function clearSVG() {
+        var svg = document.getElementById('svgOverlay');
+        var defs = svg.querySelector('defs');
+        while (svg.lastChild && svg.lastChild !== defs) {
+            svg.removeChild(svg.lastChild);
+        }
+    }
+
+    // ==================== TTP PANEL ====================
+
+    function openTTP(techniqueId) {
+        var t = techniques[techniqueId];
+        if (!t) return;
+
+        var panel = document.getElementById('ttpPanel');
+        var content = document.getElementById('ttpContent');
+        var lDef = getLayerDef(t.layer);
+        var cs = computeCoherence(t.pV, t.tV, t.gV);
+        var decision = firewallDecision(cs, t.auth);
+
+        var tacticColor = tacticColors[t.tactic] || '#8b949e';
+        var csColor = cs > 0.6 ? 'var(--green)' : cs > 0.3 ? 'var(--amber)' : 'var(--red)';
+        var decisionClass = decision === 'ACCEPT' ? 'firewall-accept' : decision === 'ACCEPT_FLAG' ? 'firewall-flag' : 'firewall-reject';
+
+        var dirArrow = t.direction === 'write' ? '&#9650; Write (upward)' : '&#9660; Read (downward)';
+        var sevClass = 'badge-' + t.severity;
+
+        var html = '';
+        html += '<div class="ttp-id">' + t.id + '</div>';
+        html += '<div class="ttp-name">' + t.name + '</div>';
+        html += '<div class="ttp-meta">';
+        html += '<span class="ttp-badge" style="background:' + tacticColor + '22;color:' + tacticColor + ';border:1px solid ' + tacticColor + '44">' + t.tactic + '</span>';
+        html += '<span class="ttp-badge" style="background:rgba(255,255,255,0.05);color:var(--text-secondary);border:1px solid var(--border)">L' + t.layer + ' ' + lDef.name + '</span>';
+        html += '<span class="ttp-badge ' + sevClass + '">' + t.severity + '</span>';
+        html += '</div>';
+
+        html += '<div class="ttp-section">';
+        html += '<div class="ttp-section-title">Direction</div>';
+        html += '<div class="ttp-desc">' + dirArrow + '</div>';
+        html += '</div>';
+
+        html += '<div class="ttp-section">';
+        html += '<div class="ttp-section-title">Description</div>';
+        html += '<div class="ttp-desc">' + t.description + '</div>';
+        html += '</div>';
+
+        html += '<div class="ttp-section">';
+        html += '<div class="ttp-section-title">Variance Profile</div>';
+        html += varianceBar('pV', t.pV, '#f85149');
+        html += varianceBar('tV', t.tV, '#f0883e');
+        html += varianceBar('gV', t.gV, '#d29922');
+        html += '</div>';
+
+        html += '<div class="ttp-section">';
+        html += '<div class="ttp-section-title">Coherence Score</div>';
+        html += '<div class="coherence-score" style="color:' + csColor + '">' + cs.toFixed(4) + '</div>';
+        html += '<div class="coherence-formula">Cs = e^-(' + t.pV.toFixed(2) + ' + ' + t.tV.toFixed(2) + ' + ' + t.gV.toFixed(2) + ') = e^-' + (t.pV + t.tV + t.gV).toFixed(2) + '</div>';
+        html += '<div class="firewall-decision ' + decisionClass + '">' + decision + (t.auth ? ' (auth required)' : '') + '</div>';
+        html += '</div>';
+
+        html += '<div class="ttp-section">';
+        html += '<div class="ttp-section-title">Narrative</div>';
+        html += '<div class="ttp-narrative">' + t.narrative + '</div>';
+        html += '</div>';
+
+        html += '<div class="ttp-section">';
+        html += '<div class="ttp-section-title">Layer ' + t.layer + ' Defenses</div>';
+        html += '<ul class="defense-list">';
+        var defs = layerDefenses[t.layer] || [];
+        for (var d = 0; d < defs.length; d++) {
+            html += '<li>' + defs[d] + '</li>';
+        }
+        html += '</ul></div>';
+
+        html += '<div class="ttp-section">';
+        html += '<div class="ttp-section-title">Mitigations</div>';
+        html += '<ul class="mitigation-list">';
+        for (var m = 0; m < t.mitigations.length; m++) {
+            html += '<li>' + t.mitigations[m] + '</li>';
+        }
+        html += '</ul></div>';
+
+        content.innerHTML = html;
+
+        // Force reflow then show
+        panel.style.display = 'block';
+        requestAnimationFrame(function() {
+            panel.classList.add('visible');
+        });
+        ttpPanelOpen = true;
+    }
+
+    function closeTTP() {
+        var panel = document.getElementById('ttpPanel');
+        panel.classList.remove('visible');
+        setTimeout(function() { panel.style.display = 'none'; }, 300);
+        ttpPanelOpen = false;
+    }
+
+    function varianceBar(label, value, color) {
+        var maxVal = 1.5;
+        var pct = Math.min((value / maxVal) * 100, 100);
+        var html = '<div class="variance-bar-row">';
+        html += '<div class="variance-label">' + label + '</div>';
+        html += '<div class="variance-bar-track"><div class="variance-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
+        html += '<div class="variance-value">' + value.toFixed(2) + '</div>';
+        html += '</div>';
+        return html;
+    }
+
+    function computeCoherence(pV, tV, gV) {
+        return Math.exp(-(pV + tV + gV));
+    }
+
+    function firewallDecision(cs, auth) {
+        if (cs > 0.6 && auth)  return 'ACCEPT';
+        if (cs > 0.6 && !auth) return 'REJECT';
+        if (cs > 0.3 && auth)  return 'ACCEPT_FLAG';
+        if (cs > 0.3 && !auth) return 'REJECT';
+        return 'REJECT';
+    }
+
+    // ==================== TIMELINE ====================
+
+    function addTimelineEvent(step, index, type) {
+        var events = document.getElementById('timelineEvents');
+        // Remove empty message
+        var empty = events.querySelector('.timeline-empty');
+        if (empty) empty.remove();
+
+        var lDef = getLayerDef(step.layer);
+        var label = '';
+        var desc = '';
+
+        if (type === 'attack') {
+            label = 'ATTACK';
+            desc = step.label;
+        } else if (type === 'compromise') {
+            label = 'COMPROMISED';
+            desc = 'L' + step.layer + ' ' + lDef.name + ' has fallen';
+        } else if (type === 'defense') {
+            label = 'BLOCKED';
+            desc = step.label;
+        } else if (type === 'breach') {
+            label = 'BREACH';
+            desc = step.label;
+        }
+
+        var div = document.createElement('div');
+        div.className = 'timeline-event';
+        div.innerHTML = '<div class="timeline-dot-col"><div class="timeline-dot ' + type + '"></div><div class="timeline-line"></div></div>' +
+            '<div class="timeline-event-content">' +
+            '<div class="timeline-event-label ' + type + '">' + label + '</div>' +
+            '<div class="timeline-event-desc">' + desc + '</div>' +
+            '<div class="timeline-event-layer">Layer ' + step.layer + ' &middot; ' + lDef.name + (step.technique ? ' &middot; ' + step.technique : '') + '</div>' +
+            '</div>';
+
+        if (step.technique) {
+            div.addEventListener('click', function() {
+                openTTP(step.technique);
+            });
+        }
+
+        events.appendChild(div);
+        events.scrollTop = events.scrollHeight;
+    }
+
+    function clearTimeline() {
+        var events = document.getElementById('timelineEvents');
+        events.innerHTML = '<div class="timeline-empty">Select an attack chain and press <strong>Play</strong> or <strong>Step</strong> to see events appear here.</div>';
+    }
+
+    // ==================== FILTERS ====================
+
+    function applyFilters() {
+        var domain = document.getElementById('filterDomain').value;
+        var severity = document.getElementById('filterSeverity').value;
+        var direction = document.getElementById('filterDirection').value;
+        buildChainCards(domain, severity, direction);
+    }
+
+    // ==================== PROGRESS ====================
+
+    function updateProgress() {
+        var el = document.getElementById('progressText');
+        if (!currentChain) {
+            el.textContent = 'No chain selected';
+        } else {
+            el.textContent = 'Step ' + (currentStepIndex + 1) + '/' + currentChain.steps.length + ' - ' + currentChain.name;
+        }
+    }
+
+    // ==================== START ====================
+    init();
+
+})();
+</script>
+
+</body>
+</html>
