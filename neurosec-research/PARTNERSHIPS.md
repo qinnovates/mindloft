@@ -382,7 +382,7 @@ The term "neurosecurity" was coined at UW. Partnership here provides:
 
 For partnership inquiries:
 
-- **GitHub:** [github.com/qikevinl/ONI](https://github.com/qikevinl/ONI)
+- **GitHub:** [github.com/qikevinl/qinnovate](https://github.com/qikevinl/qinnovate)
 - **Medium:** [medium.com/@qikevinl](https://medium.com/@qikevinl)
 - **Issues:** Open a GitHub issue with the `partnership` label
 

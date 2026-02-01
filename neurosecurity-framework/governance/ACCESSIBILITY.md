@@ -733,7 +733,7 @@ on:
 We welcome feedback on the accessibility of ONI Framework interfaces.
 
 Please report accessibility issues:
-- **GitHub Issues:** https://github.com/qikevinl/ONI/issues
+- **GitHub Issues:** https://github.com/qikevinl/qinnovate/issues
 - **Label:** `accessibility`
 - **Include:** Page URL, assistive technology used, description of barrier
 

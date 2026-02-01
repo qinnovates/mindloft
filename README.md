@@ -197,8 +197,8 @@ The ONI Framework was designed with neuroethical principles as foundational cons
 ## Python Library & Tools
 
 [![PyPI version](https://badge.fury.io/py/oni-framework.svg)](https://badge.fury.io/py/oni-framework)
-[![Tests](https://github.com/qikevinl/ONI/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/tests.yml)
-[![Security](https://github.com/qikevinl/ONI/actions/workflows/security.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/security.yml)
+[![Tests](https://github.com/qikevinl/qinnovate/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/qinnovate/actions/workflows/tests.yml)
+[![Security](https://github.com/qikevinl/qinnovate/actions/workflows/security.yml/badge.svg)](https://github.com/qikevinl/qinnovate/actions/workflows/security.yml)
 
 The ONI Framework is available as a Python package for researchers and developers.
 
@@ -319,8 +319,8 @@ Because ONI defines a universal layer model for neural security, it becomes poss
 > **What exists today:** The foundational math and theoretical framework. TARA is not a production system. It is a research prototype that demonstrates these concepts are technically viable.
 
 [![PyPI version](https://badge.fury.io/py/oni-tara.svg)](https://badge.fury.io/py/oni-tara)
-[![Tests](https://github.com/qikevinl/ONI/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/tests.yml)
-[![Security](https://github.com/qikevinl/ONI/actions/workflows/security.yml/badge.svg)](https://github.com/qikevinl/ONI/actions/workflows/security.yml)
+[![Tests](https://github.com/qikevinl/qinnovate/actions/workflows/tests.yml/badge.svg)](https://github.com/qikevinl/qinnovate/actions/workflows/tests.yml)
+[![Security](https://github.com/qikevinl/qinnovate/actions/workflows/security.yml/badge.svg)](https://github.com/qikevinl/qinnovate/actions/workflows/security.yml)
 
 **What's built:**
 - **Coherence scoring (Cₛ)** — an entropy-based formula that evaluates whether a neural signal is consistent or anomalous, based on phase, transport, and gain variance

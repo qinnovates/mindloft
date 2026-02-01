@@ -133,7 +133,7 @@ BCIs are FDA Class III medical devices requiring extensive testing—but what ar
   author={Qi, Kevin L.},
   journal={Open Research},
   year={2026},
-  url={https://github.com/qikevinl/ONI}
+  url={https://github.com/qikevinl/qinnovate}
 }
 ```
 
@@ -141,7 +141,7 @@ BCIs are FDA Class III medical devices requiring extensive testing—but what ar
 
 ## Resources
 
-- **GitHub Repository:** https://github.com/qikevinl/ONI
+- **GitHub Repository:** https://github.com/qikevinl/qinnovate
 - **Live Demo:** https://qikevinl.github.io/ONI/
 - **Python Package:** `pip install oni-framework`
 - **TARA Stack:** `pip install oni-tara[full]`

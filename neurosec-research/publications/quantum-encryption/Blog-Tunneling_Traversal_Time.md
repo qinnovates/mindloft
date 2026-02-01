@@ -240,6 +240,6 @@ If you're at a **funding agency**: The gap between quantum physics and BCI secur
 
 ---
 
-*Follow my work and research. Collaborate and contribute on [GitHub](https://github.com/qikevinl/ONI/).*
+*Follow my work and research. Collaborate and contribute on [GitHub](https://github.com/qikevinl/qinnovate/).*
 
 ← Back to [Index](INDEX.md)

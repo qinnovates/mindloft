@@ -1,6 +1,6 @@
 # 🚨 01 — Why Revamp
 
-> **Tracking:** [GitHub Issue #30](https://github.com/qikevinl/ONI/issues/30)
+> **Tracking:** [GitHub Issue #30](https://github.com/qikevinl/qinnovate/issues/30)
 
 ---
 

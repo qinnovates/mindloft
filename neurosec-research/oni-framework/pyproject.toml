@@ -72,10 +72,10 @@ all = [
 
 [project.urls]
 Homepage = "https://qikevinl.github.io/ONI/"
-Documentation = "https://github.com/qikevinl/ONI/tree/main/MAIN/oni-framework"
-Repository = "https://github.com/qikevinl/ONI"
-Issues = "https://github.com/qikevinl/ONI/issues"
-Changelog = "https://github.com/qikevinl/ONI/blob/main/MAIN/oni-framework/CHANGELOG.md"
+Documentation = "https://github.com/qikevinl/qinnovate/tree/main/MAIN/oni-framework"
+Repository = "https://github.com/qikevinl/qinnovate"
+Issues = "https://github.com/qikevinl/qinnovate/issues"
+Changelog = "https://github.com/qikevinl/qinnovate/blob/main/MAIN/oni-framework/CHANGELOG.md"
 
 [project.scripts]
 oni = "oni.cli:main"

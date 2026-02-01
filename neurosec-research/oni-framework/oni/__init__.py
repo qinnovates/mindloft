@@ -236,5 +236,5 @@ QUICK START
   >>> print(da.required_cofactors)  # ['Fe²⁺', 'BH4', 'O₂']
 
 DOCUMENTATION
-  https://github.com/qikevinl/ONI
+  https://github.com/qikevinl/qinnovate
 """)
