@@ -15,8 +15,69 @@ Brain-computer interfaces are being implanted in humans today. Neuralink, BrainG
 
 ---
 
+## 🔴 Current Priority: Neuroethics & Governance First
+
+> **February 2026 — A pivot, and why it matters.**
+
+While rebuilding the ONI Framework from the ground up ([Framework v2](MAIN/framework-v2/)), I realized something that changed the trajectory of this entire project: **the original 14-layer model relied heavily on concepts of self, consciousness, and identity (L13-L14) — things we cannot measure, model, or define with math or science.** They're fascinating to think about, but building security systems on top of unmeasurable abstractions is the wrong order of operations.
+
+The more I learn about how the brain actually works — from spinal reflexes to quantum tunneling in enzymes — the more I understand that **the unknowns vastly outnumber the knowns.** And the honest response to that isn't to build faster. It's to build the right foundation first.
+
+**That foundation is neuroethics and governance.**
+
+### Why This Pivot
+
+As the world races toward quantum computing and brain-computer interfaces, I'm looking further ahead. The convergence of everything that makes me *me* — AI, neuroscience, security, ethics, quantum physics — points to one conclusion: **the most important work isn't building the tools. It's defining the rules those tools must follow.**
+
+This isn't a new interest. It traces back to learning that a CEO at a former company had donated significantly to MIT's AI ethics committee. That planted a seed: the people building AI should also be the people asking whether it *should* be built that way. The same principle applies to BCIs — except the stakes are higher, because the endpoint is a human brain.
+
+**I know that even the more I learn, the more I need to be aware that there are far more unknowns than knowns to draw good conclusions from.** Does knowing about quantum biology help solve my security problems? Not yet. But it tells me *where the gaps are* — and a framework that honestly labels its gaps is more valuable than one that hides them.
+
+### The Priority Stack
+
+```
+✅ DONE    Understand the brain (neuroscience, BCI capabilities, quantum biology)
+✅ DONE    Build the model (funnel, gap analysis, Q integer)
+🔄 NOW     Ethics & governance — who owns neural data? what are the consent
+           requirements? what happens post-deployment? (MAIN/governance/)
+⏳ NEXT    Classical TARA (security with measurable signals)
+⏳ LATER   Quantum TARA (when quantum measurement technology advances)
+```
+
+### Framework v2: The Architectural Redesign
+
+The v1 model placed the Neural Gateway at L8 (middle of a 14-layer stack). BCIs are physical hardware — they belong adjacent to L1. Everything about the layer model needed to be rebuilt from that realization.
+
+| # | Document | What It Covers |
+|---|----------|----------------|
+| 🚨 | [01-WHY-REVAMP](MAIN/framework-v2/01-WHY-REVAMP.md) | Why v1 is fundamentally flawed |
+| 🧠 | [02-KNOWNS-AND-UNKNOWNS](MAIN/framework-v2/02-KNOWNS-AND-UNKNOWNS.md) | What neuroscience has confirmed vs. what remains open |
+| ⚡ | [03-BCI-CAPABILITIES](MAIN/framework-v2/03-BCI-CAPABILITIES.md) | Every proven BCI READ/WRITE/CLOSED-LOOP today |
+| 📐 | [04-FRAMEWORKS-ANALYSIS](MAIN/framework-v2/04-FRAMEWORKS-ANALYSIS.md) | OSI, Kandel, Bio Organization — the math and patterns |
+| 🌀 | [05-PROPOSED-MODEL](MAIN/framework-v2/05-PROPOSED-MODEL.md) | The funnel model — loops, not layers. Rings, not a stack. |
+| 🔍 | [06-GAP-ANALYSIS](MAIN/framework-v2/06-GAP-ANALYSIS.md) | What BCIs can't do — known limits vs. open questions |
+| ⚛️ | [07-QUANTUM-BIOLOGY](MAIN/framework-v2/07-QUANTUM-BIOLOGY.md) | What's proven, what's not, the photosynthesis cautionary tale |
+| 🔢 | [08-QUANTUM-INTEGER](MAIN/framework-v2/08-QUANTUM-INTEGER.md) | Q — labeled gaps for quantum unknowns, Josephson-Funnel model, neuroethics mapped to funnel positions, why TARA waits |
+
+**[Read the full v2 overview →](MAIN/framework-v2/)**
+
+### For Researchers and Admissions Officers
+
+This repository demonstrates the ability to:
+
+1. **Reason across disciplines** — neuroscience, physics, security engineering, quantum mechanics, and ethics in a single coherent framework
+2. **Ask the right questions** about systems that don't fully exist yet — and know which questions are answerable vs. measurement-walled
+3. **Apply forward-thinking frameworks** to emerging technology — the funnel model, Q integer, and Josephson junction analogy were developed independently and later validated by convergent research (Quantum-Converged OSI Stack)
+4. **Self-correct transparently** — every error (including AI errors) is documented, not hidden. See the [Gemini vs Claude vs Reality verification table](MAIN/framework-v2/07-QUANTUM-BIOLOGY.md) and the [Mathematical Rigor Audit](#lessons-learned-mathematical-rigor-audit-2026-01-29)
+5. **Prioritize governance over engineering** — understanding that you can't secure what you don't understand, and you can't build ethical tools without ethical foundations
+
+> *"I need to know how it works behind the scenes so I can ask the right questions, and apply forward-thinking frameworks to things that don't exist yet."* — Kevin Qi
+
+---
+
 ## Table of Contents
 
+- [Current Priority: Neuroethics & Governance First](#-current-priority-neuroethics--governance-first)
 - [Why Neuroethics Needs Engineering](#why-neuroethics-needs-engineering)
 - [Governance & Ethics](#governance--ethics)
 - [Privacy & Ethics Statement](#privacy--ethics-statement)
@@ -790,5 +851,5 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 ---
 
 *Auto-published from research pipeline*
-*Last update: 2026-01-30*
-*Documents: 20 | Topics: 8 | Python Packages: oni-framework v0.2.0, oni-tara v0.8.0*
+*Last update: 2026-02-01*
+*Documents: 29 | Topics: 8 | Framework v2: 9 docs | Python Packages: oni-framework v0.2.0, oni-tara v0.8.0*
