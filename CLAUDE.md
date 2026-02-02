@@ -2,7 +2,7 @@
 
 > This file provides instructions for Claude to follow when assisting with the QIF (Quantum Indeterministic Framework for Neural Security) repository. Read this file at the start of any session involving content creation, publishing, or repository maintenance.
 >
-> **GitHub:** github.com/qinnovates/qif (local folder: `@qikevinl/oni/`)
+> **GitHub:** github.com/qinnovates/mindloft (local folder: `@qikevinl/oni/`)
 
 ---
 
