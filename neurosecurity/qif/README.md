@@ -66,7 +66,7 @@ The original ONI Framework put the Neural Gateway at Layer 8 (middle of a 14-lay
 
 ## Evolution
 
-This framework evolved from the original ONI (Open Neurosecurity Interoperability) research. The foundational publications, Python packages, and earlier analysis are preserved in [`neurosec-research/`](../neurosec-research/).
+This framework evolved from the original ONI (Open Neurosecurity Interoperability) research. The foundational publications, Python packages, and earlier analysis are preserved in [`legacy-core/`](../legacy-core/).
 
 ---
 

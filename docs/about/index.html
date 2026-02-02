@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNPBK7CRGG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XNPBK7CRGG');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | ONI Framework &mdash; Neurosecurity Research</title>
+    <meta name="description" content="About the ONI Framework and its author Kevin Qi. Research at the intersection of neuroscience, quantum security, and AI ethics. Building security standards to protect the mind.">
+    <meta name="keywords" content="ONI Framework, Kevin Qi, neurosecurity, brain-computer interface, BCI security, neuroethics, quantum security">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="About | ONI Framework">
+    <meta property="og:description" content="Research at the intersection of neuroscience, quantum security, and AI ethics. Building security standards to protect the mind.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qinnovate.com/mindloft/about/">
+    <meta property="og:image" content="https://qinnovate.com/mindloft/images/ONI_Banner_Logo.png">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com; font-src 'self' https://fonts.gstatic.com;">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* ============================================
+           CSS RESET & VARIABLES
+           ============================================ */
+        :root {
+            --bg-deep: #050a14;
+            --bg-primary: #0a0f1a;
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --bg-card-hover: rgba(20, 30, 50, 0.85);
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-amber: #f59e0b;
+            --accent-green: #10b981;
+            --accent-pink: #ec4899;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-dim: #475569;
+            --border: rgba(30, 41, 59, 0.8);
+            --gradient-blue-purple: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --gradient-blue-cyan: linear-gradient(135deg, #3b82f6, #06b6d4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg-deep);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            background: rgba(5, 10, 20, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(30, 41, 59, 0.4);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(5, 10, 20, 0.95);
+            border-bottom-color: rgba(30, 41, 59, 0.7);
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            border-radius: 1px;
+        }
+
+        .nav-github {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted) !important;
+            transition: color 0.2s;
+        }
+
+        .nav-github:hover { color: var(--text-primary) !important; }
+
+        .nav-github svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Mobile hamburger */
+        .nav-hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-hamburger svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .nav-mobile-menu {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            background: rgba(5, 10, 20, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem 2rem;
+            border-bottom: 1px solid var(--border);
+            z-index: 999;
+        }
+
+        .nav-mobile-menu.open { display: flex; flex-direction: column; gap: 1rem; }
+
+        .nav-mobile-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+        }
+
+        .nav-mobile-menu a.active { color: var(--accent-blue); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-hamburger { display: block; }
+        }
+
+        /* ============================================
+           LAYOUT
+           ============================================ */
+        .page-container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 120px 2rem 80px;
+        }
+
+        /* ============================================
+           HERO / PAGE HEADER
+           ============================================ */
+        .page-hero {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding-top: 2rem;
+        }
+
+        .page-hero .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .page-hero h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            background: var(--gradient-blue-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           SECTIONS
+           ============================================ */
+        .about-section {
+            margin-bottom: 4.5rem;
+        }
+
+        .about-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .about-section h2 .accent {
+            background: var(--gradient-blue-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-section p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .about-section a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .about-section a:hover {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+
+        /* ============================================
+           AUTHOR CARD
+           ============================================ */
+        .author-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: var(--gradient-blue-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .author-info h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        .author-info .role {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .author-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .author-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.35rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .author-links a:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        @media (max-width: 600px) {
+            .author-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+            .author-links { justify-content: center; }
+        }
+
+        /* ============================================
+           MISSION BLOCK
+           ============================================ */
+        .mission-quote {
+            position: relative;
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-quote::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-blue-purple);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .mission-quote blockquote {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .mission-quote blockquote span {
+            background: var(--gradient-blue-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mission-body {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* ============================================
+           PHILOSOPHY PILLARS
+           ============================================ */
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .pillar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .pillar:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .pillar-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .pillar-icon.blue { background: rgba(59, 130, 246, 0.12); color: var(--accent-blue); }
+        .pillar-icon.purple { background: rgba(139, 92, 246, 0.12); color: var(--accent-purple); }
+        .pillar-icon.green { background: rgba(16, 185, 129, 0.12); color: var(--accent-green); }
+
+        .pillar h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .pillar p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        @media (max-width: 700px) {
+            .pillars { grid-template-columns: 1fr; }
+        }
+
+        /* ============================================
+           BIBTEX / CITE BLOCK
+           ============================================ */
+        .cite-block {
+            background: rgba(10, 15, 26, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-top: 1.25rem;
+        }
+
+        .cite-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.25rem;
+            background: rgba(30, 41, 59, 0.4);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cite-header span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .cite-copy {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cite-copy:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .cite-copy.copied {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .cite-block pre {
+            padding: 1.25rem;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            white-space: pre;
+        }
+
+        /* ============================================
+           CONTACT / COLLABORATE
+           ============================================ */
+        .collab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .collab-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-decoration: none;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .collab-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .collab-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .collab-icon.dark {
+            background: rgba(30, 41, 59, 0.6);
+            color: var(--text-secondary);
+        }
+
+        .collab-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .collab-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .collab-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ============================================
+           DIVIDER
+           ============================================ */
+        .section-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 4rem 0;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover { color: var(--accent-blue); }
+
+        /* ============================================
+           GSAP ANIMATION PREP
+           ============================================ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2rem; }
+            .page-hero .subtitle { font-size: 1rem; }
+            .page-container { padding: 100px 1.25rem 60px; }
+            .mission-quote blockquote { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =============================================
+         NAVIGATION
+         ============================================= -->
+    <nav id="main-nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">ONI</a>
+            <ul class="nav-links">
+                <li><a href="../#scene-proof">Research</a></li>
+                <li><a href="../visualizations/">Visualizations</a></li>
+                <li><a href="../whitepaper/">Whitepaper</a></li>
+                <li><a href="../documentation/">Docs</a></li>
+                <li><a href="./" class="active">About</a></li>
+                <li>
+                    <a href="https://github.com/qinnovates/mindloft" target="_blank" rel="noopener" class="nav-github" aria-label="GitHub">
+                        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    </a>
+                </li>
+            </ul>
+            <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </nav>
+    <div class="nav-mobile-menu" id="mobile-menu">
+        <a href="../#scene-proof">Research</a>
+        <a href="../visualizations/">Visualizations</a>
+        <a href="../whitepaper/">Whitepaper</a>
+        <a href="../documentation/">Docs</a>
+        <a href="./" class="active">About</a>
+        <a href="https://github.com/qinnovates/mindloft" target="_blank" rel="noopener">GitHub</a>
+    </div>
+
+    <!-- =============================================
+         PAGE CONTENT
+         ============================================= -->
+    <div class="page-container">
+
+        <!-- PAGE HEADER -->
+        <div class="page-hero fade-up">
+            <div class="section-label">About the Project</div>
+            <h1>Building Security Standards for the Mind</h1>
+            <p class="subtitle">The ONI Framework is an open research initiative developing neurosecurity standards for brain-computer interfaces &mdash; before the industry needs them retroactively.</p>
+        </div>
+
+        <!-- ===== AUTHOR ===== -->
+        <section class="about-section fade-up">
+            <h2>The <span class="accent">Researcher</span></h2>
+            <div class="author-card">
+                <div class="author-avatar">KQ</div>
+                <div class="author-info">
+                    <h3>Kevin Qi</h3>
+                    <div class="role">Neurosecurity Researcher &amp; Framework Architect</div>
+                    <p>Working at the intersection of neuroscience, quantum security, and AI ethics. Kevin created the ONI Framework to address a gap no one was filling: a comprehensive, layered security model purpose-built for brain-computer interfaces. His work draws from the OSI networking model, quantum information theory, and neuroethics to define how neural data should be protected at every layer &mdash; from ion channels to identity.</p>
+                    <div class="author-links">
+                        <a href="https://github.com/qinnovates/mindloft" target="_blank" rel="noopener">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                            GitHub
+                        </a>
+                        <a href="https://medium.com/@qikevinl" target="_blank" rel="noopener">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+                            Medium
+                        </a>
+                        <a href="https://github.com/qinnovates/mindloft/blob/main/ABOUT.md" target="_blank" rel="noopener">
+                            Full Bio &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ===== MISSION & VISION ===== -->
+        <section class="about-section fade-up">
+            <h2>Mission &amp; <span class="accent">Vision</span></h2>
+            <div class="mission-quote">
+                <blockquote>&ldquo;The mind is the last frontier. <span>We're building the security standards to protect it.</span>&rdquo;</blockquote>
+            </div>
+            <div class="mission-body">
+                <p>Brain-computer interfaces are being implanted in humans today &mdash; with no universal security standard. Companies are racing to ship neural hardware while fundamental questions about data sovereignty, cognitive privacy, and adversarial resilience remain unanswered.</p>
+                <p>The ONI Framework exists to change that. We are developing a ground-up, 14-layer reference architecture for neurosecurity &mdash; extending the principles of OSI networking into biological territory. Our goal: ensure that by the time BCIs reach mass adoption, the security standards are already in place.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ===== RESEARCH PHILOSOPHY ===== -->
+        <section class="about-section fade-up">
+            <h2>Research <span class="accent">Philosophy</span></h2>
+            <p>Three principles guide every decision in this project:</p>
+            <div class="pillars">
+                <div class="pillar">
+                    <div class="pillar-icon blue">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3>Transparency</h3>
+                    <p>Built through documented Human-AI collaboration. Every contribution is audited. AI assistance is disclosed, not hidden. We maintain a public transparency statement and cognitive boundary log.</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-icon purple">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3>Open Source</h3>
+                    <p>All framework documents, code, and visualizations are publicly available under Apache 2.0. Security through obscurity is not security &mdash; especially when the attack surface is the human brain.</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-icon green">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Neuroethics-First</h3>
+                    <p>Ethics is not a chapter at the end &mdash; it is baked into every layer. The framework maps to UNESCO neuroethics principles and includes informed consent, pediatric protections, and accessibility by design.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ===== HOW TO CITE ===== -->
+        <section class="about-section fade-up">
+            <h2>How to <span class="accent">Cite</span></h2>
+            <p>If you reference the ONI Framework or QIF in your work, please use the following BibTeX entries:</p>
+
+            <div class="cite-block">
+                <div class="cite-header">
+                    <span>BibTeX &mdash; ONI Framework</span>
+                    <button class="cite-copy" onclick="copyCite('oni')">Copy</button>
+                </div>
+                <pre id="cite-oni">@misc{qi2025oni,
+  author       = {Qi, Kevin},
+  title        = {{ONI}: Open Neurosecurity Interoperability Framework},
+  year         = {2025},
+  howpublished = {\url{https://github.com/qinnovates/mindloft}},
+  note         = {A 14-layer reference architecture for brain-computer
+                  interface security, extending OSI into biological territory}
+}</pre>
+            </div>
+
+            <div class="cite-block" style="margin-top: 1rem;">
+                <div class="cite-header">
+                    <span>BibTeX &mdash; QIF</span>
+                    <button class="cite-copy" onclick="copyCite('qif')">Copy</button>
+                </div>
+                <pre id="cite-qif">@misc{qi2025qif,
+  author       = {Qi, Kevin},
+  title        = {{QIF}: Quantum Indeterministic Framework for Neural Security},
+  year         = {2025},
+  howpublished = {\url{https://github.com/qinnovates/mindloft}},
+  note         = {Quantum-informed security model for neural interfaces,
+                  incorporating scale-frequency invariance and coherence metrics}
+}</pre>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ===== CONTACT / COLLABORATE ===== -->
+        <section class="about-section fade-up">
+            <h2>Contact &amp; <span class="accent">Collaborate</span></h2>
+            <p>This is an open research project. Contributions, critique, and collaboration are welcome.</p>
+
+            <div class="collab-grid">
+                <a href="https://github.com/qinnovates/mindloft" target="_blank" rel="noopener" class="collab-card">
+                    <div class="collab-icon dark">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    </div>
+                    <div>
+                        <h3>GitHub Repository</h3>
+                        <p>Browse the source, open issues, or fork the framework.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/CONTRIBUTING.md" target="_blank" rel="noopener" class="collab-card">
+                    <div class="collab-icon dark">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div>
+                        <h3>Contributing Guide</h3>
+                        <p>Read the CONTRIBUTING.md for contribution standards and workflow.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ===== FULL BIO LINK ===== -->
+        <section class="about-section fade-up" style="text-align: center;">
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                For a complete author biography, research background, and project history, see
+                <a href="https://github.com/qinnovates/mindloft/blob/main/ABOUT.md" target="_blank" rel="noopener" style="font-weight: 600;">ABOUT.md on GitHub</a>.
+            </p>
+        </section>
+
+    </div>
+
+    <!-- =============================================
+         FOOTER
+         ============================================= -->
+    <footer>
+        <p>ONI Framework &mdash; Open Neurosecurity Interoperability &nbsp;|&nbsp; <a href="https://github.com/qinnovates/mindloft" target="_blank" rel="noopener">GitHub</a> &nbsp;|&nbsp; Apache 2.0 License</p>
+    </footer>
+
+    <!-- =============================================
+         JAVASCRIPT
+         ============================================= -->
+    <script>
+        /* ---- Mobile Menu ---- */
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+        }
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu').classList.remove('open');
+        }
+
+        /* ---- Nav scroll state ---- */
+        window.addEventListener('scroll', function() {
+            var nav = document.getElementById('main-nav');
+            if (window.scrollY > 40) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        /* ---- Copy BibTeX ---- */
+        function copyCite(id) {
+            var pre = document.getElementById('cite-' + id);
+            var text = pre.textContent;
+            navigator.clipboard.writeText(text).then(function() {
+                var btns = pre.closest('.cite-block').querySelectorAll('.cite-copy');
+                btns.forEach(function(btn) {
+                    btn.textContent = 'Copied';
+                    btn.classList.add('copied');
+                    setTimeout(function() {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        }
+
+        /* ---- GSAP Scroll Animations ---- */
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.fade-up').forEach(function(el) {
+            gsap.fromTo(el,
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                        once: true
+                    }
+                }
+            );
+        });
+    </script>
+
+</body>
+</html>
