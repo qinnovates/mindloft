@@ -1408,6 +1408,14 @@
 
         .footer-links a:hover { color: var(--text-secondary); }
 
+        .footer-tagline {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 1rem;
+        }
+
         .footer-copy {
             color: var(--text-dim);
             font-size: 0.8rem;
@@ -1623,6 +1631,103 @@
             #oni-anim-overlay { padding: 1rem; }
             #oni-anim-overlay-card { padding: 1.25rem 1.25rem; }
         }
+
+        /* ============================================
+           BCI-FRIENDLY FEEDBACK MODAL
+           ============================================ */
+        #oni-bci-feedback-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(5, 10, 20, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #oni-bci-feedback-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        #oni-bci-feedback-card {
+            background: rgba(15, 23, 42, 0.97);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 14px;
+            padding: 2rem 2.25rem;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.4s ease;
+        }
+        #oni-bci-feedback-overlay.visible #oni-bci-feedback-card {
+            transform: scale(1) translateY(0);
+        }
+        #oni-bci-feedback-card h3 {
+            color: var(--accent-blue);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 0 0 0.75rem 0;
+            font-family: 'Inter', sans-serif;
+        }
+        #oni-bci-feedback-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin: 0 0 1.25rem 0;
+            font-family: 'Inter', sans-serif;
+        }
+        #oni-bci-feedback-card .bci-feedback-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #oni-bci-feedback-card .bci-feedback-actions a,
+        #oni-bci-feedback-card .bci-feedback-actions button {
+            border-radius: 8px;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            text-decoration: none;
+        }
+        #oni-bci-feedback-card .bci-feedback-actions a {
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        #oni-bci-feedback-card .bci-feedback-actions a:hover {
+            background: #2563eb;
+        }
+        #oni-bci-feedback-card .bci-feedback-actions button {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid rgba(71, 85, 105, 0.4);
+        }
+        #oni-bci-feedback-card .bci-feedback-actions button:hover {
+            border-color: rgba(71, 85, 105, 0.7);
+            color: var(--text-secondary);
+        }
+        #oni-bci-feedback-card .bci-feedback-actions a:focus-visible,
+        #oni-bci-feedback-card .bci-feedback-actions button:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+        @media (max-width: 480px) {
+            #oni-bci-feedback-overlay { padding: 1rem; }
+            #oni-bci-feedback-card { padding: 1.5rem 1.25rem; }
+        }
     </style>
 </head>
 <body>
@@ -1682,15 +1787,15 @@
          ============================================= -->
     <section id="scene-hero" class="scene">
         <div id="hero-osi-tagline-top" style="position: fixed; z-index: 2; text-align: center; top: 88%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 750px; opacity: 0;">
-            <p id="hero-neuro-line" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.85); margin: 0; line-height: 1.8; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out;">Neurosecurity Standards for<br>Brain-Computer Interfaces</p>
-            <p id="hero-osi-line" style="font-family: 'Inter', sans-serif; font-size: 1.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin: 0.6rem 0 0 0; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out;">The OSI of Mind</p>
+            <p id="hero-neuro-line" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.85); margin: 0; line-height: 1.8; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out;">Securing the Mind-Machine Boundary</p>
+            <p id="hero-osi-line" style="font-family: 'Inter', sans-serif; font-size: 1.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin: 0.6rem 0 0 0; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out;">The First Security Standard for Brain-Computer Interfaces</p>
             <a id="hero-author-line" href="whitepaper/index.html" style="display: inline-block; font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,55,0.9); text-decoration: none; border: 1px solid rgba(212,175,55,0.4); padding: 0.5rem 1.5rem; margin: 1rem 0 0 0; border-radius: 2rem; opacity: 0; transform: translateY(15px); transition: opacity 1.2s ease-out, transform 1.2s ease-out, border-color 0.3s, color 0.3s; animation: btnPulseGlow 2.5s ease-in-out infinite;" onmouseover="this.style.borderColor='rgba(212,175,55,0.8)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.borderColor='rgba(212,175,55,0.4)';this.style.color='rgba(212,175,55,0.9)';">Read Whitepaper <span style="margin-left:0.3em;">&rarr;</span></a>
         </div>
         <div id="hero-quote-overlay" style="position: fixed; z-index: 2; text-align: center; top: 70%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 800px; opacity: 0; pointer-events: none;">
-            <p style="font-family: 'SF Pro Display', 'Inter', -apple-system, sans-serif; font-size: clamp(1.3rem, 3vw, 2.2rem); font-weight: 300; font-style: italic; letter-spacing: 0.04em; color: rgba(255,255,255,0.85); margin: 0; line-height: 1.6;">The mind is the greatest frontier of our time.</p>
+            <p style="font-family: 'SF Pro Display', 'Inter', -apple-system, sans-serif; font-size: clamp(1.3rem, 3vw, 2.2rem); font-weight: 300; font-style: italic; letter-spacing: 0.04em; color: rgba(255,255,255,0.85); margin: 0; line-height: 1.6;">She was seven years old when they implanted the device that stopped her seizures.</p>
         </div>
         <div class="hero-scroll-indicator" id="scroll-indicator">
-            <span class="hero-scroll-text">Scroll to explore the framework</span>
+            <span class="hero-scroll-text">Scroll to see what's at stake</span>
             <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
     </section>
@@ -1717,7 +1822,7 @@
             color: rgba(255,255,255,0.95);
             letter-spacing: -0.02em;
             margin: 0;
-        ">Extending the classical OSI model into the bio-digital landscape.</p>
+        ">What if we could protect the brain the same way we protect the internet?</p>
         <p style="
             font-family: 'SF Pro Display', 'Inter', -apple-system, sans-serif;
             font-size: clamp(1rem, 2vw, 1.4rem);
@@ -1726,7 +1831,7 @@
             color: rgba(255,255,255,0.55);
             letter-spacing: 0;
             margin: 1.2rem 0 0 0;
-        ">A unified standard built with <span style="color: #8b5cf6;">neurosecurity</span> and <span style="color: #06b6d4;">neuroethics</span> as its foundation.</p>
+        ">14 layers. From silicon to synapse. Built with <span style="color: #8b5cf6;">neurosecurity</span> and <span style="color: #06b6d4;">neuroethics</span> as its foundation.</p>
     </div>
 
     <!-- OSI layer labels — positioned next to each layer during pyramid unstack -->
@@ -1768,10 +1873,10 @@
         <div class="scene-inner">
             <div class="problem-grid">
                 <div class="problem-text">
-                    <div class="section-label fade-up">The Problem</div>
-                    <h2 class="fade-up">BCIs are here.<br>Security standards aren't.</h2>
-                    <p class="fade-up">244,000+ patients have wirelessly accessible deep brain implants &mdash; and researchers have shown their communications are neither encrypted nor authenticated. Foundational researchers &mdash; Kohno, Bonaci, Yuste, Ienca &mdash; identified threats over a decade ago. But no unified, implementable framework exists. The QIF — Quantum Indeterministic Framework for Neural Security fills that gap.</p>
-                    <p class="fade-up" style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.7;">The OSI model gave computer networks a universal security architecture in 1984 &mdash; fourteen years before Google existed. BCI technology is already in patients&rsquo; brains, and it still has nothing equivalent.</p>
+                    <div class="section-label fade-up">The Unguarded Frontier</div>
+                    <h2 class="fade-up">244,000 brains are connected to the internet.<br>None of them have a firewall.</h2>
+                    <p class="fade-up">A child&rsquo;s seizure implant. A veteran&rsquo;s motor prosthesis. A researcher&rsquo;s neural recorder. These devices communicate wirelessly &mdash; and researchers have shown their signals are neither encrypted nor authenticated. The BCI market is projected to reach $6.5 billion by 2030, and there are zero dedicated security standards protecting any of it. Foundational researchers &mdash; Kohno, Bonaci, Yuste, Ienca &mdash; identified these threats over a decade ago. The QIF is the framework they called for.</p>
+                    <p class="fade-up" style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.7;">The OSI model gave computer networks a universal security architecture in 1984 &mdash; fourteen years before Google existed. BCIs are already inside human skulls, and they still have nothing equivalent.</p>
                 </div>
                 <div class="problem-stats">
                     <div class="stat-item">
@@ -1780,11 +1885,11 @@
                     </div>
                     <div class="stat-item">
                         <div class="stat-number amber" data-target="244" data-suffix="K+">0</div>
-                        <div class="stat-desc">Patients with deep brain implants</div>
+                        <div class="stat-desc">Wirelessly accessible brain implants</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number red" data-target="0" data-static="true">0</div>
-                        <div class="stat-desc">BCI-specific security standards</div>
+                        <div class="stat-desc">Dedicated security standards protecting them</div>
                     </div>
                 </div>
             </div>
@@ -1886,13 +1991,13 @@
     <section id="scene-proof" class="scene">
         <div class="scene-inner">
             <div class="proof-header">
-                <div class="section-label fade-up">Foundations</div>
-                <h2 class="fade-up">Built on a decade of research.</h2>
+                <div class="section-label fade-up">Standing on Solid Ground</div>
+                <h2 class="fade-up">We didn&rsquo;t start from scratch. We started from a decade of warnings.</h2>
             </div>
             <div class="proof-grid">
                 <!-- Research Column -->
                 <div class="proof-column fade-up">
-                    <h3>Research Foundations</h3>
+                    <h3>The Researchers Who Saw It Coming</h3>
 
                     <div class="researcher-card">
                         <div class="researcher-avatar">TK</div>
@@ -1939,12 +2044,12 @@
                         </div>
                     </div>
 
-                    <p class="proof-note">The QIF — Quantum Indeterministic Framework for Neural Security extends foundational BCI security research into a unified, implementable architecture.</p>
+                    <p class="proof-note">They identified the threats. They called for standards. The QIF is the answer.</p>
                 </div>
 
                 <!-- Regulatory Column -->
                 <div class="proof-column fade-up">
-                    <h3>Regulatory Alignment</h3>
+                    <h3>The World Is Ready</h3>
                     <ul class="regulatory-list">
                         <li>
                             <span class="check-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -1992,8 +2097,8 @@
          ============================================= -->
     <section id="scene-quote" class="scene">
         <div>
-            <p class="quote-text" id="quote-text">"Only life's most important connections deserve the most thought."</p>
-            <p class="quote-author" id="quote-author">&mdash; Kevin Qi</p>
+            <p class="quote-text" id="quote-text">"We don't get a second chance to build the security architecture of the brain."</p>
+            <p class="quote-author" id="quote-author">&mdash; Kevin Qi, QIF Author</p>
         </div>
     </section>
 
@@ -2003,15 +2108,15 @@
     <section id="scene-built" class="scene">
         <div class="scene-inner">
             <div class="built-header">
-                <div class="section-label fade-up">Ecosystem</div>
-                <h2 class="fade-up">What's been built.</h2>
+                <div class="section-label fade-up">What Exists Today</div>
+                <h2 class="fade-up">This isn&rsquo;t a whitepaper gathering dust. It&rsquo;s a working ecosystem.</h2>
             </div>
             <div class="bento-grid">
                 <a href="https://pypi.org/project/oni-framework/" target="_blank" rel="noopener" class="bento-card fade-up">
                     <div class="card-label">Python Package</div>
                     <h3>ONI Framework</h3>
                     <div class="card-code">pip install oni-framework</div>
-                    <p>14-layer model, coherence metric, scale-frequency invariant. The core library.</p>
+                    <p>Install it. Import it. Run the 14-layer model, coherence metric, and scale-frequency invariant in Python today.</p>
                     <span class="card-link">PyPI &rarr;</span>
                 </a>
 
@@ -2019,35 +2124,35 @@
                     <div class="card-label">Security Stack</div>
                     <h3>TARA Stack</h3>
                     <div class="card-code">pip install oni-tara</div>
-                    <p>Attack simulation, signal analysis, neural firewall prototype. Named after the Buddhist goddess of protection.</p>
+                    <p>Simulate attacks, analyze signals, test neural firewall defenses. Named after the Buddhist goddess of protection &mdash; because neural security should feel sacred.</p>
                     <span class="card-link">PyPI &rarr;</span>
                 </a>
 
                 <a href="visualizations/index.html" class="bento-card fade-up">
                     <div class="card-label">Web Applications</div>
                     <h3>Interactive Tools</h3>
-                    <p>10 web apps: coherence playground, threat matrix, layer explorer, framework visualization, and more.</p>
+                    <p>10 web apps to explore the framework hands-on: coherence playground, threat matrix, layer explorer, and more.</p>
                     <span class="card-link">Explore &rarr;</span>
                 </a>
 
                 <a href="whitepaper/index.html" class="bento-card fade-up">
                     <div class="card-label">Research</div>
                     <h3>Whitepaper</h3>
-                    <p>Complete framework overview, market analysis, regulatory mapping, and technical architecture.</p>
+                    <p>The full argument: why BCIs need a security standard, what it looks like, and how to build it.</p>
                     <span class="card-link">Read &rarr;</span>
                 </a>
 
                 <a href="documentation/index.html" class="bento-card fade-up">
                     <div class="card-label">Documentation</div>
-                    <h3>20+ Publications</h3>
-                    <p>Technical documents and blog posts across 8 research areas. Detection theory, quantum encryption, neural ransomware, and more.</p>
+                    <h3>31 Research Documents</h3>
+                    <p>Technical documents and blog posts across 8 research areas: detection theory, quantum encryption, neural ransomware, and more.</p>
                     <span class="card-link">Browse &rarr;</span>
                 </a>
 
                 <a href="https://github.com/qinnovates/mindloft" target="_blank" rel="noopener" class="bento-card fade-up">
                     <div class="card-label">Open Source</div>
                     <h3>Apache 2.0</h3>
-                    <p>Full transparency audit. Reproducible research. Human-AI collaboration documented in governance.</p>
+                    <p>Every decision documented. Every collaboration transparent. Reproducible research under Apache 2.0.</p>
                     <span class="card-link">GitHub &rarr;</span>
                 </a>
             </div>
@@ -2060,16 +2165,16 @@
     <section id="scene-vision" class="scene">
         <div class="scene-inner">
             <div class="vision-content">
-                <div class="section-label fade-up">Vision</div>
-                <h2 class="fade-up">Standardization unlocked the internet.<br>The brain is still waiting.</h2>
+                <div class="section-label fade-up">Why This Matters Now</div>
+                <h2 class="fade-up">The internet was built first and secured later.<br>We cannot make that mistake with the brain.</h2>
 
                 <!-- Historical Parallel -->
                 <div class="vision-parallel fade-up">
                     <div class="parallel-card then">
                         <div class="parallel-era">1970s &ndash; 1980s</div>
                         <h4>Before OSI</h4>
-                        <p>Every manufacturer had proprietary networking protocols. Nothing could talk to anything else. No interoperability, no security baselines, no shared language.</p>
-                        <div class="parallel-result">Then came OSI, TCP/IP, IEEE 802 &rarr; the internet.</div>
+                        <p>A fragmented industry building on sand. Every manufacturer had proprietary protocols. Nothing could talk to anything else. No interoperability, no security baselines, no shared language.</p>
+                        <div class="parallel-result">Then came OSI, TCP/IP, IEEE 802 &mdash; and the internet became possible.</div>
                     </div>
                     <div class="parallel-card now">
                         <div class="parallel-era">Today</div>
@@ -2081,7 +2186,7 @@
 
                 <div class="vision-terminology fade-up">
                     <h4>The Advantage We Have Now</h4>
-                    <p>When OSI was created, cybersecurity was a narrow government concern &mdash; not a design consideration. Encryption was classified as munitions. Firewalls hadn't been invented. The internet was built first &mdash; then spent decades retrofitting security after the damage was done. We don't have that excuse. We have 40+ years of hard-won security lessons, battle-tested frameworks, proven cryptography, and entire disciplines built on protecting data in transit. The QIF — Quantum Indeterministic Framework for Neural Security takes everything the security industry has learned and bakes it into the neural standard <em>from the start</em> &mdash; so we don't repeat the same mistake with the most important network of all.</p>
+                    <p>When OSI was created, cybersecurity barely existed. Encryption was classified as munitions. Firewalls hadn&rsquo;t been invented. The internet was built first &mdash; then spent decades retrofitting security after the damage was done. We have 40 years of battle-tested security lessons, proven cryptography, and entire disciplines built on protecting data in transit. The QIF takes everything the security industry has learned and bakes it into the neural standard <em>from the start</em>.</p>
                 </div>
 
                 <div class="vision-terminology fade-up">
@@ -2136,9 +2241,9 @@
                     <a href="whitepaper/index.html" class="btn btn-primary">Read the Whitepaper</a>
                     <a href="https://github.com/qinnovates/mindloft" target="_blank" rel="noopener" class="btn btn-secondary">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                        Star on GitHub
+                        Explore on GitHub
                     </a>
-                    <a href="documentation/index.html" class="btn btn-secondary">View Documentation</a>
+                    <a href="documentation/index.html" class="btn btn-secondary">Browse 31 Publications</a>
                 </div>
             </div>
         </div>
@@ -2161,6 +2266,7 @@
             <a href="https://pypi.org/project/oni-framework/" target="_blank" rel="noopener">PyPI</a>
             <a href="https://medium.com/@qikevinl" target="_blank" rel="noopener">Medium</a>
         </div>
+        <p class="footer-tagline">Securing the mind-machine boundary. Open source. Open standards. Open future.</p>
         <p class="footer-copy">&copy; 2026 Kevin Qi &amp; Qinnovate LLC. All rights reserved.</p>
         <p class="footer-copy" style="margin-top: 0.4rem; font-size: 0.7rem; color: var(--text-dim);">
             Website design, animations, and visual assets are proprietary. The QIF — Quantum Indeterministic Framework for Neural Security research is licensed under Apache 2.0.
@@ -2175,6 +2281,18 @@
         <div id="oni-anim-overlay-card">
             <p id="oni-anim-overlay-heading">This site uses animations. For accessibility or BCI-compatible browsing, you can disable animations at any time using the toggle at the bottom of the screen.</p>
             <button id="oni-anim-overlay-dismiss" type="button">Got it</button>
+        </div>
+    </div>
+
+    <!-- BCI-Friendly feedback modal (shown once when user enables reduced-motion) -->
+    <div id="oni-bci-feedback-overlay" role="dialog" aria-labelledby="oni-bci-feedback-heading" aria-modal="true">
+        <div id="oni-bci-feedback-card">
+            <h3 id="oni-bci-feedback-heading">Thank you for your interest</h3>
+            <p>We're building this project with accessibility and BCI-compatible browsing in mind — but we know there's always more to learn. If you use assistive technology or a brain-computer interface, we'd genuinely love to hear from you on how we can make this better.</p>
+            <div class="bci-feedback-actions">
+                <a href="https://github.com/qinnovates/mindloft/issues/new?labels=accessibility,bci-feedback&title=BCI+Accessibility+Feedback" target="_blank" rel="noopener">Share Feedback</a>
+                <button id="oni-bci-feedback-dismiss" type="button">Maybe later</button>
+            </div>
         </div>
     </div>
 
@@ -2267,6 +2385,47 @@
             }
         });
 
+        // BCI feedback modal references
+        var BCI_FEEDBACK_KEY = 'oni-bci-feedback-shown';
+        var bciFeedbackOverlay = document.getElementById('oni-bci-feedback-overlay');
+        var bciFeedbackDismiss = document.getElementById('oni-bci-feedback-dismiss');
+
+        function showBciFeedback() {
+            var alreadyShown = localStorage.getItem(BCI_FEEDBACK_KEY) === 'true';
+            if (!alreadyShown) {
+                setTimeout(function() {
+                    bciFeedbackOverlay.classList.add('visible');
+                }, 300);
+            }
+        }
+
+        function dismissBciFeedback() {
+            bciFeedbackOverlay.classList.remove('visible');
+            localStorage.setItem(BCI_FEEDBACK_KEY, 'true');
+        }
+
+        bciFeedbackDismiss.addEventListener('click', dismissBciFeedback);
+
+        bciFeedbackOverlay.addEventListener('click', function(e) {
+            if (e.target === bciFeedbackOverlay) {
+                dismissBciFeedback();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && bciFeedbackOverlay.classList.contains('visible')) {
+                dismissBciFeedback();
+            }
+        });
+
+        // Dismiss on feedback link click (they've engaged)
+        var bciFeedbackLink = bciFeedbackOverlay.querySelector('a');
+        if (bciFeedbackLink) {
+            bciFeedbackLink.addEventListener('click', function() {
+                localStorage.setItem(BCI_FEEDBACK_KEY, 'true');
+            });
+        }
+
         // Toggle handler
         toggleBtn.addEventListener('click', function() {
             animationsEnabled = !animationsEnabled;
@@ -2283,15 +2442,15 @@
                 // Re-enable GSAP ScrollTrigger
                 if (window.ScrollTrigger) {
                     ScrollTrigger.enable();
-                    ScrollTrigger.refresh();
-                }
-            } else {
                 document.body.classList.add('reduced-motion');
                 // Disable GSAP ScrollTrigger
                 if (window.ScrollTrigger) {
                     ScrollTrigger.disable();
                 }
                 // Three.js will stop via the isVisible/reduced-motion check in animate()
+
+                // Show BCI feedback modal (once)
+                showBciFeedback();
             }
         });
 
