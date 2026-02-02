@@ -1,0 +1,395 @@
+{
+  "_meta": {
+    "repo": "qinnovates/mindloft",
+    "base_url": "https://github.com/qinnovates/mindloft/blob/main",
+    "last_updated": "2026-02-02",
+    "description": "Single source of truth for all documentation links. Update paths here instead of editing HTML."
+  },
+  "categories": [
+    {
+      "id": "framework",
+      "title": "Framework",
+      "color": "blue",
+      "documents": [
+        {
+          "id": "oni-whitepaper",
+          "title": "ONI Whitepaper",
+          "description": "The OSI of Mind: Why BCIs Need a Universal Security Standard. Flagship overview with 8 figures.",
+          "badge": "whitepaper",
+          "path": "neurosecurity/legacy-core/publications/0-oni-framework/ONI_Whitepaper.md"
+        },
+        {
+          "id": "oni-framework-techdoc",
+          "title": "ONI Framework",
+          "description": "A Unified Neuro-Computational Stack for Secure Bio-Digital Integration.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/0-oni-framework/TechDoc-ONI_Framework.md"
+        },
+        {
+          "id": "oni-layers",
+          "title": "ONI Layers (14-Layer Model)",
+          "description": "Authoritative reference for all 14 layers — L1-L7 silicon, L8 gateway, L9-L14 biology.",
+          "badge": "reference",
+          "path": "neurosecurity/legacy-core/oni-framework/ONI_LAYERS.md"
+        },
+        {
+          "id": "oni-threat-matrix",
+          "title": "ONI Threat Matrix",
+          "description": "10 tactics, 46 techniques mapped to ONI layers. MITRE ATT&CK-inspired neural threat taxonomy.",
+          "badge": "reference",
+          "path": "neurosecurity/legacy-core/oni-framework/ONI_THREAT_MATRIX.md"
+        },
+        {
+          "id": "oni-framework-blog",
+          "title": "ONI Framework Introduction",
+          "description": "If you've worked in IT, you know the OSI model. Now meet its neural counterpart.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/0-oni-framework/Blog-ONI_Framework.md"
+        }
+      ]
+    },
+    {
+      "id": "mathematics",
+      "title": "Mathematics",
+      "color": "purple",
+      "documents": [
+        {
+          "id": "equations-reference",
+          "title": "Equations Reference",
+          "description": "Master catalog of all equations: Maxwell, Boltzmann, Nernst, Hodgkin-Huxley, Fourier, and more.",
+          "badge": "reference",
+          "path": "neurosecurity/legacy-core/publications/mathematical-foundations/TechDoc-Equations_Reference.md"
+        },
+        {
+          "id": "mathematical-audit",
+          "title": "Mathematical Audit",
+          "description": "Rigorous self-audit of every mathematical claim. 7 findings with severity ratings and corrections.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md"
+        },
+        {
+          "id": "mathematical-foundations",
+          "title": "Mathematical Foundations",
+          "description": "Corrected physics with empirically accurate models, labeled hypotheses, and expansion stubs.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md"
+        },
+        {
+          "id": "why-waves-circles",
+          "title": "Why Waves Are Circles",
+          "description": "Pedagogical primer from right triangles to Fourier transforms, with accuracy notes.",
+          "badge": "guide",
+          "path": "docs/WHY_WAVES_ARE_CIRCLES.md"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security",
+      "color": "emerald",
+      "documents": [
+        {
+          "id": "neural-firewall-blog",
+          "title": "Neural Firewall",
+          "description": "The same security principles that protect your computer will soon need to protect your mind.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/neural-firewall/Blog-Neural_Firewall.md"
+        },
+        {
+          "id": "neural-firewall-techdoc",
+          "title": "Neural Firewall Architecture",
+          "description": "A Zero-Trust Security Model for Neural Interfaces.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/neural-firewall/TechDoc-Neural_Firewall_Architecture.md"
+        },
+        {
+          "id": "neural-ransomware-blog",
+          "title": "Neural Ransomware",
+          "description": "The technical threat model for holding a brain implant hostage.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/neural-ransomware/Blog-Neural_Ransomware.md"
+        },
+        {
+          "id": "neural-ransomware-techdoc",
+          "title": "Neural Ransomware",
+          "description": "Attack Vectors and Defensive Architectures for Brain-Computer Interfaces.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/neural-ransomware/TechDoc-Neural_Ransomware.md"
+        },
+        {
+          "id": "detection-theory",
+          "title": "Detection Theory",
+          "description": "Mathematical Framework for Neural Signal Threat Detection with differential privacy and federated learning.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/detection-theory/TechDoc-Detection_Theory.md"
+        },
+        {
+          "id": "neurosecurity-implementation",
+          "title": "Neurosecurity Implementation",
+          "description": "Kohno/BCI Anonymizer integration guide. CIA triad threat model for neural interfaces.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/oni-framework/NEUROSECURITY_IMPLEMENTATION.md"
+        }
+      ]
+    },
+    {
+      "id": "signal-processing",
+      "title": "Signal Processing",
+      "color": "cyan",
+      "documents": [
+        {
+          "id": "coherence-metric-blog",
+          "title": "Coherence Metric",
+          "description": "Inside the math that could protect your mind from neural hackers.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/coherence-metric/Blog-Coherence_Metric.md"
+        },
+        {
+          "id": "coherence-metric-techdoc",
+          "title": "Coherence Metric (Detailed)",
+          "description": "A Mathematical Framework for Quantifying Trustworthiness of neural signals.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/coherence-metric/TechDoc-Coherence_Metric_Detailed.md"
+        },
+        {
+          "id": "scale-frequency-blog",
+          "title": "Scale-Frequency",
+          "description": "From millisecond spikes to lifetime memories. The f x S ~ k invariant.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/scale-frequency/Blog-Scale_Frequency.md"
+        },
+        {
+          "id": "scale-frequency-techdoc",
+          "title": "Scale-Frequency",
+          "description": "Mathematical Foundations for Hierarchical Neural Processing in the ONI Framework.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/scale-frequency/TechDoc-Scale_Frequency.md"
+        },
+        {
+          "id": "signal-viz-design",
+          "title": "Signal Visualization Design",
+          "description": "Why wavefronts were chosen as a pedagogical model for the 3D visualization.",
+          "badge": "guide",
+          "path": "docs/SIGNAL_VISUALIZATION_DESIGN.md"
+        }
+      ]
+    },
+    {
+      "id": "quantum",
+      "title": "Quantum",
+      "color": "pink",
+      "documents": [
+        {
+          "id": "quantum-encryption-techdoc",
+          "title": "Quantum Encryption",
+          "description": "A Framework for Post-Quantum Neural Protection. QKD, QPUFs, and quantum-safe protocols.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/quantum-encryption/TechDoc-Quantum_Encryption.md"
+        },
+        {
+          "id": "tunneling-traversal-techdoc",
+          "title": "Tunneling Traversal Time",
+          "description": "Tunneling Traversal Time as a Security Primitive for Brain-Computer Interfaces.",
+          "badge": "techdoc",
+          "path": "neurosecurity/legacy-core/publications/quantum-encryption/TechDoc-Tunneling_Traversal_Time.md"
+        },
+        {
+          "id": "quantum-security-blog",
+          "title": "Quantum Security",
+          "description": "The real quantum threat isn't about transcending spacetime — it's about transcending computational complexity.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/quantum-encryption/Blog-Quantum_Security.md"
+        },
+        {
+          "id": "quantum-keys-blog",
+          "title": "Quantum Keys",
+          "description": "From Macroscopic Quantum Tunneling to Quantum Keys: How the Nobel Prize Will Secure BCIs.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/quantum-encryption/Blog-Quantum_Keys.md"
+        },
+        {
+          "id": "tunneling-traversal-blog",
+          "title": "Tunneling Traversal Time",
+          "description": "The Liminal Phase: How Quantum Tunneling Time Could Secure Your Brain.",
+          "badge": "blog",
+          "path": "neurosecurity/legacy-core/publications/quantum-encryption/Blog-Tunneling_Traversal_Time.md"
+        }
+      ]
+    },
+    {
+      "id": "tools-code",
+      "title": "Tools & Code",
+      "color": "amber",
+      "documents": [
+        {
+          "id": "external-tools",
+          "title": "External Tools & Libraries",
+          "description": "BrainFlow, MNE-Python, MOABB, SciPy, hardware targets, and every dependency ONI uses.",
+          "badge": "reference",
+          "path": "neurosecurity/legacy-core/resources/EXTERNAL_TOOLS.md"
+        },
+        {
+          "id": "oni-framework-readme",
+          "title": "oni-framework README",
+          "description": "Python library documentation. Installation, API reference, quick start guide.",
+          "badge": "guide",
+          "path": "neurosecurity/legacy-core/oni-framework/README.md"
+        },
+        {
+          "id": "oni-tara-readme",
+          "title": "oni-tara README",
+          "description": "TARA neural security platform. Simulation, attack testing, NSAM, Streamlit dashboard.",
+          "badge": "guide",
+          "path": "neurosecurity/legacy-core/tara-nsec-platform/README.md"
+        },
+        {
+          "id": "visualization-suite",
+          "title": "Visualization Suite",
+          "description": "Interactive HTML apps: Coherence Playground, Layer Explorer, Kill Chain, NSAM, Scale-Frequency, Threat Matrix.",
+          "badge": "live",
+          "url": "https://qinnovate.com/mindloft/visualizations/"
+        }
+      ]
+    },
+    {
+      "id": "governance-ethics",
+      "title": "Governance & Ethics",
+      "color": "emerald",
+      "documents": [
+        {
+          "id": "transparency",
+          "title": "Transparency Statement",
+          "description": "Human-AI collaboration audit trail. Cognitive boundary documentation and HITL methodology.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/TRANSPARENCY.md"
+        },
+        {
+          "id": "neuroethics-alignment",
+          "title": "Neuroethics Alignment",
+          "description": "Maps framework components to cognitive liberty, mental privacy, and mental integrity principles.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/NEUROETHICS_ALIGNMENT.md"
+        },
+        {
+          "id": "informed-consent",
+          "title": "Informed Consent Framework",
+          "description": "Consent architecture for BCIs. Continuous consent, withdrawal protocols, capacity assessment.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/INFORMED_CONSENT_FRAMEWORK.md"
+        },
+        {
+          "id": "pediatric-considerations",
+          "title": "Pediatric Considerations",
+          "description": "Guidelines for minors and individuals with limited capacity. Age-appropriate consent models.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/PEDIATRIC_CONSIDERATIONS.md"
+        },
+        {
+          "id": "post-deployment-ethics",
+          "title": "Post-Deployment Ethics",
+          "description": "Device lifecycle, maintenance obligations, abandonment prevention, end-of-life protocols.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/POST_DEPLOYMENT_ETHICS.md"
+        },
+        {
+          "id": "regulatory-compliance",
+          "title": "Regulatory Compliance",
+          "description": "US & international regulatory mapping: FDA, state neurorights laws, MIND Act, UNESCO, Chile, EU.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/REGULATORY_COMPLIANCE.md"
+        },
+        {
+          "id": "unesco-alignment",
+          "title": "UNESCO Alignment",
+          "description": "Mapping to UNESCO Recommendation on Ethics of Neurotechnology (2025). 15 of 17 elements implemented.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/UNESCO_ALIGNMENT.md"
+        },
+        {
+          "id": "data-policy-faq",
+          "title": "Data Policy FAQ",
+          "description": "Privacy questions, anonymization, user rights, known vulnerabilities.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/DATA_POLICY_FAQ.md"
+        },
+        {
+          "id": "accessibility",
+          "title": "Accessibility",
+          "description": "Accessibility standards and compliance for ONI tools and documentation.",
+          "badge": "guide",
+          "path": "neurosecurity/qif/governance/ACCESSIBILITY.md"
+        }
+      ]
+    },
+    {
+      "id": "project",
+      "title": "Project",
+      "color": "blue",
+      "documents": [
+        {
+          "id": "contributing",
+          "title": "Contributing",
+          "description": "Contribution guidelines. How to submit PRs, report issues, and collaborate on ONI research.",
+          "badge": "guide",
+          "path": "neurosecurity/legacy-core/CONTRIBUTING.md"
+        },
+        {
+          "id": "related-work",
+          "title": "Related Work",
+          "description": "Prior BCI security research. Foundational work that ONI builds upon.",
+          "badge": "reference",
+          "path": "neurosecurity/legacy-core/RELATED_WORK.md"
+        },
+        {
+          "id": "academic-landscape",
+          "title": "Academic Landscape",
+          "description": "Top universities, key researchers, collaboration opportunities in BCI security and neurosecurity.",
+          "badge": "reference",
+          "path": "neurosecurity/legacy-core/ACADEMIC_LANDSCAPE.md"
+        },
+        {
+          "id": "partnerships",
+          "title": "Partnerships",
+          "description": "Partnership opportunities, implementation roadmap, and how to get involved.",
+          "badge": "guide",
+          "path": "neurosecurity/legacy-core/PARTNERSHIPS.md"
+        },
+        {
+          "id": "index-wiki",
+          "title": "INDEX.md (Main Wiki)",
+          "description": "Central navigation hub. Dependencies, cross-references, reading order, and roadmap.",
+          "badge": "reference",
+          "path": "neurosecurity/legacy-core/INDEX.md"
+        }
+      ]
+    },
+    {
+      "id": "learning",
+      "title": "Learning",
+      "color": "purple",
+      "documents": [
+        {
+          "id": "oni-academy",
+          "title": "ONI Academy",
+          "description": "Structured curriculum with learning modules. pip install oni-academy.",
+          "badge": "guide",
+          "path": "autodidact/oni-academy/ONI_ACADEMY.md"
+        },
+        {
+          "id": "learnviz",
+          "title": "LearnViz",
+          "description": "Adaptive visualization engine. Concept-to-code-to-video pipeline for personalized learning.",
+          "badge": "guide",
+          "path": "autodidact/learnviz/README.md"
+        },
+        {
+          "id": "neuroscience-bci",
+          "title": "Neuroscience-BCI",
+          "description": "Personal neuroscience learning roadmap. Brain regions, motor cortex research, BCI fundamentals.",
+          "badge": "guide",
+          "path": "autodidact/neuroscience-bci/README.md"
+        }
+      ]
+    }
+  ]
+}

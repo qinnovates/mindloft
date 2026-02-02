@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation Hub | ONI Framework</title>
-    <meta name="description" content="Complete documentation index for the ONI Framework — 50+ documents organized across 9 categories.">
+    <meta name="description" content="Complete documentation index for the ONI Framework — dynamically rendered from content-manifest.json.">
     <style>
         :root {
             --bg-primary: #0a0f1a;
@@ -160,6 +160,27 @@
             color: var(--text-primary);
         }
 
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-muted);
+        }
+
         /* Categories */
         .categories {
             max-width: 1200px;
@@ -180,6 +201,10 @@
 
         .category:hover {
             border-color: var(--text-muted);
+        }
+
+        .category.hidden {
+            display: none;
         }
 
         .category-header {
@@ -257,6 +282,10 @@
             transform: translateY(-1px);
         }
 
+        .doc-card.hidden {
+            display: none;
+        }
+
         .doc-badge {
             display: inline-block;
             font-size: 0.65rem;
@@ -287,6 +316,30 @@
             font-size: 0.82rem;
             color: var(--text-muted);
             line-height: 1.4;
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .no-results.visible {
+            display: block;
+        }
+
+        /* Error fallback */
+        .error-msg {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--accent-pink);
+        }
+
+        .error-msg a {
+            color: var(--accent-blue);
+            text-decoration: none;
         }
 
         /* Footer */
@@ -340,402 +393,153 @@
 <div class="hero">
     <h1>Documentation Hub</h1>
     <p>Complete index of all ONI Framework research, publications, and reference material.</p>
-    <span class="stat"><strong>50+</strong> documents across <strong>9</strong> categories</span>
+    <span class="stat" id="doc-stat"><strong>...</strong> documents across <strong>...</strong> categories</span>
 </div>
 
 <div class="controls">
+    <input type="text" class="search-box" id="search" placeholder="Search documents..." autocomplete="off">
     <button onclick="toggleAll(true)">Expand All</button>
     <button onclick="toggleAll(false)">Collapse All</button>
 </div>
 
-<div class="categories">
-
-    <!-- 1. Framework -->
-    <div class="category" style="--cat-color: var(--accent-blue);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Framework</h2>
-                <span class="category-count">5 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/0-oni-framework/ONI_Whitepaper.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-whitepaper">Whitepaper</span>
-                    <h3>ONI Whitepaper</h3>
-                    <p>The OSI of Mind: Why BCIs Need a Universal Security Standard. Flagship overview with 8 figures.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/0-oni-framework/TechDoc-ONI_Framework.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>ONI Framework</h3>
-                    <p>A Unified Neuro-Computational Stack for Secure Bio-Digital Integration.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/oni-framework/ONI_LAYERS.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-reference">Reference</span>
-                    <h3>ONI Layers (14-Layer Model)</h3>
-                    <p>Authoritative reference for all 14 layers — L1-L7 silicon, L8 gateway, L9-L14 biology.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/oni-framework/ONI_THREAT_MATRIX.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-reference">Reference</span>
-                    <h3>ONI Threat Matrix</h3>
-                    <p>10 tactics, 46 techniques mapped to ONI layers. MITRE ATT&CK-inspired neural threat taxonomy.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/0-oni-framework/Blog-ONI_Framework.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>ONI Framework Introduction</h3>
-                    <p>If you've worked in IT, you know the OSI model. Now meet its neural counterpart.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. Mathematics -->
-    <div class="category" style="--cat-color: var(--accent-purple);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Mathematics</h2>
-                <span class="category-count">4 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/mathematical-foundations/TechDoc-Equations_Reference.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-reference">Reference</span>
-                    <h3>Equations Reference</h3>
-                    <p>Master catalog of all equations: Maxwell, Boltzmann, Nernst, Hodgkin-Huxley, Fourier, and more.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/mathematical-foundations/TechDoc-Mathematical_Audit.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Mathematical Audit</h3>
-                    <p>Rigorous self-audit of every mathematical claim. 7 findings with severity ratings and corrections.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/mathematical-foundations/TechDoc-Mathematical_Foundations.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Mathematical Foundations</h3>
-                    <p>Corrected physics with empirically accurate models, labeled hypotheses, and expansion stubs.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/docs/WHY_WAVES_ARE_CIRCLES.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Why Waves Are Circles</h3>
-                    <p>Pedagogical primer from right triangles to Fourier transforms, with accuracy notes.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. Security -->
-    <div class="category" style="--cat-color: var(--accent-emerald);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Security</h2>
-                <span class="category-count">6 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/neural-firewall/Blog-Neural_Firewall.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>Neural Firewall</h3>
-                    <p>The same security principles that protect your computer will soon need to protect your mind.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/neural-firewall/TechDoc-Neural_Firewall_Architecture.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Neural Firewall Architecture</h3>
-                    <p>A Zero-Trust Security Model for Neural Interfaces.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/neural-ransomware/Blog-Neural_Ransomware.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>Neural Ransomware</h3>
-                    <p>The technical threat model for holding a brain implant hostage.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/neural-ransomware/TechDoc-Neural_Ransomware.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Neural Ransomware</h3>
-                    <p>Attack Vectors and Defensive Architectures for Brain-Computer Interfaces.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/detection-theory/TechDoc-Detection_Theory.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Detection Theory</h3>
-                    <p>Mathematical Framework for Neural Signal Threat Detection with differential privacy and federated learning.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/oni-framework/NEUROSECURITY_IMPLEMENTATION.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Neurosecurity Implementation</h3>
-                    <p>Kohno/BCI Anonymizer integration guide. CIA triad threat model for neural interfaces.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. Signal Processing -->
-    <div class="category" style="--cat-color: var(--accent-cyan);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Signal Processing</h2>
-                <span class="category-count">5 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/coherence-metric/Blog-Coherence_Metric.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>Coherence Metric</h3>
-                    <p>Inside the math that could protect your mind from neural hackers.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/coherence-metric/TechDoc-Coherence_Metric_Detailed.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Coherence Metric (Detailed)</h3>
-                    <p>A Mathematical Framework for Quantifying Trustworthiness of neural signals.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/scale-frequency/Blog-Scale_Frequency.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>Scale-Frequency</h3>
-                    <p>From millisecond spikes to lifetime memories. The f x S ~ k invariant.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/scale-frequency/TechDoc-Scale_Frequency.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Scale-Frequency</h3>
-                    <p>Mathematical Foundations for Hierarchical Neural Processing in the ONI Framework.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/docs/SIGNAL_VISUALIZATION_DESIGN.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Signal Visualization Design</h3>
-                    <p>Why wavefronts were chosen as a pedagogical model for the 3D visualization.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. Quantum -->
-    <div class="category" style="--cat-color: var(--accent-pink);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Quantum</h2>
-                <span class="category-count">5 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/quantum-encryption/TechDoc-Quantum_Encryption.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Quantum Encryption</h3>
-                    <p>A Framework for Post-Quantum Neural Protection. QKD, QPUFs, and quantum-safe protocols.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/quantum-encryption/TechDoc-Tunneling_Traversal_Time.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-techdoc">TechDoc</span>
-                    <h3>Tunneling Traversal Time</h3>
-                    <p>Tunneling Traversal Time as a Security Primitive for Brain-Computer Interfaces.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/quantum-encryption/Blog-Quantum_Security.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>Quantum Security</h3>
-                    <p>The real quantum threat isn't about transcending spacetime — it's about transcending computational complexity.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/quantum-encryption/Blog-Quantum_Keys.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>Quantum Keys</h3>
-                    <p>From Macroscopic Quantum Tunneling to Quantum Keys: How the Nobel Prize Will Secure BCIs.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/publications/quantum-encryption/Blog-Tunneling_Traversal_Time.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-blog">Blog</span>
-                    <h3>Tunneling Traversal Time</h3>
-                    <p>The Liminal Phase: How Quantum Tunneling Time Could Secure Your Brain.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. Tools & Code -->
-    <div class="category" style="--cat-color: var(--accent-amber);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Tools & Code</h2>
-                <span class="category-count">4 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/resources/EXTERNAL_TOOLS.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-reference">Reference</span>
-                    <h3>External Tools & Libraries</h3>
-                    <p>BrainFlow, MNE-Python, MOABB, SciPy, hardware targets, and every dependency ONI uses.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/oni-framework/README.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>oni-framework README</h3>
-                    <p>Python library documentation. Installation, API reference, quick start guide.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/tara-nsec-platform/README.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>oni-tara README</h3>
-                    <p>TARA neural security platform. Simulation, attack testing, NSAM, Streamlit dashboard.</p>
-                </a>
-                <a class="doc-card" href="https://qinnovates.github.io/ONI/visualizations/" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-live">Live</span>
-                    <h3>Visualization Suite</h3>
-                    <p>6 interactive HTML apps: Coherence Playground, Layer Explorer, Kill Chain, NSAM, Scale-Frequency, Threat Matrix.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 7. Governance & Ethics -->
-    <div class="category" style="--cat-color: var(--accent-emerald);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Governance & Ethics</h2>
-                <span class="category-count">9 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/TRANSPARENCY.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Transparency Statement</h3>
-                    <p>Human-AI collaboration audit trail. Cognitive boundary documentation and HITL methodology.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/NEUROETHICS_ALIGNMENT.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Neuroethics Alignment</h3>
-                    <p>Maps framework components to cognitive liberty, mental privacy, and mental integrity principles.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/INFORMED_CONSENT_FRAMEWORK.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Informed Consent Framework</h3>
-                    <p>Consent architecture for BCIs. Continuous consent, withdrawal protocols, capacity assessment.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/PEDIATRIC_CONSIDERATIONS.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Pediatric Considerations</h3>
-                    <p>Guidelines for minors and individuals with limited capacity. Age-appropriate consent models.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/POST_DEPLOYMENT_ETHICS.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Post-Deployment Ethics</h3>
-                    <p>Device lifecycle, maintenance obligations, abandonment prevention, end-of-life protocols.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/REGULATORY_COMPLIANCE.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Regulatory Compliance</h3>
-                    <p>US & international regulatory mapping: FDA, state neurorights laws, MIND Act, UNESCO, Chile, EU.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/UNESCO_ALIGNMENT.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>UNESCO Alignment</h3>
-                    <p>Mapping to UNESCO Recommendation on Ethics of Neurotechnology (2025). 15 of 17 elements implemented.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/DATA_POLICY_FAQ.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Data Policy FAQ</h3>
-                    <p>Privacy questions, anonymization, user rights, known vulnerabilities.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/qif/governance/ACCESSIBILITY.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Accessibility</h3>
-                    <p>Accessibility standards and compliance for ONI tools and documentation.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 8. Project -->
-    <div class="category" style="--cat-color: var(--accent-blue);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Project</h2>
-                <span class="category-count">5 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/CONTRIBUTING.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Contributing</h3>
-                    <p>Contribution guidelines. How to submit PRs, report issues, and collaborate on ONI research.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/RELATED_WORK.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-reference">Reference</span>
-                    <h3>Related Work</h3>
-                    <p>Prior BCI security research. Foundational work that ONI builds upon.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/ACADEMIC_LANDSCAPE.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-reference">Reference</span>
-                    <h3>Academic Landscape</h3>
-                    <p>Top universities, key researchers, collaboration opportunities in BCI security and neurosecurity.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/PARTNERSHIPS.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Partnerships</h3>
-                    <p>Partnership opportunities, implementation roadmap, and how to get involved.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/neurosecurity/legacy-core/INDEX.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-reference">Reference</span>
-                    <h3>INDEX.md (Main Wiki)</h3>
-                    <p>Central navigation hub. Dependencies, cross-references, reading order, and roadmap.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 9. Learning -->
-    <div class="category" style="--cat-color: var(--accent-purple);">
-        <div class="category-header" onclick="toggleCategory(this)">
-            <div class="category-title">
-                <h2>Learning</h2>
-                <span class="category-count">3 docs</span>
-            </div>
-            <span class="category-chevron">&#9662;</span>
-        </div>
-        <div class="category-body">
-            <div class="doc-grid">
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/autodidact/oni-academy/ONI_ACADEMY.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>ONI Academy</h3>
-                    <p>Structured curriculum with learning modules. pip install oni-academy.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/autodidact/learnviz/README.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>LearnViz</h3>
-                    <p>Adaptive visualization engine. Concept-to-code-to-video pipeline for personalized learning.</p>
-                </a>
-                <a class="doc-card" href="https://github.com/qinnovates/mindloft/blob/main/autodidact/neuroscience-bci/README.md" target="_blank" rel="noopener">
-                    <span class="doc-badge badge-guide">Guide</span>
-                    <h3>Neuroscience-BCI</h3>
-                    <p>Personal neuroscience learning roadmap. Brain regions, motor cortex research, BCI fundamentals.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
+<div class="categories" id="categories">
+    <!-- Rendered dynamically from content-manifest.json -->
 </div>
+
+<div class="no-results" id="no-results">No documents match your search.</div>
 
 <footer>
     <p>ONI Framework &mdash; <a href="https://github.com/qinnovates/mindloft">GitHub</a> &middot; <a href="../">Home</a> &middot; <a href="../visualizations/">Visualizations</a></p>
 </footer>
 
 <script>
+    const COLOR_MAP = {
+        blue: 'var(--accent-blue)',
+        purple: 'var(--accent-purple)',
+        cyan: 'var(--accent-cyan)',
+        pink: 'var(--accent-pink)',
+        amber: 'var(--accent-amber)',
+        emerald: 'var(--accent-emerald)'
+    };
+
+    function buildDocCard(doc, baseUrl) {
+        const href = doc.url || (baseUrl + '/' + doc.path);
+        const card = document.createElement('a');
+        card.className = 'doc-card';
+        card.href = href;
+        card.target = '_blank';
+        card.rel = 'noopener';
+        card.dataset.title = doc.title.toLowerCase();
+        card.dataset.desc = doc.description.toLowerCase();
+        card.dataset.badge = doc.badge;
+        card.innerHTML =
+            '<span class="doc-badge badge-' + doc.badge + '">' + doc.badge + '</span>' +
+            '<h3>' + doc.title + '</h3>' +
+            '<p>' + doc.description + '</p>';
+        return card;
+    }
+
+    function buildCategory(cat, baseUrl) {
+        const color = COLOR_MAP[cat.color] || COLOR_MAP.blue;
+        const section = document.createElement('div');
+        section.className = 'category';
+        section.style.setProperty('--cat-color', color);
+        section.dataset.catId = cat.id;
+
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.onclick = function() { toggleCategory(this); };
+        header.innerHTML =
+            '<div class="category-title">' +
+                '<h2>' + cat.title + '</h2>' +
+                '<span class="category-count">' + cat.documents.length + ' docs</span>' +
+            '</div>' +
+            '<span class="category-chevron">&#9662;</span>';
+
+        const body = document.createElement('div');
+        body.className = 'category-body';
+        const grid = document.createElement('div');
+        grid.className = 'doc-grid';
+
+        cat.documents.forEach(function(doc) {
+            grid.appendChild(buildDocCard(doc, baseUrl));
+        });
+
+        body.appendChild(grid);
+        section.appendChild(header);
+        section.appendChild(body);
+        return section;
+    }
+
+    function renderManifest(manifest) {
+        var baseUrl = manifest._meta.base_url;
+        var container = document.getElementById('categories');
+        var totalDocs = 0;
+
+        manifest.categories.forEach(function(cat) {
+            totalDocs += cat.documents.length;
+            container.appendChild(buildCategory(cat, baseUrl));
+        });
+
+        document.getElementById('doc-stat').innerHTML =
+            '<strong>' + totalDocs + '</strong> documents across <strong>' + manifest.categories.length + '</strong> categories';
+    }
+
     function toggleCategory(header) {
-        const category = header.parentElement;
-        category.classList.toggle('open');
+        header.parentElement.classList.toggle('open');
     }
 
     function toggleAll(open) {
-        document.querySelectorAll('.category').forEach(cat => {
-            if (open) {
-                cat.classList.add('open');
-            } else {
-                cat.classList.remove('open');
-            }
+        document.querySelectorAll('.category').forEach(function(cat) {
+            if (open) cat.classList.add('open');
+            else cat.classList.remove('open');
         });
     }
+
+    // Search / filter
+    document.getElementById('search').addEventListener('input', function(e) {
+        var query = e.target.value.toLowerCase().trim();
+        var noResults = document.getElementById('no-results');
+        var anyVisible = false;
+
+        document.querySelectorAll('.category').forEach(function(cat) {
+            var cards = cat.querySelectorAll('.doc-card');
+            var catVisible = false;
+
+            cards.forEach(function(card) {
+                var match = !query ||
+                    card.dataset.title.indexOf(query) !== -1 ||
+                    card.dataset.desc.indexOf(query) !== -1 ||
+                    card.dataset.badge.indexOf(query) !== -1;
+                card.classList.toggle('hidden', !match);
+                if (match) catVisible = true;
+            });
+
+            cat.classList.toggle('hidden', !catVisible);
+            if (catVisible) {
+                anyVisible = true;
+                if (query) cat.classList.add('open');
+            }
+        });
+
+        noResults.classList.toggle('visible', !anyVisible);
+    });
+
+    // Fetch manifest and render
+    fetch('../content-manifest.json')
+        .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        })
+        .then(renderManifest)
+        .catch(function(err) {
+            document.getElementById('categories').innerHTML =
+                '<div class="error-msg">' +
+                '<p>Could not load documentation manifest.</p>' +
+                '<p style="margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">' + err.message + '</p>' +
+                '<p style="margin-top:1rem;"><a href="https://github.com/qinnovates/mindloft">Browse on GitHub</a></p>' +
+                '</div>';
+        });
 </script>
 
 </body>

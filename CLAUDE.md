@@ -11,6 +11,7 @@
 | Resource | Location | Purpose |
 |----------|----------|---------|
 | **Brand Constants** | `neurosecurity/legacy-core/resources/brand/brand.json` | **Single source of truth for ONI/TARA naming, slogans, versions, stats** |
+| **Content Manifest** | `docs/content-manifest.json` | **Single source of truth for all documentation links — update paths here, not in HTML** |
 | **Website Stats** | `docs/index.html` | **Dynamic stats system - see "Website Stats System" section** |
 | **Main Wiki (INDEX)** | `neurosecurity/legacy-core/INDEX.md` | **Central hub - navigation, dependencies, cross-references** |
 | **Python Package** | `neurosecurity/legacy-core/oni-framework/` | **pip install oni-framework** |
