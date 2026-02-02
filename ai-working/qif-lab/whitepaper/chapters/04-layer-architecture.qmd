@@ -1,0 +1,67 @@
+---
+title: "The QIF Layer Architecture"
+---
+
+```{python}
+#| label: setup
+#| include: false
+import sys, os
+sys.path.insert(0, '/Users/mac/Documents/PROJECTS/@qikevinl/drafts/ai-working/qif-lab')
+from src.config import LAYERS
+import pandas as pd
+```
+
+## The Core Insight
+
+The OSI model (L1-L7) was designed for silicon networks. Brain-computer interfaces bridge silicon AND biology. QIF extends OSI with 7 neural layers (L8-L14) that map the biological signal path from electrode to conscious experience.
+
+## The 14-Layer Stack
+
+```{python}
+#| label: tbl-layers
+#| tbl-cap: "QIF 14-Layer Architecture (v2.0)"
+
+df = pd.DataFrame(LAYERS)
+df.columns = ['Layer', 'Name', 'Domain', 'Description']
+df['Layer'] = df['Layer'].apply(lambda x: f'L{x}')
+df
+```
+
+```{python}
+#| label: fig-layers
+#| fig-cap: "QIF 14-Layer Architecture: OSI (blue) + Neural Gateway (red) + Neural Domain (green)"
+
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(8, 10))
+colors = {'OSI': '#3498db', 'Neural': '#2ecc71'}
+
+for layer_info in LAYERS:
+    y = 14 - layer_info['layer']
+    color = colors[layer_info['domain']]
+    if layer_info['layer'] == 8:
+        color = '#e74c3c'
+    width = 0.6 if layer_info['layer'] == 8 else 0.8
+    x_offset = (0.8 - width) / 2
+
+    rect = plt.Rectangle((x_offset, y), width, 0.85, facecolor=color, alpha=0.8,
+                          edgecolor='white', linewidth=2, zorder=2)
+    ax.add_patch(rect)
+    ax.text(0.4, y + 0.42, f"L{layer_info['layer']}: {layer_info['name']}",
+            ha='center', va='center', fontsize=10, fontweight='bold', color='white', zorder=3)
+
+ax.text(0.95, 10, 'OSI\nDomain', ha='left', va='center', fontsize=10, color='#3498db', fontweight='bold')
+ax.text(0.95, 6.5, 'GATEWAY', ha='left', va='center', fontsize=10, color='#e74c3c', fontweight='bold')
+ax.text(0.95, 3, 'Neural\nDomain', ha='left', va='center', fontsize=10, color='#2ecc71', fontweight='bold')
+
+ax.set_xlim(-0.1, 1.3)
+ax.set_ylim(-0.5, 14.5)
+ax.axis('off')
+ax.set_title('QIF 14-Layer Architecture (v2.0)', fontsize=14, fontweight='bold', pad=20)
+plt.tight_layout()
+plt.show()
+```
+
+## L8: The Most Critical Layer
+
+L8 (Neural Gateway) is where silicon meets biology — the trust boundary. This is the attack surface for quantum-level threats. No existing framework addresses this boundary at the quantum level. The QI equation operates most directly here.

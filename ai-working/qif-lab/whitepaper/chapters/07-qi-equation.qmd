@@ -1,0 +1,126 @@
+---
+title: "The QI Equation: Two Complementary Views"
+---
+
+```{python}
+#| label: setup
+#| include: false
+import sys, os
+sys.path.insert(0, '/Users/mac/Documents/PROJECTS/@qikevinl/drafts/ai-working/qif-lab')
+import numpy as np
+from src.config import DECOHERENCE_CAMPS, DEFAULT_C1_PARAMS
+from src.qif_equations import (
+    qi_candidate1, qi_candidate2, quantum_gate,
+    von_neumann_entropy, QICandidate1Params
+)
+```
+
+## Why Two Equations?
+
+The QI equation is presented in two complementary forms:
+
+- **Candidate 1 (Additive/Engineering):** Modular, intuitive, each term independently computable. For BCI engineers building real systems.
+- **Candidate 2 (Tensor/Theoretical):** Mathematically rigorous, entanglement natural, decoherence emergent. For physicists evaluating the framework.
+
+Both produce compatible security assessments. They are two lenses on the same reality.
+
+## Candidate 1: The Engineering Equation
+
+$$QI(t) = \alpha \cdot C_{class} + \beta \cdot (1 - \Gamma_D(t)) \cdot [Q_i + \delta \cdot Q_{entangle}] - \gamma \cdot Q_{tunnel}$$
+
+where $\Gamma_D(t) = 1 - e^{-t/\tau_D}$
+
+```{python}
+#| label: fig-qi-decoherence
+#| fig-cap: "QI score over time: quantum terms fade as decoherence progresses. The shaded region shows the quantum contribution — it's strongest when t << τ_D and vanishes as the system decoheres."
+
+import matplotlib.pyplot as plt
+
+tau_d = DEFAULT_C1_PARAMS['tau_d']
+times = np.logspace(-8, -2, 200)
+
+total_scores = []
+classical_scores = []
+
+for t in times:
+    params = QICandidate1Params(tau_d=tau_d)
+    total = qi_candidate1(c_class=0.8, qi_indeterminacy=0.5, q_entangle=0.3, q_tunnel=0.1, t=t, params=params)
+    params_c = QICandidate1Params(tau_d=1e-15)
+    classical = qi_candidate1(c_class=0.8, qi_indeterminacy=0.5, q_entangle=0.3, q_tunnel=0.1, t=t, params=params_c)
+    total_scores.append(total)
+    classical_scores.append(classical)
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.fill_between(times, classical_scores, total_scores, alpha=0.3, color='#9b59b6', label='Quantum contribution')
+ax.plot(times, total_scores, color='#9b59b6', linewidth=2.5, label='QI(t) total')
+ax.plot(times, classical_scores, color='#3498db', linewidth=2, linestyle='--', label='Classical only')
+
+for camp in DECOHERENCE_CAMPS:
+    ax.axvline(x=camp['tau_d'], color='gray', linestyle=':', alpha=0.5)
+    ax.text(camp['tau_d'], max(total_scores)*0.95, camp['camp'].split('(')[0].strip(),
+            ha='center', va='top', fontsize=8, rotation=90, alpha=0.7)
+
+ax.set_xscale('log')
+ax.set_xlabel('Time (seconds)')
+ax.set_ylabel('QI Score')
+ax.set_title('QI Equation: Quantum Terms Fade with Decoherence')
+ax.legend(loc='center right')
+plt.tight_layout()
+plt.show()
+```
+
+### Live Computation Demo
+
+Change any input and the QI score updates:
+
+```{python}
+#| label: tbl-qi-demo
+#| tbl-cap: "QI Equation Output Across Decoherence Timescales"
+
+import pandas as pd
+
+results = []
+for camp in DECOHERENCE_CAMPS:
+    params = QICandidate1Params(tau_d=camp['tau_d'])
+    gate = quantum_gate(1e-6, camp['tau_d'])
+    qi_score = qi_candidate1(
+        c_class=0.8, qi_indeterminacy=0.5, q_entangle=0.3, q_tunnel=0.1,
+        t=1e-6, params=params
+    )
+    results.append({
+        'Camp': camp['camp'],
+        'τ_D': camp['label'],
+        'Quantum Gate': f'{gate:.4f}',
+        'QI Score': f'{qi_score:.4f}',
+    })
+
+pd.DataFrame(results)
+```
+
+## Candidate 2: The Theoretical Equation
+
+$$QI = C_{class} \otimes e^{-S_{quantum}}$$
+
+where $S_{quantum} = S_{vN}(\rho(t)) + \lambda \cdot \Phi_{tunnel} - \mu \cdot E(\rho_{AB})$
+
+The security metric is: $S_{QI} = \text{Tr}(\hat{QI} \cdot \rho_{total})$
+
+## Comparing the Two Candidates
+
+```{python}
+#| label: tbl-comparison
+#| tbl-cap: "Candidate Comparison"
+
+comparison = [
+    ["Audience", "BCI engineers", "Physicists, theorists"],
+    ["Structure", "Sum of terms", "Tensor product"],
+    ["Decoherence", "Explicit gate ΓD(t)", "Emerges from SvN(ρ(t))"],
+    ["Entanglement", "Added term (δ·Qentangle)", "Natural via E(ρAB)"],
+    ["Calibration params", "4 (α, β, γ, δ)", "2 (λ, μ)"],
+    ["Measurability", "Each term independent", "Requires state tomography"],
+    ["Computational cost", "Low", "High"],
+    ["Intuition", "High", "Low (requires QM background)"],
+]
+
+pd.DataFrame(comparison, columns=["Property", "Candidate 1 (Additive)", "Candidate 2 (Tensor)"])
+```

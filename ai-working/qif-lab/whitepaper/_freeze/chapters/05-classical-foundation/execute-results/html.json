@@ -1,0 +1,12 @@
+{
+  "hash": "94213ee901c7df6c9f0b830ad702b0a0",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"The Classical Foundation\"\n---\n\n\n::: {.callout-note}\n## Content Pending\nThis chapter's content is drafted in QIF-WHITEPAPER.md and will be migrated to as-code format.\nSee the full draft for complete text.\n:::\n\n",
+    "supporting": [
+      "05-classical-foundation_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
