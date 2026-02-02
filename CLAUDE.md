@@ -2,7 +2,7 @@
 
 > This file provides instructions for Claude to follow when assisting with the QIF (Quantum Indeterministic Framework for Neural Security) repository. Read this file at the start of any session involving content creation, publishing, or repository maintenance.
 >
-> **GitHub:** github.com/qinnovates/mindloft (local folder: `@qikevinl/oni/`)
+> **GitHub:** github.com/qinnovates/mindloft (local folder: `qinnovates/mindloft/main/`)
 
 ---
 
@@ -532,12 +532,12 @@ Every claim gets tagged:
 ## QIF Truth Propagation Protocol (CRITICAL)
 
 > **The QIF Source of Truth lives OUTSIDE this repo:**
-> `@qikevinl/drafts/ai-working/QIF-TRUTH.md`
+> `qinnovates/mindloft/drafts/ai-working/QIF-TRUTH.md`
 >
 > **Truth flows ONE direction:** QIF-TRUTH.md → repo docs → blogs
 > **NEVER update truth based on blogs.** NEVER patch blogs without checking truth first.
 >
-> **Full protocol:** `@qikevinl/drafts/ai-working/PROPAGATION.md`
+> **Full protocol:** `qinnovates/mindloft/drafts/ai-working/PROPAGATION.md`
 
 ### Truth Hierarchy (Authoritative Sources)
 
@@ -555,10 +555,10 @@ Every claim gets tagged:
 
 At the start of ANY session involving QIF content:
 
-1. Read `@qikevinl/drafts/ai-working/QIF-TRUTH.md`
+1. Read `qinnovates/mindloft/drafts/ai-working/QIF-TRUTH.md`
 2. Check **"Next audit due"** date — if overdue, **REMIND USER**
 3. Check **Section 6 Sync Dashboard** — if any item is `REVIEW` or `NEEDS_SYNC`, **REMIND USER**
-4. Read `@qikevinl/drafts/ai-working/PROPAGATION.md` for the full protocol
+4. Read `qinnovates/mindloft/drafts/ai-working/PROPAGATION.md` for the full protocol
 
 ### When Making QIF Changes
 
