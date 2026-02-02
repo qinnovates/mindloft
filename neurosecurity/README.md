@@ -23,10 +23,7 @@ neurosecurity/
 │   ├── project/      Project management
 │   └── archive/      Historical website versions
 │
-└── autodidact/       Educational content
-    ├── oni-academy/  Interactive learning portal
-    ├── learnviz/     Learning visualizations
-    └── neuroscience-bci/ BCI fundamentals
+See also: [autodidact/](../autodidact/) — Educational content (oni-academy, learnviz, BCI fundamentals)
 ```
 
 ## Key Resources

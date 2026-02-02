@@ -17,7 +17,7 @@ Brain-computer interfaces are being implanted in humans today. This pillar build
 |-----------|-------------|
 | [QIF Framework](neurosecurity/qif/) | Quantum Indeterminacy Framework — 9 architectural docs + 9 governance docs |
 | [Legacy Core (ONI)](neurosecurity/legacy-core/) | 31 publications, Python packages, TARA platform |
-| [Autodidact](neurosecurity/autodidact/) | ONI Academy, learning visualizations, BCI fundamentals |
+| [Autodidact](autodidact/) | ONI Academy, learning visualizations, BCI fundamentals |
 
 **Key resources:**
 - [QIF Framework (9 docs)](neurosecurity/qif/framework/) — read in order, 01 through 09
@@ -50,9 +50,10 @@ mindloft/
 │   │   ├── tara-nsec-platform/        # Python: pip install oni-tara
 │   │   ├── resources/                 # Brand, templates, pipeline, editor
 │   │   └── archive/                   # Website evolution (v1-v5)
-│   └── autodidact/                    # Educational content
-│       ├── oni-academy/               # Python: pip install oni-academy
-│       └── neuroscience-bci/          # BCI fundamentals
+│
+├── autodidact/                        # Educational content
+│   ├── oni-academy/                   # Python: pip install oni-academy
+│   └── neuroscience-bci/              # BCI fundamentals
 │
 ├── docs/                              # GitHub Pages website
 │   ├── index.html                     # Landing page

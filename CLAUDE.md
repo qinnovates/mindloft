@@ -83,11 +83,11 @@ mindloft/                               # Local folder (remote: github.com/qinno
 │   │   ├── project/                    # Project management (prd.json, KANBAN.md)
 │   │   ├── resources/                  # Brand, agents, templates, pipeline, editor
 │   │   └── archive/                    # Website evolution (v1-v5)
-│   │
-│   └── autodidact/                     # Educational content
-│       ├── oni-academy/                # ONI Academy (pip install oni-academy)
-│       ├── neuroscience-bci/           # Personal neuroscience learning
-│       └── learnviz/                   # Learning visualization tools
+│
+├── autodidact/                        # Educational content
+│   ├── oni-academy/                   # ONI Academy (pip install oni-academy)
+│   ├── neuroscience-bci/              # Personal neuroscience learning
+│   └── learnviz/                      # Learning visualization tools
 │
 ├── docs/                               # GitHub Pages website
 │   ├── index.html                      # Landing page
