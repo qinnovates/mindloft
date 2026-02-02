@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QIF — 3D Interactive Model</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a12;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: #fff;
+  }
+  canvas { display: block; }
+
+  #info-panel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  #info-panel h1 {
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #9ecfff;
+    text-shadow: 0 0 20px rgba(100,180,255,0.4);
+  }
+  #info-panel p {
+    font-size: 12px;
+    color: #667;
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  #controls-hint {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #445;
+    letter-spacing: 1px;
+    z-index: 10;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  #label-tooltip {
+    position: fixed;
+    display: none;
+    background: rgba(10,10,20,0.9);
+    border: 1px solid rgba(100,180,255,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #cde;
+    max-width: 280px;
+    z-index: 20;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+  }
+  #label-tooltip h3 {
+    font-size: 14px;
+    color: #9ecfff;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  #ring-labels {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  #ring-labels .ring-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: #889;
+    letter-spacing: 0.5px;
+  }
+  #ring-labels .ring-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  #section-labels {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 40px 0;
+    text-align: right;
+  }
+  .section-label.quantum { color: rgba(130,100,255,0.7); }
+  .section-label.bci { color: rgba(255,80,80,0.9); font-weight: 600; }
+  .section-label.classical { color: rgba(100,200,255,0.7); }
+</style>
+</head>
+<body>
+
+<div id="info-panel">
+  <h1>QIF Model</h1>
+  <p>Quantum Indeterministic Framework for Neural Security</p>
+</div>
+
+<div id="ring-labels">
+  <div class="ring-item"><div class="ring-dot" style="background:#ff4060"></div>Ring 1 — Neural Data (Core)</div>
+  <div class="ring-item"><div class="ring-dot" style="background:#ff6840"></div>Ring 2 — Signal Processing</div>
+  <div class="ring-item"><div class="ring-dot" style="background:#ff9020"></div>Ring 3 — Device Security</div>
+  <div class="ring-item"><div class="ring-dot" style="background:#ffc020"></div>Ring 4 — Communication</div>
+  <div class="ring-item"><div class="ring-dot" style="background:#80e040"></div>Ring 5 — Application Layer</div>
+  <div class="ring-item"><div class="ring-dot" style="background:#40a0ff"></div>Ring 6 — User/Consent</div>
+  <div class="ring-item"><div class="ring-dot" style="background:#8060ff"></div>Ring 7 — Governance (Outer)</div>
+</div>
+
+<div id="section-labels">
+  <div class="section-label quantum">Quantum-like Intent ↑</div>
+  <div class="section-label bci">⬤ BCI Neck — Power Boundary</div>
+  <div class="section-label classical">Classical Output ↓</div>
+</div>
+
+<div id="controls-hint">
+  DRAG to rotate &nbsp;·&nbsp; SCROLL to zoom &nbsp;·&nbsp; RIGHT-DRAG to pan
+</div>
+
+<div id="label-tooltip">
+  <h3 id="tooltip-title"></h3>
+  <div id="tooltip-body"></div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+// ─── Scene Setup ───
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0a0a12, 0.015);
+
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 2, 12);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+document.body.appendChild(renderer.domElement);
+
+// ─── Post-Processing (Bloom) ───
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloomPass = new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
+  0.8, 0.4, 0.85
+);
+composer.addPass(bloomPass);
+
+// ─── Controls ───
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
+controls.minDistance = 5;
+controls.maxDistance = 25;
+
+// ─── Lighting ───
+const ambientLight = new THREE.AmbientLight(0x1a1a3a, 0.6);
+scene.add(ambientLight);
+
+const topLight = new THREE.PointLight(0x8060ff, 2, 30);
+topLight.position.set(0, 8, 0);
+scene.add(topLight);
+
+const bottomLight = new THREE.PointLight(0x40a0ff, 1.5, 30);
+bottomLight.position.set(0, -8, 0);
+scene.add(bottomLight);
+
+const rimLight = new THREE.PointLight(0xff4080, 1, 20);
+rimLight.position.set(5, 0, 5);
+scene.add(rimLight);
+
+const rimLight2 = new THREE.PointLight(0x4080ff, 1, 20);
+rimLight2.position.set(-5, 0, -5);
+scene.add(rimLight2);
+
+// ─── Hourglass Group ───
+const hourglassGroup = new THREE.Group();
+scene.add(hourglassGroup);
+
+// ─── Funnel Geometry (Lathe) ───
+function createFunnelPoints(top, neckRadius, rimRadius, segments) {
+  const points = [];
+  const steps = segments || 40;
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    // Smooth curve from neck to rim
+    const ease = t * t * (3 - 2 * t); // smoothstep
+    const r = neckRadius + (rimRadius - neckRadius) * ease;
+    const y = top ? t * 4 : -t * 4;
+    points.push(new THREE.Vector2(r, y));
+  }
+  return points;
+}
+
+// ─── Quantum (Top) Funnel ───
+const topPoints = createFunnelPoints(true, 0.35, 3.2, 50);
+const topGeom = new THREE.LatheGeometry(topPoints, 64);
+
+const quantumShader = {
+  uniforms: {
+    time: { value: 0 },
+    color1: { value: new THREE.Color(0x2a0845) },
+    color2: { value: new THREE.Color(0x6441a5) },
+    color3: { value: new THREE.Color(0x1a0533) },
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    varying vec3 vPosition;
+    varying vec3 vNormal;
+    void main() {
+      vUv = uv;
+      vPosition = position;
+      vNormal = normalize(normalMatrix * normal);
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform float time;
+    uniform vec3 color1, color2, color3;
+    varying vec2 vUv;
+    varying vec3 vPosition;
+    varying vec3 vNormal;
+
+    // Simplex-ish noise
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+    }
+    float noise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      f = f * f * (3.0 - 2.0 * f);
+      return mix(
+        mix(hash(i), hash(i + vec2(1,0)), f.x),
+        mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x),
+        f.y
+      );
+    }
+    float fbm(vec2 p) {
+      float v = 0.0, a = 0.5;
+      for (int i = 0; i < 5; i++) {
+        v += a * noise(p);
+        p *= 2.0;
+        a *= 0.5;
+      }
+      return v;
+    }
+
+    void main() {
+      vec2 uv = vUv;
+      float n = fbm(uv * 4.0 + time * 0.1);
+      float n2 = fbm(uv * 8.0 - time * 0.15);
+
+      vec3 col = mix(color1, color2, n);
+      col = mix(col, color3, n2 * 0.4);
+
+      // Stars
+      float star = step(0.98, hash(floor(uv * 200.0)));
+      float twinkle = 0.5 + 0.5 * sin(time * 3.0 + hash(floor(uv * 200.0)) * 100.0);
+      col += star * twinkle * vec3(0.8, 0.7, 1.0);
+
+      // Fresnel glow
+      float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0,0,1))), 2.5);
+      col += fresnel * vec3(0.3, 0.1, 0.6) * 0.6;
+
+      // Fade near neck
+      float fadeToNeck = smoothstep(0.0, 0.15, uv.y);
+      col *= 0.4 + 0.6 * fadeToNeck;
+
+      gl_FragColor = vec4(col, 0.85 + 0.1 * fresnel);
+    }
+  `
+};
+
+const topMat = new THREE.ShaderMaterial({
+  ...quantumShader,
+  transparent: true,
+  side: THREE.DoubleSide,
+  depthWrite: false,
+});
+
+const topMesh = new THREE.Mesh(topGeom, topMat);
+hourglassGroup.add(topMesh);
+
+// ─── Classical (Bottom) Funnel ───
+const bottomPoints = createFunnelPoints(false, 0.35, 3.2, 50);
+const bottomGeom = new THREE.LatheGeometry(bottomPoints, 64);
+
+const classicalShader = {
+  uniforms: {
+    time: { value: 0 },
+    color1: { value: new THREE.Color(0x0a1628) },
+    color2: { value: new THREE.Color(0x1a4a7a) },
+    color3: { value: new THREE.Color(0x0d2a4a) },
+  },
+  vertexShader: quantumShader.vertexShader,
+  fragmentShader: `
+    uniform float time;
+    uniform vec3 color1, color2, color3;
+    varying vec2 vUv;
+    varying vec3 vPosition;
+    varying vec3 vNormal;
+
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+    }
+    float noise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      f = f * f * (3.0 - 2.0 * f);
+      return mix(
+        mix(hash(i), hash(i + vec2(1,0)), f.x),
+        mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x),
+        f.y
+      );
+    }
+    float fbm(vec2 p) {
+      float v = 0.0, a = 0.5;
+      for (int i = 0; i < 5; i++) {
+        v += a * noise(p);
+        p *= 2.0;
+        a *= 0.5;
+      }
+      return v;
+    }
+
+    void main() {
+      vec2 uv = vUv;
+      float n = fbm(uv * 4.0 + time * 0.08);
+      float n2 = fbm(uv * 6.0 - time * 0.05);
+
+      vec3 col = mix(color1, color2, n);
+      col = mix(col, color3, n2 * 0.5);
+
+      // Reflection-like shimmer
+      float shimmer = noise(uv * 20.0 + time * 0.3) * 0.15;
+      col += shimmer * vec3(0.3, 0.5, 0.8);
+
+      // Fresnel
+      float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0,0,1))), 2.5);
+      col += fresnel * vec3(0.1, 0.3, 0.5) * 0.5;
+
+      // Fade near neck
+      float fadeToNeck = smoothstep(0.0, 0.15, abs(uv.y));
+      col *= 0.4 + 0.6 * fadeToNeck;
+
+      // Mirror effect - brighter, more reflective
+      col *= 1.3;
+
+      gl_FragColor = vec4(col, 0.9 + 0.08 * fresnel);
+    }
+  `
+};
+
+const bottomMat = new THREE.ShaderMaterial({
+  ...classicalShader,
+  transparent: true,
+  side: THREE.DoubleSide,
+  depthWrite: false,
+});
+
+const bottomMesh = new THREE.Mesh(bottomGeom, bottomMat);
+hourglassGroup.add(bottomMesh);
+
+// ─── BCI Neck (Red Glowing Ring) ───
+const neckGeom = new THREE.TorusGeometry(0.45, 0.08, 16, 64);
+const neckMat = new THREE.MeshStandardMaterial({
+  color: 0xff2040,
+  emissive: 0xff2040,
+  emissiveIntensity: 2,
+  metalness: 0.8,
+  roughness: 0.2,
+});
+const neckRing = new THREE.Mesh(neckGeom, neckMat);
+neckRing.rotation.x = Math.PI / 2;
+hourglassGroup.add(neckRing);
+
+// Second ring (power boundary)
+const neckGeom2 = new THREE.TorusGeometry(0.55, 0.03, 16, 64);
+const neckMat2 = new THREE.MeshStandardMaterial({
+  color: 0xff6040,
+  emissive: 0xff4020,
+  emissiveIntensity: 1.5,
+  metalness: 0.9,
+  roughness: 0.1,
+});
+const neckRing2 = new THREE.Mesh(neckGeom2, neckMat2);
+neckRing2.rotation.x = Math.PI / 2;
+hourglassGroup.add(neckRing2);
+
+// ─── Defense-in-Depth Rings ───
+const ringColors = [
+  0xff4060, // Ring 1 — Neural Data
+  0xff6840, // Ring 2 — Signal Processing
+  0xff9020, // Ring 3 — Device Security
+  0xffc020, // Ring 4 — Communication
+  0x80e040, // Ring 5 — Application
+  0x40a0ff, // Ring 6 — User/Consent
+  0x8060ff, // Ring 7 — Governance
+];
+
+const ringDescriptions = [
+  'Neural Data (Core)',
+  'Signal Processing',
+  'Device Security',
+  'Communication',
+  'Application Layer',
+  'User / Consent',
+  'Governance (Outer)',
+];
+
+const rings = [];
+for (let i = 0; i < 7; i++) {
+  const t = (i + 1) / 8;
+  const radius = 0.35 + (3.2 - 0.35) * (t * t * (3 - 2 * t));
+  const ringGeom = new THREE.TorusGeometry(radius, 0.015, 8, 64);
+  const ringMat = new THREE.MeshStandardMaterial({
+    color: ringColors[i],
+    emissive: ringColors[i],
+    emissiveIntensity: 0.8,
+    transparent: true,
+    opacity: 0.6,
+  });
+
+  // Top ring
+  const ringTop = new THREE.Mesh(ringGeom, ringMat);
+  ringTop.position.y = t * 4;
+  ringTop.rotation.x = Math.PI / 2;
+  hourglassGroup.add(ringTop);
+  rings.push(ringTop);
+
+  // Bottom ring (mirrored)
+  const ringBot = new THREE.Mesh(ringGeom, ringMat.clone());
+  ringBot.position.y = -t * 4;
+  ringBot.rotation.x = Math.PI / 2;
+  hourglassGroup.add(ringBot);
+}
+
+// ─── Particle Systems ───
+// Quantum particles (top)
+function createParticles(count, yMin, yMax, color, speed) {
+  const positions = new Float32Array(count * 3);
+  const velocities = [];
+  for (let i = 0; i < count; i++) {
+    const theta = Math.random() * Math.PI * 2;
+    const y = yMin + Math.random() * (yMax - yMin);
+    const t = Math.abs(y) / 4;
+    const ease = t * t * (3 - 2 * t);
+    const maxR = 0.35 + (3.2 - 0.35) * ease;
+    const r = Math.random() * maxR;
+    positions[i * 3] = Math.cos(theta) * r;
+    positions[i * 3 + 1] = y;
+    positions[i * 3 + 2] = Math.sin(theta) * r;
+    velocities.push({
+      theta: (Math.random() - 0.5) * speed,
+      y: (Math.random() - 0.5) * speed * 0.3,
+      r: r,
+      baseTheta: theta,
+    });
+  }
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const mat = new THREE.PointsMaterial({
+    color: color,
+    size: 0.04,
+    transparent: true,
+    opacity: 0.7,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const points = new THREE.Points(geom, mat);
+  return { mesh: points, velocities, positions };
+}
+
+const quantumParticles = createParticles(800, 0.3, 4.0, 0xaa77ff, 0.02);
+hourglassGroup.add(quantumParticles.mesh);
+
+const classicalParticles = createParticles(600, -4.0, -0.3, 0x4488ff, 0.015);
+hourglassGroup.add(classicalParticles.mesh);
+
+// Neck flow particles
+const neckParticleCount = 200;
+const neckPositions = new Float32Array(neckParticleCount * 3);
+const neckVelocities = [];
+for (let i = 0; i < neckParticleCount; i++) {
+  const theta = Math.random() * Math.PI * 2;
+  const r = Math.random() * 0.35;
+  neckPositions[i * 3] = Math.cos(theta) * r;
+  neckPositions[i * 3 + 1] = (Math.random() - 0.5) * 1.0;
+  neckPositions[i * 3 + 2] = Math.sin(theta) * r;
+  neckVelocities.push({
+    speed: 0.01 + Math.random() * 0.03,
+    theta: theta,
+    r: r,
+  });
+}
+const neckGeomPart = new THREE.BufferGeometry();
+neckGeomPart.setAttribute('position', new THREE.BufferAttribute(neckPositions, 3));
+const neckPartMat = new THREE.PointsMaterial({
+  color: 0xff8080,
+  size: 0.03,
+  transparent: true,
+  opacity: 0.9,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const neckParts = new THREE.Points(neckGeomPart, neckPartMat);
+hourglassGroup.add(neckParts);
+
+// ─── Q Labels (Quantum Integer markers) ───
+function createQMarker(y, ringIndex) {
+  const t = Math.abs(y) / 4;
+  const ease = t * t * (3 - 2 * t);
+  const radius = 0.35 + (3.2 - 0.35) * ease;
+
+  const markerGeom = new THREE.SphereGeometry(0.06, 12, 12);
+  const markerMat = new THREE.MeshStandardMaterial({
+    color: 0xffcc00,
+    emissive: 0xffaa00,
+    emissiveIntensity: 1.5,
+  });
+  const marker = new THREE.Mesh(markerGeom, markerMat);
+  marker.position.set(radius + 0.15, y, 0);
+  marker.userData = { ringIndex, type: 'qmarker' };
+  return marker;
+}
+
+// Add Q markers at each ring level (top side)
+for (let i = 0; i < 7; i++) {
+  const t = (i + 1) / 8;
+  const marker = createQMarker(t * 4, i);
+  hourglassGroup.add(marker);
+}
+
+// ─── Background Stars ───
+const starCount = 2000;
+const starPositions = new Float32Array(starCount * 3);
+for (let i = 0; i < starCount; i++) {
+  const theta = Math.random() * Math.PI * 2;
+  const phi = Math.random() * Math.PI;
+  const r = 30 + Math.random() * 50;
+  starPositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+  starPositions[i * 3 + 1] = r * Math.cos(phi);
+  starPositions[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
+}
+const starGeom = new THREE.BufferGeometry();
+starGeom.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+const starMat = new THREE.PointsMaterial({
+  color: 0xffffff,
+  size: 0.15,
+  transparent: true,
+  opacity: 0.5,
+  blending: THREE.AdditiveBlending,
+});
+scene.add(new THREE.Points(starGeom, starMat));
+
+// ─── NIST CSF Arc Labels (3D text sprites) ───
+function createTextSprite(text, color, fontSize) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 64;
+  const ctx = canvas.getContext('2d');
+  ctx.font = `${fontSize || 24}px 'Segoe UI', system-ui, sans-serif`;
+  ctx.fillStyle = color || '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.fillText(text, 256, 40);
+  const texture = new THREE.CanvasTexture(canvas);
+  const mat = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    depthTest: false,
+  });
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(4, 0.5, 1);
+  return sprite;
+}
+
+// Top label
+const topLabel = createTextSprite('QUANTUM-LIKE INTENT', 'rgba(170,120,255,0.8)', 20);
+topLabel.position.set(0, 5, 0);
+hourglassGroup.add(topLabel);
+
+// BCI label
+const bciLabel = createTextSprite('⬤  BCI  —  POWER BOUNDARY', 'rgba(255,80,80,0.95)', 22);
+bciLabel.position.set(0, 0.7, 0);
+hourglassGroup.add(bciLabel);
+
+// Bottom label
+const bottomLabel = createTextSprite('CLASSICAL PHYSICAL OUTPUT', 'rgba(80,160,255,0.8)', 20);
+bottomLabel.position.set(0, -5, 0);
+hourglassGroup.add(bottomLabel);
+
+// DSKE label
+const dskeLabel = createTextSprite('DSKE — Quantum-Safe Key Exchange', 'rgba(255,200,50,0.6)', 16);
+dskeLabel.position.set(0, -0.7, 0);
+hourglassGroup.add(dskeLabel);
+
+// ─── Animation Loop ───
+const clock = new THREE.Clock();
+
+function animateParticles(particleData, time) {
+  const pos = particleData.mesh.geometry.attributes.position.array;
+  for (let i = 0; i < particleData.velocities.length; i++) {
+    const v = particleData.velocities[i];
+    v.baseTheta += v.theta;
+    const y = pos[i * 3 + 1];
+    const t = Math.abs(y) / 4;
+    const ease = t * t * (3 - 2 * t);
+    const maxR = 0.35 + (3.2 - 0.35) * ease;
+    const r = Math.min(v.r, maxR * 0.95);
+    pos[i * 3] = Math.cos(v.baseTheta) * r;
+    pos[i * 3 + 2] = Math.sin(v.baseTheta) * r;
+  }
+  particleData.mesh.geometry.attributes.position.needsUpdate = true;
+}
+
+function animateNeckParticles(time) {
+  const pos = neckParts.geometry.attributes.position.array;
+  for (let i = 0; i < neckParticleCount; i++) {
+    const v = neckVelocities[i];
+    let y = pos[i * 3 + 1];
+    y -= v.speed;
+    if (y < -0.5) y = 0.5;
+    pos[i * 3 + 1] = y;
+    v.theta += 0.05;
+    pos[i * 3] = Math.cos(v.theta) * v.r;
+    pos[i * 3 + 2] = Math.sin(v.theta) * v.r;
+  }
+  neckParts.geometry.attributes.position.needsUpdate = true;
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+
+  // Update shader uniforms
+  topMat.uniforms.time.value = time;
+  bottomMat.uniforms.time.value = time;
+
+  // Animate rings
+  rings.forEach((ring, i) => {
+    ring.material.emissiveIntensity = 0.5 + 0.4 * Math.sin(time * 1.5 + i * 0.8);
+  });
+
+  // Neck glow pulse
+  neckMat.emissiveIntensity = 1.5 + 0.8 * Math.sin(time * 2);
+  neckMat2.emissiveIntensity = 1.0 + 0.6 * Math.sin(time * 2.5 + 1);
+
+  // Particle animation
+  animateParticles(quantumParticles, time);
+  animateParticles(classicalParticles, time);
+  animateNeckParticles(time);
+
+  // Subtle float
+  hourglassGroup.position.y = Math.sin(time * 0.5) * 0.15;
+  hourglassGroup.rotation.y = Math.sin(time * 0.2) * 0.05;
+
+  controls.update();
+  composer.render();
+}
+
+animate();
+
+// ─── Resize ───
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+</body>
+</html>
