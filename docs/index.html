@@ -2406,18 +2406,10 @@
         // Detect OS-level reduced-motion preference
         var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // Default: animations ON unless OS prefers reduced motion
-        // Stored preference only respected if user explicitly toggled OFF
+        // Always start with animations ON — the toggle lets users opt out.
+        // Only disable if user explicitly toggled off in a previous session.
         var stored = localStorage.getItem(STORAGE_KEY);
-        var animationsEnabled;
-        if (stored === 'false') {
-            // User explicitly disabled — but still start enabled on fresh loads
-            // so visitors always see animations first
-            animationsEnabled = true;
-            localStorage.removeItem(STORAGE_KEY);
-        } else {
-            animationsEnabled = !prefersReduced;
-        }
+        var animationsEnabled = (stored !== 'false');
 
         // Expose globally so the main IIFE can check it
         window.__oniAnimationsEnabled = animationsEnabled;
