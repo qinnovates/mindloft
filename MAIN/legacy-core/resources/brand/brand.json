@@ -64,10 +64,16 @@
     "threat_signatures": 46,
     "learning_portals": 1
   },
+  "qinnovate": {
+    "name": "Qinnovate",
+    "role": "The engine",
+    "description": "Where forward thinking begins."
+  },
   "mindloft": {
     "name": "Mindloft",
+    "role": "The workshop",
     "slogan": "Let's mind our way.",
-    "tagline": "A Safe Space With You In Mind"
+    "description": "Where research is built, developed, and shared."
   },
   "_meta": {
     "last_updated": "2026-02-01",

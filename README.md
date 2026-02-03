@@ -2,9 +2,10 @@
 
 > *"Let's Mind Our Way."*
 >
+> **Qinnovate** — the engine. Where forward thinking begins.
+> **Mindloft** — the workshop. Where research is built, developed, and shared.
+>
 > **Direct link:** [qinnovate.com/QIF](https://qinnovate.com/QIF)
-
-> Projects for the mind — from neurosecurity to cognitive science.
 
 [![Tests](https://github.com/qinnovates/mindloft/actions/workflows/tests.yml/badge.svg)](https://github.com/qinnovates/mindloft/actions/workflows/tests.yml)
 [![Security](https://github.com/qinnovates/mindloft/actions/workflows/security.yml/badge.svg)](https://github.com/qinnovates/mindloft/actions/workflows/security.yml)
@@ -19,22 +20,33 @@ https://github.com/qinnovates/mindloft/releases/download/v1.0.0-demo/ONIDemoVide
 
 ## Pillars
 
-### [Neurosecurity](MAIN/) — BCI Security Research
+### [Research](MAIN/) — Discover + Build
 
-Brain-computer interfaces are being implanted in humans today. This pillar builds the security frameworks to protect them.
+Brain-computer interfaces are being implanted in humans today — with no universal security standard. This pillar creates the science and the tools to change that.
 
 | Component | Description |
 |-----------|-------------|
-| [QIF Framework](MAIN/qif/) | Quantum Indeterminacy Framework — 9 architectural docs + 9 governance docs |
+| [QIF Framework](MAIN/qif/) | Quantum Indeterminacy Framework — 7-band hourglass architecture, 9 architectural docs + 9 governance docs |
+| [QIF Whitepaper](MAIN/qif/QIF-WHITEPAPER.md) | Comprehensive working paper — v3.1 with Hamiltonian, Nobel Prize context, Perry 2025 |
+| [Field Journal](MAIN/qif/QIF-FIELD-JOURNAL.md) | First-person research observations — synesthesia, neurodivergence, thinking |
 | [Legacy Core (ONI)](MAIN/legacy-core/) | 31 publications, Python packages, TARA platform |
-| [Autodidact](autodidact/) | ONI Academy, learning visualizations, BCI fundamentals |
 
 **Key resources:**
 - [QIF Framework (9 docs)](MAIN/qif/framework/) — read in order, 01 through 09
 - [Governance (9 docs)](MAIN/qif/governance/) — neuroethics, regulatory compliance, consent
 - [Publications (31 papers)](MAIN/legacy-core/publications/) — coherence metric, neural firewall, quantum encryption
-- [Interactive Visualizations (13+ tools)](docs/visualizations/) — web-based framework demos
-- [Whitepaper](docs/whitepaper/)
+- [Interactive Whitepaper](docs/whitepaper/)
+
+### [Autodidact](autodidact/) — Teach + Lead
+
+Making neuroscience and BCI security accessible through interactive tools, educational modules, and hands-on experiences.
+
+| Component | Description |
+|-----------|-------------|
+| [ONI Academy](autodidact/oni-academy/) | Educational modules — `pip install oni-academy` |
+| [Visualizations](docs/visualizations/) | 13+ interactive web-based framework demos |
+| [Neuroscience](autodidact/neuroscience/) | BCI fundamentals and neuroscience learning |
+| [Media](autodidact/) | BCI zoom animations, motion graphics, workflow tools |
 
 **Python packages:**
 ```bash
@@ -49,20 +61,20 @@ pip install oni-academy     # Educational modules
 
 ```
 mindloft/
-├── MAIN/                     # PILLAR 1: BCI/Neural Security
-│   ├── qif/                           # Quantum Indeterminacy Framework
-│   │   ├── framework/                 # 9 architectural documents (v2)
+├── MAIN/                              # RESEARCH: Discover + Build
+│   ├── qif/                           # QIF Framework (active, v3.1)
+│   │   ├── framework/                 # 9 architectural documents
 │   │   ├── governance/                # 9 neuroethics + compliance docs
+│   │   ├── qif-lab/                   # Equation code, tests, Quarto whitepaper
 │   │   └── images/                    # QIF model diagrams
-│   ├── legacy-core/                   # ONI Foundation (v1)
-│   │   ├── publications/              # 31 papers across 8 topics
-│   │   ├── oni-framework/             # Python: pip install oni-framework
-│   │   ├── tara-nsec-platform/        # Python: pip install oni-tara
-│   │   ├── resources/                 # Brand, templates, pipeline, editor
-│   │   ├── oni-product-demo/          # ONI demo video (Remotion) + rendered MP4
-│   │   └── archive/                   # Website evolution (v1-v5)
+│   └── legacy-core/                   # ONI Foundation (preserved)
+│       ├── publications/              # 31 papers across 8 topics
+│       ├── oni-framework/             # Python: pip install oni-framework
+│       ├── tara-nsec-platform/        # Python: pip install oni-tara
+│       ├── resources/                 # Brand, templates, pipeline, editor
+│       └── archive/                   # Website evolution (v1-v5)
 │
-├── autodidact/                        # Educational content
+├── autodidact/                        # AUTODIDACT: Teach + Lead
 │   ├── oni-academy/                   # Python: pip install oni-academy
 │   ├── neuroscience/                  # Neuroscience fundamentals
 │   ├── bci-zoom/                      # BCI zoom animation
@@ -74,8 +86,6 @@ mindloft/
 │   ├── visualizations/                # 13+ interactive tools
 │   ├── documentation/                 # Documentation hub
 │   └── whitepaper/                    # Published whitepaper
-│
-└── [future pillars]                   # Room to grow
 ```
 
 ---
@@ -148,5 +158,5 @@ Kevin Qi — researching at the intersection of neuroscience, quantum security, 
 
 ---
 
-*Last update: 2026-02-02*
+*Last update: 2026-02-03*
 *QIF: 9 docs | Governance: 9 docs | Publications: 31 | Python Packages: 3 | Visualizations: 13+*
