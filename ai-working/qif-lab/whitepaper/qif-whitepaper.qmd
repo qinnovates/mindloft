@@ -2,7 +2,7 @@
 title: "QIF — Quantum Indeterministic Framework for Neural Security"
 subtitle: "Why the Next Generation of Brain-Computer Interfaces Needs Quantum-Aware Protection"
 author: "Kevin Qi, with Claude (Anthropic)"
-date: "2026-02-02"
+date: "2026-02-03"
 format:
   html:
     theme: darkly
@@ -371,6 +371,23 @@ $$QI = C_{class} \otimes e^{-S_{quantum}}$$
 
 where $S_{quantum} = S_{vN}(\rho(t)) + \lambda \cdot \Phi_{tunnel} - \mu \cdot E(\rho_{AB})$
 
+## The Implicit Hamiltonian
+
+Both QI candidates operate on **derived quantities** without referencing their common generator: the system Hamiltonian $H$. Every quantum term is downstream of $H$:
+
+| QI Term | Hamiltonian Dependence |
+|---|---|
+| $\Gamma_D(t)$ | Derived from system-environment interaction $H_{int}$ |
+| $S_{vN}(\rho)$ | Density matrix evolves via $d\rho/dt = -\frac{i}{\hbar}[H, \rho]$ |
+| $\Phi_{tunnel}$ | Calculated from potential barrier in $H$ |
+| $E(\rho_{AB})$ | Depends on interaction Hamiltonian $H_{AB}$ |
+
+For the electrode-tissue interface (I0 band):
+
+$$H_{total} = H_{neuron} + H_{electrode} + H_{interface} + H_{environment}$$
+
+**Nobody has formulated $H_{interface}$ for any BCI system.** Writing it down would derive all four quantum terms from a single equation — reducing free parameters, enforcing physical consistency, and connecting directly to quantum simulation. This is a key future research target.
+
 ---
 
 # Novel Contributions
@@ -396,6 +413,14 @@ ax.set_xlabel('Barrier Width (nm)'); ax.set_ylabel('Tunneling Probability T'); a
 ax.set_title('Quantum Tunneling: T ≈ e^(−2κd) | V₀ = 1 eV'); ax.legend()
 plt.tight_layout(); plt.show()
 ```
+
+## Macroscopic Tunneling and Under-the-Barrier Recollision (2025)
+
+Two 2025 developments strengthen QIF's tunneling terms:
+
+**2025 Nobel Prize in Physics** (Clarke, Devoret, Martinis): Demonstrated quantum tunneling in macroscopic Josephson junction circuits. The electrode-tissue interface is smaller than these circuits — if macroscopic circuits tunnel, quantum effects at the neural interface are more plausible.
+
+**Under-the-Barrier Recollision (UBR)** (Kim et al., 2025): Electrons collide with nuclei *inside* the tunnel barrier. This challenges the simple WKB model $T \approx e^{-2\kappa d}$ — tunneling involves internal dynamics, not just exponential decay. The tunneling terms ($\hat{Q}_{tunnel}$, $\Phi_{tunnel}$) may need refinement, and the richer dynamics make tunneling profiles harder to spoof (strengthening the biometric hypothesis).
 
 ## Zeno-BCI Stabilization
 
@@ -445,7 +470,7 @@ plt.tight_layout(); plt.show()
 
 $$\Gamma_D(t) = 1 - e^{-t/\tau_D}$$
 
-QIF treats τ_D as a tunable parameter. The framework works at ANY timescale.
+QIF treats τ_D as a tunable parameter. The framework works at ANY timescale. Notably, Perry (2025) proposes NV-center quantum sensors to measure microtubule coherence, suggesting collective coherence times of 1–10 ms — narrowing the 8-OOM gap to ~3 OOM ($10^{-5}$ to $10^{-2}$ s). If confirmed, quantum terms contribute meaningfully at BCI sampling rates.
 
 ```{python}
 #| label: fig-timescales
@@ -548,6 +573,6 @@ QIF delivers:
 
 # References
 
-See full reference list in QIF-WHITEPAPER.md (50 references in APA format).
+See full reference list in QIF-WHITEPAPER.md (59 references in APA format).
 
 *This whitepaper is generated as-code from `qif-lab/`. All figures, tables, and computed values are produced by Python code that reads from a single configuration source (`config.py`) and equation implementation (`qif_equations.py`). Change the equations → re-render → the paper updates.*
