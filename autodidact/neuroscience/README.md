@@ -45,7 +45,7 @@
 ## Folder Structure
 
 ```
-autodidact/neuroscience-bci/
+autodidact/neuroscience/
 ├── README.md                           # This file
 │
 ├── visualizing-the-mind/               # BCI macro-to-micro zoom animations

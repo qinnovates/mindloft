@@ -271,7 +271,7 @@ oni-academy ui
 
 ---
 
-### 4. Neuroscience-BCI — Research Foundation
+### 4. Neuroscience — Research Foundation
 
 **Purpose:** Personal research repository for understanding the biological substrate that BCIs interface with.
 
@@ -281,7 +281,7 @@ oni-academy ui
 - Visualization projects (Blender 3D, Manim 2D)
 - Key questions the research aims to answer
 
-**Location:** [`neuroscience-bci/`](./neuroscience-bci/)
+**Location:** [`neuroscience/`](./neuroscience/)
 
 **Why it matters:** You can't secure what you don't understand. This research feeds directly into QIF Academy content and LearnViz visualizations.
 
@@ -294,7 +294,7 @@ oni-academy ui
 │                     KNOWLEDGE FLOW                               │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                  │
-│   NEUROSCIENCE-BCI                                               │
+│   NEUROSCIENCE                                               │
 │   ┌────────────────────────────┐                                 │
 │   │ • Raw research notes       │                                 │
 │   │ • Brain region anatomy     │                                 │
@@ -429,7 +429,7 @@ autodidact/
 │   ├── oni_academy/             # Python package source
 │   └── tests/                   # Unit tests
 │
-├── neuroscience-bci/            # Research foundation
+├── neuroscience/            # Research foundation
 │   ├── README.md                # Research roadmap
 │   ├── brain-regions/           # Anatomical documentation
 │   └── visualizing-the-mind/    # BCI zoom animations
@@ -474,7 +474,7 @@ python learnviz.py "Binary search algorithm" --render
 
 ### For Contributing Research
 
-1. Add notes to `neuroscience-bci/brain-regions/[region]/`
+1. Add notes to `neuroscience/brain-regions/[region]/`
 2. Use `Notes-[Topic].md` for informal notes
 3. Use `Research-[Topic].md` for structured research
 4. Tag questions with `[Q]` and unknowns with `[?]`

@@ -101,7 +101,7 @@ mindloft/                               # Local folder (remote: github.com/qinno
 │
 ├── autodidact/                        # Educational content
 │   ├── oni-academy/                   # ONI Academy (pip install oni-academy)
-│   ├── neuroscience-bci/              # Personal neuroscience learning
+│   ├── neuroscience/                  # Personal neuroscience learning
 │   └── learnviz/                      # Learning visualization tools
 │
 ├── docs/                               # GitHub Pages website

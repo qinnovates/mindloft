@@ -415,11 +415,11 @@
           "path": "autodidact/learnviz/README.md"
         },
         {
-          "id": "neuroscience-bci",
-          "title": "Neuroscience-BCI",
+          "id": "neuroscience",
+          "title": "Neuroscience",
           "description": "Personal neuroscience learning roadmap. Brain regions, motor cortex research, BCI fundamentals.",
           "badge": "guide",
-          "path": "autodidact/neuroscience-bci/README.md"
+          "path": "autodidact/neuroscience/README.md"
         }
       ]
     }

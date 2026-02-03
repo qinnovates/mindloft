@@ -36,7 +36,7 @@ open -a Blender
 ### Option 2: Command Line (Headless)
 
 ```bash
-cd autodidact/neuroscience-bci/visualizing-the-mind/3D-mindmapper/blender/bci-zoom-3d
+cd autodidact/neuroscience/visualizing-the-mind/3D-mindmapper/blender/bci-zoom-3d
 
 # Generate scene (creates .blend file)
 blender --background --python scripts/bci_zoom_3d.py

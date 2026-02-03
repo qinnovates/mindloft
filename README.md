@@ -64,7 +64,7 @@ mindloft/
 │
 ├── autodidact/                        # Educational content
 │   ├── oni-academy/                   # Python: pip install oni-academy
-│   └── neuroscience-bci/              # BCI fundamentals
+│   └── neuroscience/                  # Neuroscience fundamentals
 │
 ├── docs/                              # GitHub Pages website
 │   ├── index.html                     # Landing page
