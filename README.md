@@ -1,5 +1,10 @@
 # Mindloft
 
+> **Mindloft** is Qinnovate's future vision division — *"Let's Mind Our Way Home."*
+> The QIF (Quantum Indeterministic Framework) is Mindloft's flagship research.
+>
+> **Direct link:** [qinnovate.com/QIF](https://qinnovate.com/QIF)
+
 > Projects for the mind — from neurosecurity to cognitive science.
 
 [![Tests](https://github.com/qinnovates/mindloft/actions/workflows/tests.yml/badge.svg)](https://github.com/qinnovates/mindloft/actions/workflows/tests.yml)
