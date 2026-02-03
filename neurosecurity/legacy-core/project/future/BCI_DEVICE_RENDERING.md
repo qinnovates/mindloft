@@ -102,6 +102,7 @@ Browser: BCI Data Stream
 
 - BCI toggle component: **Done** (implemented 2026-02-02 in `docs/index.html`)
 - BCI feedback modal: **Done** (collects user input on what they want to see)
+- Immersive whitepaper (V1): **Done** (3D curved display, AI voiceover stub, BCI-mode adaptations in `docs/whitepaper/index.html`)
 - `qif_equations.py` coherence metric: **Done** (needs JS port)
 - Synthetic data generator: **Done** (`qif-lab/src/synthetic_data.py`, needs JS port)
 - Visualization pages: In progress (11 of 11 built, refinements ongoing)

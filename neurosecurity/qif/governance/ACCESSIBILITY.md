@@ -470,7 +470,19 @@ When a user enables BCI-friendly mode via this toggle, a one-time feedback modal
 
 **Note:** The `body.bci-mode` class is applied when the toggle is active. BCI-specific CSS overrides (Section 5.3) hook into this class. The animation toggle (`body.reduced-motion`) and BCI toggle (`body.bci-mode`) are independent — users can enable either or both.
 
-### 5.5 Implementation Timeline
+### 5.5 Immersive Whitepaper (V1)
+
+The whitepaper (`docs/whitepaper/index.html`) is the first page to implement the immersive BCI-adaptive experience. It includes three features:
+
+1. **3D Curved Display Effect** — As the user scrolls, sections rotate subtly via CSS 3D transforms (GSAP ScrollTrigger), creating the sensation of reading on a curved display. A vignette overlay darkens viewport edges to reinforce the illusion. Disabled in BCI mode, reduced-motion mode, and on mobile (< 1024px).
+
+2. **AI Voiceover Toggle** — A speaker-icon button (bottom-left, cyan accent) enables section-by-section audio narration. When enabled, audio plays as each section enters the viewport. Missing audio files are handled silently ("audio coming soon"). Audio stubs are in `docs/whitepaper/audio/` — dropping MP3s with the correct filenames activates them automatically. Voiceover is NOT disabled by reduced-motion (audio is not a motion concern).
+
+3. **BCI-Mode Adaptations** — When `body.bci-mode` is active (synced from landing page localStorage), the whitepaper renders with 15% larger text, doubled line height, narrower column, visible section borders, and no 3D effects (vestibular safety). The voiceover toggle is given extra prominence (larger, bordered).
+
+**This is the V1 foundation** for the future BCI device rendering roadmap (see `neurosecurity/legacy-core/project/future/BCI_DEVICE_RENDERING.md`). Future versions will overlay live BCI device data onto the whitepaper visualizations.
+
+### 5.6 Implementation Timeline
 
 BCI Mode should be implemented **after all visualization pages are finalized** to avoid rework. See [Section 7](#7-implementation-checklist) for phased rollout.
 

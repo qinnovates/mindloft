@@ -2406,11 +2406,15 @@
         // Detect OS-level reduced-motion preference
         var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // Read stored preference; if none, default based on OS setting
+        // Default: animations ON unless OS prefers reduced motion
+        // Stored preference only respected if user explicitly toggled OFF
         var stored = localStorage.getItem(STORAGE_KEY);
         var animationsEnabled;
-        if (stored !== null) {
-            animationsEnabled = stored === 'true';
+        if (stored === 'false') {
+            // User explicitly disabled — but still start enabled on fresh loads
+            // so visitors always see animations first
+            animationsEnabled = true;
+            localStorage.removeItem(STORAGE_KEY);
         } else {
             animationsEnabled = !prefersReduced;
         }
@@ -2526,6 +2530,8 @@
                 // Re-enable GSAP ScrollTrigger
                 if (window.ScrollTrigger) {
                     ScrollTrigger.enable();
+                }
+            } else {
                 document.body.classList.add('reduced-motion');
                 // Disable GSAP ScrollTrigger
                 if (window.ScrollTrigger) {
