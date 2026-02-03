@@ -387,11 +387,11 @@
           "path": "neurosecurity/legacy-core/INDEX.md"
         },
         {
-          "id": "qif-field-notes",
-          "title": "QIF Field Notes",
+          "id": "qif-field-journal",
+          "title": "QIF Field Journal",
           "description": "First-person research journal — synesthesia, neurodivergence, perceptual shifts, and epiphanies from inside the research.",
           "badge": "journal",
-          "path": "neurosecurity/qif/QIF-FIELD-NOTES.md"
+          "path": "neurosecurity/qif/QIF-FIELD-JOURNAL.md"
         }
       ]
     },

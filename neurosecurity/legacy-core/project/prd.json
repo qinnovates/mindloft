@@ -408,10 +408,10 @@
       "learnings": "CSS max-height transitions with overflow:hidden create smooth expand/collapse. Using a large max-height value (2000px) for expanded state avoids needing to measure content. Arrow rotation via CSS transform: rotate(90deg) on .qif-collapse-arrow. classList.toggle is cleaner than manual add/remove."
     },
     {
-      "id": "qif-field-notes-journal",
-      "description": "Create QIF-FIELD-NOTES.md — first-person research journal for personal epiphanies, synesthesia observations, and neurodivergent experiences. Entry format with date, title, observation, internal state, QIF connection, and open questions. First entry documents synesthesia changes during QIF visualization work. Published to both drafts and main repo for public visibility.",
+      "id": "qif-field-journal",
+      "description": "Create QIF-FIELD-JOURNAL.md — first-person research journal for personal epiphanies, synesthesia observations, and neurodivergent experiences. Entry format with date, title, observation, internal state, QIF connection, and open questions. First entry documents synesthesia changes during QIF visualization work. Published to both drafts and main repo for public visibility.",
       "status": "complete",
-      "exit_condition": "QIF-FIELD-NOTES.md exists in both drafts/ai-working/ and main/neurosecurity/qif/; Entry 001 documents synesthesia breakthrough; Claude reminder protocol added to CLAUDE.md",
+      "exit_condition": "QIF-FIELD-JOURNAL.md exists in both drafts/ai-working/ and main/neurosecurity/qif/; Entry 001 documents synesthesia breakthrough; Claude reminder protocol added to CLAUDE.md",
       "completed_at": "2026-02-02",
       "priority": "high",
       "learnings": "Field notes serve dual purpose: personal journal AND public research artifact. The 'When to Write' guide (7 signal types) helps identify capture-worthy moments. Adding a Claude reminder protocol ('Anything surprise you about your own thinking lately?') ensures the journal keeps growing across sessions."

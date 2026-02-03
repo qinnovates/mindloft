@@ -9,7 +9,7 @@
 # - Private keys and certificates
 #
 # Installation:
-#   ./security-audit-pipeline/install.sh
+#   ./.github/security-audit/install.sh
 #
 # To bypass (use sparingly):
 #   git commit --no-verify
@@ -32,8 +32,8 @@ if [ -z "$REPO_ROOT" ]; then
 fi
 
 # Path to audit script
-AUDIT_SCRIPT="$REPO_ROOT/security-audit-pipeline/scripts/audit.py"
-CONFIG_FILE="$REPO_ROOT/security-audit-pipeline/patterns/secrets.json"
+AUDIT_SCRIPT="$REPO_ROOT/.github/security-audit/scripts/audit.py"
+CONFIG_FILE="$REPO_ROOT/.github/security-audit/patterns/secrets.json"
 
 # Check if audit script exists
 if [ ! -f "$AUDIT_SCRIPT" ]; then
