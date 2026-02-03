@@ -20,6 +20,8 @@ format:
     toc: true
     number-sections: true
     colorlinks: true
+bibliography: references.bib
+csl: https://www.zotero.org/styles/ieee
 execute:
   echo: false
   warning: false
@@ -33,7 +35,7 @@ jupyter: python3
 #| label: global-setup
 #| include: false
 import sys, os
-sys.path.insert(0, '/Users/mac/Documents/PROJECTS/@qikevinl/drafts/ai-working/qif-lab')
+sys.path.insert(0, '/Users/mac/Documents/PROJECTS/qinnovates/mindloft/drafts/ai-working/qif-lab')
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -45,9 +47,13 @@ from src.synthetic_data import generate_custom_signals, SCENARIOS
 
 ## Abstract {.unnumbered}
 
-Brain-computer interfaces (BCIs) are advancing from experimental medical devices toward consumer technology, yet their security frameworks remain rooted entirely in classical computing paradigms. This paper introduces the **Quantum Indeterministic Framework (QIF)**, a 14-layer security architecture that extends the OSI model into the neural domain and addresses a critical blind spot: quantum-scale phenomena at the electrode-tissue interface that are invisible to classical detection.
+Brain-computer interfaces (BCIs) are advancing from experimental medical devices toward consumer technology, yet their security frameworks remain rooted entirely in classical computing paradigms. This paper introduces the **Quantum Indeterministic Framework (QIF)**, a 7-band symmetric hourglass (3-1-3) security architecture derived from neuroscience and quantum physics that addresses a critical blind spot: quantum-scale phenomena at the electrode-tissue interface that may be invisible to classical detection, if operationally significant.
 
 We present the QI equation in two complementary forms — an additive engineering model and a tensor-product theoretical model — that unify 21 established equations into a single security metric. The framework maps 8 open questions in quantum neuroscience as tunable parameters, making the equation future-proof. We identify six novel contributions and propose five testable experimental predictions.
+
+::: {.callout-note title="AI Transparency Disclosure"}
+`{python} FRAMEWORK['ai_transparency']['statement']` For methodology, contribution matrix, and documented corrections, see **[TRANSPARENCY.md](../../main/neurosecurity/qif/governance/TRANSPARENCY.md)**. For the complete timestamped audit trail — every derivation, AI contribution, validation result, and decision rationale — see **[`{python} FRAMEWORK['ai_transparency']['audit_trail']`](`{python} FRAMEWORK['ai_transparency']['audit_trail']`)**.
+:::
 
 ---
 
@@ -69,11 +75,11 @@ pd.DataFrame([
 ], columns=["Specification", "Value"])
 ```
 
-Current BCI security treats the interface as a classical digital system. But the interface sits at the boundary of quantum and classical physics. Neural tissue operates at scales where quantum effects are non-negligible.
+Current BCI security treats the interface as a classical digital system. But the interface sits at the boundary of quantum and classical physics. Neural tissue operates at scales where quantum effects may be non-negligible (see the Limitations chapter for caveats and the decoherence time debate).
 
 ## The Security Gap
 
-Classical anomaly detection operates at millisecond/millivolt resolution. Quantum effects at the BCI-tissue interface operate at femtosecond/nanovolt scales. An attacker exploiting quantum-scale phenomena is invisible to classical detectors.
+Classical anomaly detection operates at millisecond/millivolt resolution. Quantum effects at the BCI-tissue interface operate at femtosecond/nanovolt scales. An attacker exploiting quantum-scale phenomena would hypothetically be invisible to classical detectors.
 
 ---
 
@@ -90,7 +96,7 @@ pd.DataFrame(QUANTUM_THREATS)
 
 ## The Davydov Soliton Attack (Novel Threat)
 
-Davydov solitons are quantum quasiparticles propagating along protein alpha-helices that can trigger synaptic vesicle release via tunneling. Precisely tuned terahertz radiation targeting SNARE protein complexes could trigger false synaptic events — entirely invisible to classical anomaly detection.
+Davydov solitons are quantum quasiparticles propagating along protein alpha-helices that are hypothesized to be capable of triggering synaptic vesicle release via tunneling (not yet experimentally demonstrated). Precisely tuned terahertz radiation targeting SNARE protein complexes could trigger false synaptic events — entirely invisible to classical anomaly detection.
 
 ---
 
@@ -138,7 +144,7 @@ unknowns = [
     ["Tunneling uniqueness", "Unique per person?", "Quantum biometric", "Qtunnel"],
     ["Zeno-BCI effect", "Never tested", "Modeled hypothesis", "Zeno"],
     ["Davydov soliton attacks", "Can THz trigger false synapses?", "Threat model", "Qtunnel"],
-    ["Silicon-tissue boundary", "No quantum framework exists", "L8 Neural Gateway", "Layer 8"],
+    ["Silicon-tissue boundary", "No quantum framework exists", "I0 Neural Interface", "Band I0"],
     ["Quantum-classical transition", "Binary or continuous?", "Continuous dial", "ΓD(t)"],
 ]
 
@@ -180,37 +186,60 @@ plt.tight_layout(); plt.show()
 
 ---
 
-# The QIF Layer Architecture (v2.0)
+# The QIF Layer Architecture (v3.0 — Hourglass)
+
+QIF v3.0 replaces the deprecated 14-layer OSI-based model with a 7-band symmetric hourglass (3-1-3) architecture derived from neuroscience and quantum physics. No OSI heritage. Every band corresponds to a real BCI functional stage.
 
 ```{python}
-#| label: tbl-layers
-#| tbl-cap: "QIF 14-Layer Architecture"
+#| label: tbl-bands
+#| tbl-cap: "QIF v3.0 — 7-Band Hourglass Architecture"
 
-df = pd.DataFrame(LAYERS)
-df.columns = ['Layer', 'Name', 'Domain', 'Description']
-df['Layer'] = df['Layer'].apply(lambda x: f'L{x}')
-df
+rows = []
+for band in BANDS:
+    qi_lo, qi_hi = band["qi_range"]
+    qi_str = f"{qi_lo}–{qi_hi}" if qi_hi > 0 else "≈ 0"
+    regions = ", ".join(band["brain_regions"]) if band["brain_regions"] else "—"
+    rows.append({"Band": band["id"], "Name": band["name"], "Zone": ZONES[band["zone"]]["name"],
+                 "Determinacy": band["determinacy"], "QI Range": qi_str, "Brain Regions": regions})
+pd.DataFrame(rows)
 ```
 
 ```{python}
-#| label: fig-layers
-#| fig-cap: "QIF 14-Layer Stack: OSI (blue), Neural Gateway (red), Neural (green)"
+#| label: fig-hourglass
+#| fig-cap: "QIF v3.0 — 7-Band Hourglass (3-1-3 symmetric). Width = state space. Narrowest at I0 (measurement bottleneck). Classical ceiling between N2 and N3."
 
-fig, ax = plt.subplots(figsize=(7, 9))
-colors = {'OSI': '#3498db', 'Neural': '#2ecc71'}
-for layer_info in LAYERS:
-    y = 14 - layer_info['layer']
-    color = colors[layer_info['domain']]
-    if layer_info['layer'] == 8: color = '#e74c3c'
-    w = 0.55 if layer_info['layer'] == 8 else 0.8
-    rect = plt.Rectangle(((0.8-w)/2, y), w, 0.85, facecolor=color, alpha=0.85, edgecolor='white', linewidth=2)
+import matplotlib.patches as mpatches
+fig, ax = plt.subplots(figsize=(8, 9))
+zone_colors = {z_id: z["color"] for z_id, z in ZONES.items()}
+n = len(BANDS)
+for i, band in enumerate(BANDS):
+    y = n - 1 - i
+    color = zone_colors[band["zone"]]
+    alpha = 0.95 if band["id"] == "I0" else 0.8
+    width = 0.2 + band["hourglass_width"] * 0.7
+    x_offset = (1.0 - width) / 2
+    rect = plt.Rectangle((x_offset, y), width, 0.85, facecolor=color, alpha=alpha,
+                          edgecolor='white', linewidth=2, zorder=2)
     ax.add_patch(rect)
-    ax.text(0.4, y+0.42, f"L{layer_info['layer']}: {layer_info['name']}", ha='center', va='center', fontsize=9, fontweight='bold', color='white')
+    ax.text(0.5, y + 0.42, f"{band['id']}: {band['name']}",
+            ha='center', va='center', fontsize=10, fontweight='bold', color='white', zorder=3)
+    qi_lo, qi_hi = band["qi_range"]
+    qi_text = f"QI {qi_lo}–{qi_hi}" if qi_hi > 0 else "QI ≈ 0"
+    ax.text(0.5 + width/2 + 0.12, y + 0.42, qi_text, ha='left', va='center', fontsize=8, color='gray')
 
-ax.text(0.95, 10, 'OSI', ha='left', fontsize=10, color='#3498db', fontweight='bold')
-ax.text(0.95, 6.5, 'GATEWAY', ha='left', fontsize=10, color='#e74c3c', fontweight='bold')
-ax.text(0.95, 3, 'Neural', ha='left', fontsize=10, color='#2ecc71', fontweight='bold')
-ax.set_xlim(-0.1, 1.3); ax.set_ylim(-0.5, 14.5); ax.axis('off')
+# Zone labels — dynamic
+neural_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "neural"]
+interface_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "interface"]
+silicon_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "silicon"]
+ax.text(1.1, sum(neural_ys)/len(neural_ys) + 0.42, 'Neural', ha='left', fontsize=10, color=zone_colors['neural'], fontweight='bold')
+ax.text(1.1, sum(interface_ys)/len(interface_ys) + 0.42, 'Interface', ha='left', fontsize=10, color=zone_colors['interface'], fontweight='bold')
+ax.text(1.1, sum(silicon_ys)/len(silicon_ys) + 0.42, 'Silicon', ha='left', fontsize=10, color=zone_colors['silicon'], fontweight='bold')
+n3_y = n - 1 - 0 + 0.42; n2_y = n - 1 - 1 + 0.42
+ceiling_y = (n3_y + n2_y) / 2
+ax.axhline(y=ceiling_y, color='#f39c12', linestyle='--', alpha=0.5, linewidth=1.5, xmin=0.05, xmax=0.95)
+ax.text(0.97, ceiling_y + 0.05, 'Classical Ceiling', ha='right', va='bottom', fontsize=8, color='#f39c12', fontstyle='italic')
+ax.set_xlim(-0.1, 1.4); ax.set_ylim(-0.5, n + 0.5); ax.axis('off')
+ax.set_title(f'QIF {FRAMEWORK["layer_model_version"]} — {n}-Band Hourglass', fontsize=14, fontweight='bold', pad=20)
 plt.tight_layout(); plt.show()
 ```
 
@@ -332,7 +361,7 @@ where $S_{quantum} = S_{vN}(\rho(t)) + \lambda \cdot \Phi_{tunnel} - \mu \cdot E
 
 The tunneling coefficient $T \approx e^{-2\kappa d}$ depends on barrier geometry determined by genetics. Each person's tunneling profile could be unique — a quantum biometric that is:
 
-1. **Unforgeable:** depends on quantum tunneling
+1. **Hypothetically unforgeable:** would depend on quantum tunneling
 2. **Unique:** depends on individual biology
 3. **Unclonable:** no-cloning theorem applies
 
@@ -354,7 +383,7 @@ plt.tight_layout(); plt.show()
 
 ```{python}
 #| label: fig-zeno
-#| fig-cap: "Without Zeno: exponential decay of quantum coherence. With Zeno (1kHz sampling): coherence is repeatedly stabilized by measurement."
+#| fig-cap: "Without Zeno: exponential decay of quantum coherence. With Zeno (1kHz sampling): coherence would hypothetically be stabilized by measurement, contingent on decoherence timescales exceeding the sampling interval."
 
 tau_d = 1e-5; t = np.linspace(0, 5e-5, 1000)
 coherence_no_zeno = np.exp(-t/tau_d)
@@ -431,7 +460,7 @@ plt.tight_layout(); plt.show()
 #| tbl-cap: "QIF Threat Model: Classical vs Quantum Detection"
 
 pd.DataFrame(THREAT_MODEL).rename(columns={
-    'attack': 'Attack Type', 'layers': 'Layer(s)',
+    'attack': 'Attack Type', 'bands': 'Band(s)',
     'classical': 'Classical Detection?', 'quantum': 'Quantum Detection?'
 })
 ```
@@ -488,7 +517,7 @@ pd.DataFrame(predictions, columns=["#", "Prediction", "How to Test", "Expected O
 
 QIF delivers:
 
-- A **14-layer architecture** extending OSI into the neural domain
+- A **7-band symmetric hourglass (3-1-3)** derived from neuroscience and quantum physics
 - **Two complementary QI equations** (engineering + theoretical)
 - A **knowns/unknowns framework** that is future-proof by design
 - **Six novel contributions** not found in prior literature

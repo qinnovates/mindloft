@@ -13,26 +13,38 @@ FRAMEWORK = {
     "name": "QIF — Quantum Indeterministic Framework for Neural Security",
     "pronunciation": "CHIEF",
     "predecessor": "ONI (Organic Neural Interface)",
-    "layer_model_version": "v3.0 (Hourglass)",
+    "layer_model_version": "v3.1 (Hourglass, 7-band)",
     "layer_model_date": "2026-02-02",
     "github": "qinnovates/qinnovate",
     "authors": "Kevin Qi, with Claude (Anthropic)",
     "collaboration": "Quantum Intelligence (QI)",
+    "ai_transparency": {
+        "statement": "This framework was developed collaboratively between Kevin Qi (human researcher) and AI assistants. All AI involvement is assistive — Kevin retains authorship and all decision-making authority.",
+        "ai_systems": [
+            {"name": "Claude (Opus 4.5)", "role": "Co-derivation, implementation, research agent orchestration", "provider": "Anthropic"},
+            {"name": "Gemini 2.5", "role": "Independent peer review (cross-AI validation)", "provider": "Google"},
+        ],
+        "audit_trail": "QIF-DERIVATION-LOG.md",
+        "audit_trail_description": "Complete chronological record of every derivation, decision, AI contribution, and validation result — with timestamps, reasoning chains, and source attribution.",
+        "research_sources": "QIF-RESEARCH-SOURCES.md",
+    },
 }
 
 # ──────────────────────────────────────────────
 # Layer Architecture — v3.0 Hourglass Model
 # ──────────────────────────────────────────────
-# 3 Zones, 8 Bands. No OSI heritage.
+# 3 Zones, 7 Bands (3-1-3 symmetric). No OSI heritage.
 # Numbers increase AWAY from the interface in both directions.
 # Width = state space / possibility space (hourglass geometry).
+# v3.0 → v3.1: Dropped N4 (Identity/Consciousness merged into N3).
+#   Validated 2026-02-02 by quantum physics, neuroscience, and cybersecurity agents.
 
 ZONES = {
     "neural": {
         "name": "Neural Domain",
-        "description": "Quantum-dominant: biological processing from subcortical relay to consciousness",
+        "description": "Biological processing from subcortical relay to integrative association cortex",
         "color": "#3fb950",  # green
-        "bands": ["N1", "N2", "N3", "N4"],
+        "bands": ["N1", "N2", "N3"],
     },
     "interface": {
         "name": "Interface Zone",
@@ -50,42 +62,34 @@ ZONES = {
 
 BANDS = [
     {
-        "id": "N4", "name": "Identity & Consciousness", "zone": "neural",
-        "description": "Executive function, agency, sense of self",
-        "determinacy": "Quantum Indeterminate",
-        "qi_range": (0.9, 1.0),
-        "brain_regions": ["PFC (executive)", "anterior cingulate"],
+        "id": "N3", "name": "Integrative Association", "zone": "neural",
+        "description": "Executive function, language, memory, emotion, identity — PFC + association cortex",
+        "determinacy": "Quantum Uncertain",
+        "qi_range": (0.3, 0.5),
+        "brain_regions": ["PFC", "ACC", "Broca", "Wernicke", "HIPP", "BLA", "insula"],
         "hourglass_width": 1.0,  # widest in neural domain
     },
     {
-        "id": "N3", "name": "Cognitive Integration", "zone": "neural",
-        "description": "Decisions, language, memory encoding, emotion",
-        "determinacy": "Quantum Uncertain",
-        "qi_range": (0.7, 0.9),
-        "brain_regions": ["PFC (decisions)", "Broca", "Wernicke", "HIPP", "amygdala"],
-        "hourglass_width": 0.8,
-    },
-    {
         "id": "N2", "name": "Sensorimotor Processing", "zone": "neural",
-        "description": "Primary motor/sensory cortices, movement planning",
+        "description": "Primary motor/sensory cortices, movement planning, cerebellar-cortical loops",
         "determinacy": "Chaotic → Stochastic",
-        "qi_range": (0.4, 0.7),
-        "brain_regions": ["M1", "S1", "V1", "A1", "PMC", "SMA"],
+        "qi_range": (0.15, 0.3),
+        "brain_regions": ["M1", "S1_cortex", "V1", "A1", "PMC", "SMA", "PPC", "cerebellum"],
         "hourglass_width": 0.55,
     },
     {
         "id": "N1", "name": "Subcortical Relay", "zone": "neural",
-        "description": "Sensory gating, motor selection, coordination, arousal",
+        "description": "Sensory gating, motor selection, coordination, arousal, autonomic reflexes",
         "determinacy": "Stochastic",
-        "qi_range": (0.2, 0.4),
-        "brain_regions": ["thalamus", "basal ganglia", "cerebellum", "brainstem"],
+        "qi_range": (0.05, 0.15),
+        "brain_regions": ["thalamus", "basal ganglia", "cerebellum", "brainstem", "CeA"],
         "hourglass_width": 0.35,
     },
     {
         "id": "I0", "name": "Neural Interface", "zone": "interface",
         "description": "Electrode-tissue boundary, measurement/collapse, quasi-quantum zone",
         "determinacy": "Quasi-quantum (ΓD ∈ (0,1))",
-        "qi_range": (0.1, 0.3),
+        "qi_range": (0.01, 0.1),
         "brain_regions": [],
         "hourglass_width": 0.2,  # narrowest — bottleneck
     },
@@ -93,7 +97,7 @@ BANDS = [
         "id": "S1", "name": "Analog Front-End", "zone": "silicon",
         "description": "Amplification, filtering, ADC/DAC conversion",
         "determinacy": "Stochastic (analog noise)",
-        "qi_range": (0.01, 0.1),
+        "qi_range": (0.001, 0.01),
         "brain_regions": [],
         "hourglass_width": 0.35,
     },
@@ -123,23 +127,32 @@ BANDS_BY_ID = {b["id"]: b for b in BANDS}
 # ──────────────────────────────────────────────
 
 BRAIN_REGION_MAP = {
-    "PFC (executive)":    {"band": "N4", "connections": ["N3", "N2"]},
-    "anterior cingulate": {"band": "N4", "connections": ["N3"]},
-    "PFC (decisions)":    {"band": "N3", "connections": ["N4", "N2", "N1"]},
-    "Broca":              {"band": "N3", "connections": ["Wernicke", "PFC (decisions)"]},
-    "Wernicke":           {"band": "N3", "connections": ["A1", "Broca", "PFC (decisions)"]},
-    "HIPP":               {"band": "N3", "connections": ["N1", "PFC (decisions)"]},
-    "amygdala":           {"band": "N3", "connections": ["N1", "PFC (decisions)"]},
-    "M1":                 {"band": "N2", "connections": ["PFC (decisions)", "PMC", "SMA", "basal ganglia"]},
-    "S1":                 {"band": "N2", "connections": ["thalamus", "PFC (decisions)"]},
-    "V1":                 {"band": "N2", "connections": ["thalamus"]},
+    # N3 — Integrative Association (executive, language, memory, emotion, identity)
+    "PFC":                {"band": "N3", "connections": ["Broca", "Wernicke", "HIPP", "BLA", "insula", "M1", "PMC", "SMA", "PPC", "basal ganglia", "thalamus", "ACC"]},
+    "ACC":                {"band": "N3", "connections": ["PFC", "BLA", "insula", "brainstem"]},
+    "Broca":              {"band": "N3", "connections": ["Wernicke", "PFC"]},
+    "Wernicke":           {"band": "N3", "connections": ["A1", "Broca", "PFC"]},
+    "HIPP":               {"band": "N3", "connections": ["BLA", "thalamus", "PFC"]},
+    "BLA":                {"band": "N3", "connections": ["HIPP", "PFC", "insula", "CeA"],
+                           "note": "Basolateral amygdala — cortical-like, associative learning"},
+    "insula":             {"band": "N3", "connections": ["ACC", "BLA", "PFC", "S1_cortex"]},
+    # N2 — Sensorimotor Processing (cortices + cerebellar-cortical loops)
+    "M1":                 {"band": "N2", "connections": ["PFC", "PMC", "SMA", "basal ganglia", "cerebellum"]},
+    "S1_cortex":          {"band": "N2", "connections": ["thalamus", "PFC", "insula"],
+                           "note": "Primary somatosensory cortex (renamed to avoid collision with S1 band)"},
+    "V1":                 {"band": "N2", "connections": ["thalamus", "PPC"]},
     "A1":                 {"band": "N2", "connections": ["thalamus", "Wernicke"]},
-    "PMC":                {"band": "N2", "connections": ["PFC (decisions)", "M1"]},
-    "SMA":                {"band": "N2", "connections": ["PFC (decisions)", "M1"]},
-    "thalamus":           {"band": "N1", "connections": ["S1", "V1", "A1", "PFC (decisions)"]},
-    "basal ganglia":      {"band": "N1", "connections": ["M1", "PFC (decisions)"]},
-    "cerebellum":         {"band": "N1", "connections": ["M1", "thalamus"]},
-    "brainstem":          {"band": "N1", "connections": ["thalamus", "cerebellum"]},
+    "PMC":                {"band": "N2", "connections": ["PFC", "M1"]},
+    "SMA":                {"band": "N2", "connections": ["PFC", "M1"]},
+    "PPC":                {"band": "N2", "connections": ["V1", "M1", "PMC", "PFC"]},
+    "cerebellum":         {"band": "N1/N2", "connections": ["M1", "thalamus", "PFC", "PMC"],
+                           "note": "Spans N1 (relay) and N2 (cerebellar-cortical loops)"},
+    # N1 — Subcortical Relay (gating, selection, arousal, autonomic)
+    "thalamus":           {"band": "N1", "connections": ["V1", "A1", "S1_cortex", "PFC", "HIPP"]},
+    "basal ganglia":      {"band": "N1", "connections": ["M1", "PFC", "thalamus"]},
+    "brainstem":          {"band": "N1", "connections": ["thalamus", "cerebellum", "PFC", "CeA", "ACC"]},
+    "CeA":                {"band": "N1", "connections": ["BLA", "brainstem", "thalamus"],
+                           "note": "Central amygdala — subcortical, autonomic output"},
 }
 
 # ──────────────────────────────────────────────
@@ -150,9 +163,10 @@ DETERMINACY_SPECTRUM = [
     {"level": 1, "name": "Deterministic",         "bands": ["S2", "S3"],  "description": "f(state,t) → next_state, no randomness"},
     {"level": 2, "name": "Stochastic",            "bands": ["S1", "N1"],  "description": "Known probability distributions, epistemic randomness"},
     {"level": 3, "name": "Chaotic",               "bands": ["N2"],        "description": "Deterministic but sensitive to initial conditions (λ_L > 0)"},
-    {"level": 4, "name": "Quantum Uncertain",     "bands": ["N3"],        "description": "Heisenberg-bounded, ontic randomness (Bell's theorem)"},
-    {"level": 5, "name": "Quantum Indeterminate",  "bands": ["N4"],        "description": "Robertson-Schrödinger, entangled, contextual"},
+    {"level": 4, "name": "Quantum Uncertain",     "bands": ["N3"],        "description": "Heisenberg-bounded, security-relevant indeterminacy"},
 ]
+# Note: Level 5 "Quantum Indeterminate" (former N4) removed in v3.1.
+# N3 tops out at "Quantum Uncertain" — defensible without claiming quantum dominance.
 
 # ──────────────────────────────────────────────
 # v2.0 → v3.0 Migration Map
@@ -172,7 +186,7 @@ V2_TO_V3_MIGRATION = {
     "L11": "N2",   # Cognitive Transport → Sensorimotor Processing
     "L12": "N3",   # Cognitive Session → Cognitive Integration
     "L13": "N3",   # Semantic Layer → Cognitive Integration
-    "L14": "N4",   # Identity Layer → Identity & Consciousness
+    "L14": "N3",   # Identity Layer → Integrative Association (merged)
 }
 
 # DEPRECATED v2.0 — kept for migration reference only. Do NOT use in new code.
@@ -308,5 +322,39 @@ THREAT_MODEL = [
     {"attack": "Quantum tunneling exploit",   "bands": "I0–N1",  "classical": "No",       "quantum": "Yes (tunneling profile anomaly)"},
     {"attack": "Davydov soliton attack",      "bands": "I0–N1",  "classical": "No",       "quantum": "Yes (tunneling term Qtunnel)"},
     {"attack": "Harvest-now-decrypt-later",   "bands": "S3",     "classical": "No",       "quantum": "Prevented (QKD)"},
-    {"attack": "Identity spoofing",           "bands": "N4",     "classical": "Partial",  "quantum": "Yes (quantum biometric)"},
+    {"attack": "Identity spoofing",           "bands": "N3",     "classical": "Partial",  "quantum": "Yes (quantum biometric)"},
+    # v3.1 additions — cybersecurity agent recommendations (2026-02-02)
+    {"attack": "BLE/RF side-channel",         "bands": "S1–S2",  "classical": "Yes",     "quantum": "Enhanced (signal correlation)"},
+    {"attack": "Supply chain compromise",     "bands": "S2–S3",  "classical": "Yes",     "quantum": "Enhanced (firmware attestation)"},
+    {"attack": "Cloud infrastructure attack",  "bands": "S3",     "classical": "Yes",     "quantum": "Enhanced (QKD for data-in-transit)"},
+    {"attack": "Neural data privacy breach",  "bands": "N1–S3",  "classical": "Yes",     "quantum": "Enhanced (cross-band encryption)"},
+]
+
+# ──────────────────────────────────────────────
+# Limitations & Open Questions (Ch. 14)
+# ──────────────────────────────────────────────
+
+UNCALIBRATED_PARAMS = [
+    {"param": "α (classical weight)",     "default": 1.0,  "status": "Placeholder", "calibration_method": "Regression on labeled BCI security incidents"},
+    {"param": "β (quantum weight)",       "default": 1.0,  "status": "Placeholder", "calibration_method": "Controlled decoherence experiments"},
+    {"param": "γ (tunneling weight)",     "default": 0.5,  "status": "Placeholder", "calibration_method": "Ion channel patch-clamp tunneling measurements"},
+    {"param": "δ (entanglement weight)",  "default": 0.5,  "status": "Placeholder", "calibration_method": "Bell test experiments on neural tissue"},
+]
+
+OPEN_QUESTIONS = [
+    {"question": "What is τ_D for neural microtubules in vivo?",               "param": "τ_D",         "range": "10⁻²⁰ to 10³·⁶ s", "resolution": "Ultrafast spectroscopy on living brain tissue"},
+    {"question": "Are ion channel tunneling profiles unique per individual?",   "param": "Q_tunnel",    "range": "Unknown",            "resolution": "Single-channel patch clamp + quantum state tomography"},
+    {"question": "Does BCI sampling rate affect quantum coherence (Zeno)?",     "param": "Zeno gate",   "range": "Unknown",            "resolution": "Vary sampling rate, measure coherence time"},
+    {"question": "Can Davydov solitons trigger false synaptic events?",         "param": "Q_tunnel",    "range": "Unknown",            "resolution": "THz stimulation of SNARE complexes in vitro"},
+    {"question": "What is the Hilbert space dimension d for neural qubits?",    "param": "Q̂_i norm",   "range": "2 to ~10⁶",         "resolution": "Quantum state tomography of microtubule states"},
+    {"question": "Are Posner molecules present in human cortex?",               "param": "Fisher τ_D",  "range": "Hours if yes",       "resolution": "³¹P NMR spectroscopy of cortical tissue"},
+    {"question": "What is the entanglement entropy of neural Bell pairs?",      "param": "Q_entangle",  "range": "0 to ln(d)",         "resolution": "Loophole-free Bell test on neural preparations"},
+    {"question": "Does non-Markovian decoherence extend coherence windows?",    "param": "Γ_D(t) form", "range": "Quadratic vs exp",   "resolution": "Time-resolved coherence measurements in warm wet tissue"},
+]
+
+SCOPE_LIMITATIONS = [
+    "QIF targets implanted BCIs (intracortical, ECoG). Non-invasive EEG BCIs have fundamentally different interface physics.",
+    "The quantum adversary timeline depends on fault-tolerant quantum computing, estimated 2030-2040+ (Gidney 2025).",
+    "QIF assumes electrode-tissue interface physics; next-gen optical or magnetogenetic interfaces may require different models.",
+    "Clinical validation requires IRB approval, neurosurgical collaboration, and access to implanted BCI patients.",
 ]

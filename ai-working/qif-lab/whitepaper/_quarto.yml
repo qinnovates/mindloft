@@ -25,6 +25,9 @@ execute:
   warning: false
   freeze: auto
 
+bibliography: references.bib
+csl: https://www.zotero.org/styles/ieee
+
 metadata:
   title: "QIF — Quantum Indeterministic Framework for Neural Security"
   subtitle: "Why the Next Generation of Brain-Computer Interfaces Needs Quantum-Aware Protection"

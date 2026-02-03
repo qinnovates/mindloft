@@ -1,10 +1,10 @@
 {
-  "hash": "75b8c28c4bd55a0420090a898f21888b",
+  "hash": "c298c9f995ef859342bf4089f2f57b2e",
   "result": {
     "engine": "jupyter",
     "markdown": "---\ntitle: \"Encyclopedia of Terms\"\n---\n\n\n::: {.callout-note}\n## Content Pending\nThis chapter's content is drafted in QIF-WHITEPAPER.md and will be migrated to as-code format.\nSee the full draft for complete text.\n:::\n\n",
     "supporting": [
-      "16-encyclopedia_files"
+      "16-encyclopedia_files/figure-html"
     ],
     "filters": [],
     "includes": {}

@@ -188,16 +188,17 @@ def fig_scale_frequency(save=True):
 
 
 def fig_hourglass(save=True):
-    """[VIS 5.2] The 8-band hourglass architecture (v3.0)."""
-    fig, ax = plt.subplots(figsize=(10, 12))
+    """[VIS 5.2] The 7-band hourglass architecture (v3.1, 3-1-3 symmetric)."""
+    n_bands = len(BANDS)
+    fig, ax = plt.subplots(figsize=(10, 11))
     ax.set_xlim(0, 10)
-    ax.set_ylim(-1, len(BANDS) + 1)
+    ax.set_ylim(-1, n_bands + 1)
     ax.axis('off')
 
     zone_colors = {z_id: z["color"] for z_id, z in ZONES.items()}
 
     for i, band in enumerate(BANDS):
-        y = len(BANDS) - 1 - i  # N4 at top, S3 at bottom
+        y = n_bands - 1 - i  # N3 at top, S3 at bottom
         color = zone_colors[band["zone"]]
         alpha = 0.95 if band["id"] == "I0" else 0.7
 
@@ -228,21 +229,31 @@ def fig_hourglass(save=True):
         ax.text(5 - width / 2 - 0.3, y, band["determinacy"], ha='right',
                 va='center', fontsize=8, color='#8b949e')
 
-    # Zone labels
-    ax.text(0.3, 5.5, 'NEURAL\nDOMAIN', ha='center', va='center', fontsize=11,
+    # Zone labels — compute y positions dynamically
+    neural_bands = [n_bands - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "neural"]
+    interface_bands = [n_bands - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "interface"]
+    silicon_bands = [n_bands - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "silicon"]
+
+    ax.text(0.3, sum(neural_bands) / len(neural_bands), 'NEURAL\nDOMAIN',
+            ha='center', va='center', fontsize=11,
             color=zone_colors['neural'], fontweight='bold')
-    ax.text(0.3, 3.0, 'INTERFACE\nZONE', ha='center', va='center', fontsize=11,
+    ax.text(0.3, sum(interface_bands) / len(interface_bands), 'INTERFACE\nZONE',
+            ha='center', va='center', fontsize=11,
             color=zone_colors['interface'], fontweight='bold')
-    ax.text(0.3, 1.0, 'SILICON\nDOMAIN', ha='center', va='center', fontsize=11,
+    ax.text(0.3, sum(silicon_bands) / len(silicon_bands), 'SILICON\nDOMAIN',
+            ha='center', va='center', fontsize=11,
             color=zone_colors['silicon'], fontweight='bold')
 
-    # Classical ceiling line (between N2 and N1, roughly between chaotic and quantum uncertain)
-    ceiling_y = 4.6  # between N2 (y=5) and N3 (y=4) — shifted to between stochastic/chaotic boundary
+    # Classical ceiling line — between N2 and N3 (chaotic/stochastic → quantum uncertain)
+    # N3 is index 0, N2 is index 1 in BANDS
+    n3_y = n_bands - 1 - 0  # N3 position
+    n2_y = n_bands - 1 - 1  # N2 position
+    ceiling_y = (n3_y + n2_y) / 2
     ax.axhline(y=ceiling_y, color=COLORS['warning'], linestyle='--', alpha=0.6, linewidth=1.5)
     ax.text(9.5, ceiling_y + 0.15, 'Classical\nCeiling', ha='right', va='bottom',
             fontsize=9, color=COLORS['warning'], fontstyle='italic')
 
-    ax.set_title(f'QIF {FRAMEWORK["layer_model_version"]} — 8-Band Hourglass Architecture',
+    ax.set_title(f'QIF {FRAMEWORK["layer_model_version"]} — {n_bands}-Band Hourglass Architecture',
                  fontsize=14, pad=20, color='#c9d1d9')
 
     if save:
@@ -268,15 +279,35 @@ def fig_brain_dependency_graph(save=True):
     band_regions = {}
     for region, info in BRAIN_REGION_MAP.items():
         band_id = info["band"]
-        band_regions.setdefault(band_id, []).append(region)
+        # Handle multi-band regions like "N1/N2" — place at midpoint
+        if "/" in band_id:
+            parts = band_id.split("/")
+            primary_band = parts[0]  # use first band for grouping
+        else:
+            primary_band = band_id
+        band_regions.setdefault(primary_band, []).append(region)
 
     pos = {}
     for band_id, regions in band_regions.items():
-        y = band_y[band_id]
+        if band_id in band_y:
+            y = band_y[band_id]
+        elif "/" in band_id:
+            # Multi-band: average y position
+            parts = band_id.split("/")
+            y = sum(band_y.get(p, 0) for p in parts) / len(parts)
+        else:
+            y = 0
         n = len(regions)
         for j, region in enumerate(regions):
             x = 2 + (j / max(n - 1, 1)) * 10 if n > 1 else 7
-            pos[region] = (x, y)
+            # Multi-band regions get offset y to show spanning
+            region_band = BRAIN_REGION_MAP[region]["band"]
+            if "/" in region_band:
+                parts = region_band.split("/")
+                y_actual = sum(band_y.get(p, 0) for p in parts) / len(parts)
+                pos[region] = (x, y_actual)
+            else:
+                pos[region] = (x, y)
             G.add_node(region)
 
     # Add edges from connection lists (connections are region names or band IDs)
@@ -286,10 +317,16 @@ def fig_brain_dependency_graph(save=True):
                 G.add_edge(region, conn)
 
     zone_colors = {z_id: z["color"] for z_id, z in ZONES.items()}
+    bands_by_id = {b["id"]: b for b in BANDS}
     node_colors = []
     for node in G.nodes():
         band_id = BRAIN_REGION_MAP[node]["band"]
-        zone_id = next(b["zone"] for b in BANDS if b["id"] == band_id)
+        # Handle multi-band regions like "N1/N2"
+        primary_band = band_id.split("/")[0]
+        if primary_band in bands_by_id:
+            zone_id = bands_by_id[primary_band]["zone"]
+        else:
+            zone_id = "neural"  # fallback
         node_colors.append(zone_colors[zone_id])
 
     nx.draw_networkx_nodes(G, pos, ax=ax, node_color=node_colors,

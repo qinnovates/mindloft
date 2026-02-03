@@ -451,3 +451,159 @@ def full_qi_assessment(
     result.decision = coherence_decision(result.coherence, auth_valid)
 
     return result
+
+
+# ──────────────────────────────────────────────
+# Sensitivity Analysis — Candidate 1
+# ──────────────────────────────────────────────
+
+def sensitivity_analysis_c1(
+    base_params: dict = None,
+    param_range: float = 0.5,
+    n_points: int = 50,
+) -> dict:
+    """One-at-a-time sensitivity analysis for QI Candidate 1.
+
+    Sweeps each parameter individually while holding others at baseline,
+    computing the resulting QI score range. Returns data suitable for
+    a tornado plot.
+
+    Args:
+        base_params: Baseline parameter values. Keys: c_class, qi_indeterminacy,
+            q_entangle, q_tunnel, t, tau_d, alpha, beta, gamma, delta.
+        param_range: Fractional range to sweep (0.5 = ±50% of baseline).
+        n_points: Number of points per sweep.
+
+    Returns:
+        Dict with keys: 'params' (list of param names), 'low' (QI at low end),
+        'high' (QI at high end), 'baseline' (QI at baseline), 'sweeps' (full sweep data).
+    """
+    if base_params is None:
+        base_params = {
+            'c_class': 0.8, 'qi_indeterminacy': 0.5, 'q_entangle': 0.3,
+            'q_tunnel': 0.1, 't': 1e-6, 'tau_d': 1e-5,
+            'alpha': 1.0, 'beta': 1.0, 'gamma': 0.5, 'delta': 0.5,
+        }
+
+    # Baseline QI
+    p = QICandidate1Params(
+        alpha=base_params['alpha'], beta=base_params['beta'],
+        gamma=base_params['gamma'], delta=base_params['delta'],
+        tau_d=base_params['tau_d'],
+    )
+    baseline_qi = qi_candidate1(
+        base_params['c_class'], base_params['qi_indeterminacy'],
+        base_params['q_entangle'], base_params['q_tunnel'],
+        base_params['t'], p,
+    )
+
+    # Parameters to sweep (exclude t — sweep tau_d instead for physics insight)
+    sweep_params = ['c_class', 'qi_indeterminacy', 'q_entangle', 'q_tunnel',
+                    'alpha', 'beta', 'gamma', 'delta', 'tau_d']
+
+    results = {'params': [], 'low': [], 'high': [], 'baseline': baseline_qi, 'sweeps': {}}
+
+    for param_name in sweep_params:
+        base_val = base_params[param_name]
+        if base_val == 0:
+            low_val, high_val = 0.0, 0.5
+        else:
+            low_val = base_val * (1 - param_range)
+            high_val = base_val * (1 + param_range)
+
+        # Clip inputs to [0, 1] for normalized params
+        input_params = ['c_class', 'qi_indeterminacy', 'q_entangle', 'q_tunnel']
+        if param_name in input_params:
+            low_val = max(0.0, low_val)
+            high_val = min(1.0, high_val)
+
+        sweep_vals = np.linspace(low_val, high_val, n_points)
+        qi_scores = []
+
+        for val in sweep_vals:
+            bp = dict(base_params)
+            bp[param_name] = val
+            p = QICandidate1Params(
+                alpha=bp['alpha'], beta=bp['beta'],
+                gamma=bp['gamma'], delta=bp['delta'],
+                tau_d=bp['tau_d'],
+            )
+            qi = qi_candidate1(bp['c_class'], bp['qi_indeterminacy'],
+                               bp['q_entangle'], bp['q_tunnel'], bp['t'], p)
+            qi_scores.append(qi)
+
+        results['params'].append(param_name)
+        results['low'].append(qi_scores[0])
+        results['high'].append(qi_scores[-1])
+        results['sweeps'][param_name] = {'values': sweep_vals, 'qi_scores': np.array(qi_scores)}
+
+    return results
+
+
+def sensitivity_heatmap_c1(
+    param_x: str, param_y: str,
+    base_params: dict = None,
+    x_range: tuple = None,
+    y_range: tuple = None,
+    n_points: int = 50,
+) -> dict:
+    """2D sensitivity heatmap for QI Candidate 1.
+
+    Sweeps two parameters simultaneously, computing QI at each grid point.
+
+    Args:
+        param_x: Name of x-axis parameter.
+        param_y: Name of y-axis parameter.
+        base_params: Baseline values for all other parameters.
+        x_range: (low, high) for x parameter. Defaults to ±50% of baseline.
+        y_range: (low, high) for y parameter. Defaults to ±50% of baseline.
+        n_points: Grid resolution per axis.
+
+    Returns:
+        Dict with keys: 'x_vals', 'y_vals', 'qi_grid' (2D array), 'param_x', 'param_y'.
+    """
+    if base_params is None:
+        base_params = {
+            'c_class': 0.8, 'qi_indeterminacy': 0.5, 'q_entangle': 0.3,
+            'q_tunnel': 0.1, 't': 1e-6, 'tau_d': 1e-5,
+            'alpha': 1.0, 'beta': 1.0, 'gamma': 0.5, 'delta': 0.5,
+        }
+
+    def _make_range(param_name, custom_range):
+        if custom_range is not None:
+            return np.linspace(custom_range[0], custom_range[1], n_points)
+        base_val = base_params[param_name]
+        if base_val == 0:
+            return np.linspace(0, 1, n_points)
+        return np.linspace(base_val * 0.1, base_val * 2.0, n_points)
+
+    x_vals = _make_range(param_x, x_range)
+    y_vals = _make_range(param_y, y_range)
+
+    # Handle log-scale parameters
+    if param_x == 'tau_d' and x_range is not None:
+        x_vals = np.logspace(np.log10(x_range[0]), np.log10(x_range[1]), n_points)
+    if param_y == 'tau_d' and y_range is not None:
+        y_vals = np.logspace(np.log10(y_range[0]), np.log10(y_range[1]), n_points)
+
+    qi_grid = np.zeros((n_points, n_points))
+
+    for i, yv in enumerate(y_vals):
+        for j, xv in enumerate(x_vals):
+            bp = dict(base_params)
+            bp[param_x] = xv
+            bp[param_y] = yv
+            p = QICandidate1Params(
+                alpha=bp['alpha'], beta=bp['beta'],
+                gamma=bp['gamma'], delta=bp['delta'],
+                tau_d=bp['tau_d'],
+            )
+            qi_grid[i, j] = qi_candidate1(
+                bp['c_class'], bp['qi_indeterminacy'],
+                bp['q_entangle'], bp['q_tunnel'], bp['t'], p,
+            )
+
+    return {
+        'x_vals': x_vals, 'y_vals': y_vals, 'qi_grid': qi_grid,
+        'param_x': param_x, 'param_y': param_y,
+    }

@@ -33,59 +33,69 @@
 
 ## 2. Layer Architecture (v3.0 — Hourglass Model)
 
-> **v2.0 (14-layer OSI-based) is DEPRECATED.** Replaced 2026-02-02 with 8-band hourglass derived from neuroscience and quantum physics. No OSI heritage. See Derivation Log entries 1–13 for rationale.
+> **v2.0 (14-layer OSI-based) is DEPRECATED.** Replaced 2026-02-02 with hourglass derived from neuroscience and quantum physics. No OSI heritage. See Derivation Log entries 1–14 for rationale.
+>
+> **v3.0 (8-band) refined to v3.1 (7-band, 3-1-3 symmetric) on 2026-02-02** after validation by quantum physics, neuroscience, and cybersecurity research agents. N4 (Identity & Consciousness) merged into N3 (Integrative Association). QI ranges lowered to defensible levels. Amygdala split (BLA/CeA). Cerebellum spans N1+N2. See Derivation Log entry 15.
 
-### 3 Zones, 8 Bands
+### 3 Zones, 7 Bands (3-1-3 Symmetric)
 
-**NEURAL DOMAIN (Upper Hourglass) — Quantum-dominant**
+**NEURAL DOMAIN (Upper Hourglass)**
 
 | Band | Name | Brain Regions | Determinacy | QI Range |
 |------|------|---------------|-------------|----------|
-| **N4** | Identity & Consciousness | PFC (executive), anterior cingulate | Quantum Indeterminate | 0.9–1.0 |
-| **N3** | Cognitive Integration | PFC (decisions), Broca, Wernicke, HIPP, amygdala | Quantum Uncertain | 0.7–0.9 |
-| **N2** | Sensorimotor Processing | M1, S1, V1, A1, PMC, SMA | Chaotic → Stochastic | 0.4–0.7 |
-| **N1** | Subcortical Relay | Thalamus, basal ganglia, cerebellum, brainstem | Stochastic | 0.2–0.4 |
+| **N3** | Integrative Association | PFC, ACC, Broca, Wernicke, HIPP, BLA, insula | Quantum Uncertain | 0.3–0.5 |
+| **N2** | Sensorimotor Processing | M1, S1_cortex, V1, A1, PMC, SMA, PPC, cerebellum | Chaotic → Stochastic | 0.15–0.3 |
+| **N1** | Subcortical Relay | Thalamus, basal ganglia, cerebellum, brainstem, CeA | Stochastic | 0.05–0.15 |
 
 **INTERFACE ZONE (Bottleneck) — Quasi-quantum**
 
 | Band | Name | Function | Determinacy | QI Range |
 |------|------|----------|-------------|----------|
-| **I0** | Neural Interface | Electrode-tissue boundary, measurement/collapse | Quasi-quantum (ΓD ∈ (0,1)) | 0.1–0.3 |
+| **I0** | Neural Interface | Electrode-tissue boundary, measurement/collapse | Quasi-quantum (ΓD ∈ (0,1)) | 0.01–0.1 |
 
 **SILICON DOMAIN (Lower Hourglass) — Classical**
 
 | Band | Name | Function | Determinacy | QI Range |
 |------|------|----------|-------------|----------|
-| **S1** | Analog Front-End | Amplification, filtering, ADC/DAC | Stochastic (analog noise) | 0.01–0.1 |
+| **S1** | Analog Front-End | Amplification, filtering, ADC/DAC | Stochastic (analog noise) | 0.001–0.01 |
 | **S2** | Digital Processing | Decoding, algorithms, classification | Deterministic | ~0 |
 | **S3** | Application | Clinical software, UI, data storage | Deterministic | 0 |
 
+### Key Anatomical Decisions (v3.1)
+- **Amygdala split:** BLA (basolateral, cortical-like, associative learning) → N3. CeA (central, subcortical, autonomic output) → N1.
+- **Cerebellum spans N1+N2:** Relay functions in N1, cerebellar-cortical motor loops in N2.
+- **S1_cortex:** Primary somatosensory cortex renamed to avoid collision with S1 (Analog Front-End) band ID.
+
 ### Naming Convention
-- Format: `{Zone}{Number}` — N4, N3, N2, N1, I0, S1, S2, S3
+- Format: `{Zone}{Number}` — N3, N2, N1, I0, S1, S2, S3
 - Numbers increase **away** from interface in both directions
 - No relation to OSI layer numbers
 
 ### Hourglass Geometry
 - **Width = state space / possibility space**
-- Widest at N4 (quantum superposition, max indeterminacy) and S3 (max classical pathways)
+- Widest at N3 (integrative association, max security-relevant indeterminacy) and S3 (max classical pathways)
 - Narrowest at I0 (measurement collapses possibilities)
+- **3-1-3 symmetry:** 3 neural bands, 1 interface band, 3 silicon bands
 - The bottleneck has **real thickness** (quasi-quantum zone, not a line)
 
 ### Classical Ceiling
 The boundary between chaotic (N2) and quantum uncertain (N3) is the **classical ceiling** — below it, all unpredictability is in principle resolvable with better measurement; above it, the unpredictability is ontic (Bell's theorem). Classical security tools operate below the ceiling. QIF operates across the full spectrum.
 
+### QI Range Philosophy (v3.1)
+QI ranges were lowered dramatically in v3.1 to avoid implying quantum dominance in the brain. QI measures **security-relevant indeterminacy**, not literal quantum effects. The highest band (N3) caps at 0.5, meaning "half the unpredictability at this band may be ontic." This is defensible without requiring proof of quantum cognition.
+
 ### v2.0 → v3.0 Migration
 
-| v2.0 | v3.0 | Rationale |
+| v2.0 | v3.0/3.1 | Rationale |
 |------|------|-----------|
 | L1–L7 (OSI) | S3 | All classical networking collapses into Application band |
 | L8 (Neural Gateway) | I0 | Electrode-tissue boundary → Interface |
 | L9 (Signal Processing) | I0/N1 | Split between interface and subcortical relay |
 | L10 (Neural Protocol) | N1/N2 | Subcortical/sensorimotor |
 | L11 (Cognitive Transport) | N2 | Sensorimotor Processing |
-| L12 (Cognitive Session) | N3 | Cognitive Integration |
-| L13 (Semantic Layer) | N3 | Cognitive Integration |
-| L14 (Identity Layer) | N4 | Identity & Consciousness |
+| L12 (Cognitive Session) | N3 | Integrative Association |
+| L13 (Semantic Layer) | N3 | Integrative Association |
+| L14 (Identity Layer) | N3 | Integrative Association (merged from former N4) |
 
 ---
 

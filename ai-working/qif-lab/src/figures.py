@@ -68,14 +68,14 @@ def save(fig, name):
 # ──────────────────────────────────────────────
 
 def fig_layer_architecture():
-    """8-band hourglass with zone colors, width variation, QI annotations."""
+    """7-band hourglass with zone colors, width variation, QI annotations."""
     fig, ax = plt.subplots(figsize=(10, 10))
 
     zone_colors = {z_id: z["color"] for z_id, z in ZONES.items()}
     n = len(BANDS)
 
     for i, band in enumerate(BANDS):
-        y = n - 1 - i  # N4 at top, S3 at bottom
+        y = n - 1 - i  # N3 at top, S3 at bottom
         color = zone_colors[band["zone"]]
         alpha = 0.95 if band["id"] == "I0" else 0.8
 
@@ -95,24 +95,34 @@ def fig_layer_architecture():
         ax.text(0.5 + width / 2 + 0.15, y + 0.42, qi_text,
                 ha='left', va='center', fontsize=8, color='gray', zorder=3)
 
-    # Zone labels
-    ax.text(1.15, 5.5, 'Neural\nDomain', ha='left', va='center', fontsize=10,
+    # Zone labels — compute y positions dynamically
+    neural_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "neural"]
+    interface_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "interface"]
+    silicon_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "silicon"]
+
+    ax.text(1.15, sum(neural_ys) / len(neural_ys) + 0.42, 'Neural\nDomain',
+            ha='left', va='center', fontsize=10,
             color=zone_colors['neural'], fontweight='bold')
-    ax.text(1.15, 3.0, 'Interface\nZone', ha='left', va='center', fontsize=10,
+    ax.text(1.15, sum(interface_ys) / len(interface_ys) + 0.42, 'Interface\nZone',
+            ha='left', va='center', fontsize=10,
             color=zone_colors['interface'], fontweight='bold')
-    ax.text(1.15, 1.0, 'Silicon\nDomain', ha='left', va='center', fontsize=10,
+    ax.text(1.15, sum(silicon_ys) / len(silicon_ys) + 0.42, 'Silicon\nDomain',
+            ha='left', va='center', fontsize=10,
             color=zone_colors['silicon'], fontweight='bold')
 
-    # Classical ceiling line
-    ax.axhline(y=4.6, color='#f39c12', linestyle='--', alpha=0.5, linewidth=1.5, xmin=0.05, xmax=0.95)
-    ax.text(0.97, 4.65, 'Classical Ceiling', ha='right', va='bottom', fontsize=8,
+    # Classical ceiling line — between N2 and N3 (dynamic)
+    n3_y = n - 1 - 0 + 0.42  # N3 is first band
+    n2_y = n - 1 - 1 + 0.42  # N2 is second band
+    ceiling_y = (n3_y + n2_y) / 2
+    ax.axhline(y=ceiling_y, color='#f39c12', linestyle='--', alpha=0.5, linewidth=1.5, xmin=0.05, xmax=0.95)
+    ax.text(0.97, ceiling_y + 0.05, 'Classical Ceiling', ha='right', va='bottom', fontsize=8,
             color='#f39c12', fontstyle='italic')
 
     ax.set_xlim(-0.15, 1.5)
     ax.set_ylim(-0.5, n + 0.5)
     ax.set_aspect('auto')
     ax.axis('off')
-    ax.set_title(f'QIF {FRAMEWORK["layer_model_version"]} — 8-Band Hourglass Architecture',
+    ax.set_title(f'QIF {FRAMEWORK["layer_model_version"]} — {n}-Band Hourglass Architecture',
                  fontsize=14, fontweight='bold', pad=20)
 
     save(fig, 'layer_architecture')

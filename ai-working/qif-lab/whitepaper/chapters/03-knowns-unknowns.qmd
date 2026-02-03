@@ -8,7 +8,7 @@ title: "What We Know and What We Don't"
 #| label: setup
 #| include: false
 import sys, os
-sys.path.insert(0, '/Users/mac/Documents/PROJECTS/@qikevinl/drafts/ai-working/qif-lab')
+sys.path.insert(0, '/Users/mac/Documents/PROJECTS/qinnovates/mindloft/drafts/ai-working/qif-lab')
 from src.config import FREQUENCY_BANDS, NEURO_CONSTANTS, QUANTUM_THREATS, DECOHERENCE_CAMPS
 import pandas as pd
 ```
@@ -64,7 +64,7 @@ unknowns = [
     ["Ion channel tunneling uniqueness", "Are profiles unique per person?", "Quantum biometric hypothesis", "Qtunnel (biometric)"],
     ["Does BCI sampling stabilize quantum states?", "Zeno-BCI — never tested", "Modeled hypothesis", "Zeno term"],
     ["Davydov soliton vulnerability", "Can THz radiation trigger false synaptic events?", "Tunneling vulnerability model", "Qtunnel (threat)"],
-    ["Silicon-tissue quantum boundary", "No quantum-level framework exists", "L8 Neural Gateway", "QIF Layer 8"],
+    ["Silicon-tissue quantum boundary", "No quantum-level framework exists", "I0 Neural Interface", "QIF Band I0"],
     ["Classical-quantum transition shape", "Binary or continuous?", "Continuous dial: ΓD(t) = 1 − e^(−t/τ_D)", "ΓD(t)"],
 ]
 

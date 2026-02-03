@@ -12,6 +12,8 @@ format:
     code-fold: true
     code-tools: true
     self-contained: true
+bibliography: references.bib
+csl: https://www.zotero.org/styles/ieee
 ---
 
 ```{python}
@@ -48,15 +50,19 @@ COLORS = {
 > *"The brain doesn't run on ones and zeros. Its security shouldn't either."*
 > — Quantum Intelligence (Kevin Qi + Claude)
 
-**Version:** 2.0 (Working Draft) | **Collaboration:** `{python} FRAMEWORK['collaboration']` | **GitHub:** `{python} FRAMEWORK['github']`
+**Version:** 3.0 (Working Draft) | **Collaboration:** `{python} FRAMEWORK['collaboration']` | **GitHub:** `{python} FRAMEWORK['github']`
 
 ## Abstract
 
-Brain-computer interfaces (BCIs) are advancing from experimental medical devices toward consumer technology, yet their security frameworks remain rooted entirely in classical computing paradigms. This paper introduces the **`{python} FRAMEWORK['name']`** (pronounced "`{python} FRAMEWORK['pronunciation']`"), a 14-layer security architecture that extends the OSI model into the neural domain and addresses a critical blind spot: quantum-scale phenomena at the electrode-tissue interface that are invisible to classical detection.
+Brain-computer interfaces (BCIs) are advancing from experimental medical devices toward consumer technology, yet their security frameworks remain rooted entirely in classical computing paradigms. This paper introduces the **`{python} FRAMEWORK['name']`** (pronounced "`{python} FRAMEWORK['pronunciation']`"), a 7-band symmetric hourglass (3-1-3) security architecture derived from neuroscience and quantum physics that addresses a critical blind spot: quantum-scale phenomena at the electrode-tissue interface that may be invisible to classical detection, if operationally significant.
 
 We present the QI equation in two complementary forms — an additive engineering model for BCI practitioners and a tensor-product theoretical model for physicists — that unify 21 established equations from classical physics, neuroscience, and quantum mechanics into a single security metric. The framework maps 8 open questions in quantum neuroscience as tunable parameters rather than fixed assumptions, making the equation future-proof by design.
 
 We identify six novel contributions not found in prior literature, including quantum biometrics via ion channel tunneling profiles and Zeno-BCI stabilization. Five testable experimental predictions are proposed for empirical validation.
+
+::: {.callout-note title="AI Transparency Disclosure"}
+`{python} FRAMEWORK['ai_transparency']['statement']` For methodology, contribution matrix, and documented corrections, see **[TRANSPARENCY.md](../../main/neurosecurity/qif/governance/TRANSPARENCY.md)**. For the complete timestamped audit trail — every derivation, AI contribution, validation result, and decision rationale — see **[`{python} FRAMEWORK['ai_transparency']['audit_trail']`](`{python} FRAMEWORK['ai_transparency']['audit_trail']`)**.
+:::
 
 ---
 
@@ -80,64 +86,90 @@ df = pd.DataFrame([
 df.style.hide(axis='index')
 ```
 
-Current BCI security treats the interface as a classical digital system. But the interface sits at the boundary of quantum and classical physics. Neural tissue is not silicon — it operates at scales where quantum effects are non-negligible.
+Current BCI security treats the interface as a classical digital system. But the interface sits at the boundary of quantum and classical physics. Neural tissue is not silicon — it operates at scales where quantum effects may be non-negligible (see Limitations chapter for caveats and the decoherence time debate).
 
 ---
 
 ## The QIF Layer Architecture (`{python} FRAMEWORK['layer_model_version']`)
 
-The OSI model (L1-L7) was designed for silicon networks. QIF extends it with 7 neural layers (L8-L14).
+The OSI model was designed in 1984 for packet-switched telecommunications. A brain-computer interface is not a packet-switched network. QIF v3.0 removes all OSI heritage — the layer model is derived entirely from neuroscience and quantum physics.
 
 ```{python}
-#| label: fig-layer-stack
-#| fig-cap: "QIF 14-Layer Architecture — L8 (Neural Gateway) is the trust boundary"
+#| label: fig-hourglass
+#| fig-cap: "QIF v3.0 — 7-Band Hourglass Architecture (3-1-3 symmetric). Width represents state space. Narrowest at I0 (measurement collapses possibilities)."
 
-fig, ax = plt.subplots(figsize=(8, 12))
-ax.set_xlim(0, 10)
-ax.set_ylim(-1, 15)
-ax.axis('off')
+zone_colors = {z_id: z["color"] for z_id, z in ZONES.items()}
 
-for layer_info in LAYERS:
-    i = layer_info['layer']
-    y = 14 - i
-    is_neural = layer_info['domain'] == 'Neural'
-    color = COLORS['neural'] if is_neural else COLORS['classical']
-    alpha = 0.9 if i == 8 else 0.6
+fig, ax = plt.subplots(figsize=(10, 10))
+n = len(BANDS)
 
-    if i <= 7:
-        width = 4 + (7 - i) * 0.5
-    elif i == 8:
-        width = 3
-    else:
-        width = 3 + (i - 8) * 0.4
+for i, band in enumerate(BANDS):
+    y = n - 1 - i
+    color = zone_colors[band["zone"]]
+    alpha = 0.95 if band["id"] == "I0" else 0.8
 
-    x_start = 5 - width / 2
-    rect = mpatches.FancyBboxPatch(
-        (x_start, y - 0.4), width, 0.75,
-        boxstyle="round,pad=0.05",
-        facecolor=color, alpha=alpha, edgecolor='white', linewidth=0.5
-    )
+    width = 0.2 + band["hourglass_width"] * 0.7
+    x_offset = (1.0 - width) / 2
+
+    rect = plt.Rectangle((x_offset, y), width, 0.85, facecolor=color, alpha=alpha,
+                          edgecolor='white', linewidth=2, zorder=2)
     ax.add_patch(rect)
-    fontweight = 'bold' if i == 8 else 'normal'
-    ax.text(5, y, f"L{i}: {layer_info['name']}", ha='center', va='center',
-            fontsize=9, fontweight=fontweight, color='white')
+    ax.text(0.5, y + 0.42, f"{band['id']}: {band['name']}",
+            ha='center', va='center', fontsize=10, fontweight='bold', color='white', zorder=3)
 
-ax.text(0.5, 10.5, 'OSI\nDomain', ha='center', va='center', fontsize=10,
-        color=COLORS['classical'], fontweight='bold')
-ax.text(0.5, 3.5, 'Neural\nDomain', ha='center', va='center', fontsize=10,
-        color=COLORS['neural'], fontweight='bold')
-ax.text(0.5, 6.5, 'L8: Trust\nBoundary', ha='center', va='center', fontsize=10,
-        color=COLORS['danger'], fontweight='bold')
-ax.set_title(f'QIF {FRAMEWORK["layer_model_version"]} — 14-Layer Architecture', fontsize=14, pad=20)
+    qi_lo, qi_hi = band["qi_range"]
+    qi_text = f"QI {qi_lo}–{qi_hi}" if qi_hi > 0 else "QI ≈ 0"
+    ax.text(0.5 + width / 2 + 0.15, y + 0.42, qi_text,
+            ha='left', va='center', fontsize=8, color='gray', zorder=3)
+
+# Zone labels — dynamic
+neural_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "neural"]
+interface_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "interface"]
+silicon_ys = [n - 1 - i for i, b in enumerate(BANDS) if b["zone"] == "silicon"]
+
+ax.text(1.15, sum(neural_ys)/len(neural_ys) + 0.42, 'Neural\nDomain',
+        ha='left', va='center', fontsize=10, color=zone_colors['neural'], fontweight='bold')
+ax.text(1.15, sum(interface_ys)/len(interface_ys) + 0.42, 'Interface\nZone',
+        ha='left', va='center', fontsize=10, color=zone_colors['interface'], fontweight='bold')
+ax.text(1.15, sum(silicon_ys)/len(silicon_ys) + 0.42, 'Silicon\nDomain',
+        ha='left', va='center', fontsize=10, color=zone_colors['silicon'], fontweight='bold')
+
+# Classical ceiling — between N3 and N2
+n3_y = n - 1 - 0 + 0.42
+n2_y = n - 1 - 1 + 0.42
+ceiling_y = (n3_y + n2_y) / 2
+ax.axhline(y=ceiling_y, color='#f39c12', linestyle='--', alpha=0.5, linewidth=1.5, xmin=0.05, xmax=0.95)
+ax.text(0.97, ceiling_y + 0.05, 'Classical Ceiling', ha='right', va='bottom', fontsize=8,
+        color='#f39c12', fontstyle='italic')
+
+ax.set_xlim(-0.15, 1.5)
+ax.set_ylim(-0.5, n + 0.5)
+ax.set_aspect('auto')
+ax.axis('off')
+ax.set_title(f'QIF {FRAMEWORK["layer_model_version"]} — {n}-Band Hourglass Architecture',
+             fontsize=14, fontweight='bold', pad=20)
+plt.tight_layout()
 plt.show()
 ```
 
 ```{python}
-#| label: tbl-layers
-#| tbl-cap: "QIF Layer Architecture"
-df_layers = pd.DataFrame(LAYERS)
-df_layers.columns = ['Layer', 'Name', 'Domain', 'Description']
-df_layers.style.hide(axis='index')
+#| label: tbl-bands
+#| tbl-cap: "QIF v3.0 — 7-Band Hourglass Architecture"
+
+rows = []
+for band in BANDS:
+    qi_lo, qi_hi = band["qi_range"]
+    qi_str = f"{qi_lo}–{qi_hi}" if qi_hi > 0 else "≈ 0"
+    regions = ", ".join(band["brain_regions"]) if band["brain_regions"] else "—"
+    rows.append({
+        "Band": band["id"],
+        "Name": band["name"],
+        "Zone": ZONES[band["zone"]]["name"],
+        "Determinacy": band["determinacy"],
+        "QI Range": qi_str,
+        "Brain Regions": regions,
+    })
+pd.DataFrame(rows).style.hide(axis='index')
 ```
 
 ---
@@ -177,7 +209,7 @@ unknowns = [
     ["Ion channel tunneling uniqueness", "Are profiles unique per person?", "Quantum biometric hypothesis", "Qtunnel"],
     ["Does BCI sampling stabilize quantum states?", "Zeno-BCI — never tested", "Modeled hypothesis", "Zeno term"],
     ["Davydov soliton vulnerability", "THz attack on SNARE?", "Tunneling vulnerability model", "Qtunnel"],
-    ["Silicon-tissue quantum boundary", "No framework exists", "L8 Neural Gateway", "QIF Layer 8"],
+    ["Silicon-tissue quantum boundary", "No framework exists", "I0 Neural Interface", "QIF Band I0"],
     ["Classical-quantum transition shape", "Binary or continuous?", "Continuous dial", "ΓD(t)"],
 ]
 df_u = pd.DataFrame(unknowns, columns=["Unknown", "Mystery", "QIF Approach", "Variable"])
@@ -443,7 +475,7 @@ plt.show()
 #| label: tbl-threats
 #| tbl-cap: "QIF threat model — quantum detection fills classical blind spots"
 df_threats = pd.DataFrame(THREAT_MODEL)
-df_threats.columns = ['Attack', 'Layer(s)', 'Classical Detection?', 'Quantum Detection?']
+df_threats.columns = ['Attack', 'Band(s)', 'Classical Detection?', 'Quantum Detection?']
 df_threats.style.hide(axis='index')
 ```
 
@@ -507,6 +539,6 @@ df_threats.style.hide(axis='index')
 
 ---
 
-*QIF Whitepaper v2.0 — Generated from code. Change the equation, re-render, paper updates.*
+*QIF Whitepaper v3.1 — Generated from code. Change the equation, re-render, paper updates.*
 
 *Authors: Kevin Qi, with Claude (Anthropic) | Quantum Intelligence (QI) | 2026-02-02*
