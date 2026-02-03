@@ -469,6 +469,262 @@
   }
 
   /* ----------------------------------------------------------
+     Audio Player: Pre-generated Kokoro TTS narration
+     Loads manifest.json from audio/ dir, plays per-section audio
+     ---------------------------------------------------------- */
+  var audioPlayer = {
+    manifest: null,
+    audio: null,
+    currentIndex: -1,
+    playing: false,
+    enabled: false,
+    sectionMap: {},     // section id -> manifest index
+    ui: {}
+  };
+
+  function initAudioPlayer() {
+    // Try to load manifest
+    var basePath = '';
+    // Detect base path — works for both local file and served
+    var scripts = document.querySelectorAll('script');
+    // Audio files are relative to the HTML
+    basePath = 'audio/';
+
+    fetch(basePath + 'manifest.json')
+      .then(function (r) { return r.json(); })
+      .catch(function () { return null; })
+      .then(function (data) {
+        if (!data || !data.sections || !data.sections.length) {
+          // No audio available — don't show player
+          return;
+        }
+        audioPlayer.manifest = data;
+        audioPlayer.basePath = basePath;
+
+        // Build section id -> index map
+        data.sections.forEach(function (s, i) {
+          audioPlayer.sectionMap[s.id] = i;
+        });
+
+        buildAudioUI();
+        initAudioScrollObserver();
+      });
+  }
+
+  function buildAudioUI() {
+    // Toggle button (shows when player is hidden)
+    var toggle = el('button', {
+      className: 'qif-audio-toggle',
+      textContent: '\uD83C\uDFA7',
+      title: 'Listen to narration (Kokoro AI)',
+      onClick: function () { showAudioPlayer(); }
+    });
+
+    // Player bar
+    var playBtn = el('button', {
+      className: 'qif-audio-btn',
+      textContent: '\u25B6',
+      title: 'Play / Pause',
+      onClick: function () { toggleAudioPlayback(); }
+    });
+
+    var titleEl = el('div', { className: 'qif-audio-title', textContent: 'Ready to narrate' });
+    var modelEl = el('div', { className: 'qif-audio-model', textContent: 'Kokoro TTS \u00B7 Open Source (Apache 2.0)' });
+    var progressFill = el('div', { className: 'qif-audio-progress-fill' });
+    var progressBar = el('div', { className: 'qif-audio-progress' }, [progressFill]);
+
+    // Click on progress bar to seek
+    progressBar.addEventListener('click', function (e) {
+      if (!audioPlayer.audio) return;
+      var rect = progressBar.getBoundingClientRect();
+      var pct = (e.clientX - rect.left) / rect.width;
+      audioPlayer.audio.currentTime = pct * audioPlayer.audio.duration;
+    });
+
+    var infoEl = el('div', { className: 'qif-audio-info' }, [titleEl, modelEl, progressBar]);
+
+    var closeBtn = el('button', {
+      className: 'qif-audio-btn',
+      textContent: '\u2715',
+      title: 'Close player',
+      onClick: function () { hideAudioPlayer(); }
+    });
+
+    var player = el('div', { className: 'qif-audio-player hidden' }, [playBtn, infoEl, closeBtn]);
+
+    document.body.appendChild(toggle);
+    document.body.appendChild(player);
+
+    audioPlayer.ui = {
+      toggle: toggle,
+      player: player,
+      playBtn: playBtn,
+      title: titleEl,
+      progressFill: progressFill
+    };
+  }
+
+  function showAudioPlayer() {
+    audioPlayer.enabled = true;
+    audioPlayer.ui.toggle.style.display = 'none';
+    audioPlayer.ui.player.classList.remove('hidden');
+  }
+
+  function hideAudioPlayer() {
+    audioPlayer.enabled = false;
+    if (audioPlayer.audio) {
+      audioPlayer.audio.pause();
+      audioPlayer.playing = false;
+    }
+    audioPlayer.ui.player.classList.add('hidden');
+    audioPlayer.ui.toggle.style.display = '';
+    audioPlayer.ui.toggle.classList.remove('active');
+    audioPlayer.ui.playBtn.textContent = '\u25B6';
+    audioPlayer.ui.playBtn.classList.remove('playing');
+  }
+
+  function playSection(index) {
+    if (!audioPlayer.manifest) return;
+    var sections = audioPlayer.manifest.sections;
+    if (index < 0 || index >= sections.length) return;
+
+    var section = sections[index];
+    audioPlayer.currentIndex = index;
+
+    // Stop current
+    if (audioPlayer.audio) {
+      audioPlayer.audio.pause();
+      audioPlayer.audio.removeEventListener('timeupdate', updateProgress);
+      audioPlayer.audio.removeEventListener('ended', onAudioEnded);
+    }
+
+    audioPlayer.ui.title.textContent = section.title;
+
+    var audio = new Audio(audioPlayer.basePath + section.file);
+    audioPlayer.audio = audio;
+
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('ended', onAudioEnded);
+
+    audio.play().then(function () {
+      audioPlayer.playing = true;
+      audioPlayer.ui.playBtn.textContent = '\u275A\u275A';
+      audioPlayer.ui.playBtn.classList.add('playing');
+
+      // Highlight the section in the document
+      var docSection = document.getElementById(section.id);
+      if (docSection) {
+        // Remove previous highlights
+        document.querySelectorAll('section.qif-reading').forEach(function (s) {
+          s.classList.remove('qif-reading');
+        });
+        docSection.classList.add('qif-reading');
+      }
+    }).catch(function () {
+      // Autoplay blocked — user needs to click
+      audioPlayer.ui.title.textContent = 'Click play: ' + section.title;
+    });
+  }
+
+  function toggleAudioPlayback() {
+    if (!audioPlayer.audio || audioPlayer.currentIndex === -1) {
+      // Start from first section or current scroll position
+      var idx = findCurrentScrollSection();
+      playSection(idx >= 0 ? idx : 0);
+      return;
+    }
+
+    if (audioPlayer.playing) {
+      audioPlayer.audio.pause();
+      audioPlayer.playing = false;
+      audioPlayer.ui.playBtn.textContent = '\u25B6';
+      audioPlayer.ui.playBtn.classList.remove('playing');
+    } else {
+      audioPlayer.audio.play();
+      audioPlayer.playing = true;
+      audioPlayer.ui.playBtn.textContent = '\u275A\u275A';
+      audioPlayer.ui.playBtn.classList.add('playing');
+    }
+  }
+
+  function updateProgress() {
+    if (!audioPlayer.audio || !audioPlayer.audio.duration) return;
+    var pct = (audioPlayer.audio.currentTime / audioPlayer.audio.duration) * 100;
+    audioPlayer.ui.progressFill.style.width = pct + '%';
+  }
+
+  function onAudioEnded() {
+    // Auto-advance to next section
+    var next = audioPlayer.currentIndex + 1;
+    if (audioPlayer.manifest && next < audioPlayer.manifest.sections.length) {
+      playSection(next);
+      // Scroll to that section
+      var sectionId = audioPlayer.manifest.sections[next].id;
+      var docSection = document.getElementById(sectionId);
+      if (docSection) {
+        docSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // End of whitepaper
+      audioPlayer.playing = false;
+      audioPlayer.ui.playBtn.textContent = '\u25B6';
+      audioPlayer.ui.playBtn.classList.remove('playing');
+      audioPlayer.ui.title.textContent = 'Narration complete';
+      audioPlayer.ui.progressFill.style.width = '100%';
+      document.querySelectorAll('section.qif-reading').forEach(function (s) {
+        s.classList.remove('qif-reading');
+      });
+    }
+  }
+
+  function findCurrentScrollSection() {
+    if (!audioPlayer.manifest) return -1;
+    var vh = window.innerHeight;
+    var best = -1;
+    var bestDist = Infinity;
+
+    audioPlayer.manifest.sections.forEach(function (s, i) {
+      var docSection = document.getElementById(s.id);
+      if (!docSection) return;
+      var rect = docSection.getBoundingClientRect();
+      var center = rect.top + rect.height * 0.5;
+      var dist = Math.abs(center - vh * 0.5);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    });
+    return best;
+  }
+
+  function initAudioScrollObserver() {
+    // When user scrolls to a new section and audio is playing, auto-switch
+    var observer = new IntersectionObserver(
+      function (entries) {
+        if (!audioPlayer.enabled || !audioPlayer.playing) return;
+
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var sectionId = entry.target.id;
+          var idx = audioPlayer.sectionMap[sectionId];
+          if (idx !== undefined && idx !== audioPlayer.currentIndex) {
+            playSection(idx);
+          }
+        });
+      },
+      {
+        threshold: 0.4,
+        rootMargin: '-20% 0px -20% 0px'
+      }
+    );
+
+    audioPlayer.manifest.sections.forEach(function (s) {
+      var docSection = document.getElementById(s.id);
+      if (docSection) observer.observe(docSection);
+    });
+  }
+
+  /* ----------------------------------------------------------
      Collapsible Callouts
      Click header to expand/collapse. Starts collapsed.
      ---------------------------------------------------------- */
@@ -526,6 +782,7 @@
     initNoiseOverlay();
     initSectionReveals();
     initCollapsibleCallouts();
+    initAudioPlayer();
     buildDictationUI();
     initDictationObserver();
   }
