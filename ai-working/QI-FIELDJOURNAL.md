@@ -136,6 +136,38 @@ The scientific consensus leans toward Tegmark. Most physicists and neuroscientis
 
 ---
 
+### Entry QP-004: What is quantum simulation? (2026-02-03)
+
+**Question:** What's quantum simulation?
+
+**Answer:** Quantum simulation is using a controllable quantum system to model another quantum system that's too complex to simulate on a classical computer.
+
+**The core problem:** Simulating quantum mechanics on classical computers scales exponentially. A system of N qubits requires tracking 2^N complex amplitudes. 50 qubits = ~10¹⁵ amplitudes. 300 qubits = more states than atoms in the observable universe. Classical computers choke.
+
+**The solution:** Use a quantum system you *can* control (trapped ions, superconducting circuits, ultracold atoms) to mimic one you *can't* easily study directly (molecular interactions, exotic materials, high-energy physics).
+
+**Two types:**
+
+| Type | How it works | Tradeoff |
+|------|-------------|----------|
+| **Analog** | Engineer hardware to directly mimic the target system's Hamiltonian (energy/dynamics equations). Like a wind tunnel for quantum physics. | Simpler to build, less flexible |
+| **Digital** | Use a universal quantum computer to run algorithms that approximate the target system step by step. | More flexible, but needs error correction that doesn't fully exist yet |
+
+**What it's used for:**
+- Molecular chemistry (drug design, catalyst discovery)
+- Condensed matter physics (superconductivity, magnetism)
+- Materials science (designing new materials with specific properties)
+- High-energy physics (lattice gauge theories)
+
+**Key players:** Google, IBM, QuEra, Quantinuum, academic labs worldwide. Richard Feynman proposed the idea in 1982 — "Nature isn't classical, dammit, and if you want to make a simulation of nature, you'd better make it quantum mechanical."
+
+**QIF connection:** If quantum simulation matures enough to model the electrode-tissue interface at quantum scales, it could resolve the decoherence debate directly — simulate what happens to quantum states at the platinum-neural membrane junction without needing to measure it in vivo. That would answer QIF's central open question (Entry QP-001). Instead of building the impossibly difficult instrumentation to measure quantum coherence inside a living neuron, you simulate the neuron quantum-mechanically and observe what the simulation predicts.
+
+**Related:** Feynman 1982 (Int. J. Theor. Phys.), Lloyd 1996 (universal quantum simulation), Entry QP-001 (Tegmark decoherence), QIF-TRUTH.md (decoherence parameter)
+**Visualization:**
+
+---
+
 ## Neuroethics
 
 *(Future entries)*
@@ -150,4 +182,4 @@ The scientific consensus leans toward Tegmark. Most physicists and neuroscientis
 
 *Part of the [QIF Project](https://github.com/qinnovates/mindloft) — Quantum Intelligence Field Journal*
 *Started: 2026-02-03*
-*Entries: 5 (QP: 3, NS: 2)*
+*Entries: 6 (QP: 4, NS: 2)*
