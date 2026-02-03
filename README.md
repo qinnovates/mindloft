@@ -5,6 +5,12 @@
 [![Tests](https://github.com/qinnovates/mindloft/actions/workflows/tests.yml/badge.svg)](https://github.com/qinnovates/mindloft/actions/workflows/tests.yml)
 [![Security](https://github.com/qinnovates/mindloft/actions/workflows/security.yml/badge.svg)](https://github.com/qinnovates/mindloft/actions/workflows/security.yml)
 
+<div align="center">
+
+https://github.com/qinnovates/mindloft/releases/download/v1.0.0-demo/ONIDemoVideo.mp4
+
+</div>
+
 ---
 
 ## Pillars
