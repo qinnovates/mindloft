@@ -80,12 +80,12 @@ This is the bottleneck. Every thought, every intention, every neural signal that
 The hourglass has seven bands, arranged symmetrically: three neural bands above the interface, three silicon bands below, and the interface itself at the center. I call it the 3-1-3 architecture.
 
 **Neural Domain:**
-- **N3 — Integrative Cortex**: Prefrontal cortex, parietal association areas, temporal regions. Where thoughts converge, plans form, identity resides. The physics here may include quantum effects — this is debated, and I will return to the debate.
+- **N3 — Integrative Cortex**: Prefrontal cortex, parietal association areas, temporal regions. Where thoughts converge, plans form, and cognitive sovereignty resides — volitional control, cognitive integrity, and the neurorights identified by Ienca & Andorno (2017). The physics here may include quantum effects — this is debated, and I will return to the debate.
 - **N2 — Distributed Networks**: Thalamus, sensorimotor cortex, salience networks. The relay and routing infrastructure of the brain. Chaotic but classically describable.
 - **N1 — Relay Nuclei**: Basal ganglia, cerebellum, thalamic nuclei. Signal conditioning and timing. Stochastic but well-characterized.
 
 **The Bottleneck:**
-- **I0 — Neural Interface**: The electrode-tissue junction. Where all neural information is compressed into measurable signals. The narrowest point. The most vulnerable point. The point where quantum physics matters most.
+- **I0 — Neural Interface**: The electrode-tissue junction. Where all neural information is compressed into measurable signals. I0 IS the physical layer — not "above" anything, but the waist of the hourglass, where platinum touches tissue, where electrons become ions, where classical measurement meets quantum state. The narrowest point. The most vulnerable point. The point where quantum physics matters most.
 
 **Silicon Domain:**
 - **S1 — Signal Acquisition**: Amplifiers, filters, analog-to-digital conversion.
@@ -93,6 +93,8 @@ The hourglass has seven bands, arranged symmetrically: three neural bands above 
 - **S3 — Application Layer**: Wireless transmission, cloud connectivity, user interfaces.
 
 The symmetry is not decorative. It reflects a physical reality: the brain's complexity fans inward toward measurement, and the device's complexity fans outward toward application. Security must protect the pinch point where they meet.
+
+The hourglass does not invalidate the earlier 14-layer model — it reframes it. The 14 layers are the hourglass *expanded*: a detailed engineering view where each band decomposes into actionable layers with specific protocols, threats, and mitigations. Security teams use the 14-layer view for threat analysis and firewall rules. Researchers use the hourglass to understand the architecture's symmetry and the quantum-classical boundary. Neither view is wrong. They are different zoom levels of the same system.
 
 ### What I Built on This Foundation
 
