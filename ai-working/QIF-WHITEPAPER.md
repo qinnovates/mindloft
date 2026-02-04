@@ -47,7 +47,7 @@ Brain-computer interfaces (BCIs) are advancing from experimental medical devices
 
 We present the QI equation in two complementary forms — an additive engineering model for BCI practitioners and a tensor-product theoretical model for physicists — that unify 21 established equations from classical physics, neuroscience, and quantum mechanics into a single security metric. The framework maps 8 open questions in quantum neuroscience (including the disputed decoherence timescale, biological entanglement, and the silicon-tissue quantum boundary) as tunable parameters rather than fixed assumptions, making the equation future-proof: as science resolves each unknown, QIF's predictions automatically sharpen without structural changes.
 
-We identify six novel contributions not found in prior literature: (1) quantum tunneling through ion channels as an unforgeable biometric, (2) a conditional Zeno-BCI hypothesis linking sampling rate to quantum coherence under specific decoherence timescale assumptions, (3) Davydov soliton attack vectors invisible to classical detection, (4) Von Neumann entropy non-monotonicity as a security feature, (5) exact indeterminacy computation via the Robertson-Schrödinger equality for qubits, and (6) decoherence as a continuous security dial rather than a binary switch. Five testable experimental predictions are proposed for empirical validation. The framework integrates neuroethical considerations at the architectural level, with explicit protections for cognitive integrity and neural identity.
+We identify six novel contributions not found in prior literature: (1) quantum tunneling through ion channels as an unforgeable biometric, (2) a conditional Zeno-BCI hypothesis linking sampling rate to quantum coherence under specific decoherence timescale assumptions, (3) Davydov soliton attack vectors invisible to classical detection, (4) Von Neumann entropy non-monotonicity as a security feature, (5) exact indeterminacy computation via the Robertson-Schrödinger equality for qubits, and (6) decoherence as a continuous security dial rather than a binary switch. Five testable experimental predictions are proposed for empirical validation. The framework integrates neuroethical considerations at the architectural level — embedding protections for cognitive liberty, mental privacy, and psychological continuity as design constraints rather than compliance addenda — and positions neuroethics as the foundation bridging classical and quantum approaches to neural security.
 
 **Key claim:** We present QIF, a 7-band hourglass quantum-classical security architecture for brain-computer interfaces that introduces the QI equation — a unified mathematical model bridging established classical neuroscience, quantum mechanics, and novel quantum indeterminacy principles. The framework treats unsolved questions in quantum neuroscience as tunable parameters rather than assumptions, making it future-proof as science progresses. We identify six novel contributions including quantum biometrics via ion channel tunneling profiles and a conditional Zeno-BCI hypothesis.
 
@@ -73,7 +73,7 @@ The result is a blind spot. An attacker exploiting quantum-scale phenomena at th
 
 ### 2.3 What This Paper Delivers
 
-This paper presents the Quantum Indeterministic Framework (QIF), which addresses the quantum blind spot in BCI security through five contributions. First, we propose a 7-band hourglass architecture (v3.1) spanning the neural-silicon boundary, with three neural bands (N3–N1), one interface band (I0), and three silicon bands (S1–S3) mapping the complete signal path from conscious experience to application software. Second, we present the QI equation in two complementary forms — an additive engineering model and a tensor-product theoretical model — encompassing 30 defined variables that unify 21 established equations from classical physics, neuroscience, and quantum mechanics. Third, we provide an explicit knowns/unknowns mapping showing where QIF builds on established science and where it fills gaps with tunable parameters, making the framework future-proof as open questions in quantum neuroscience are resolved. Fourth, we identify six novel contributions not found in prior literature, each with proposed experimental validation. Fifth, the paper includes a comprehensive encyclopedia making every concept accessible to readers without backgrounds in quantum mechanics or neuroscience.
+This paper presents the Quantum Indeterministic Framework (QIF), which addresses the quantum blind spot in BCI security through five contributions. First, we propose a 7-band hourglass architecture (v3.1) spanning the neural-silicon boundary, with three neural bands (N3–N1), one interface band (I0), and three silicon bands (S1–S3) mapping the complete signal path from conscious experience to application software. Second, we present the QI equation in two complementary forms — an additive engineering model and a tensor-product theoretical model — encompassing 30 defined variables that unify 21 established equations from classical physics, neuroscience, and quantum mechanics. Third, we provide an explicit knowns/unknowns mapping showing where QIF builds on established science and where it fills gaps with tunable parameters, making the framework future-proof as open questions in quantum neuroscience are resolved. Fourth, we identify six novel contributions not found in prior literature, each with proposed experimental validation. Fifth, the paper establishes neuroethics as the architectural foundation that bridges classical and quantum security models, embedding cognitive liberty, mental privacy, and psychological continuity as design constraints throughout the hourglass architecture (Section 14). Sixth, the paper includes a comprehensive encyclopedia making every concept accessible to readers without backgrounds in quantum mechanics or neuroscience.
 
 ### 2.4 Related Work
 
@@ -172,11 +172,11 @@ Since 2024, several developments have directly impacted the framework's testabil
 
 ## 5. The QIF Layer Architecture (v3.1 — Hourglass Model)
 
-> **v2.0 (14-layer OSI-based) is DEPRECATED.** Replaced 2026-02-02 with a hourglass architecture derived from neuroscience and quantum physics. No OSI heritage. See QIF-TRUTH.md Section 2 for canonical definitions.
+> **v2.0 (14-layer OSI-based) has been superseded** by the v3.1 hourglass architecture, derived from neuroscience and quantum physics rather than networking analogy. The 14-layer model remains valid as a detailed engineering view — it is the hourglass expanded (see §5.7). See QIF-TRUTH.md Section 2 for canonical definitions.
 
 ### 5.1 The Core Insight
 
-The v2.0 architecture extended the OSI model by stacking 7 neural layers (L8–L14) on top of 7 silicon layers. This was intuitive but wrong — it implied a linear signal path and inherited OSI's networking assumptions, which don't apply to neural tissue. The v3.1 hourglass model is derived from the actual physics:
+The v2.0 architecture extended the OSI model by stacking 7 neural layers (L8–L14) on top of 7 silicon layers. This was intuitive and productive — it generated 31 publications, two Python packages, and a 46-technique threat taxonomy. But it inherited OSI's networking assumptions (linear signal path, strict layering) which don't apply to neural tissue. The v3.1 hourglass model is derived from the actual physics:
 
 - **Width represents state space** — how many possible states exist at each band
 - The architecture is **widest at the extremes** (N3: integrative association with maximum security-relevant indeterminacy; S3: maximum classical application pathways) and **narrowest at the center** (I0: the electrode-tissue interface where measurement collapses possibilities)
@@ -214,6 +214,8 @@ The v2.0 architecture extended the OSI model by stacking 7 neural layers (L8–L
 
 I0 (Neural Interface) is the bottleneck of the hourglass — where silicon meets biology. Unlike v2.0's "Layer 8" which was modeled as a thin boundary, I0 has **real thickness**: it is a quasi-quantum zone where the decoherence factor ΓD ∈ (0,1), meaning quantum and classical physics coexist.
 
+**I0 IS the physical layer.** A common objection is that BCIs are physical devices — electrodes, wires, amplifiers — and therefore the interface should sit at the bottom of the stack (adjacent to OSI L1), not in the middle. The hourglass resolves this. I0 is not "above" anything. It is the **waist** — the most physical, most constrained point in the entire system. Everything above it (N1–N3) is progressively more abstract neural processing. Everything below it (S1–S3) is progressively more abstract digital processing. The waist is where platinum touches tissue, where electrons become ions, where classical measurement meets quantum state. It is the system's L1 — not by numbering convention, but by physical reality.
+
 - This is the attack surface for quantum-level threats
 - This is where the QI equation operates most directly
 - No existing framework addresses this boundary at the quantum level
@@ -243,7 +245,29 @@ The boundary between N2 (chaotic/stochastic) and N3 (quantum uncertain) is the *
 | L11 (Cognitive Transport) | N2 | Sensorimotor Processing |
 | L12 (Cognitive Session) | N3 | Integrative Association |
 | L13 (Semantic Layer) | N3 | Integrative Association |
-| L14 (Identity Layer) | N3 | Integrative Association (merged from former N4) |
+| L14 (Cognitive Sovereignty) | N3 | Integrative Association (merged from former N4) |
+
+### 5.7 Relationship to the Classical 14-Layer Model
+
+The hourglass does not invalidate the Classical model. It reframes it. The 14-layer model is the hourglass *expanded* — a detailed engineering view where each band decomposes into actionable layers with specific protocols, threats, and mitigations:
+
+| Hourglass Band | Classical Layers | Domain |
+|---|---|---|
+| S3 (Application) | L5–L7 (Session, Presentation, Application) | Digital application |
+| S2 (Digital Processing) | L3–L4 (Network, Transport) | Digital transport |
+| S1 (Analog Front-End) | L1–L2 (Physical Carrier, Data Link) | Silicon hardware |
+| **I0 (Interface)** | **L8 (Neural Gateway)** | **Electrode-tissue boundary** |
+| N1 (Subcortical Relay) | L9–L10 (Signal Processing, Neural Protocol) | Neural signaling |
+| N2 (Sensorimotor Processing) | L11–L12 (Cognitive Transport, Cognitive Session) | Neural processing |
+| N3 (Integrative Association) | L13–L14 (Semantic, Cognitive Sovereignty) | Cognitive integrity |
+
+**When to use which:**
+- **Classical 14-layer** — Security teams performing threat analysis, writing firewall rules, mapping attack surfaces to specific protocol layers. It speaks the language of network security professionals.
+- **Hourglass 7-band** — Researchers analyzing the architecture's symmetry, physicists modeling the quantum-classical boundary, architects designing systems that must span both domains. It reveals *why* the architecture works.
+
+The key correction the hourglass introduces is positional, not structural: L8 was always the physical interface — the electrode touching tissue. The 14-layer numbering implied it sat "above" OSI L7 in abstraction. The hourglass corrects this by placing it at the **waist** — the narrowest, most physical point — not a higher layer of abstraction. The Purdue Enterprise Reference Architecture for industrial control systems makes the same distinction: the physical process sits at Level 0 (the center), not above the network stack. The EvoArch model (Akhshabi & Dovrolis, 2011) provides theoretical backing: layered protocol stacks naturally evolve toward hourglass topologies, with the most universal protocol (here, the physical interface) at the waist.
+
+Neither view is wrong. They are different zoom levels of the same system.
 
 ---
 
@@ -771,32 +795,75 @@ Requires specialized quantum measurements.
 
 > **[VISUALIZATION 13.2]** — Three-phase calibration flowchart: Phase 1 (classical, blue) feeds into Phase 2 (quantum, purple) feeds into Phase 3 (specialized, red). Each phase shows inputs (equipment, measurements) and outputs (calibrated coefficients). A final "cross-validation" step connects both candidates.
 
+The calibration protocol above establishes *how* to validate QIF experimentally — what to measure, in what order, and what agreement between candidates would confirm. But experimental capability, once built, raises a question that no equation can answer: who decides what these measurements are used for? A calibrated QI equation can protect a patient's neural identity. It can also, with the same mathematics, profile that identity for surveillance. The difference is not technical. It is ethical. And that distinction must be embedded in the framework's architecture, not left to the discretion of whoever holds the equipment.
+
 ---
 
-## 14. Neuroethics and Regulatory Alignment
+## 14. Neuroethics as Foundation: Why Security Without Ethics Fails
 
-### 14.1 Ethical Imperatives
+The preceding twelve sections have constructed QIF from first principles: an architecture (Section 5), a classical foundation (Section 6), a quantum frontier (Section 7), two complementary equations (Section 8), six novel contributions (Section 9), a decoherence spectrum (Section 10), a threat analysis (Section 11), a meta-equation interpretation (Section 12), and a set of experimental predictions with calibration protocols (Section 13). Each of these is a technical instrument. None of them, alone or together, answers the question that precedes all others: *should we?*
 
-- Neural data is the most intimate data type — it represents thoughts, intentions, identity
-- Quantum-level attacks on BCIs could alter cognition without awareness
-- The dual-use nature of quantum tunneling (vulnerability + biometric) raises consent questions
-- Who owns a person's quantum biometric profile?
+The Mindloft project maintains two complementary models for neurosecurity — the **Classical Model** (ONI 14-layer) for securing today's BCI landscape, and the **Quantum Model** (QIF 7-band hourglass) for securing tomorrow's. Between them sits neuroethics: not as a compliance addendum bolted onto either model, but as the architectural foundation that makes both trustworthy. Without it, the most sophisticated security framework in the world is just a lock on a door no one agreed to build.
 
-### 14.2 Regulatory Landscape
+### 14.1 Why Security Engineering Needs Neuroethics
 
-- FDA: Medical device classification for BCIs
-- GDPR/HIPAA: Neural data as sensitive personal data
-- NIST: Post-quantum cryptography standards
-- IEEE: Neuroethics framework development
+Security engineering has always required thinking like both architect and adversary. You cannot defend a system you have not tried to break. This dual perspective — probing for vulnerabilities while building defenses — is what distinguishes security engineering from access control. It is adversarial by design, because the threat landscape is adversarial by nature.
 
-### 14.3 QIF's Ethical Design
+This principle applies with even greater urgency to neural security. A data breach exposes information — credit card numbers, social security numbers, embarrassing emails. A neural breach could alter identity, cognition, or autonomy. The CIA triad (confidentiality, integrity, availability) that governs classical cybersecurity extends, at the neural boundary, into something far more personal: **cognitive liberty**, **mental privacy**, and **psychological continuity**. These are not abstract rights in a philosophy seminar. BCIs are implanted in human patients today, and the security gap is not hypothetical — it is operational.
 
-- Quantum biometric is opt-in; the underlying quantum tunneling state is non-extractable (no-cloning theorem prevents copying the quantum state at the electrode-tissue interface, though the classical measurement output can be recorded — it cannot reconstruct the full quantum state)
-- Framework explicitly models threats to identity and cognition (N3: Integrative Association)
-- Decoherence parameter transparency — no hidden assumptions about quantum effects
-- Open research questions are clearly labeled, not presented as established fact
+The Classical Model provides the defensive architecture: 14 layers, 46 threat techniques, firewall architectures, coherence scoring. The Quantum Model discovers the attack surfaces that classical methods cannot see: decoherence at the electrode-tissue interface, tunneling as both vulnerability and biometric, soliton propagation through neural protein chains. Together, they form a security engineering approach grounded in neuroscience — but security engineering without ethical constraints is indistinguishable from threat development.
 
-> **[VISUALIZATION 14.3]** — Governance hourglass diagram: Show how QIF bands map to regulatory bodies and ethical frameworks. S1–S3 → NIST/IEEE, I0 → FDA, N1–N3 → Neuroethics boards. Overlay QI equation as the security guarantee spanning all governance domains.
+### 14.2 The Risks of Security Without Ethics
+
+Without neuroethics as the foundation for both approaches, the field faces four compounding risks.
+
+First, **unregulated BCI development is outpacing security.** Commercial timelines move faster than regulatory frameworks. Companies deploying BCIs have market incentives — growth targets, funding rounds, competitive pressure — that may conflict with patient safety. Neuroethics provides the principles that must constrain both models regardless of how slowly regulators move. If the framework waits for regulation, it is already too late.
+
+Second, **nation-state exploitation of neural interfaces is not speculative.** The same quantum effects that enable novel biometric identification (Section 9) could be weaponized for covert neural surveillance. A security framework without ethical constraints cannot distinguish between protecting a patient's neural signature and harvesting it. The technical capability is symmetric; only the ethical framework makes it asymmetric.
+
+Third, the three rights that matter most — **cognitive liberty, mental privacy, and psychological continuity** — are not protected by technical security alone. These rights were articulated by Ienca & Andorno (2017) and have since found legal expression in Chile's constitutional neurorights amendment (2021), the first nation to constitutionally protect mental integrity. A cryptographically secure BCI that has no consent framework, no withdrawal protocol, and no transparency about what data it collects is technically secure and ethically vacant. The lock works. The question is whether anyone consented to the door.
+
+Fourth, there is **the indeterminacy problem** itself. In quantum mechanics, indeterminacy is a feature — the QI Equation explicitly models it (Section 8). In unregulated neural interfaces, indeterminacy is a risk. If the rules governing BCI deployment are themselves indeterminate — shifting between jurisdictions, undefined for novel use cases, silent on questions of identity — the result is not freedom but chaos. The framework must be as precise about its ethical commitments as it is about its equations.
+
+### 14.3 The Regulatory Landscape
+
+The governance challenge is that neural interfaces sit at the intersection of multiple regulatory regimes, none of which were designed for this technology.
+
+The **FDA** classifies BCIs as medical devices, applying frameworks built for pacemakers and cochlear implants to technology that reads and writes neural signals — a category difference that existing classifications do not adequately address. **GDPR** and **HIPAA** treat neural data as sensitive personal data, but their definitions of "personal data" predate the possibility of decoding motor intentions or emotional states from electrode arrays. **NIST** is developing post-quantum cryptography standards that will eventually govern how BCI communications are encrypted, but current guidance does not address the unique constraints of implanted devices with limited computational resources. **IEEE** is building neuroethics frameworks, but adoption is voluntary.
+
+More recently, the regulatory landscape has begun to catch up. **Chile** became the first country to constitutionally protect neurorights in 2021, establishing that mental integrity, free will, and equal access to cognitive enhancement are constitutional guarantees. **UNESCO** adopted its Recommendation on the Ethics of Neurotechnology in 2025, articulating 17 principles for responsible development — of which QIF's governance documents implement 15 (see `UNESCO_ALIGNMENT.md`). The **EU AI Act** classifies neural interfaces as high-risk AI systems, requiring conformity assessment, human oversight, and transparency obligations that align closely with QIF's governance architecture.
+
+The QIF framework does not wait for these regulatory regimes to converge. It implements the strictest interpretation across all of them, on the principle that neural security should default to the highest standard available.
+
+### 14.4 How QIF Embeds Ethics in Architecture
+
+Ethics in QIF is not a governance appendix. It is embedded in the framework's architectural decisions.
+
+The quantum biometric proposed in Section 9 is **opt-in by design**. The underlying quantum tunneling state at the electrode-tissue interface is non-extractable — the no-cloning theorem prevents copying the quantum state, though the classical measurement output can be recorded. This means the biometric cannot be silently harvested; it requires active participation from the device and informed consent from the patient. The classical measurement residue is insufficient to reconstruct the full quantum state, creating a natural asymmetry between the user (who has the quantum state) and any adversary (who can only observe classical projections of it).
+
+The framework **explicitly models threats to cognitive sovereignty** at the architectural level. Band N3 (Integrative Association) is not a technical afterthought — it is the band where neural activity corresponds to volitional control, cognitive integrity, and the four neurorights identified by Ienca & Andorno (2017): cognitive liberty, mental privacy, mental integrity, and psychological continuity. By placing it at the outermost neural band, the hourglass architecture ensures that threats to cognitive sovereignty must traverse every other security layer before reaching it. The framework does not model consciousness — it models the measurable, security-relevant properties of cognition that can be verified, authenticated, and protected.
+
+**Decoherence parameter transparency** is a design commitment. Every quantum term in the QI Equation is labeled with its empirical status — established, hypothesized, or unknown. The framework does not hide behind impressive notation. Where the science is uncertain (and much of it is — Section 15), the uncertainty is flagged. This is not a weakness; it is what distinguishes a research framework from marketing.
+
+Nine governance documents operationalize these principles across transparency, informed consent, pediatric considerations, post-deployment ethics, regulatory compliance, UNESCO alignment, accessibility, data policy, and the living neuroethics questions that remain open.
+
+### 14.5 The Bridge Between Two Models
+
+Neuroethics is not a layer in either the Classical or Quantum model. It is the substrate beneath both — the reason both models exist.
+
+The Classical Model identified the right problem: brain-computer interfaces have no universal security standard, and the OSI networking model can be extended into the biological domain to provide one. It produced 31 publications, two Python packages, a threat taxonomy of 46 techniques, and a neural firewall architecture. It speaks the language of network engineers, security architects, and compliance officers. It secures today.
+
+The Quantum Model identified what the Classical Model could not see: at the electrode-neuron interface, where a platinum-iridium electrode sits against living neural tissue, the physics changes. Ion channels exhibit quantum tunneling. Decoherence timescales are disputed but potentially relevant. The scale-frequency invariant (v = f × λ) that governs classical neural signal processing may break down at the nanometer boundary where biology meets silicon. The Quantum Model speaks the language of physicists, neuroscientists, and mathematicians. It secures tomorrow.
+
+Neither model answers the question that matters most: **should we?**
+
+Should we implant devices that can read motor intentions? Under what consent framework? Should we develop the capability to write neural signals? With what oversight? Should we pursue quantum biometric identification? For whom — patients, or surveillance targets? Where does cognitive liberty end and neural surveillance begin?
+
+These questions — asked honestly, with regulatory teeth and philosophical rigor — are what neuroethics provides. It is the bridge between Classical and Quantum, between engineering and philosophy, between what we can build and what we should build. The Venn diagram on the Mindloft landing page is not a design metaphor. The two circles — Classical and Quantum — overlap, and in the overlap is neuroethics. The white glow at the center is not decorative. It is the point.
+
+> **[VISUALIZATION 14.5]** — Governance hourglass diagram: Show how QIF bands map to regulatory bodies and ethical frameworks. S1–S3 → NIST/IEEE, I0 → FDA, N1–N3 → Neuroethics boards. Overlay QI equation as the security guarantee spanning all governance domains.
+
+With this ethical foundation established, the framework can now turn honestly to what it does not yet know. The neuroethics section is not a digression from QIF's technical substance — it is the lens through which the following limitations should be read. Every open question in Section 15 is also an ethical question: how much uncertainty is acceptable when the substrate is a human mind?
 
 ---
 
@@ -849,7 +916,7 @@ A framework that cannot be disproven is not science. QIF is designed to be empir
 - A knowns/unknowns framework that is future-proof by design
 - Six novel contributions not found in prior literature
 - Five testable experimental predictions
-- Ethical integration at the architectural level
+- Neuroethics as the architectural foundation bridging classical and quantum security models — not a compliance layer, but the substrate that gives both models their legitimacy
 
 ### 16.2 The Vision
 
