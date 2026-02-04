@@ -97,6 +97,14 @@ class SecurityAuditor:
     }
     RESET_COLOR = "\033[0m"
 
+    # Maximum file size to scan (1 MB). Larger files are likely generated
+    # artifacts (e.g. self-contained HTML) where secrets won't appear.
+    MAX_FILE_SIZE = 1_000_000
+
+    # Maximum line length to scan. Lines longer than this are skipped since
+    # regex matching on multi-megabyte lines can hang due to backtracking.
+    MAX_LINE_LENGTH = 10_000
+
     def __init__(self, config_path: Optional[str] = None, min_severity: str = "low"):
         self.config = self._load_config(config_path)
         self.min_severity = min_severity
@@ -190,6 +198,13 @@ class SecurityAuditor:
         if any(d in skip_dirs for d in parts):
             return True
 
+        # Skip files larger than MAX_FILE_SIZE (likely generated artifacts)
+        try:
+            if os.path.getsize(file_path) > self.MAX_FILE_SIZE:
+                return True
+        except OSError:
+            pass
+
         return False
 
     def scan_file(self, file_path: str) -> list[Finding]:
@@ -220,6 +235,11 @@ class SecurityAuditor:
 
         # Scan each line
         for line_num, line in enumerate(lines, 1):
+            # Skip extremely long lines — regex backtracking on multi-MB
+            # minified/generated lines can hang the process.
+            if len(line) > self.MAX_LINE_LENGTH:
+                continue
+
             for category, patterns in self.compiled_patterns.items():
                 for p in patterns:
                     # Check severity threshold
