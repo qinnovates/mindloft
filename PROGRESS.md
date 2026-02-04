@@ -7,13 +7,15 @@ AI assists with execution; every concept, direction, and framework choice is Kev
 > Last generated: 2026-02-04
 
 ## Summary
-- **Commits**: 655 | **Date range**: 2026-01-18 — 2026-02-04
+- **Commits**: 657 | **Date range**: 2026-01-18 — 2026-02-04
 - **prd.json**: 40/46 tasks complete (87%)
 - **Future Work**: 2/7 initiatives complete
 
 ## Timeline
 
 ### 2026-02-04
+- `c6d9f58` Fix CI workflows: update stale neurosec-research/ paths to MAIN/legacy-core/
+- `c97a985` Regenerate PROGRESS.md (655 commits)
 - `b6445c6` Add hearts banner to README, rename autodidact/ → autodidactive/
 - `7468e66` Regenerate PROGRESS.md (653 commits)
 - `0c89a02` Reframe Purple Team → security engineering + neuroethics
