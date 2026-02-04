@@ -138,6 +138,9 @@ Incident response and recovery for neural security breaches. What happens after 
 | **STRIDE Threat Matrix** | Extend `shared/threat-matrix.json` with STRIDE categories (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege) mapped to both models. |
 | ~~**Classical-Quantum Bridge**~~ | ✅ **Done.** `MAIN/shared/threat-matrix.json` + `bridge.py` — 9 tactics, 34 techniques, 6 defenses, 4 neurorights mapped to both models. `config.py` loads from shared source. |
 | **Recover Function** | Incident response and recovery playbooks for neural security breaches. |
+| **Human-in-the-Loop Validation** | This framework is pre-peer-review independent research. Before any claim moves from hypothesis to assertion, it requires HITL validation through: academic peer review, IEEE standards alignment (IEEE 2794, Neuroethics Framework), NIST CSF 2.0 compliance audit, and engagement with BCI security researchers (Kohno, Bonaci, Schroder). No equation, threshold, or architectural decision is finalized without external human expert review. AI assists — humans decide. |
+| **Live BCI Testing** | Validate the framework against real hardware. Test coherence metric thresholds, signal injection detection, and anomaly classification using consumer-grade BCIs (OpenBCI, Muse, BrainFlow-compatible devices). Move from synthetic data to empirical validation — every equation in `qif_equations.py` tested against live neural signals. |
+| **BCI-Enhanced Website** | Build mindloft.org from the ground up as a BCI-aware web experience. Adaptive UI that responds to neural input — attention-driven navigation, cognitive load detection that adjusts content density, coherence-based authentication demos, and real-time signal visualization. Not a website with BCI bolted on, but a website architectured for neural interaction from the first line of code. |
 
 **Python packages:**
 ```bash
