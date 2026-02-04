@@ -1,0 +1,119 @@
+{
+  "_meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-02-04",
+    "description": "Repository custom properties (as-code alternative to GitHub Custom Properties)",
+    "maintainer": "Kevin Qi",
+    "consumers": ["workflows", "python-packages", "agents", "website"]
+  },
+
+  "properties": {
+    "framework": "QIF",
+    "framework_version": "3.1",
+    "legacy_framework": "ONI",
+    "model_status": "active-research",
+    "data_classification": "public-research",
+    "license": "Apache-2.0",
+    "neuroethics_aligned": true,
+    "review_required": true,
+    "has_python_packages": true
+  },
+
+  "compliance": {
+    "nist_csf_functions": ["Identify", "Protect", "Detect", "Govern", "Respond"],
+    "nist_csf_version": "2.0",
+    "neuroethics_frameworks": [
+      "UNESCO Recommendation on the Ethics of AI (2021)",
+      "Ienca & Andorno Neurorights Framework (2017)"
+    ],
+    "governance_docs": [
+      "MAIN/governance/TRANSPARENCY.md",
+      "MAIN/governance/NEUROETHICS_ALIGNMENT.md",
+      "MAIN/governance/REGULATORY_COMPLIANCE.md",
+      "MAIN/governance/UNESCO_ALIGNMENT.md",
+      "MAIN/governance/INFORMED_CONSENT_FRAMEWORK.md",
+      "MAIN/governance/POST_DEPLOYMENT_ETHICS.md",
+      "MAIN/governance/PEDIATRIC_CONSIDERATIONS.md",
+      "MAIN/governance/DATA_POLICY_FAQ.md",
+      "MAIN/governance/ACCESSIBILITY.md"
+    ],
+    "security_scanning": ["bandit", "safety", "codeql", "web-security"],
+    "audit_trail": "MAIN/governance/TRANSPARENCY.md"
+  },
+
+  "models": {
+    "classical": {
+      "name": "ONI 14-Layer Model",
+      "status": "established-legacy",
+      "layers": 14,
+      "location": "MAIN/legacy-core/",
+      "publications": 31,
+      "threats": 46
+    },
+    "quantum": {
+      "name": "QIF 7-Band Hourglass",
+      "status": "active-research",
+      "bands": 7,
+      "architecture": "N3/N2/N1 | I0 | S1/S2/S3",
+      "location": "MAIN/qif/",
+      "framework_docs": 9,
+      "governance_docs": 9
+    }
+  },
+
+  "packages": [
+    {
+      "name": "oni-framework",
+      "install": "pip install oni-framework",
+      "location": "MAIN/legacy-core/oni-framework/",
+      "module": "oni"
+    },
+    {
+      "name": "oni-tara",
+      "install": "pip install oni-tara",
+      "location": "MAIN/legacy-core/tara-nsec-platform/",
+      "module": "tara_mvp"
+    },
+    {
+      "name": "oni-academy",
+      "install": "pip install oni-academy",
+      "location": "autodidactive/oni-academy/",
+      "module": "oni_academy"
+    }
+  ],
+
+  "truth_sources": {
+    "brand": "MAIN/legacy-core/resources/brand/brand.json",
+    "equations": "QIF-TRUTH.md (in drafts branch)",
+    "threats": "MAIN/shared/threat-matrix.json",
+    "tasks": "MAIN/legacy-core/project/prd.json",
+    "navigation": "docs/content-manifest.json"
+  },
+
+  "nist_csf_mapping": {
+    "Identify": {
+      "description": "Map the attack surface",
+      "components": ["MAIN/qif/", "MAIN/shared/threat-matrix.json"]
+    },
+    "Protect": {
+      "description": "Build the defenses",
+      "components": ["MAIN/legacy-core/oni-framework/", "MAIN/legacy-core/tara-nsec-platform/"]
+    },
+    "Detect": {
+      "description": "See what others miss",
+      "components": ["docs/visualizations/", "MAIN/legacy-core/publications/coherence-metric/"]
+    },
+    "Govern": {
+      "description": "Neuroethics as foundation",
+      "components": ["MAIN/governance/"]
+    },
+    "Respond": {
+      "description": "Teach and equip",
+      "components": ["autodidactive/"]
+    },
+    "Recover": {
+      "description": "Future work",
+      "components": []
+    }
+  }
+}

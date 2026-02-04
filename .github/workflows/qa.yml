@@ -7,6 +7,7 @@ on:
       - 'MAIN/legacy-core/**'
       - 'docs/**'
       - '.github/workflows/qa.yml'
+      - 'repo-metadata.json'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -280,9 +281,24 @@ jobs:
             echo "::warning::docs/index.html not found"
           fi
 
+  metadata-validation:
+    name: Metadata Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Validate repo-metadata.json
+        run: python3 MAIN/shared/validate_metadata.py
+
   qa-summary:
     name: QA Summary
-    needs: [brand-consistency, import-validation, formula-consistency, link-validation, html-validation]
+    needs: [brand-consistency, import-validation, formula-consistency, link-validation, html-validation, metadata-validation]
     runs-on: ubuntu-latest
     if: always()
 
@@ -298,6 +314,7 @@ jobs:
           echo "| Formula Consistency | ${{ needs.formula-consistency.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Link Validation | ${{ needs.link-validation.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| HTML Validation | ${{ needs.html-validation.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Metadata Validation | ${{ needs.metadata-validation.result }} |" >> $GITHUB_STEP_SUMMARY
 
           # Fail if any critical check failed
           if [ "${{ needs.brand-consistency.result }}" == "failure" ] || \
