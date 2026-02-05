@@ -18,7 +18,7 @@ My work ethic comes from watching my father, an autodidactic electrical engineer
 
 That fire nearly cost our family the ancestral home: a single roof in a small fishing village that sheltered three generations at once. Watching him engineer a life for us out of nothing, balancing manual labor with the precision of a self-taught mind, taught me what grit truly is.
 
-To me, engineering isn't just a career. It's a survival mechanism—turning uncertainty into something measurable and actionable. And art? It's in everything I do and is the creative foundation that allows me apply my engineering mind in abstract ways.
+To me, engineering isn't just a career. It's a survival mechanism—turning uncertainty into something measurable and actionable. And art? It's in everything I embody and is the creative foundation that allows me apply my engineering mind in abstract ways.
 
 ## The Path
 
@@ -30,7 +30,7 @@ That dual perspective — engineer and adversary — is what makes security engi
 
 ## The Vision: Qinnovate > Mindloft > QIF
 
-Everything I build is about my search for a better future, because if we cannot see it, we cannot design it.
+Everything I build is about my search for a better future, because if we cannot see it, we cannot design it. It started with the book I found from the late 1800s called Periodic Law. As I was reading it, I was able to envision the cognitive thought process that each scientist faced that showcased the evolution of discovery and frameworks to visualize how we can distill complex knowledge into the table we know of today; one that middle-schoolers can even appreciate. There were many iterations, and this is my first iteration. 
 
 **Qinnovate** is the engine — where forward thinking begins. **Mindloft** is the workshop — where research is built, developed, and shared. *"Let's Mind Our Way."* And **QIF** (Quantum Indeterministic Framework for Neural Security) is Mindloft's flagship research: security engineering grounded in neuroethics — developing rigorous, testable frameworks that protect the "crown jewels" of what makes us human — our unique cognitive fingerprints — as we enter the age of brain–computer interfaces.
 
@@ -57,16 +57,18 @@ This is why I want to expand this work — collaborating with academics, researc
 
 What began as a solo project to delve into my unknowns has taken form into something bigger than what I originally envisioned. I'm merely a small piece in the wonders that are larger than I can currently comprehend — and that's why I can't do it alone. I need more exploration, more academics to fill in the gaps and help us closer to a safer, more secure future. A world where we, and the visionaries of tomorrow, have the tools that not only safeguard them but add value and allow them to explore their inner hearts to the truest potential.
 
-This project started from my heart, and to the mind.
+This project started from my heart, and to the mind. Now, it's my time to engineer the life of aspirations that have merely begun to actualize. One that includes all of you reading this.
 
-I'm a calculated drop that creates forward momentum — a ripple that builds into a wave to shape the trajectory of tomorrow. All it takes is one small action to create a reaction.
+I'm a miniscule drop that creates forward momentum, a ripple that builds into a wave to shape the trajectory of tomorrow. All it takes is one small action to create a reaction.
 
-But there are no waves without the pool of knowledge — the researchers, neuroscientists, and engineers whose work makes the water deep enough to carry them. The wave is metaphorical: research with the brightest minds, pooled together to make tomorrow better, together today.
+But there are no waves without the pool of knowledge, the researchers, neuroscientists, and engineers whose work makes the water deep enough to carry them. The wave is metaphorical: research with the brightest minds, pooled together to make tomorrow better, together today.
 
-Because the most important connections require the most thought, and *"our life is what our thoughts make it."*
+Because the most important connections require the utmost thought, and *"our life is what our thoughts make it."*
 
 ---
 
 **Let's Mind Our Way.**
 
 *Connect: [GitHub](https://github.com/qikevinl) | [Medium](https://medium.com/@qikevinl)*
+
+I'm only 1 person trying to help the world. The cost of books, research, and tools are not cheap. Feel free to donate to help me keep this full-time passion fueling as I continue to grow this. Moving back home with my parents has best decision for all of this however, school is not cheap!
