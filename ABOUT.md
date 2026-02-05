@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="docs/images/mindloft-hearts.png" alt="Kevin Qi" width="360">
+</div>
+
 # About the Author
 
 I'm an independent security researcher with an incurable curiosity for how complex systems break—and how to design them so they don't.
