@@ -93,9 +93,9 @@ Because the most important connections require the utmost thought, and *"our lif
 
 **Let's Mind Our Way.**
 
-*Connect: [GitHub](https://github.com/qikevinl) | [Medium](https://medium.com/@qikevinl)* | [SoundCloud](https://soundcloud.com/keviano)
+*Connect: [GitHub](https://github.com/qikevinl) | [Medium](https://medium.com/@qikevinl)* | [Pefect Mood Song](https://on.soundcloud.com/6SJFO9R8tSlpDdr2MO)
 
-_I'm just 1 person trying to make a change. The cost of books, research, and tools are not cheap. Please donate to help me keep this full-time passion fueling as I continue to grow this. Moving back home with my parents has best decision for all of this however, school is not cheap!_
+_I'm just 1 person trying to make a change. The cost of books, research, and tools are not always free undortunately. Please donate to help me if you'd like, a coffee helps support this initiave. 
 
 thanks.dev/u/gh/qikevinl | 
 patreon.com/qikevinl | 
