@@ -17,6 +17,10 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: auto-index-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate-index:
     runs-on: ubuntu-latest

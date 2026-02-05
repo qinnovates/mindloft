@@ -15,6 +15,10 @@ on:
       - 'autodidactive/**'
       - 'docs/**'
 
+concurrency:
+  group: validate-docs-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate-manifest:
     runs-on: ubuntu-latest
