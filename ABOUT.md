@@ -8,7 +8,7 @@ I'm an independent security researcher with an incurable curiosity for how compl
 
 ## The Origin
 
-My obsession with "how things work" started in middle school, the moment we got our first Packard Bell computer. By 11, I had built my first website—teaching myself through the vast, unlimited knowledge of the early internet. I created a community of 3,000+ members where I shared Photoshop tutorials, inspired by strangers who freely shared their knowledge with a curious kid asking too many questions.
+My obsession with "how things work" started in middle school, the moment we got our first Packard Bell computer. By 11, I had built my first website—teaching myself through the vast, unlimited knowledge of the early internet. I created a community of 3,000+ members where I shared Photoshop tutorials, creating abstract art when the internet first became a thing, inspired by strangers who freely shared their knowledge with a curious kid asking too many questions.
 
 That experience shaped me. Mindloft is how I pay it forward—a vision I hope can inspire others in this emerging field.
 
@@ -18,9 +18,9 @@ My work ethic comes from watching my father, an autodidactic electrical engineer
 
 That fire nearly cost our family the ancestral home: a single roof in a small fishing village that sheltered three generations at once. Watching him engineer a life for us out of nothing, balancing manual labor with the precision of a self-taught mind, taught me what grit truly is.
 
-To me, engineering isn't just a career. It's a survival mechanism—turning uncertainty into something measurable and actionable.
+To me, engineering isn't just a career. It's a survival mechanism—turning uncertainty into something measurable and actionable. And art? It's in everything I do and is the creative foundation that allows me apply my engineering mind in abstract ways.
 
-## The Work
+## The Path
 
 Over 15+ years, I've worked across biotech, high-scale consumer tech, publishing, and institutional finance. I've specialized in stepping into "void environments"—places where data exists at astronomical scale, but the systems to interpret and secure it don't.
 
@@ -30,7 +30,7 @@ That dual perspective — engineer and adversary — is what makes security engi
 
 ## The Vision: Qinnovate > Mindloft > QIF
 
-Everything I build is about **protection**.
+Everything I build is about my search for a better future, because if we cannot see it, we cannot design it.
 
 **Qinnovate** is the engine — where forward thinking begins. **Mindloft** is the workshop — where research is built, developed, and shared. *"Let's Mind Our Way."* And **QIF** (Quantum Indeterministic Framework for Neural Security) is Mindloft's flagship research: security engineering grounded in neuroethics — developing rigorous, testable frameworks that protect the "crown jewels" of what makes us human — our unique cognitive fingerprints — as we enter the age of brain–computer interfaces.
 
