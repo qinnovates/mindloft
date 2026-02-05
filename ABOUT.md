@@ -69,6 +69,11 @@ Because the most important connections require the utmost thought, and *"our lif
 
 **Let's Mind Our Way.**
 
-*Connect: [GitHub](https://github.com/qikevinl) | [Medium](https://medium.com/@qikevinl)*
+*Connect: [GitHub](https://github.com/qikevinl) | [Medium](https://medium.com/@qikevinl)* | [SoundCloud](https://soundcloud.com/keviano)
 
 I'm only 1 person trying to help the world. The cost of books, research, and tools are not cheap. Feel free to donate to help me keep this full-time passion fueling as I continue to grow this. Moving back home with my parents has best decision for all of this however, school is not cheap!
+
+
+thanks.dev/u/gh/qikevinl
+patreon.com/qikevinl
+buymeacoffee.com/qikevinl
