@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="docs/images/mindloft-hearts.png" alt="Mindloft" width="420">
 
   # M I N D L O F T
 
