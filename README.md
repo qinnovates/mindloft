@@ -17,6 +17,12 @@
 
 ---
 
+<div align="center">
+
+![divider](https://raw.githubusercontent.com/qinnovates/mindloft/main/docs/images/divider-dash.svg)
+
+</div>
+
 **Building BCI-Native Tools for Web 5.0**
 
 > *The first QIF-compliant BCI security platform*
