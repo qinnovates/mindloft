@@ -177,6 +177,18 @@ Mindloft operates on the **CIV (Continuous Iteration & Validation)** lifecycle, 
 - New threats or discoveries trigger the next research cycle
 - The loop continues — perpetual improvement
 
+### Built-In Policy Process
+
+CIV was designed with **continuous governance enforcement** at every stage — similar to how NIST embeds policy compliance throughout technology development. At Mindloft, this means:
+
+- **Research Phase:** All experiments must align with neuroethics principles from day one
+- **POC Phase:** Lab testing follows strict ethical research constraints and compliance protocols
+- **Validation Phase:** Qinnovate peer review includes ethics vetting alongside technical validation
+- **Implementation Phase:** Products built with documented compliance to published standards
+- **Operations Phase:** Continuous monitoring ensures ongoing adherence to governance requirements
+
+Governance isn't a final checkpoint — it's embedded in every decision we make, from initial research to live deployment. This is how we ensure that Mindloft products are not only technically sound but also ethically responsible and compliant with global BCI security standards.
+
 ### Why This Matters
 
 When we validate a POC in the lab — whether it's a security vulnerability, a new BCI capability, or an enhanced detection method — we don't just implement it in our products. We work with Qinnovate to ensure the entire BCI security community benefits from the finding. Every validated POC becomes a **peer-reviewed data point** that strengthens the standard for everyone:
