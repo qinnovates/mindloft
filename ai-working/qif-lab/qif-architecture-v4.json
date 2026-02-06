@@ -1,0 +1,1726 @@
+{
+  "framework": {
+    "name": "QIF \u2014 Quantum Indeterministic Framework for Neural Security",
+    "pronunciation": "CHIEF",
+    "predecessor": "ONI (Organic Neural Interface)",
+    "layer_model_version": "v4.0 (Hourglass, 11-band, 7-1-3)",
+    "layer_model_date": "2026-02-06",
+    "github": "qinnovates/qinnovate",
+    "authors": "Kevin Qi, with Claude (Anthropic)",
+    "collaboration": "Quantum Intelligence (QI)",
+    "ai_transparency": {
+      "statement": "This framework was developed collaboratively between Kevin Qi (human researcher) and AI assistants. All AI involvement is assistive \u2014 Kevin retains authorship and all decision-making authority.",
+      "ai_systems": [
+        {
+          "name": "Claude (Opus 4.5)",
+          "role": "Co-derivation, implementation, research agent orchestration",
+          "provider": "Anthropic"
+        },
+        {
+          "name": "Gemini 2.5",
+          "role": "Independent peer review (cross-AI validation)",
+          "provider": "Google"
+        }
+      ],
+      "audit_trail": "QIF-DERIVATION-LOG.md",
+      "audit_trail_description": "Complete chronological record of every derivation, decision, AI contribution, and validation result \u2014 with timestamps, reasoning chains, and source attribution.",
+      "research_sources": "QIF-RESEARCH-SOURCES.md"
+    }
+  },
+  "version": "v4.0",
+  "date": "2026-02-06",
+  "architecture": "7-1-3 Hourglass",
+  "zones": {
+    "neural": {
+      "name": "Neural Domain",
+      "description": "Biological processing from spinal cord to neocortex \u2014 7 bands, severity-stratified",
+      "color": "#3fb950",
+      "bands": [
+        "N7",
+        "N6",
+        "N5",
+        "N4",
+        "N3",
+        "N2",
+        "N1"
+      ]
+    },
+    "interface": {
+      "name": "Interface Zone",
+      "description": "Quasi-quantum bottleneck: electrode-tissue boundary, measurement/collapse",
+      "color": "#f85149",
+      "bands": [
+        "I0"
+      ]
+    },
+    "silicon": {
+      "name": "Silicon Domain",
+      "description": "Classical: analog front-end through digital processing to application/wireless",
+      "color": "#58a6ff",
+      "bands": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    }
+  },
+  "bands": [
+    {
+      "id": "N7",
+      "name": "Neocortex",
+      "zone": "neural",
+      "description": "PFC, M1, S1, V1, A1, Broca, Wernicke, association cortex \u2014 executive function, language, movement, perception",
+      "brain_regions": [
+        "PFC",
+        "ACC",
+        "Broca",
+        "Wernicke",
+        "M1",
+        "S1_cortex",
+        "V1",
+        "A1",
+        "PMC",
+        "SMA",
+        "PPC"
+      ],
+      "dominant_freq_hz": "13-100 (Beta 13-30, Gamma 30-100)",
+      "L_m": [
+        0.04,
+        0.3
+      ],
+      "determinacy": "Quantum Uncertain",
+      "severity": "High",
+      "severity_description": "Cognitive impairment, motor paralysis, sensory loss, language disruption",
+      "qi_range": [
+        0.3,
+        0.5
+      ],
+      "hourglass_width": 1.0,
+      "bci_devices": [
+        "Neuralink N1",
+        "Blackrock Utah Array",
+        "Precision Layer 7",
+        "ECoG grids",
+        "cortical DBS"
+      ]
+    },
+    {
+      "id": "N6",
+      "name": "Limbic System",
+      "zone": "neural",
+      "description": "Hippocampus, amygdala, insula, ACC, cingulate \u2014 emotion, memory, interoception",
+      "brain_regions": [
+        "HIPP",
+        "BLA",
+        "insula",
+        "ACC",
+        "CeA",
+        "cingulate"
+      ],
+      "dominant_freq_hz": "4-13 (Theta 4-8, Alpha 8-13)",
+      "L_m": [
+        0.3,
+        1.0
+      ],
+      "determinacy": "Chaotic \u2192 Quantum Uncertain",
+      "severity": "High",
+      "severity_description": "Memory erasure, emotional dysregulation, PTSD trigger, addiction manipulation",
+      "qi_range": [
+        0.2,
+        0.4
+      ],
+      "hourglass_width": 0.85,
+      "bci_devices": [
+        "NeuroPace RNS (depth)",
+        "DBS (ANT target)",
+        "depth electrodes"
+      ]
+    },
+    {
+      "id": "N5",
+      "name": "Basal Ganglia",
+      "zone": "neural",
+      "description": "Striatum, GPi/GPe, STN, substantia nigra \u2014 motor selection, reward, habit",
+      "brain_regions": [
+        "striatum",
+        "GPi",
+        "GPe",
+        "STN",
+        "substantia_nigra"
+      ],
+      "dominant_freq_hz": "13-30 (Beta \u2014 pathological oscillations in Parkinson's)",
+      "L_m": [
+        0.13,
+        0.3
+      ],
+      "determinacy": "Chaotic",
+      "severity": "High",
+      "severity_description": "Movement disorders (Parkinson's, dystonia), reward hijacking, compulsive behavior",
+      "qi_range": [
+        0.15,
+        0.35
+      ],
+      "hourglass_width": 0.65,
+      "bci_devices": [
+        "Medtronic Percept (STN)",
+        "Abbott Infinity (GPi)",
+        "Boston Scientific Vercise"
+      ]
+    },
+    {
+      "id": "N4",
+      "name": "Diencephalon",
+      "zone": "neural",
+      "description": "Thalamus, hypothalamus \u2014 sensory gating, consciousness relay, autonomic regulation",
+      "brain_regions": [
+        "thalamus",
+        "hypothalamus",
+        "VIM",
+        "ANT",
+        "CM-Pf"
+      ],
+      "dominant_freq_hz": "4-13 (Alpha spindles, Theta)",
+      "L_m": [
+        0.3,
+        1.0
+      ],
+      "determinacy": "Stochastic \u2192 Chaotic",
+      "severity": "CRITICAL",
+      "severity_description": "Consciousness disruption, sensory blackout, sleep-wake cycle attack, thermal regulation failure",
+      "qi_range": [
+        0.1,
+        0.3
+      ],
+      "hourglass_width": 0.5,
+      "bci_devices": [
+        "DBS (VIM for tremor)",
+        "thalamic depth electrodes",
+        "ANT stimulation for epilepsy"
+      ]
+    },
+    {
+      "id": "N3",
+      "name": "Cerebellum",
+      "zone": "neural",
+      "description": "Cerebellar cortex, deep nuclei, vermis \u2014 motor coordination, timing, learning",
+      "brain_regions": [
+        "cerebellar_cortex",
+        "dentate_nucleus",
+        "fastigial_nucleus",
+        "vermis"
+      ],
+      "dominant_freq_hz": "50-100 (Purkinje cell complex spikes)",
+      "L_m": [
+        0.04,
+        0.08
+      ],
+      "determinacy": "Stochastic",
+      "severity": "High",
+      "severity_description": "Ataxia, coordination loss, speech disruption (dysarthria), motor learning impairment",
+      "qi_range": [
+        0.1,
+        0.25
+      ],
+      "hourglass_width": 0.45,
+      "bci_devices": [
+        "Experimental cerebellar stimulation"
+      ]
+    },
+    {
+      "id": "N2",
+      "name": "Brainstem",
+      "zone": "neural",
+      "description": "Medulla, pons, midbrain, cranial nerve nuclei \u2014 vital functions, arousal, reflexes",
+      "brain_regions": [
+        "medulla",
+        "pons",
+        "midbrain",
+        "reticular_formation",
+        "cranial_nuclei"
+      ],
+      "dominant_freq_hz": "0.5-4 (Delta, low-frequency rhythmic)",
+      "L_m": [
+        1.0,
+        null
+      ],
+      "determinacy": "Stochastic",
+      "severity": "LETHAL",
+      "severity_description": "Respiratory arrest, cardiac failure, loss of consciousness, cranial nerve paralysis",
+      "qi_range": [
+        0.05,
+        0.15
+      ],
+      "hourglass_width": 0.3,
+      "bci_devices": [
+        "Vagus nerve stimulators",
+        "auditory brainstem implants",
+        "DBS (PPN for gait)"
+      ]
+    },
+    {
+      "id": "N1",
+      "name": "Spinal Cord",
+      "zone": "neural",
+      "description": "Cervical, thoracic, lumbar, sacral, cauda equina \u2014 reflexes, peripheral motor/sensory relay",
+      "brain_regions": [
+        "cervical_cord",
+        "thoracic_cord",
+        "lumbar_cord",
+        "sacral_cord",
+        "cauda_equina"
+      ],
+      "dominant_freq_hz": "Reflex arcs (ms-scale, not oscillatory)",
+      "L_m": null,
+      "determinacy": "Stochastic",
+      "severity": "Severe",
+      "severity_description": "Paralysis (quadri/para), bladder/bowel dysfunction, chronic pain, autonomic dysreflexia",
+      "qi_range": [
+        0.02,
+        0.1
+      ],
+      "hourglass_width": 0.25,
+      "bci_devices": [
+        "Spinal cord stimulators (SCS)",
+        "InterStim (sacral)",
+        "epidural stimulation",
+        "ONWARD ARC-IM"
+      ]
+    },
+    {
+      "id": "I0",
+      "name": "Neural Interface",
+      "zone": "interface",
+      "description": "Electrode-tissue boundary, measurement/collapse, quasi-quantum zone",
+      "brain_regions": [],
+      "dominant_freq_hz": "N/A (boundary, not oscillatory)",
+      "L_m": null,
+      "determinacy": "Quasi-quantum (\u0393D \u2208 (0,1))",
+      "severity": "Depends on adjacent N band",
+      "severity_description": "Interface degradation, impedance failure, tissue damage, signal corruption",
+      "qi_range": [
+        0.01,
+        0.1
+      ],
+      "hourglass_width": 0.2,
+      "bci_devices": [
+        "All implanted/semi-invasive BCIs"
+      ]
+    },
+    {
+      "id": "S1",
+      "name": "Analog / Near-Field",
+      "zone": "silicon",
+      "description": "Amplification, filtering, ADC/DAC, near-field EM (0 Hz \u2013 10 kHz)",
+      "brain_regions": [],
+      "dominant_freq_hz": "0-10,000 (analog front-end passband)",
+      "L_m": [
+        30000.0,
+        null
+      ],
+      "determinacy": "Stochastic (analog noise)",
+      "severity": "N/A (silicon)",
+      "severity_description": "Signal corruption, ADC saturation, impedance artifact",
+      "qi_range": [
+        0.001,
+        0.01
+      ],
+      "hourglass_width": 0.35,
+      "bci_devices": [
+        "All BCIs (analog front-end is universal)"
+      ]
+    },
+    {
+      "id": "S2",
+      "name": "Digital / Telemetry",
+      "zone": "silicon",
+      "description": "Decoding, classification, telemetry, MICS (10 kHz \u2013 1 GHz)",
+      "brain_regions": [],
+      "dominant_freq_hz": "10,000-1,000,000,000 (digital processing + telemetry)",
+      "L_m": [
+        0.3,
+        30000.0
+      ],
+      "determinacy": "Deterministic",
+      "severity": "N/A (silicon)",
+      "severity_description": "Data corruption, BLE exploit, MICS intermodulation, firmware compromise",
+      "qi_range": [
+        0.0,
+        0.0
+      ],
+      "hourglass_width": 0.7,
+      "bci_devices": [
+        "All wireless BCIs (BLE, WiFi, MICS)"
+      ]
+    },
+    {
+      "id": "S3",
+      "name": "Radio / Wireless / DE",
+      "zone": "silicon",
+      "description": "RF, wireless links, directed energy, application layer (1 GHz+)",
+      "brain_regions": [],
+      "dominant_freq_hz": "1,000,000,000+ (GHz+ RF and beyond)",
+      "L_m": [
+        3e-05,
+        0.3
+      ],
+      "determinacy": "Deterministic",
+      "severity": "N/A (silicon)",
+      "severity_description": "RF hijack, directed energy, cloud compromise, supply chain attack",
+      "qi_range": [
+        0.0,
+        0.0
+      ],
+      "hourglass_width": 1.0,
+      "bci_devices": [
+        "BLE/WiFi consumer, satellite links, DE weapons"
+      ]
+    }
+  ],
+  "brain_region_map": {
+    "PFC": {
+      "band": "N7",
+      "connections": [
+        "Broca",
+        "Wernicke",
+        "HIPP",
+        "BLA",
+        "insula",
+        "M1",
+        "PMC",
+        "SMA",
+        "PPC",
+        "STN",
+        "thalamus",
+        "ACC"
+      ]
+    },
+    "ACC": {
+      "band": "N7",
+      "connections": [
+        "PFC",
+        "BLA",
+        "insula",
+        "medulla"
+      ]
+    },
+    "Broca": {
+      "band": "N7",
+      "connections": [
+        "Wernicke",
+        "PFC"
+      ]
+    },
+    "Wernicke": {
+      "band": "N7",
+      "connections": [
+        "A1",
+        "Broca",
+        "PFC"
+      ]
+    },
+    "M1": {
+      "band": "N7",
+      "connections": [
+        "PFC",
+        "PMC",
+        "SMA",
+        "STN",
+        "cerebellar_cortex"
+      ]
+    },
+    "S1_cortex": {
+      "band": "N7",
+      "connections": [
+        "thalamus",
+        "PFC",
+        "insula"
+      ],
+      "note": "Primary somatosensory cortex (renamed to avoid collision with S1 band)"
+    },
+    "V1": {
+      "band": "N7",
+      "connections": [
+        "thalamus",
+        "PPC"
+      ]
+    },
+    "A1": {
+      "band": "N7",
+      "connections": [
+        "thalamus",
+        "Wernicke"
+      ]
+    },
+    "PMC": {
+      "band": "N7",
+      "connections": [
+        "PFC",
+        "M1"
+      ]
+    },
+    "SMA": {
+      "band": "N7",
+      "connections": [
+        "PFC",
+        "M1"
+      ]
+    },
+    "PPC": {
+      "band": "N7",
+      "connections": [
+        "V1",
+        "M1",
+        "PMC",
+        "PFC"
+      ]
+    },
+    "HIPP": {
+      "band": "N6",
+      "connections": [
+        "BLA",
+        "thalamus",
+        "PFC"
+      ]
+    },
+    "BLA": {
+      "band": "N6",
+      "connections": [
+        "HIPP",
+        "PFC",
+        "insula",
+        "CeA"
+      ],
+      "note": "Basolateral amygdala \u2014 cortical-like, associative learning"
+    },
+    "insula": {
+      "band": "N6",
+      "connections": [
+        "ACC",
+        "BLA",
+        "PFC",
+        "S1_cortex"
+      ]
+    },
+    "CeA": {
+      "band": "N6",
+      "connections": [
+        "BLA",
+        "medulla",
+        "thalamus"
+      ],
+      "note": "Central amygdala \u2014 autonomic output, but limbic origin"
+    },
+    "cingulate": {
+      "band": "N6",
+      "connections": [
+        "PFC",
+        "ACC",
+        "HIPP"
+      ]
+    },
+    "striatum": {
+      "band": "N5",
+      "connections": [
+        "PFC",
+        "M1",
+        "GPi",
+        "GPe"
+      ]
+    },
+    "GPi": {
+      "band": "N5",
+      "connections": [
+        "striatum",
+        "thalamus"
+      ],
+      "note": "Globus pallidus interna \u2014 primary output nucleus"
+    },
+    "GPe": {
+      "band": "N5",
+      "connections": [
+        "striatum",
+        "STN"
+      ]
+    },
+    "STN": {
+      "band": "N5",
+      "connections": [
+        "GPe",
+        "GPi",
+        "M1"
+      ],
+      "note": "Subthalamic nucleus \u2014 #1 DBS target for Parkinson's"
+    },
+    "substantia_nigra": {
+      "band": "N5",
+      "connections": [
+        "striatum",
+        "thalamus"
+      ],
+      "note": "Dopamine source \u2014 degeneration = Parkinson's"
+    },
+    "thalamus": {
+      "band": "N4",
+      "connections": [
+        "V1",
+        "A1",
+        "S1_cortex",
+        "PFC",
+        "HIPP",
+        "GPi"
+      ]
+    },
+    "hypothalamus": {
+      "band": "N4",
+      "connections": [
+        "thalamus",
+        "medulla",
+        "CeA"
+      ],
+      "note": "Autonomic master regulator \u2014 temperature, hunger, circadian"
+    },
+    "VIM": {
+      "band": "N4",
+      "connections": [
+        "thalamus",
+        "cerebellar_cortex"
+      ],
+      "note": "Ventral intermediate nucleus \u2014 DBS target for essential tremor"
+    },
+    "ANT": {
+      "band": "N4",
+      "connections": [
+        "thalamus",
+        "HIPP"
+      ],
+      "note": "Anterior nucleus of thalamus \u2014 DBS target for epilepsy"
+    },
+    "cerebellar_cortex": {
+      "band": "N3",
+      "connections": [
+        "M1",
+        "thalamus",
+        "PFC",
+        "PMC",
+        "dentate_nucleus"
+      ]
+    },
+    "dentate_nucleus": {
+      "band": "N3",
+      "connections": [
+        "cerebellar_cortex",
+        "thalamus"
+      ]
+    },
+    "fastigial_nucleus": {
+      "band": "N3",
+      "connections": [
+        "cerebellar_cortex",
+        "medulla"
+      ]
+    },
+    "vermis": {
+      "band": "N3",
+      "connections": [
+        "cerebellar_cortex"
+      ]
+    },
+    "medulla": {
+      "band": "N2",
+      "connections": [
+        "thalamus",
+        "cerebellar_cortex",
+        "CeA",
+        "spinal_cord"
+      ],
+      "note": "Contains respiratory and cardiovascular centers \u2014 compromise is LETHAL"
+    },
+    "pons": {
+      "band": "N2",
+      "connections": [
+        "medulla",
+        "cerebellar_cortex",
+        "thalamus"
+      ]
+    },
+    "midbrain": {
+      "band": "N2",
+      "connections": [
+        "thalamus",
+        "substantia_nigra",
+        "pons"
+      ]
+    },
+    "reticular_formation": {
+      "band": "N2",
+      "connections": [
+        "thalamus",
+        "medulla",
+        "pons"
+      ],
+      "note": "Ascending arousal system \u2014 attack = loss of consciousness"
+    },
+    "cervical_cord": {
+      "band": "N1",
+      "connections": [
+        "medulla",
+        "thoracic_cord"
+      ],
+      "note": "C1-C8 \u2014 upper limbs, diaphragm (C3-C5)"
+    },
+    "thoracic_cord": {
+      "band": "N1",
+      "connections": [
+        "cervical_cord",
+        "lumbar_cord"
+      ]
+    },
+    "lumbar_cord": {
+      "band": "N1",
+      "connections": [
+        "thoracic_cord",
+        "sacral_cord"
+      ],
+      "note": "L1-L5 \u2014 lower limbs"
+    },
+    "sacral_cord": {
+      "band": "N1",
+      "connections": [
+        "lumbar_cord"
+      ],
+      "note": "S1-S5 \u2014 bladder, bowel, sexual function. InterStim target."
+    },
+    "cauda_equina": {
+      "band": "N1",
+      "connections": [
+        "lumbar_cord",
+        "sacral_cord"
+      ]
+    }
+  },
+  "determinacy_spectrum": [
+    {
+      "level": 1,
+      "name": "Deterministic",
+      "bands": [
+        "S2",
+        "S3"
+      ],
+      "description": "f(state,t) \u2192 next_state, no randomness"
+    },
+    {
+      "level": 2,
+      "name": "Stochastic",
+      "bands": [
+        "S1",
+        "N1",
+        "N2",
+        "N3"
+      ],
+      "description": "Known probability distributions, epistemic randomness"
+    },
+    {
+      "level": 3,
+      "name": "Stochastic \u2192 Chaotic",
+      "bands": [
+        "N4"
+      ],
+      "description": "Thalamic gating transitions between stochastic relay and chaotic oscillation"
+    },
+    {
+      "level": 4,
+      "name": "Chaotic",
+      "bands": [
+        "N5"
+      ],
+      "description": "Deterministic but sensitive to initial conditions (\u03bb_L > 0). Pathological beta oscillations."
+    },
+    {
+      "level": 5,
+      "name": "Chaotic \u2192 QU",
+      "bands": [
+        "N6"
+      ],
+      "description": "Limbic system spans chaotic dynamics to quantum-uncertain territory at synaptic scale"
+    },
+    {
+      "level": 6,
+      "name": "Quantum Uncertain",
+      "bands": [
+        "N7"
+      ],
+      "description": "Heisenberg-bounded, security-relevant indeterminacy at cortical synapses"
+    }
+  ],
+  "migration_v31_to_v40": {
+    "N3_v31": [
+      "N7",
+      "N6"
+    ],
+    "N2_v31": [
+      "N7",
+      "N5",
+      "N3"
+    ],
+    "N1_v31": [
+      "N4",
+      "N2",
+      "N1"
+    ],
+    "I0": [
+      "I0"
+    ],
+    "S1": [
+      "S1"
+    ],
+    "S2": [
+      "S2"
+    ],
+    "S3": [
+      "S3"
+    ]
+  },
+  "wave_equation": {
+    "equation": "L = v / f",
+    "L": "Length of one wave in its medium (meters)",
+    "v": "Propagation velocity in the medium (m/s)",
+    "f": "Frequency (Hz)",
+    "note": "\u03bb and S are deprecated symbols. Use L everywhere."
+  },
+  "propagation_velocities": {
+    "neural_unmyelinated": {
+      "v_m_s": 0.5,
+      "range": "0.5-2",
+      "medium": "C-fibers, unmyelinated axons"
+    },
+    "neural_myelinated": {
+      "v_m_s": 4.0,
+      "range": "4-120",
+      "medium": "A-fibers, myelinated axons (saltatory conduction)"
+    },
+    "neural_nunez": {
+      "v_m_s": 7.0,
+      "range": "~7",
+      "medium": "Nunez canonical model for corticocortical"
+    },
+    "copper_trace": {
+      "v_m_s": 200000000.0,
+      "range": "~2\u00d710\u2078",
+      "medium": "PCB trace, chip interconnect"
+    },
+    "free_space": {
+      "v_m_s": 300000000.0,
+      "range": "3\u00d710\u2078",
+      "medium": "RF, wireless, directed energy"
+    },
+    "ultrasound_tissue": {
+      "v_m_s": 1540.0,
+      "range": "~1540",
+      "medium": "Acoustic in soft tissue (not EM \u2014 separate vector)"
+    }
+  },
+  "frequency_bands_neural": [
+    {
+      "band": "High gamma",
+      "freq_range": "60-100 Hz",
+      "freq_mid": 80,
+      "spatial_extent": "0.3-5 mm",
+      "spatial_mid_m": 0.0025,
+      "fxs": "~0.08-0.4",
+      "source": "Jia et al. 2011"
+    },
+    {
+      "band": "Low gamma",
+      "freq_range": "30-60 Hz",
+      "freq_mid": 45,
+      "spatial_extent": "1-10 mm",
+      "spatial_mid_m": 0.005,
+      "fxs": "~0.04-0.4",
+      "source": "ECoG studies"
+    },
+    {
+      "band": "Alpha",
+      "freq_range": "8-12 Hz",
+      "freq_mid": 10,
+      "spatial_extent": "10-20 cm",
+      "spatial_mid_m": 0.15,
+      "fxs": "1-2",
+      "source": "Srinivasan 1999"
+    },
+    {
+      "band": "Theta",
+      "freq_range": "4-8 Hz",
+      "freq_mid": 6,
+      "spatial_extent": "4-5 cm",
+      "spatial_mid_m": 0.045,
+      "fxs": "0.24-0.40",
+      "source": "Patel et al. 2012"
+    },
+    {
+      "band": "Delta",
+      "freq_range": "0.5-4 Hz",
+      "freq_mid": 2,
+      "spatial_extent": "15-20 cm",
+      "spatial_mid_m": 0.175,
+      "fxs": "0.15-0.20",
+      "source": "Massimini 2004"
+    }
+  ],
+  "silicon_frequency_registry": {
+    "S1": {
+      "band_name": "Analog / Near-Field",
+      "freq_range": "0 Hz \u2013 10 kHz",
+      "v": 300000000.0,
+      "allocations": [
+        {
+          "name": "ELF (Extremely Low Frequency)",
+          "freq_hz": [
+            3,
+            76
+          ],
+          "L_m": [
+            3900000.0,
+            100000000.0
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "DIRECT"
+          ],
+          "target_N": [
+            "N7",
+            "N6",
+            "N4"
+          ],
+          "notes": "US Navy submarine comms (76 Hz Clam Lake, 45 Hz Republic). IS neural frequency. Penetrates everything on Earth. Direct gamma/alpha/theta entrainment.",
+          "historical": "Operational 1989-2004 (US). Russia, China maintain similar capability."
+        },
+        {
+          "name": "SLF (Super Low Frequency)",
+          "freq_hz": [
+            30,
+            300
+          ],
+          "L_m": [
+            1000000.0,
+            10000000.0
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "DIRECT"
+          ],
+          "target_N": [
+            "N7",
+            "N3",
+            "N5"
+          ],
+          "notes": "Overlaps high-gamma and DBS therapeutic range (130 Hz). Direct motor coordination and cognitive binding disruption."
+        },
+        {
+          "name": "ULF (Ultra Low Frequency)",
+          "freq_hz": [
+            300,
+            3000
+          ],
+          "L_m": [
+            100000.0,
+            1000000.0
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "HARMONIC"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "Cochlear frequency range. Direct attack vector for auditory BCIs. Subharmonics reach any neural band."
+        },
+        {
+          "name": "VLF (Very Low Frequency)",
+          "freq_hz": [
+            3000,
+            30000
+          ],
+          "L_m": [
+            10000.0,
+            100000.0
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "Submarine comms, navigation. Penetrates buildings, rock, skulls. Stealth carrier for envelope-modulated neural attacks. Attacker selects target via modulation frequency."
+        },
+        {
+          "name": "BCI Analog Front-End",
+          "freq_hz": [
+            0.1,
+            10000
+          ],
+          "L_m": null,
+          "access": "PUBLIC",
+          "coupling": [
+            "DIRECT"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "Amplification, filtering, ADC. Current BCI operating range. All neural frequencies pass through here."
+        },
+        {
+          "name": "Power Line Harmonics",
+          "freq_hz": [
+            50,
+            300
+          ],
+          "L_m": [
+            1000000.0,
+            6000000.0
+          ],
+          "access": "PUBLIC",
+          "coupling": [
+            "DIRECT",
+            "HARMONIC"
+          ],
+          "target_N": [
+            "N7",
+            "N6"
+          ],
+          "notes": "Environmental background. 50/60 Hz in gamma range. Harmonics reach beta/alpha. Could provide cover for targeted injection."
+        }
+      ]
+    },
+    "S2": {
+      "band_name": "Digital Processing / Telemetry",
+      "freq_range": "10 kHz \u2013 1 GHz",
+      "v": 300000000.0,
+      "allocations": [
+        {
+          "name": "LF (Low Frequency)",
+          "freq_hz": [
+            30000.0,
+            300000.0
+          ],
+          "L_m": [
+            1000.0,
+            10000.0
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "Navigation beacons (LORAN legacy), time signals. Spoofable. Envelope attacks."
+        },
+        {
+          "name": "MF (Medium Frequency / AM broadcast)",
+          "freq_hz": [
+            300000.0,
+            3000000.0
+          ],
+          "L_m": [
+            100,
+            1000
+          ],
+          "access": "LICENSED",
+          "coupling": [
+            "ENVELOPE",
+            "TEMPORAL_INTERFERENCE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "AM radio band. Licensed but widely accessible transmitters. Two nearby AM stations create beat frequencies in neural range."
+        },
+        {
+          "name": "HF (High Frequency)",
+          "freq_hz": [
+            3000000.0,
+            30000000.0
+          ],
+          "L_m": [
+            10,
+            100
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "ENVELOPE",
+            "TEMPORAL_INTERFERENCE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "Military HF comms, over-the-horizon radar. No line of sight needed \u2014 ionospheric skip. Global reach with envelope/TI attacks."
+        },
+        {
+          "name": "VHF (Very High Frequency)",
+          "freq_hz": [
+            30000000.0,
+            300000000.0
+          ],
+          "L_m": [
+            1,
+            10
+          ],
+          "access": "LICENSED",
+          "coupling": [
+            "ENVELOPE",
+            "TEMPORAL_INTERFERENCE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "FM radio, TV broadcast, military aviation, marine. L approaching body scale. Contains both public and restricted allocations."
+        },
+        {
+          "name": "UHF Military (MILSATCOM)",
+          "freq_hz": [
+            225000000.0,
+            400000000.0
+          ],
+          "L_m": [
+            0.75,
+            1.33
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "TEMPORAL_INTERFERENCE",
+            "INTERMODULATION"
+          ],
+          "target_N": [
+            "N4",
+            "N5",
+            "N6"
+          ],
+          "notes": "CRITICAL: Adjacent to BCI MICS telemetry (402-405 MHz). Intermodulation trivial. 398 MHz mil + 402 MHz BCI = 4 Hz beat \u2192 theta \u2192 N4 thalamus. The BCI's own telemetry weaponized."
+        },
+        {
+          "name": "MICS (Medical Implant Communication Service)",
+          "freq_hz": [
+            402000000.0,
+            405000000.0
+          ],
+          "L_m": [
+            0.74,
+            0.745
+          ],
+          "access": "LICENSED",
+          "coupling": [
+            "INTERMODULATION"
+          ],
+          "target_N": [],
+          "notes": "BCI telemetry band. FCC Part 95. Not an attack frequency itself, but participates in intermodulation attacks when paired with nearby military UHF."
+        },
+        {
+          "name": "UHF Public (ISM, cellular)",
+          "freq_hz": [
+            400000000.0,
+            1000000000.0
+          ],
+          "L_m": [
+            0.3,
+            0.75
+          ],
+          "access": "PUBLIC",
+          "coupling": [
+            "ENVELOPE",
+            "TEMPORAL_INTERFERENCE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "ISM 433 MHz, cellular 700-900 MHz. L at body/head scale. Consumer accessible."
+        }
+      ]
+    },
+    "S3": {
+      "band_name": "Radio / Wireless / Directed Energy",
+      "freq_range": "1 GHz+",
+      "v": 300000000.0,
+      "allocations": [
+        {
+          "name": "L-Band (GPS, satellite)",
+          "freq_hz": [
+            1000000000.0,
+            2000000000.0
+          ],
+          "L_m": [
+            0.15,
+            0.3
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "GPS L1 (1.575 GHz), military satellite. L \u2248 head diameter. Pulsed with PRF in neural range selects target. Focused delivery at head scale."
+        },
+        {
+          "name": "BLE / WiFi / ISM 2.4 GHz",
+          "freq_hz": [
+            2400000000.0,
+            2483500000.0
+          ],
+          "L_m": [
+            0.121,
+            0.125
+          ],
+          "access": "PUBLIC",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5",
+            "N6",
+            "N7"
+          ],
+          "notes": "Current BCI wireless link (Neuralink BLE). L \u2248 12.5 cm (cortical scale). Public access = anyone can transmit here."
+        },
+        {
+          "name": "S-Band (military radar, Frey effect)",
+          "freq_hz": [
+            2000000000.0,
+            4000000000.0
+          ],
+          "L_m": [
+            0.075,
+            0.15
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "N2",
+            "N7"
+          ],
+          "notes": "Microwave auditory effect (Frey, 1962). Pulsed microwave \u2192 thermoelastic expansion \u2192 cochlea perceives as sound. 'Havana Syndrome' range. PRF selects neural target. N2 auditory brainstem, N7 auditory cortex.",
+          "prf_targeting": {
+            "40 Hz": "N7 \u2014 gamma, cognition disruption",
+            "10 Hz": "N6 \u2014 alpha, emotional regulation disruption",
+            "4 Hz": "N4 \u2014 theta, consciousness/thalamic relay disruption",
+            "1 Hz": "N2 \u2014 delta, autonomic/vital sign disruption"
+          }
+        },
+        {
+          "name": "C-Band (satellite, 5G mid-band)",
+          "freq_hz": [
+            4000000000.0,
+            8000000000.0
+          ],
+          "L_m": [
+            0.0375,
+            0.075
+          ],
+          "access": "LICENSED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "N7",
+            "I0"
+          ],
+          "notes": "5G mid-band (3.5-4.2 GHz), satellite downlink. L at cortical/electrode scale. Growing public deployment."
+        },
+        {
+          "name": "X-Band (military radar)",
+          "freq_hz": [
+            8000000000.0,
+            12000000000.0
+          ],
+          "L_m": [
+            0.025,
+            0.0375
+          ],
+          "access": "RESTRICTED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "N7",
+            "I0"
+          ],
+          "notes": "Military fire-control radar, weather radar. L at electrode array scale. Can heat implant components. Surface cortex and I0 electrode damage."
+        },
+        {
+          "name": "Ku/Ka-Band (military satellite, 5G mm-wave)",
+          "freq_hz": [
+            12000000000.0,
+            40000000000.0
+          ],
+          "L_m": [
+            0.0075,
+            0.025
+          ],
+          "access": "LICENSED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "I0"
+          ],
+          "notes": "Military SATCOM, 5G mm-wave (28 GHz, 39 GHz). L at electrode/tissue scale. Shallow penetration but can disrupt I0 boundary."
+        },
+        {
+          "name": "V/W-Band (military comms, directed energy research)",
+          "freq_hz": [
+            40000000000.0,
+            110000000000.0
+          ],
+          "L_m": [
+            0.0027,
+            0.0075
+          ],
+          "access": "CLASSIFIED",
+          "coupling": [
+            "ENVELOPE"
+          ],
+          "target_N": [
+            "I0"
+          ],
+          "notes": "Military point-to-point comms, directed energy research. L at single-electrode scale. Highly absorbed by atmosphere \u2014 short range but precise."
+        },
+        {
+          "name": "Active Denial System (ADS)",
+          "freq_hz": [
+            95000000000.0,
+            95000000000.0
+          ],
+          "L_m": [
+            0.00316,
+            0.00316
+          ],
+          "access": "CLASSIFIED",
+          "coupling": [],
+          "target_N": [
+            "I0"
+          ],
+          "notes": "95 GHz directed energy. Excites water molecules in top 0.4 mm of skin. For implants near surface: electrode heating, tissue damage at I0 boundary. Destroys interface integrity.",
+          "mechanism": "Thermal absorption, not frequency coupling. Damages I0 physically."
+        },
+        {
+          "name": "Terahertz (THz gap)",
+          "freq_hz": [
+            100000000000.0,
+            10000000000000.0
+          ],
+          "L_m": [
+            3e-05,
+            0.003
+          ],
+          "access": "CLASSIFIED",
+          "coupling": [],
+          "target_N": [
+            "I0"
+          ],
+          "notes": "Mostly unexplored for neural effects. Molecular resonance frequencies. Could affect electrode-tissue chemistry. Research frontier for nation-states. L at cellular/molecular scale."
+        }
+      ]
+    }
+  },
+  "attack_coupling_mechanisms": [
+    {
+      "id": "DIRECT",
+      "name": "Direct Frequency Match",
+      "formula": "f_attack = f_neural",
+      "coupling_strength": "Strongest",
+      "description": "Attack frequency is already at the neural target frequency. Walks through I0."
+    },
+    {
+      "id": "HARMONIC",
+      "name": "Harmonic Coupling",
+      "formula": "f_attack = n \u00d7 f_neural (super) or f_neural / n (sub)",
+      "coupling_strength": "\u221d 1/n\u00b2",
+      "description": "Neural tissue is nonlinear \u2014 generates harmonics. Higher n = weaker coupling."
+    },
+    {
+      "id": "ENVELOPE",
+      "name": "Envelope Modulation",
+      "formula": "Carrier at f_carrier, modulated at f_mod. Tissue responds to f_mod.",
+      "coupling_strength": "\u221d modulation depth",
+      "description": "Stealth attack. High-frequency carrier hides low-frequency neural-range modulation. tACS principle."
+    },
+    {
+      "id": "TEMPORAL_INTERFERENCE",
+      "name": "Temporal Interference",
+      "formula": "f_beat = |f\u2081 - f\u2082|. Tissue at intersection responds to f_beat.",
+      "coupling_strength": "Strong at focal point",
+      "description": "Two kHz+ signals create neural-range beat frequency. Can target deep brain structures. Grossman et al. 2017, Cell."
+    },
+    {
+      "id": "INTERMODULATION",
+      "name": "Intermodulation (BCI as weapon)",
+      "formula": "f_attack = f_neural - f_BCI. Attack + BCI's own signal mix in nonlinear tissue.",
+      "coupling_strength": "Variable \u2014 depends on BCI signal power",
+      "description": "Most dangerous. Attacker's signal mixes with BCI's therapeutic/telemetry signal. BCI becomes part of the attack chain. Attack frequency can be inside normal operating range."
+    }
+  ],
+  "attack_propagation": {
+    "equation": "P_neural(f_N) = \u03a3\u1d62 [ H(f\u1d62) \u00d7 G(f\u1d62, f_N) \u00d7 P_attack(f\u1d62) \u00d7 A(f\u1d62) ]",
+    "P_neural": "Power delivered to neural band at frequency f_N",
+    "H": "I0 transfer function \u2014 electrode impedance at frequency f\u1d62 (frequency-dependent)",
+    "G": "Coupling gain \u2014 sum of all 5 mechanisms (DIRECT + HARMONIC + ENVELOPE + TEMPORAL_INTERFERENCE + INTERMODULATION)",
+    "P_attack": "Attack power at frequency f\u1d62",
+    "A": "Access coefficient \u2014 1 if threat actor can transmit at f\u1d62, 0 otherwise. Nation-states: A=1 everywhere."
+  },
+  "access_levels": {
+    "PUBLIC": {
+      "who": "Anyone",
+      "power": "Milliwatts",
+      "examples": "ISM bands, WiFi, BLE"
+    },
+    "LICENSED": {
+      "who": "Telecom, medical, broadcast",
+      "power": "Watts",
+      "examples": "MICS, cellular, TV broadcast"
+    },
+    "RESTRICTED": {
+      "who": "Government, military",
+      "power": "Kilowatts",
+      "examples": "ELF, UHF-Mil, radar bands"
+    },
+    "CLASSIFIED": {
+      "who": "Nation-state military/intel",
+      "power": "Kilowatts-Megawatts, pulsed, focused",
+      "examples": "Directed energy, EW systems"
+    }
+  },
+  "resonance_shield": {
+    "concept": "Active EM cancellation at I0 boundary",
+    "principle": "Destructive interference \u2014 opposite phase, matched amplitude cancels incoming wave",
+    "analogues": [
+      "Noise-canceling headphones (acoustic)",
+      "Radar jamming / ECM (RF)",
+      "Adaptive optics (optical)"
+    ],
+    "requirements": [
+      "Detection: sensor array to measure incoming EM (frequency, phase, amplitude)",
+      "Computation: real-time cancellation signal calculation (< fraction of wave period)",
+      "Emission: antenna array to broadcast cancellation field",
+      "Whitelist: pass authorized frequencies (therapeutic stim, MRI), cancel unauthorized"
+    ],
+    "dual_use": {
+      "security": "Protects against adversarial pulsed EM, ELF entrainment, Frey effect attacks",
+      "clinical": "Enables MRI compatibility for BCI patients (cancel RF excitation at Larmor frequency, gradient switching)"
+    },
+    "mri_fields": [
+      {
+        "field": "Static B0",
+        "freq": "0 Hz (DC)",
+        "defense": "Passive magnetic shielding (mu-metal)"
+      },
+      {
+        "field": "RF excitation B1",
+        "freq": "64 MHz (1.5T) / 128 MHz (3T)",
+        "defense": "Active cancellation at Larmor frequency"
+      },
+      {
+        "field": "Gradient switching",
+        "freq": "1-10 kHz",
+        "defense": "Active cancellation at gradient frequencies"
+      }
+    ],
+    "status": "Concept \u2014 requires hardware research. NSP specification should define as I0 hardware requirement."
+  },
+  "bci_device_classes": {
+    "CONSUMER": {
+      "description": "Non-invasive EEG headsets for consumer/wellness use",
+      "channels": "1-16",
+      "sampling_hz": "128-256",
+      "invasiveness": "Non-invasive (scalp)",
+      "wireless": "BLE",
+      "qi_active_terms": 3,
+      "dsf_viable": false,
+      "quantum_terms": false,
+      "attack_surface": [
+        "BLE replay",
+        "signal spoofing",
+        "app-layer"
+      ],
+      "threat_actors": [
+        "Script kiddies",
+        "stalkers",
+        "data brokers"
+      ],
+      "brainflow_support": true
+    },
+    "CONSUMER_PRO": {
+      "description": "Higher-channel consumer EEG with cloud/research features",
+      "channels": "5-32",
+      "sampling_hz": "128-256",
+      "invasiveness": "Non-invasive (scalp)",
+      "wireless": "BLE/WiFi/USB",
+      "qi_active_terms": "3-4",
+      "dsf_viable": "Borderline (14ch+)",
+      "quantum_terms": false,
+      "attack_surface": [
+        "BLE replay",
+        "signal spoofing",
+        "cloud API",
+        "app-layer"
+      ],
+      "threat_actors": [
+        "Script kiddies",
+        "stalkers",
+        "data brokers",
+        "competitors"
+      ],
+      "brainflow_support": true
+    },
+    "RESEARCH": {
+      "description": "Research-grade EEG systems for laboratory use",
+      "channels": "8-256",
+      "sampling_hz": "250-38400",
+      "invasiveness": "Non-invasive (scalp)",
+      "wireless": "WiFi/USB/wired",
+      "qi_active_terms": 4,
+      "dsf_viable": true,
+      "quantum_terms": false,
+      "attack_surface": [
+        "Signal injection",
+        "USB/WiFi intercept",
+        "lab network"
+      ],
+      "threat_actors": [
+        "Competitors",
+        "researchers",
+        "nation-states (IP theft)"
+      ],
+      "brainflow_support": "Partial (BrainFlow supports some)"
+    },
+    "CLINICAL": {
+      "description": "Clinical-grade EEG/ECoG for medical diagnosis and monitoring",
+      "channels": "32-256",
+      "sampling_hz": "1000-30000",
+      "invasiveness": "Non-invasive (scalp) to semi-invasive (ECoG subdural)",
+      "wireless": "Wired (typically) / MICS for implanted",
+      "qi_active_terms": "4-5",
+      "dsf_viable": true,
+      "quantum_terms": "Maybe (ECoG \u2014 direct cortical contact)",
+      "attack_surface": [
+        "Signal injection",
+        "MICS intermod",
+        "surgical access",
+        "hospital network"
+      ],
+      "threat_actors": [
+        "Nation-states",
+        "insurers",
+        "organized crime"
+      ],
+      "brainflow_support": false
+    },
+    "IMPLANTED": {
+      "description": "Fully implanted intracortical BCIs with direct neural contact",
+      "channels": "96-65536",
+      "sampling_hz": "20000-30000",
+      "invasiveness": "Invasive (intracortical)",
+      "wireless": "BLE / MICS / wired",
+      "qi_active_terms": "All 7+",
+      "dsf_viable": true,
+      "quantum_terms": true,
+      "attack_surface": [
+        "All 5 coupling mechanisms",
+        "directed energy",
+        "surgical access",
+        "quantum channel"
+      ],
+      "threat_actors": [
+        "Nation-states",
+        "military",
+        "intelligence agencies"
+      ],
+      "brainflow_support": false
+    },
+    "STIMULATION": {
+      "description": "Neurostimulation devices \u2014 bidirectional read/write",
+      "channels": "4-16 sensing + stimulation electrodes",
+      "sampling_hz": "250-1000 (sensing)",
+      "invasiveness": "Invasive (implanted leads)",
+      "wireless": "BLE / MICS / NFC",
+      "qi_active_terms": "4-5",
+      "dsf_viable": "Limited (few sensing channels)",
+      "quantum_terms": "Possible at I0",
+      "attack_surface": [
+        "Stimulation parameter manipulation",
+        "MICS intermod",
+        "firmware",
+        "BLE"
+      ],
+      "threat_actors": [
+        "Nation-states",
+        "organized crime",
+        "insider threat (clinician)"
+      ],
+      "brainflow_support": false
+    },
+    "AUDITORY_PROSTHESIS": {
+      "description": "Cochlear implants and auditory cortex prostheses \u2014 NSP Phase 1 target",
+      "channels": "12-22 (cochlear) / 60+ (cortical)",
+      "sampling_hz": "Varies (tonotopic mapping)",
+      "invasiveness": "Invasive (cochlea or cortex)",
+      "wireless": "Proprietary RF (cochlear) / BLE",
+      "qi_active_terms": "3-5",
+      "dsf_viable": "Different \u2014 tonotopic not spatial",
+      "quantum_terms": "Possible at cortical implant I0",
+      "attack_surface": [
+        "RF injection (auditory hallucinations)",
+        "Frey effect",
+        "firmware"
+      ],
+      "threat_actors": [
+        "Nation-states",
+        "stalkers (targeted harassment)",
+        "organized crime"
+      ],
+      "brainflow_support": false
+    },
+    "OPTICAL": {
+      "description": "Optical neural interfaces \u2014 fNIRS, optogenetics, fiber photometry",
+      "channels": "8-52 (fNIRS) / varies (optogenetics)",
+      "sampling_hz": "10-100 (fNIRS hemodynamic) / 1000+ (optogenetics)",
+      "invasiveness": "Non-invasive (fNIRS) to invasive (optogenetics fiber)",
+      "wireless": "BLE/WiFi (fNIRS) / wired (optogenetics)",
+      "qi_active_terms": "3-4",
+      "dsf_viable": "Different I0 physics (photon-tissue)",
+      "quantum_terms": "Yes \u2014 photon coherence at I0",
+      "attack_surface": [
+        "Light injection",
+        "photobleaching attack",
+        "wavelength spoofing"
+      ],
+      "threat_actors": [
+        "Researchers",
+        "competitors",
+        "nation-states"
+      ],
+      "brainflow_support": "Partial (some fNIRS)"
+    }
+  },
+  "bci_devices_count": 92,
+  "coherence_thresholds": {
+    "high": 0.6,
+    "low": 0.3
+  },
+  "decision_matrix": [
+    {
+      "coherence": "High (C\u209b > 0.6)",
+      "auth": "Valid",
+      "action": "ACCEPT"
+    },
+    {
+      "coherence": "High (C\u209b > 0.6)",
+      "auth": "Invalid",
+      "action": "REJECT + ALERT"
+    },
+    {
+      "coherence": "Medium (0.3 < C\u209b < 0.6)",
+      "auth": "Valid",
+      "action": "ACCEPT + FLAG"
+    },
+    {
+      "coherence": "Medium (0.3 < C\u209b < 0.6)",
+      "auth": "Invalid",
+      "action": "REJECT + ALERT"
+    },
+    {
+      "coherence": "Low (C\u209b < 0.3)",
+      "auth": "Any",
+      "action": "REJECT + CRITICAL"
+    }
+  ],
+  "interface_types": [
+    {
+      "type": "Electrode (current)",
+      "i0_physics": "Electrode-tissue ionic coupling",
+      "quantum_mechanism": "Ion channel tunneling, charge transfer at metal-tissue boundary",
+      "examples": "Neuralink N1, BrainGate Utah array, ECoG grids",
+      "status": "Current focus"
+    },
+    {
+      "type": "Optical",
+      "i0_physics": "Photon-tissue absorption/emission",
+      "quantum_mechanism": "Photon coherence, stimulated emission, photoelectric effects",
+      "examples": "Optogenetics, fiber photometry, two-photon imaging",
+      "status": "Near-term extension"
+    },
+    {
+      "type": "Magnetogenetic",
+      "i0_physics": "Magnetic field-ion channel spin coupling",
+      "quantum_mechanism": "Spin dynamics, magnetic resonance at molecular scale",
+      "examples": "Magneto-thermal TRPV channels, DREADD variants",
+      "status": "Emerging"
+    },
+    {
+      "type": "Quantum sensor",
+      "i0_physics": "Quantum sensor-neural field coupling",
+      "quantum_mechanism": "NV-center spin readout, OPM atomic coherence, SQUID flux quantization",
+      "examples": "OPMs, NV-diamond magnetometry, MagLOV proteins",
+      "status": "Future (may enable non-invasive QIF)"
+    }
+  ]
+}
