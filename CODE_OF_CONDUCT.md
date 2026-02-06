@@ -1,91 +1,102 @@
 # Code of Conduct
 
-## Our Pledge
+## Preamble
 
-Contributors and maintainers commit to creating a harassment-free, ethically grounded environment for all participants — regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, sexual identity and orientation, neurodivergence, or cognitive ability.
+The brain is the seat of identity. Before it is a research subject, before it is an attack surface, before it is an engineering problem — it is a person. Every line of code in this repository, every threat model, every equation exists because someone's cognitive autonomy deserves protection.
 
-As a project that develops security standards for brain-computer interfaces, we hold ourselves to an elevated standard: the same principles of cognitive liberty, mental privacy, and human dignity that the QIF framework protects in code, we protect in community.
+This Code of Conduct reflects that reality. We build security standards for the most intimate technology humanity has ever created. The way we treat each other in this community must be worthy of the thing we are trying to protect.
 
-## Our Standards
+## Equal Standing
 
-### Positive Behaviors
+Every person who engages with this project — whether contributing code, opening an issue, asking a question, or reading the documentation — holds equal standing in this community.
 
-- Using welcoming and inclusive language
-- Being respectful of differing viewpoints, experiences, and cognitive styles
-- Gracefully accepting constructive criticism
-- Focusing on what is best for the community
-- Showing empathy towards other community members
-- Citing sources and acknowledging uncertainty in technical claims
-- Respecting the boundary between security research and harmful application
+We do not discriminate on the basis of age, body size, disability, ethnicity, sex characteristics, gender identity or expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, sexual identity or orientation, neurodivergence, cognitive ability, or any other dimension of human difference.
 
-### Neuroethics Principles
+Neurotechnology will not affect all people equally. Historically marginalized communities face disproportionate risk from surveillance technologies, from unequal access to protective standards, and from exclusion in the design process. We recognize this. Equal standing in our community means actively working to ensure that the standards we develop serve everyone — not just those with the resources to participate in their creation.
 
-As contributors to a neural security framework, we additionally commit to:
+## Principles
 
-- **Cognitive Liberty** — Respecting every individual's right to mental self-determination. We do not develop, promote, or endorse tools or techniques designed to manipulate, coerce, or override cognitive autonomy without informed consent.
-- **Mental Privacy** — Treating neural data as a special category requiring the highest protection. We do not advocate for or contribute to surveillance of mental states without explicit, informed consent.
-- **Mental Integrity** — Protecting against unauthorized alteration of neural function. Research into attack vectors is conducted solely for defensive purposes, documented transparently, and subject to responsible disclosure.
-- **Psychological Continuity** — Recognizing the right to maintain personal identity. We do not develop capabilities intended to alter personality, memory, or sense of self without clinical justification and informed consent.
-- **Cognitive Authenticity** — Upholding the right to know which thoughts are genuinely one's own. Our coherence metrics and security tools exist to protect authenticity, not to undermine it.
+### Cognitive Liberty
 
-These principles are grounded in the framework's [Neuroethics Alignment](MAIN/governance/NEUROETHICS_ALIGNMENT.md) document and align with the [UNESCO Recommendation on the Ethics of Neurotechnology (2025)](MAIN/governance/UNESCO_ALIGNMENT.md).
+Every individual possesses the right to mental self-determination. This principle governs both our framework and our community: no contributor should feel coerced in their participation, pressured to adopt a position, or penalized for independent thought. In our research, we do not develop, promote, or endorse tools designed to override cognitive autonomy without informed consent.
 
-### Unacceptable Behaviors
+### Mental Privacy
 
-- Sexualized language, imagery, or unwelcome sexual advances
-- Trolling, insults, derogatory comments, and personal or political attacks
-- Public or private harassment
-- Publishing others' private information — including but not limited to physical addresses, electronic addresses, or neural data — without explicit permission
-- Weaponizing framework knowledge: using QIF security research, attack surface documentation, or threat models to develop offensive capabilities targeting real BCI users
-- Misrepresenting framework claims: presenting unverified hypotheses as validated findings, or omitting uncertainty tags from research contributions
-- Other conduct that would be inappropriate in a professional or academic setting
+Neural data is not ordinary data. It is the substrate of thought itself. We treat it as a special category requiring the highest protection — and we extend the same principle to our contributors. Private information, whether physical, electronic, or neural, is never disclosed without explicit permission. We do not build toward surveillance of mental states.
 
-## Dual-Use Research Responsibility
+### Mental Integrity
 
-The QIF framework documents attack surfaces and threat models for brain-computer interfaces. This information is published openly for defensive purposes — to help device manufacturers, security researchers, and regulators protect neural interfaces.
+The right to protection from unauthorized alteration of neural function is foundational. In our community, this translates to intellectual honesty: we do not misrepresent findings, manipulate data, or present unverified hypotheses as established fact. Research into attack vectors is conducted solely for defensive purposes, documented transparently, and subject to responsible disclosure.
 
-Contributors must:
+### Psychological Continuity
 
-1. **Frame offensively** only for defense — Attack research exists to improve defenses. Document mitigations alongside any new threat vectors.
-2. **Follow responsible disclosure** — Report vulnerabilities in real BCI devices through the manufacturer's security channels before public discussion. See [SECURITY.md](SECURITY.md).
-3. **Acknowledge limitations** — Use the project's [verification protocol](MAIN/legacy-core/resources/agents/RESEARCH_VERIFICATION_PROTOCOL.md) uncertainty tags (Verified, Inferred, Unverified, Hypothesis) to clearly communicate confidence levels.
-4. **Consider downstream impact** — Before publishing, consider whether the contribution could disproportionately benefit attackers over defenders. When in doubt, discuss with maintainers first.
+The right to maintain one's personal identity — memory, personality, sense of self — deserves protection in both technology and community. We create space for contributors to grow and change their views without being defined by past positions. We do not develop capabilities intended to alter identity without clinical justification and informed consent.
 
-## Human-AI Collaboration Transparency
+### Cognitive Authenticity
 
-This project uses AI assistance in research and development. Contributors working with AI tools must:
+The right to know which thoughts are genuinely one's own. Our coherence metrics exist to protect this right. In community, it means proper attribution, honest disclosure of AI assistance, and never claiming another's work or ideas as your own.
 
-- Disclose AI involvement in significant contributions using `Co-Authored-By` commit tags
-- Document human decisions versus AI suggestions in the [Transparency](MAIN/governance/TRANSPARENCY.md) audit trail for major contributions
-- Never present AI-generated content as independently verified research without human validation
-- Apply the same verification standards to AI-generated claims as to human-generated claims
+These five principles are recognized in international neuroethics scholarship (Ienca & Andorno, 2017; Yuste et al., 2017) and codified in the [UNESCO Recommendation on the Ethics of Neurotechnology (2025)](MAIN/governance/UNESCO_ALIGNMENT.md). They are not aspirational for this project. They are operational.
 
-## Our Responsibilities
+## Conduct
 
-Maintainers clarify behavioral standards and take appropriate corrective action. They may remove, edit, or reject contributions misaligned with this Code of Conduct, or temporarily or permanently ban contributors engaged in inappropriate, threatening, offensive, or harmful conduct.
+### What We Expect
 
-For contributions involving neuroethics-sensitive areas (attack research, neural data handling, cognitive manipulation vectors), maintainers will additionally consult the project's governance documents before accepting changes.
+- Treat every contributor as an intellectual equal, regardless of their background or credentials
+- Engage with ideas on their merits — critique arguments, not people
+- Cite sources and acknowledge uncertainty honestly
+- Welcome newcomers and help them orient to the project
+- Respect cognitive diversity — different minds approach problems differently, and that makes the work stronger
+- Maintain the boundary between security research and harmful application
 
-## Scope
+### What We Will Not Tolerate
 
-This Code of Conduct applies within all project spaces — including issues, pull requests, discussions, and documentation — and when individuals represent the project publicly, such as through official communications, social media, conference presentations, or as appointed representatives at events.
+- Harassment, intimidation, or discrimination of any kind
+- Sexualized language, imagery, or unwelcome advances
+- Personal attacks, insults, or deliberately inflammatory commentary
+- Disclosure of private information without explicit consent
+- Weaponization of framework knowledge — using QIF threat models, attack surface documentation, or security research to target real BCI users or systems
+- Misrepresentation of research — presenting hypotheses as validated findings, fabricating results, or omitting uncertainty from claims
 
-The neuroethics principles in this Code extend to derivative works: if you fork or build upon the QIF framework, we strongly encourage adopting equivalent ethical commitments.
+## Dual-Use Responsibility
+
+This framework documents how brain-computer interfaces can be attacked. That knowledge exists so they can be defended. Every contributor shares responsibility for maintaining this boundary.
+
+When contributing threat research or attack analysis:
+
+1. Document the defense alongside the threat. A vulnerability without a mitigation path is incomplete work.
+2. Follow responsible disclosure for real devices. Report vulnerabilities to manufacturers before public discussion. See [SECURITY.md](SECURITY.md).
+3. Label confidence levels honestly. Use the project's uncertainty tags — Verified, Inferred, Unverified, Hypothesis — so readers know what is established and what is not.
+4. Consider who benefits. If a contribution disproportionately advantages attackers over defenders, it needs revision or discussion with maintainers before merging.
+
+## AI Transparency
+
+This project uses artificial intelligence in research and development. The same standards of honesty we apply to human contributions apply to AI-assisted work:
+
+- Disclose AI involvement using `Co-Authored-By` tags in commits
+- Never present AI-generated content as independently verified without human validation
+- Document the human-AI decision boundary in significant contributions via the project's [Transparency](MAIN/governance/TRANSPARENCY.md) audit trail
+- Apply the same verification rigor to AI-generated claims as to any other source
 
 ## Enforcement
 
-Report violations to the maintainer via [GitHub Private Vulnerability Reporting](https://github.com/qinnovates/mindloft/security/advisories/new) or through the contact methods listed in [ABOUT.md](ABOUT.md). All complaints will be reviewed and investigated promptly and fairly, with reporter confidentiality maintained.
+Report violations to the maintainer via [GitHub Security Advisories](https://github.com/qinnovates/mindloft/security/advisories/new) or the contact methods in [ABOUT.md](ABOUT.md). All reports will be investigated promptly, fairly, and confidentially.
 
-Maintainers who do not follow or enforce this Code of Conduct in good faith may face temporary or permanent repercussions as determined by the project leadership.
+Maintainers may remove, edit, or reject contributions that violate this Code, and may temporarily or permanently restrict participation by individuals who engage in harmful conduct. For contributions touching neuroethics-sensitive areas, maintainers will consult the project's [governance documents](MAIN/governance/) before making decisions.
+
+## Scope
+
+This Code applies in all project spaces — issues, pull requests, discussions, documentation, and any public context where an individual represents the project. We encourage anyone who forks or builds upon the QIF framework to adopt equivalent ethical commitments.
 
 ## Attribution
 
-This Code of Conduct adapts the [Contributor Covenant v1.4](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html), extended with neuroethics principles derived from:
+Adapted from the [Contributor Covenant v1.4](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html), with neuroethics principles grounded in:
 
 - Ienca, M., & Andorno, R. (2017). Towards new human rights in the age of neuroscience and neurotechnology. *Life Sciences, Society and Policy*, 13(1), 5.
 - Yuste, R., Goering, S., et al. (2017). Four ethical priorities for neurotechnologies and AI. *Nature*, 551(7679), 159-163.
 - UNESCO. (2025). *Recommendation on the Ethics of Neurotechnology*.
+- Lázaro-Muñoz, G., et al. (2020). Researcher Perspectives on Ethical Considerations in Adaptive Deep Brain Stimulation Trials. *Frontiers in Human Neuroscience*, 14, 578695.
 
 ---
 
-*Version 1.0 — Last Updated: 2026-02-05*
+*Version 1.1 — Last Updated: 2026-02-05*
