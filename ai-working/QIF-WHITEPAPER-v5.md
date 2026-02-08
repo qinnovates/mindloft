@@ -29,7 +29,7 @@
 
 ## 1. Abstract
 
-Brain-computer interfaces are advancing from experimental medical devices toward consumer technology, yet their security architectures remain grounded in classical computing paradigms. This paper presents the Quantum Indeterministic Framework (QIF), an 11-band hourglass security architecture spanning the neural-silicon boundary, and proposes a unified security equation: QI(b,t) = e^(-S(b,t)). The QI equation combines four classical signal integrity terms (phase coherence, normalized transport entropy, amplitude stability, and a scale-frequency validity check derived from L = v/f) with three quantum terms (indeterminacy and entanglement gated by decoherence; tunneling ungated, as it persists in classical regimes). We identify five cross-domain attack coupling mechanisms by which silicon-domain signals reach neural tissue, with intermodulation attacks representing the most dangerous class because they are undetectable from signal data alone. We propose the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol integrating QI scoring with ML-KEM key exchange, ML-DSA authentication, and AES-256-GCM encryption, scaled across three device tiers. A conceptual analogy between NSP-secured data and black hole information scrambling is explored and its limitations acknowledged following independent peer review. We additionally present Project Runemate, a content compression pipeline that converts HTML to a compact bytecode format (Staves), offsetting PQC bandwidth overhead by 65-90% and achieving net bandwidth savings over classical transport for pages above 23 KB. Five falsifiability conditions are specified. QIF treats unresolved questions in quantum neuroscience, particularly the decoherence timescale in neural tissue, as tunable parameters rather than fixed assumptions. The framework degrades gracefully: if all quantum terms are zero, QIF reduces to a classical 11-band signal integrity architecture that retains independent utility.
+Brain-computer interfaces are advancing from experimental medical devices toward consumer technology, yet their security architectures remain grounded in classical computing paradigms. This paper presents the Quantum Indeterministic Framework (QIF), an 11-band hourglass security architecture spanning the neural-synthetic boundary, and proposes a unified security equation: QI(b,t) = e^(-S(b,t)). The QI equation combines four classical signal integrity terms (phase coherence, normalized transport entropy, amplitude stability, and a scale-frequency validity check derived from L = v/f) with three quantum terms (indeterminacy and entanglement gated by decoherence; tunneling ungated, as it persists in classical regimes). We identify five cross-domain attack coupling mechanisms by which synthetic-domain signals reach neural tissue, with intermodulation attacks representing the most dangerous class because they are undetectable from signal data alone. We propose the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol integrating QI scoring with ML-KEM key exchange, ML-DSA authentication, and AES-256-GCM encryption, scaled across three device tiers. A conceptual analogy between NSP-secured data and black hole information scrambling is explored and its limitations acknowledged following independent peer review. We additionally present Project Runemate, a content compression pipeline that converts HTML to a compact bytecode format (Staves), offsetting PQC bandwidth overhead by 65-90% and achieving net bandwidth savings over classical transport for pages above 23 KB. Five falsifiability conditions are specified. QIF treats unresolved questions in quantum neuroscience, particularly the decoherence timescale in neural tissue, as tunable parameters rather than fixed assumptions. The framework degrades gracefully: if all quantum terms are zero, QIF reduces to a classical 11-band signal integrity architecture that retains independent utility.
 
 ---
 
@@ -51,7 +51,7 @@ Physics has always been part of BCI engineering. Electrode impedance monitoring 
 
 ### 2.3 What This Paper Delivers
 
-This paper presents seven contributions. First, an 11-band hourglass architecture (v4.0) spanning the neural-silicon boundary with 7-1-3 asymmetry (7 severity-stratified neural bands, 1 interface band, 3 silicon bands), derived from neuroanatomy and quantum physics rather than networking analogy. Second, a unified QI equation, QI(b,t) = e^(-S(b,t)), that subsumes the previously separate coherence metric and two candidate QI equations into a single exponential form with clear Boltzmann-factor structure. Third, identification of five cross-domain attack coupling mechanisms (direct, harmonic, envelope, temporal interference, intermodulation) and honest assessment of which attacks the QI equation can and cannot detect. Fourth, the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol for BCI data. Fifth, Project Runemate, a content compression pipeline that offsets PQC bandwidth overhead by 65-90%, making post-quantum security practical for constrained BCI hardware. Sixth, a conceptual analogy between NSP security properties and black hole information scrambling, presented with explicit acknowledgment of its limitations. Seventh, falsifiability conditions specifying what experimental findings would weaken or invalidate specific framework components.
+This paper presents seven contributions. First, an 11-band hourglass architecture (v4.0) spanning the neural-synthetic boundary with 7-1-3 asymmetry (7 severity-stratified neural bands, 1 interface band, 3 synthetic bands), derived from neuroanatomy and quantum physics rather than networking analogy. Second, a unified QI equation, QI(b,t) = e^(-S(b,t)), that subsumes the previously separate coherence metric and two candidate QI equations into a single exponential form with clear Boltzmann-factor structure. Third, identification of five cross-domain attack coupling mechanisms (direct, harmonic, envelope, temporal interference, intermodulation) and honest assessment of which attacks the QI equation can and cannot detect. Fourth, the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol for BCI data. Fifth, Project Runemate, a content compression pipeline that offsets PQC bandwidth overhead by 65-90%, making post-quantum security practical for constrained BCI hardware. Sixth, a conceptual analogy between NSP security properties and black hole information scrambling, presented with explicit acknowledgment of its limitations. Seventh, falsifiability conditions specifying what experimental findings would weaken or invalidate specific framework components.
 
 ---
 
@@ -83,9 +83,9 @@ Despite advances in BCI security, quantum biology, and post-quantum cryptography
 
 ### 4.1 Design Principles
 
-The v2.0 architecture (14 layers) extended the OSI model by stacking 7 neural layers on top of 7 silicon layers. This was intuitive and productive, but it inherited OSI's networking assumptions (linear signal path, strict layering) which do not apply to neural tissue. The hourglass model is derived from actual physics.
+The v2.0 architecture (14 layers) extended the OSI model by stacking 7 neural layers on top of 7 silicon/synthetic layers. This was intuitive and productive, but it inherited OSI's networking assumptions (linear signal path, strict layering) which do not apply to neural tissue. The hourglass model is derived from actual physics.
 
-Three principles govern the design. Width represents state space: how many possible states exist at each band. The architecture is widest at the extremes and narrowest at the center. The 7-1-3 asymmetry (7 neural bands, 1 interface band, 3 silicon bands) reflects the real structure: two domains converging on a single bottleneck. The neural domain is wider because the brain has 500 million years of evolutionary complexity; silicon is human-designed with bounded complexity. Bands are severity-stratified: higher neural bands represent higher clinical severity if compromised.
+Three principles govern the design. Width represents state space: how many possible states exist at each band. The architecture is widest at the extremes and narrowest at the center. The 7-1-3 asymmetry (7 neural bands, 1 interface band, 3 synthetic bands) reflects the real structure: two domains converging on a single bottleneck. The neural domain is wider because the brain has 500 million years of evolutionary complexity; the synthetic domain is human-designed with bounded complexity. Bands are severity-stratified: higher neural bands represent higher clinical severity if compromised.
 
 ### 4.2 The 11-Band Stack
 
@@ -107,7 +107,7 @@ Three principles govern the design. Width represents state space: how many possi
 |------|------|----------|-------------|----------|
 | **I0** | Neural Interface | Electrode-tissue boundary, measurement/collapse | Quasi-quantum (GammaD in (0,1)) | 0.01 to 0.1 |
 
-**Silicon Domain (Lower Hourglass)**
+**Synthetic Domain (Lower Hourglass)**
 
 | Band | Name | Function | Determinacy | QI Range |
 |------|------|----------|-------------|----------|
@@ -117,9 +117,9 @@ Three principles govern the design. Width represents state space: how many possi
 
 Band naming follows the convention {Zone}{Number}. Numbers increase away from the interface in both directions. This convention has no relation to OSI layer numbers. Each band maps to specific real-world BCI devices (e.g., N5: Medtronic Percept STN DBS; N7: Neuralink N1; N2: vagus nerve stimulators) and carries 38 canonical brain region assignments documented in the implementation codebase.
 
-#### Why Three Silicon Bands: Frequency-Regime Security
+#### Why Three Synthetic Bands: Frequency-Regime Security
 
-The silicon domain is decomposed by electromagnetic physics regime rather than by OSI-style protocol layering or functional role alone. The three bands correspond to three distinct physics regimes that govern signal propagation and, critically, the physics of attack:
+The synthetic domain is decomposed by electromagnetic physics regime rather than by OSI-style protocol layering or functional role alone. The three bands correspond to three distinct physics regimes that govern signal propagation and, critically, the physics of attack:
 
 | Band | Physics Regime | Frequency Range | Attack Physics |
 |------|---------------|-----------------|----------------|
@@ -221,7 +221,7 @@ Weights w1 through w4 are calibratable parameters. Their values are not yet dete
 L = v / f
 ```
 
-| Symbol | Meaning | In neural tissue | In silicon |
+| Symbol | Meaning | In neural tissue | In synthetic hardware |
 |--------|---------|------------------|-----------|
 | L | Length of one wave | Spatial extent of coherent activity | Wavelength |
 | v | Wave velocity | Axonal conduction velocity (0.1 to 30 m/s) | Speed of light in medium |
@@ -324,7 +324,7 @@ Nobody has formulated H_interface for any BCI system. The individual pieces exis
 | Moore's Law cited for energy limits | Replaced by Landauer's Principle: E_min = kT*ln(2) per bit erasure [61] | Gemini + Claude independent review |
 | Tunneling gated by GammaD | Tunneling ungated (persists in classical regime) | Gemini review |
 | Ht as raw sum | Ht/ln(N) normalized by channel count | Session derivation |
-| Separate lambda (silicon) and S (neural) | Unified as L = v/f | Entry 28, 2026-02-06 |
+| Separate lambda (synthetic) and S (neural) | Unified as L = v/f | Entry 28, 2026-02-06 |
 | Two competing QI candidates | Single unified equation QI(b,t) = e^(-S(b,t)) | Entry 26, 2026-02-06 |
 | Dsf using linear scale | Dsf using log scale: (ln(f*L/v_expected))^2 | Gemini review |
 
@@ -334,7 +334,7 @@ Nobody has formulated H_interface for any BCI system. The individual pieces exis
 
 ### 6.1 Five Cross-Domain Attack Coupling Mechanisms
 
-A signal injected in the silicon domain does not need to match the neural target frequency to cause harm. There are five coupling mechanisms, each exploiting different physics. We propose this taxonomy as a contribution to BCI threat modeling.
+A signal injected in the synthetic domain does not need to match the neural target frequency to cause harm. There are five coupling mechanisms, each exploiting different physics. We propose this taxonomy as a contribution to BCI threat modeling.
 
 **Mechanism A: Direct Frequency Match** (strongest coupling)
 
@@ -651,7 +651,7 @@ QIF's parameterized design means that most falsification scenarios reduce the fr
 
 QIF is a proposed security architecture for brain-computer interfaces that unifies classical signal integrity metrics with quantum-aware anomaly detection in a single mathematical framework. It provides:
 
-- An 11-band hourglass model (7 neural, 1 interface, 3 silicon) derived from neuroanatomy and physics, not networking analogy
+- An 11-band hourglass model (7 neural, 1 interface, 3 synthetic) derived from neuroanatomy and physics, not networking analogy
 - A unified equation QI(b,t) = e^(-S(b,t)) with clear Boltzmann-factor structure
 - A five-mechanism attack coupling taxonomy for cross-domain BCI threats
 - A post-quantum communication protocol (NSP) for BCI data

@@ -23,7 +23,7 @@
 
 | Date | Event | Link |
 |------|-------|------|
-| 2026-02-08 | Silicon Band Rationale: frequency-regime security validated by Gemini + literature review, RF fingerprinting parallel to EEG uniqueness confirmed, whitepaper + visualization updated | [Entry 42](#entry-42-silicon-band-rationale--frequency-regime-security-and-rf-fingerprinting-parallel) |
+| 2026-02-08 | Synthetic Band Rationale: frequency-regime security validated by Gemini + literature, RF fingerprinting parallel confirmed, Silicon→Synthetic rename propagated | [Entry 42](#entry-42-synthetic-band-rationale--frequency-regime-security-and-rf-fingerprinting-parallel) |
 | 2026-02-07 | First Multi-Model Validation Cycle: QwQ-32B found 3 equation errors in QIF-TRUTH, Grok-3 found stale NSP terminology, Gemini confirmed 5 fixes + found 2 minor NSP issues, all fixed | [Entry 41](#entry-41-first-multi-model-validation-cycle--equation-fixes-and-cross-document-sync) |
 | 2026-02-07 | Unrestricted AI Validation Team: multi-model adversarial review protocol, v4.0 propagation to all docs, DeepSeek-R1 + QwQ-32B + WhiteRabbitNeo team | [Entry 40](#entry-40-unrestricted-ai-validation-team--multi-model-adversarial-review-protocol) |
 | 2026-02-07 | Project Runemate: 3-pass Gemini review, NSP number unification, cross-document consistency, AI transparency log | [Entry 39](#entry-39-project-runemate--three-pass-independent-review-and-nsp-number-unification) |
@@ -4326,12 +4326,12 @@ While applying the QwQ fixes, spotted that QIF-TRUTH §4.1 still listed v3.1 ban
 
 ---
 
-## Entry 42: Silicon Band Rationale — Frequency-Regime Security and RF Fingerprinting Parallel
+## Entry 42: Synthetic Band Rationale — Frequency-Regime Security and RF Fingerprinting Parallel
 
 **Date:** 2026-02-08
-**Context:** Kevin asked why the S bands are named "Analog Front-End," "Digital Processing," and "Application" rather than security-role names like "Protocol Security." This triggered a formal validation of the silicon band naming rationale. The question also surfaced a key insight: the S bands should be explicitly documented as organized by electromagnetic physics regime, and the rationale should draw the parallel between electronic device fingerprints and biological neural fingerprints.
-**Builds on:** Entry 33 (v4.0 architecture decision — "3 Silicon because: Three physics regimes (near-field, guided wave, far-field)"), Entry 34 (v4.0 implementation), Entry 40 (multi-model validation protocol)
-**Status:** VALIDATED AND DOCUMENTED — whitepaper updated, visualization tour step added, QIF-TRUTH already correct
+**Context:** Kevin asked why the S bands are named "Analog Front-End," "Digital Processing," and "Application" rather than security-role names like "Protocol Security." This triggered a formal validation of the synthetic band naming rationale. Kevin also reminded that per Entry 36, the domain is "Synthetic" not "Silicon" — future-proofing for graphene, organic bioelectronics, and conductive polymer BCIs. The S bands should be explicitly documented as organized by electromagnetic physics regime, and the rationale should draw the parallel between electronic device fingerprints and biological neural fingerprints.
+**Builds on:** Entry 33 (v4.0 architecture decision — "3 bands because: Three physics regimes"), Entry 34 (v4.0 implementation), Entry 36 (Silicon→Synthetic rename), Entry 40 (multi-model validation protocol)
+**Status:** VALIDATED AND DOCUMENTED — whitepaper updated, visualization tour step added, Silicon→Synthetic rename propagated per Entry 36
 **AI Systems:** Gemini 2.5 Pro (independent verification), Claude Opus 4.6 (synthesis and implementation)
 **Human Decision:** Kevin directed the investigation, asked for multi-model validation, and specified inclusion in both whitepaper and visualization
 
