@@ -6,7 +6,7 @@ Version:        0.3
 Date:           2026-02-06
 Status:         Draft
 Author:         Kevin Qi (Qinnovate)
-Framework:      QIF v3.1 Hourglass Model
+Framework:      QIF v4.0 Hourglass Model (11-band, 7-1-3)
 ```
 
 ---
@@ -48,7 +48,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 | **NSP** | Neural Sensory Protocol. The protocol defined by this specification. |
 | **QI** | Quantum Indeterminacy score. A composite signal integrity metric ranging from 0 (maximally anomalous) to 1 (perfectly normal). |
 | **QIF** | Quantum Indeterministic Framework for Neural Security. The security framework from which NSP derives its signal integrity model. |
-| **Band** | One of seven QIF Hourglass bands: N3, N2, N1, I0, S1, S2, S3. |
+| **Band** | One of eleven QIF v4.0 Hourglass bands: N7, N6, N5, N4, N3, N2, N1, I0, S1, S2, S3. |
 | **Frame** | The fundamental unit of NSP-protected data transmission. |
 | **Frame group** | A sequence of frames sharing a single Merkle root signature. Group size is negotiated during handshake (range: 1 to 256, default: 100). |
 | **Session** | A cryptographically authenticated connection between two NSP endpoints. |
@@ -198,11 +198,11 @@ Every NSP frame begins with a fixed 24-byte header, followed by a variable-lengt
 | Version | 0 | 1 byte | Protocol version. This specification defines version `0x01`. |
 | Flags | 1 | 1 byte | Bitfield. See Section 3.3. |
 | Frame Type | 2 | 1 byte | Frame type identifier. See Section 3.4. |
-| Band ID | 3 | 1 byte | QIF band identifier (0x00=S3, 0x01=S2, 0x02=S1, 0x03=I0, 0x04=N1, 0x05=N2, 0x06=N3). |
+| Band ID | 3 | 1 byte | QIF band identifier (0x00=S3, 0x01=S2, 0x02=S1, 0x03=I0, 0x04=N1, 0x05=N2, 0x06=N3, 0x07=N4, 0x08=N5, 0x09=N6, 0x0A=N7). v4.0 architecture (11-band, 7-1-3). |
 | Sequence Number | 4 | 4 bytes | Monotonically increasing per-session frame counter. Big-endian unsigned integer. Wraps at 2^32. |
-| Timestamp | 8 | 4 bytes | Milliseconds since session establishment. Big-endian unsigned integer. |
+| Timestamp | 8 | 4 bytes | Milliseconds since session establishment. Big-endian unsigned integer. Wraps at 2^32 (~49.7 days). Receivers MUST handle wrap by treating timestamp as a monotonic counter modulo 2^32; if sessions approach 49.7 days, key rotation (Section 7.3) resets the session clock. |
 | QI Score | 12 | 2 bytes | QI value encoded as unsigned 16-bit fixed-point (0x0000 = 0.0, 0xFFFF = 1.0). Resolution: ~0.0000153. |
-| QI Components | 14 | 2 bytes | Packed 4-bit fields for individual anomaly indicators: [phase(4)][transport(4)][amplitude(4)][scale-freq(4)]. Each field: 0x0=normal, 0xF=max anomaly. |
+| QI Components | 14 | 2 bytes | Packed 4-bit fields for individual anomaly indicators: [phase(4)][transport(4)][amplitude(4)][scale-freq(4)]. Each field: 0x0=normal, 0xF=max anomaly. Note: Quantum anomaly terms (Q̂i, Q̂t, Q̂e) are not encoded in this field in v0.3. Future revisions MAY extend QI Components to 4 bytes to include quantum indicators for Tier T3 devices. |
 | Payload Length | 16 | 2 bytes | Length of the payload in bytes. Big-endian unsigned integer. Maximum: 65,535 bytes. |
 | Cipher Suite ID | 18 | 2 bytes | Identifies the active cipher suite. See Section 5.6. |
 | Reserved | 20 | 4 bytes | Reserved for future use. Senders MUST set to zero. Receivers MUST ignore. |
@@ -902,9 +902,13 @@ QI computation parameters vary by QIF band. The following table defines expected
 
 | Band | Expected QI Range | Dominant Terms | Notes |
 |------|------------------|----------------|-------|
-| N3 | 0.3 - 0.5 | sigma2_phi, H_tau | High natural variability. Wider acceptance window. |
-| N2 | 0.15 - 0.3 | sigma2_phi, sigma2_gamma | Sensorimotor signals. Moderate variability. |
-| N1 | 0.05 - 0.15 | H_tau, sigma2_gamma | Subcortical relay. Low natural variability. |
+| N7 | 0.3 - 0.5 | sigma2_phi, H_tau | Neocortex. High natural variability. Widest acceptance window. |
+| N6 | 0.2 - 0.4 | sigma2_phi, H_tau | Limbic system. Emotion/memory introduces variability. |
+| N5 | 0.15 - 0.35 | sigma2_phi, sigma2_gamma | Basal ganglia. Pathological beta oscillations (Parkinson's). |
+| N4 | 0.1 - 0.3 | sigma2_phi, sigma2_gamma | Diencephalon/thalamus. Sensory gating variability. |
+| N3 | 0.1 - 0.25 | sigma2_gamma | Cerebellum. Complex spike timing. |
+| N2 | 0.05 - 0.15 | H_tau, sigma2_gamma | Brainstem. Low variability, vital function monitoring. |
+| N1 | 0.01 - 0.1 | sigma2_gamma | Spinal cord. Reflex arcs, low natural variability. |
 | I0 | 0.01 - 0.1 | sigma2_gamma, D_sf | Electrode-tissue boundary. Noise-dominated. |
 | S1 | 0.001 - 0.01 | sigma2_gamma | Analog front-end. Very low variability expected. |
 | S2 | ~0 | All terms ~0 | Digital processing. Deterministic. Any anomaly is suspect. |

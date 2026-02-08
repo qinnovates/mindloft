@@ -315,7 +315,7 @@ v = f × λ
 
 Where v = axonal conduction velocity (NOT a universal constant).
 
-| Band | Frequency | Coherent Spatial Extent | f × S (m·Hz) | Source |
+| Band | Frequency | Coherent Spatial Extent | f × S (m/s) | Source |
 |------|-----------|------------------------|--------------|--------|
 | High gamma | 60-100 Hz | 0.3-5 mm | ~0.08-0.4 | Jia et al. 2011 |
 | Low gamma | 30-60 Hz | 1-10 mm | ~0.04-0.4 | ECoG studies |

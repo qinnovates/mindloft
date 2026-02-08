@@ -253,6 +253,24 @@ More striking: during this research, I noticed that my synesthetic mappings are 
 
 ---
 
+## Part V.5: From Theory to Protocol to Implementation
+
+A framework is not enough. I learned this the hard way.
+
+QIF defines the threats. It maps the attack surface. It provides equations to score signal integrity. But a threat model without a wire protocol is a map without roads. When I presented the hourglass architecture, the first question from every engineer was the same: *how does this translate into bytes on a wire?*
+
+So I wrote NSP — the Neural Sensory Protocol. An RFC-style specification, version 0.3, with five defense layers, a frame format, a handshake state machine, and concrete cryptographic primitives (ML-KEM for key exchange, ML-DSA for authentication, AES-256-GCM for encryption — all NIST-finalized). I specified three device tiers: T1 (consumer headbands), T2 (clinical systems), and T3 (implanted BCIs). I worked through the power budget: 3.25% of a 40 mW implant, or 1.3 milliwatts for five-layer quantum-resistant security. I designed the key lifecycle for 20-year device lifetimes. NSP gave the framework teeth.
+
+But then I hit the bandwidth wall. Post-quantum keys are enormous. ML-KEM public keys are 1,184 bytes versus 65 bytes for classical ECDH — an 18x increase. ML-DSA signatures are 3,309 bytes versus 72 for ECDSA — 46x. For a BCI implant transmitting over Bluetooth Low Energy, that overhead threatens to make PQC adoption impractical. The security is mathematically sound. The engineering is prohibitive.
+
+The insight came from an unexpected direction: HTML is absurdly redundant. A `<div class="container">` tag is 25 bytes of text representing 2 bytes of information. If you compile HTML into a compact bytecode before encrypting it, you can compress BCI interface content by 65-90%. I built the proof of concept — Project Runemate — and the math worked out. Above approximately 30 KB of content, a post-quantum-secured session with Staves bytecode is *more bandwidth-efficient* than a classical session with raw HTML. The PQ handshake overhead pays for itself on the first page load. Everything after is pure savings.
+
+I chose Rust for the implementation, not because it is fashionable, but because a buffer overflow in a neural interface compiler could corrupt stimulation parameters sent to someone's brain. Rust's compile-time memory safety eliminates that class of vulnerability entirely. The Ferrocene Rust compiler has achieved IEC 62304 Class C certification for medical device software. Type-level sanitization means injection prevention is enforced by the type system, not by a developer remembering to call a sanitize function.
+
+Three pillars, one argument: QIF defines what needs to be secured, NSP defines how to secure it, and Runemate makes the security practical. No pillar works alone. Together, they demonstrate that a fully post-quantum-secured BCI stack is feasible on current hardware, at current power budgets, with net bandwidth savings for typical interface content.
+
+---
+
 ## Part VI: The Urgency
 
 Consumer BCIs will reach millions of users within this decade. The security architecture built in the next few years will determine whether these devices protect or endanger the people who depend on them.

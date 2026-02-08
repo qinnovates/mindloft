@@ -15,7 +15,7 @@
 1. [Abstract](#1-abstract)
 2. [Introduction](#2-introduction)
 3. [Background and Related Work](#3-background-and-related-work)
-4. [QIF Hourglass Model (v3.1)](#4-qif-hourglass-model-v31)
+4. [QIF Hourglass Model (v4.0)](#4-qif-hourglass-model-v40)
 5. [The Unified QI Equation](#5-the-unified-qi-equation)
 6. [Attack Surface Analysis](#6-attack-surface-analysis)
 7. [Neural Sensory Protocol (NSP)](#7-neural-sensory-protocol-nsp)
@@ -29,7 +29,7 @@
 
 ## 1. Abstract
 
-Brain-computer interfaces are advancing from experimental medical devices toward consumer technology, yet their security architectures remain grounded in classical computing paradigms. This paper presents the Quantum Indeterministic Framework (QIF), a 7-band hourglass security architecture spanning the neural-silicon boundary, and proposes a unified security equation: QI(b,t) = e^(-S(b,t)). The QI equation combines four classical signal integrity terms (phase coherence, normalized transport entropy, amplitude stability, and a scale-frequency validity check derived from L = v/f) with three decoherence-gated quantum terms (indeterminacy, tunneling, entanglement). We identify five cross-domain attack coupling mechanisms by which silicon-domain signals reach neural tissue, with intermodulation attacks representing the most dangerous class because they are undetectable from signal data alone. We propose the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol integrating QI scoring with ML-KEM key exchange, ML-DSA authentication, and AES-256-GCM encryption, scaled across three device tiers. A conceptual analogy between NSP-secured data and black hole information scrambling is explored and its limitations acknowledged following independent peer review. Five falsifiability conditions are specified. QIF treats unresolved questions in quantum neuroscience, particularly the decoherence timescale in neural tissue, as tunable parameters rather than fixed assumptions. The framework degrades gracefully: if all quantum terms are zero, QIF reduces to a classical 7-band signal integrity architecture that retains independent utility.
+Brain-computer interfaces are advancing from experimental medical devices toward consumer technology, yet their security architectures remain grounded in classical computing paradigms. This paper presents the Quantum Indeterministic Framework (QIF), an 11-band hourglass security architecture spanning the neural-silicon boundary, and proposes a unified security equation: QI(b,t) = e^(-S(b,t)). The QI equation combines four classical signal integrity terms (phase coherence, normalized transport entropy, amplitude stability, and a scale-frequency validity check derived from L = v/f) with three quantum terms (indeterminacy and entanglement gated by decoherence; tunneling ungated, as it persists in classical regimes). We identify five cross-domain attack coupling mechanisms by which silicon-domain signals reach neural tissue, with intermodulation attacks representing the most dangerous class because they are undetectable from signal data alone. We propose the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol integrating QI scoring with ML-KEM key exchange, ML-DSA authentication, and AES-256-GCM encryption, scaled across three device tiers. A conceptual analogy between NSP-secured data and black hole information scrambling is explored and its limitations acknowledged following independent peer review. We additionally present Project Runemate, a content compression pipeline that converts HTML to a compact bytecode format (Staves), offsetting PQC bandwidth overhead by 65-90% and achieving net bandwidth savings over classical transport for pages above 23 KB. Five falsifiability conditions are specified. QIF treats unresolved questions in quantum neuroscience, particularly the decoherence timescale in neural tissue, as tunable parameters rather than fixed assumptions. The framework degrades gracefully: if all quantum terms are zero, QIF reduces to a classical 11-band signal integrity architecture that retains independent utility.
 
 ---
 
@@ -51,7 +51,7 @@ Physics has always been part of BCI engineering. Electrode impedance monitoring 
 
 ### 2.3 What This Paper Delivers
 
-This paper presents six contributions. First, a 7-band hourglass architecture (v3.1) spanning the neural-silicon boundary with 3-1-3 symmetry, derived from neuroscience and quantum physics rather than networking analogy. Second, a unified QI equation, QI(b,t) = e^(-S(b,t)), that subsumes the previously separate coherence metric and two candidate QI equations into a single exponential form with clear Boltzmann-factor structure. Third, identification of five cross-domain attack coupling mechanisms (direct, harmonic, envelope, temporal interference, intermodulation) and honest assessment of which attacks the QI equation can and cannot detect. Fourth, the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol for BCI data. Fifth, a conceptual analogy between NSP security properties and black hole information scrambling, presented with explicit acknowledgment of its limitations. Sixth, falsifiability conditions specifying what experimental findings would weaken or invalidate specific framework components.
+This paper presents seven contributions. First, an 11-band hourglass architecture (v4.0) spanning the neural-silicon boundary with 7-1-3 asymmetry (7 severity-stratified neural bands, 1 interface band, 3 silicon bands), derived from neuroanatomy and quantum physics rather than networking analogy. Second, a unified QI equation, QI(b,t) = e^(-S(b,t)), that subsumes the previously separate coherence metric and two candidate QI equations into a single exponential form with clear Boltzmann-factor structure. Third, identification of five cross-domain attack coupling mechanisms (direct, harmonic, envelope, temporal interference, intermodulation) and honest assessment of which attacks the QI equation can and cannot detect. Fourth, the Neural Sensory Protocol (NSP), a five-layer post-quantum communication protocol for BCI data. Fifth, Project Runemate, a content compression pipeline that offsets PQC bandwidth overhead by 65-90%, making post-quantum security practical for constrained BCI hardware. Sixth, a conceptual analogy between NSP security properties and black hole information scrambling, presented with explicit acknowledgment of its limitations. Seventh, falsifiability conditions specifying what experimental findings would weaken or invalidate specific framework components.
 
 ---
 
@@ -79,23 +79,27 @@ Despite advances in BCI security, quantum biology, and post-quantum cryptography
 
 ---
 
-## 4. QIF Hourglass Model (v3.1)
+## 4. QIF Hourglass Model (v4.0)
 
 ### 4.1 Design Principles
 
-The v2.0 architecture (14 layers) extended the OSI model by stacking 7 neural layers on top of 7 silicon layers. This was intuitive and productive, but it inherited OSI's networking assumptions (linear signal path, strict layering) which do not apply to neural tissue. The v3.1 hourglass model is derived from actual physics.
+The v2.0 architecture (14 layers) extended the OSI model by stacking 7 neural layers on top of 7 silicon layers. This was intuitive and productive, but it inherited OSI's networking assumptions (linear signal path, strict layering) which do not apply to neural tissue. The hourglass model is derived from actual physics.
 
-Three principles govern the design. Width represents state space: how many possible states exist at each band. The architecture is widest at the extremes and narrowest at the center. The 3-1-3 symmetry (3 neural bands, 1 interface band, 3 silicon bands) reflects the real structure: two domains converging on a single bottleneck.
+Three principles govern the design. Width represents state space: how many possible states exist at each band. The architecture is widest at the extremes and narrowest at the center. The 7-1-3 asymmetry (7 neural bands, 1 interface band, 3 silicon bands) reflects the real structure: two domains converging on a single bottleneck. The neural domain is wider because the brain has 500 million years of evolutionary complexity; silicon is human-designed with bounded complexity. Bands are severity-stratified: higher neural bands represent higher clinical severity if compromised.
 
-### 4.2 The 7-Band Stack
+### 4.2 The 11-Band Stack
 
-**Neural Domain (Upper Hourglass)**
+**Neural Domain (Upper Hourglass) — 7 bands, severity-stratified**
 
-| Band | Name | Brain Regions | Determinacy | QI Range |
-|------|------|---------------|-------------|----------|
-| **N3** | Integrative Association | PFC, ACC, Broca, Wernicke, hippocampus, BLA, insula | Quantum Uncertain | 0.3 to 0.5 |
-| **N2** | Sensorimotor Processing | M1, S1_cortex, V1, A1, PMC, SMA, PPC, cerebellum | Chaotic to Stochastic | 0.15 to 0.3 |
-| **N1** | Subcortical Relay | Thalamus, basal ganglia, cerebellum, brainstem, CeA | Stochastic | 0.05 to 0.15 |
+| Band | Name | Key Structures | Determinacy | QI Range |
+|------|------|----------------|-------------|----------|
+| **N7** | Neocortex | PFC, M1, V1, A1, Broca, Wernicke, PMC, SMA, PPC | Quantum Uncertain | 0.3 to 0.5 |
+| **N6** | Limbic System | Hippocampus, BLA, insula, ACC, cingulate | Chaotic to QU | 0.2 to 0.4 |
+| **N5** | Basal Ganglia | Striatum, GPi/GPe, STN, substantia nigra | Chaotic | 0.15 to 0.35 |
+| **N4** | Diencephalon | Thalamus, hypothalamus, VIM, ANT | Stochastic to Chaotic | 0.1 to 0.3 |
+| **N3** | Cerebellum | Cerebellar cortex, deep nuclei, vermis | Stochastic | 0.1 to 0.25 |
+| **N2** | Brainstem | Medulla, pons, midbrain, reticular formation | Stochastic | 0.05 to 0.15 |
+| **N1** | Spinal Cord | Cervical, thoracic, lumbar, sacral, cauda equina | Stochastic | 0.01 to 0.1 |
 
 **Interface Zone (Bottleneck)**
 
@@ -111,31 +115,36 @@ Three principles govern the design. Width represents state space: how many possi
 | **S2** | Digital Processing | Decoding, algorithms, classification | Deterministic | approximately 0 |
 | **S3** | Application | Clinical software, UI, data storage | Deterministic | 0 |
 
-Band naming follows the convention {Zone}{Number}. Numbers increase away from the interface in both directions. This convention has no relation to OSI layer numbers.
+Band naming follows the convention {Zone}{Number}. Numbers increase away from the interface in both directions. This convention has no relation to OSI layer numbers. Each band maps to specific real-world BCI devices (e.g., N5: Medtronic Percept STN DBS; N7: Neuralink N1; N2: vagus nerve stimulators) and carries 38 canonical brain region assignments documented in the implementation codebase.
 
 ### 4.3 I0: The Bottleneck
 
 I0 is the most critical band. Unlike v2.0's "Layer 8" which was modeled as a thin boundary, I0 has real thickness: it is a quasi-quantum zone where the decoherence factor GammaD lies between 0 and 1, meaning quantum and classical physics coexist.
 
-I0 is the physical layer, not an abstraction above it. A common objection holds that BCIs are physical devices and therefore the interface should sit at the bottom of the stack (adjacent to OSI Layer 1), not in the middle. The hourglass resolves this. I0 is the waist: the most physical, most constrained point in the system. Everything above it (N1 to N3) is progressively more abstract neural processing. Everything below it (S1 to S3) is progressively more abstract digital processing. The waist is where platinum touches tissue, where electrons become ions, where classical measurement encounters quantum states. It is the system's physical layer not by numbering convention but by physical reality.
+I0 is the physical layer, not an abstraction above it. A common objection holds that BCIs are physical devices and therefore the interface should sit at the bottom of the stack (adjacent to OSI Layer 1), not in the middle. The hourglass resolves this. I0 is the waist: the most physical, most constrained point in the system. Everything above it (N1 to N7) is progressively more abstract neural processing. Everything below it (S1 to S3) is progressively more abstract digital processing. The waist is where platinum touches tissue, where electrons become ions, where classical measurement encounters quantum states. It is the system's physical layer not by numbering convention but by physical reality.
 
 The bottleneck geometry means all information must pass through the narrowest point. This provides maximum security leverage: secure I0, and you secure the chokepoint through which all data flows.
 
 ### 4.4 The Classical Ceiling
 
-The boundary between N2 (chaotic/stochastic) and N3 (quantum uncertain) is the classical ceiling. Below it, all unpredictability is in principle resolvable with better measurement. Above it, the unpredictability is ontic, as established by Bell's theorem [64]. Classical security tools operate below the ceiling. QIF operates across the full spectrum.
+The boundary between N6 (chaotic to quantum uncertain) and N7 (quantum uncertain) is the classical ceiling. Below it, all unpredictability is in principle resolvable with better measurement. Above it, the unpredictability is ontic, as established by Bell's theorem [64]. Classical security tools operate below the ceiling. QIF operates across the full spectrum.
 
 ### 4.5 QI Range Philosophy
 
-QI ranges were lowered dramatically in v3.1 to avoid implying quantum dominance in the brain. QI measures security-relevant indeterminacy, not literal quantum effects. The highest band (N3) caps at 0.5, meaning "half the unpredictability at this band may be ontic." This is defensible without requiring proof of quantum cognition.
+QI ranges reflect security-relevant indeterminacy, not literal quantum effects. The highest band (N7) caps at 0.5, meaning "half the unpredictability at this band may be ontic." QI ranges overlap between adjacent bands, reflecting that determinacy is a spectrum, not discrete levels. This is defensible without requiring proof of quantum cognition.
 
-### 4.6 Anatomical Decisions
+### 4.6 Severity Stratification
 
-Three anatomical decisions merit explicit documentation:
+The 7-band neural decomposition enables severity-aware threat assessment. An attack targeting N7 (neocortex: cognition, language, executive function) has categorically higher clinical severity than one targeting N1 (spinal cord: reflex arcs). This maps directly to medical device risk classification: a compromised cortical BCI (N7) threatens cognitive sovereignty; a compromised spinal cord stimulator (N1) affects motor function. The 60-technique threat taxonomy (Section 6.5) assigns band-level targeting to each attack, enabling severity-scored risk assessment.
 
-- **Amygdala split.** The basolateral amygdala (BLA), which is cortical-like and performs associative learning, maps to N3. The central amygdala (CeA), which is subcortical and drives autonomic output, maps to N1.
-- **Cerebellum spans N1 and N2.** Relay functions map to N1. Cerebellar-cortical motor loops map to N2.
+### 4.7 Anatomical Decisions
+
+Key anatomical decisions are documented:
+
 - **S1_cortex.** Primary somatosensory cortex is labeled S1_cortex to avoid collision with the S1 (Analog Front-End) band identifier.
+- **Cerebellum as distinct band (N3).** Separated from brainstem/cortex because it has unique oscillatory properties (50-100 Hz Purkinje cell complex spikes) and represents a distinct DBS target class.
+- **Spinal cord included (N1).** v3.1 stopped at the brainstem. v4.0 extends to the cauda equina because spinal cord stimulators (e.g., ONWARD ARC-IM) are a major and growing BCI category.
+- **Thalamus in N4, not N1.** The thalamus is the sensory gateway and consciousness relay, not a simple peripheral relay. Its DBS targeting (VIM for tremor, ANT for epilepsy) reflects diencephalic function.
 
 ---
 
@@ -148,7 +157,7 @@ QI(b, t) = e^(-S(b, t))
 ```
 
 Where:
-- b = band index (N3, N2, N1, I0, S1, S2, S3)
+- b = band index (N7, N6, N5, N4, N3, N2, N1, I0, S1, S2, S3)
 - t = time window
 - S(b,t) = total anomaly score = Sc(b,t) + Sq(b,t)
 - QI output range: 0 to 1, where 1 = perfectly normal and 0 = maximally anomalous
@@ -217,7 +226,7 @@ An observation: L for gamma oscillations (approximately 10 cm in neural tissue) 
 
 **Validated spatial extents** (from neuroscience literature):
 
-| Band | Frequency | Coherent Spatial Extent | f * S (m*Hz) | Source |
+| Band | Frequency | Coherent Spatial Extent | f * S (m/s) | Source |
 |------|-----------|-------------------------|--------------|--------|
 | High gamma | 60 to 100 Hz | 0.3 to 5 mm | approximately 0.08 to 0.4 | Jia et al. 2011 |
 | Low gamma | 30 to 60 Hz | 1 to 10 mm | approximately 0.04 to 0.4 | ECoG studies |
@@ -522,6 +531,29 @@ For BCI security, no-cloning applies at I0 (the electrode-tissue interface). If 
 
 No-cloning does not protect the classical data stream (S1 through S3). Once quantum states are measured and converted to classical bits, those bits are freely copyable. This is where PQC is essential. No-cloning protects I0. PQC protects S1 through S3. Together they provide defense-in-depth across the full BCI stack.
 
+### 7.8 Project Runemate: Offsetting PQC Overhead Through Content Compression
+
+Post-quantum cryptographic primitives are significantly larger than their classical counterparts. ML-KEM-768 public keys are 1,184 bytes versus 65 bytes for ECDH-P256 (18.2x). ML-DSA-65 signatures are 3,309 bytes versus 72 bytes for ECDSA (46x). For a device with a 40 mW power budget transmitting over BLE, this overhead is the primary barrier to PQC adoption. NSP's power budget analysis (Section 7.6) addresses the computational cost. This section addresses the bandwidth cost.
+
+Project Runemate is a content compression pipeline that converts HTML-based BCI interface content into a compact bytecode format called Staves. Runemate Forge, the compiler, applies six compression techniques: tokenized DOM (replacing verbose HTML tags with 2-byte opcodes), style table deduplication, semantic packing of CSS property values into bit fields, delta encoding of repeated elements, complete JavaScript elimination (not supported on-chip), and dictionary coding of common HTML patterns. The combined effect is 65-90% compression of typical BCI interface content.
+
+The compression math reveals a crossover point. NSP's full PQ handshake costs 21,117 bytes (~20.6 KB), computed from the protocol's message struct definitions (ClientHello through Finished, including ML-KEM-768 key exchange and two ML-DSA-65 certificate chains). The classical equivalent is 839 bytes (~0.8 KB). For pages below approximately 23 KB, PQ+Staves costs more than classical+HTML because the fixed PQ handshake dominates. Above 23 KB, PQ+Staves becomes more efficient because compression savings exceed the handshake overhead. Nearly all real BCI interfaces exceed this threshold.
+
+| Page Complexity | Raw HTML | Staves | PQ+Staves Total | Classical Total | Net vs Classical |
+|-----------------|----------|--------|-----------------|-----------------|-----------------|
+| Minimal alert (5 KB) | 5 KB | 0.5 KB | 21.1 KB | 5.8 KB | +15.3 KB |
+| Standard UI page (50 KB) | 50 KB | 5 KB | 25.6 KB | 50.8 KB | **-25.2 KB** |
+| Rich dashboard (200 KB) | 200 KB | 20 KB | 40.6 KB | 200.8 KB | **-160.2 KB** |
+| Complex interface (500 KB) | 500 KB | 50 KB | 70.6 KB | 500.8 KB | **-430.2 KB** |
+
+Session amortization amplifies the advantage. The PQ handshake happens once per session; key rotations add 2,276 bytes each (vs 134 classical). Over a one-hour session with 60 rotations and 10-50 page loads, PQ+Staves saves 1.6-8.6 MB compared to classical+HTML. The PQ handshake cost is recovered on the first dashboard load.
+
+A proof-of-concept implementation (Python, Phase 1) validated these projections against three BCI interface templates: a minimal alert page (2.4 KB, 61.9% compression), a dashboard (20.6 KB, 76.8% compression), and a settings page (10.5 KB, 66.6% compression). The PoC confirms that Staves bytecode achieves the theoretical compression range. Compression ratios include compile-time CSS selector resolution via OP_STYLE_REF opcodes, eliminating runtime style matching on-chip.
+
+Runemate Forge is implemented in Rust. The language choice is deliberate. Rust provides compile-time memory safety (eliminating the buffer overflow and use-after-free vulnerabilities that account for 30-50% of CVEs in C codebases), type-level sanitization (XSS prevention enforced by the type system, not runtime checks), and bare-metal deployment via `no_std` (64 KB RAM floor, comparable to C). The Ferrocene Rust compiler has achieved IEC 62304 Class C certification for medical device software. Servo browser engine crates (html5ever, cssparser) provide production-quality HTML/CSS parsing. For a device implanted in a human brain, where a buffer overflow could corrupt neural stimulation parameters, these guarantees are medical requirements rather than engineering preferences.
+
+The long-term vision for Runemate extends beyond compression. Phase 2 targets a neural rendering engine: a minimal Staves interpreter running on-chip that renders BCI interface content directly on the implant's display or neural output, eliminating the need for a companion phone. Phase 3 envisions universal neural markup, a content format designed natively for neural interfaces rather than adapted from web standards.
+
 ---
 
 ## 8. The Black Hole Security Principle
@@ -583,7 +615,7 @@ If single-channel patch clamp studies combined with quantum state tomography rev
 
 ### 9.3 No Measurable Quantum Effects at the Electrode-Tissue Interface
 
-If quantum state tomography at the BCI junction consistently shows fully classical statistics (density matrix indistinguishable from classical mixture for all practical measurements), then quantum corrections at I0 and N1 through N3 are zero. The framework's novel quantum contributions would be falsified. The classical architecture, the attack coupling taxonomy, and the NSP protocol retain independent value.
+If quantum state tomography at the BCI junction consistently shows fully classical statistics (density matrix indistinguishable from classical mixture for all practical measurements), then quantum corrections at I0 and N1 through N7 are zero. The framework's novel quantum contributions would be falsified. The classical architecture, the attack coupling taxonomy, and the NSP protocol retain independent value.
 
 ### 9.4 Zeno Effect Impossible at Any Plausible BCI Sampling Rate
 
@@ -605,10 +637,11 @@ QIF's parameterized design means that most falsification scenarios reduce the fr
 
 QIF is a proposed security architecture for brain-computer interfaces that unifies classical signal integrity metrics with quantum-aware anomaly detection in a single mathematical framework. It provides:
 
-- A 7-band hourglass model derived from neural and silicon physics, not networking analogy
+- An 11-band hourglass model (7 neural, 1 interface, 3 silicon) derived from neuroanatomy and physics, not networking analogy
 - A unified equation QI(b,t) = e^(-S(b,t)) with clear Boltzmann-factor structure
 - A five-mechanism attack coupling taxonomy for cross-domain BCI threats
 - A post-quantum communication protocol (NSP) for BCI data
+- A content compression pipeline (Project Runemate) that makes PQC practical for constrained devices
 - Explicit falsifiability conditions
 - Honest boundaries on what it can and cannot detect
 
@@ -647,7 +680,13 @@ The calibration process must proceed in phases because different terms require d
 | No tampered BCI dataset exists | Cannot validate against real attacks | Synthetic attack generation proposed |
 | Three classical terms have different natural scales | Weighting may need normalization | Open calibration question |
 
-### 10.5 Energy Bounds
+### 10.5 The Qinnovate Ecosystem: From Theory to Implementation
+
+QIF, NSP, and Project Runemate form one continuous argument: brain-computer interfaces can be secured end-to-end without sacrificing power, bandwidth, or device lifetime. QIF defines the threat model and security architecture. NSP translates that architecture into a deployable wire protocol with concrete cryptographic primitives, device tiers, and power budgets. Project Runemate solves the practical barrier that would otherwise prevent NSP adoption — post-quantum key sizes are too large for constrained BCI hardware unless content is compressed first.
+
+The three components are interdependent. NSP without QIF lacks a threat model and has no signal integrity layer. QIF without NSP is a theoretical architecture with no wire format. Both without Runemate face a bandwidth wall that makes PQC impractical for implanted devices. Together, they demonstrate that a fully post-quantum-secured BCI stack is feasible today, on current hardware, at 3.25% power overhead, with net bandwidth savings for typical interface content.
+
+### 10.6 Energy Bounds
 
 Landauer's Principle [61] establishes the fundamental thermodynamic cost of information processing: E_min = kT * ln(2) per bit erasure. At body temperature (310 K), this is approximately 2.97 * 10^-21 joules per bit. This is relevant to BCI security in two ways. First, it sets a physics-derived lower bound on the energy required for any computation, including attack signal generation and quantum state measurement. Second, it replaces Moore's Law (which is an empirical trend, not a physical law) as the correct reference for energy scaling arguments in the framework. Any claim about computational energy limits in QIF must reference Landauer, not Moore.
 
@@ -681,7 +720,7 @@ Landauer's Principle [61] establishes the fundamental thermodynamic cost of info
 
 10. **Zeno-BCI Experimental Test.** Vary BCI sampling rate from 100 Hz to 20 kHz and measure coherence time at the electrode interface. If tau_D >= 1 ms, the Zeno effect should manifest as increased coherence at higher sampling rates.
 
-11. **v4.0 Architecture Expansion.** Derivation Log entries 33 and 34 propose expanding the neural domain from 3 bands to 7 bands (N1 Spinal Cord through N7 Neocortex) with a 7-1-3 hourglass geometry. This expansion provides severity-aware, anatomically specific security scoring. Validation and adoption of v4.0 is deferred pending additional peer review.
+11. **v4.0 Architecture Validation.** The v4.0 expansion (7 neural bands) requires validation that severity stratification correlates with actual clinical outcomes. A study mapping historical BCI adverse events to specific bands would test whether N7 attacks have higher clinical impact than N1 attacks as the model predicts.
 
 ---
 

@@ -2,8 +2,8 @@
 
 > **This is the CANONICAL reference for all QIF equations, values, and definitions.**
 > **All blogs, repo docs, and publications MUST be consistent with this file.**
-> **Last validated: 2026-02-06**
-> **Last audit: 2026-02-06**
+> **Last validated: 2026-02-07**
+> **Last audit: 2026-02-07**
 > **Next audit due: 2026-02-09**
 >
 > ## Update Triggers
@@ -26,26 +26,32 @@
 - **Name:** QIF — Quantum Indeterministic Framework for Neural Security
 - **Pronunciation:** "CHIEF"
 - **Predecessor:** ONI (Organic Neural Interface) — deprecated
-- **Layer model version:** v3.0 Hourglass (2026-02-02)
+- **Layer model version:** v4.0 Hourglass (2026-02-06)
 - **GitHub:** qinnovates/qinnovate
 
 ---
 
-## 2. Layer Architecture (v3.0 — Hourglass Model)
+## 2. Layer Architecture (v4.0 — Hourglass Model)
 
-> **v2.0 (14-layer OSI-based) is DEPRECATED.** Replaced 2026-02-02 with hourglass derived from neuroscience and quantum physics. No OSI heritage. See Derivation Log entries 1–14 for rationale.
+> **v2.0 (14-layer OSI-based) is DEPRECATED.** Replaced 2026-02-02. See Derivation Log entries 1–14.
 >
-> **v3.0 (8-band) refined to v3.1 (7-band, 3-1-3 symmetric) on 2026-02-02** after validation by quantum physics, neuroscience, and cybersecurity research agents. N4 (Identity & Consciousness) merged into N3 (Integrative Association). QI ranges lowered to defensible levels. Amygdala split (BLA/CeA). Cerebellum spans N1+N2. See Derivation Log entry 15.
+> **v3.0/3.1 (7-band, 3-1-3) refined to v4.0 (11-band, 7-1-3) on 2026-02-06.** The 3-band neural domain was expanded to 7 bands for complete neuroanatomical coverage. Each major brain structure now has its own band with severity stratification and BCI device mapping. See Derivation Log entries 33-34.
+>
+> v3.1 (7-band) remains valid as a **strategic view** — the 7-band neural expansion is a tactical decomposition, analogous to how the 14-layer classical model is a "zoom in" of the hourglass.
 
-### 3 Zones, 7 Bands (3-1-3 Symmetric)
+### 3 Zones, 11 Bands (7-1-3)
 
-**NEURAL DOMAIN (Upper Hourglass)**
+**NEURAL DOMAIN (Upper Hourglass) — 7 bands, severity-stratified**
 
-| Band | Name | Brain Regions | Determinacy | QI Range |
-|------|------|---------------|-------------|----------|
-| **N3** | Integrative Association | PFC, ACC, Broca, Wernicke, HIPP, BLA, insula | Quantum Uncertain | 0.3–0.5 |
-| **N2** | Sensorimotor Processing | M1, S1_cortex, V1, A1, PMC, SMA, PPC, cerebellum | Chaotic → Stochastic | 0.15–0.3 |
-| **N1** | Subcortical Relay | Thalamus, basal ganglia, cerebellum, brainstem, CeA | Stochastic | 0.05–0.15 |
+| Band | Name | Key Structures | Determinacy | QI Range |
+|------|------|----------------|-------------|----------|
+| **N7** | Neocortex | PFC, M1, V1, A1, Broca, Wernicke, PMC, SMA, PPC | Quantum Uncertain | 0.3–0.5 |
+| **N6** | Limbic System | Hippocampus, BLA, insula, ACC, cingulate | Chaotic → QU | 0.2–0.4 |
+| **N5** | Basal Ganglia | Striatum, GPi/GPe, STN, substantia nigra | Chaotic | 0.15–0.35 |
+| **N4** | Diencephalon | Thalamus, hypothalamus, VIM, ANT | Stochastic → Chaotic | 0.1–0.3 |
+| **N3** | Cerebellum | Cerebellar cortex, deep nuclei, vermis | Stochastic | 0.1–0.25 |
+| **N2** | Brainstem | Medulla, pons, midbrain, reticular formation | Stochastic | 0.05–0.15 |
+| **N1** | Spinal Cord | Cervical, thoracic, lumbar, sacral, cauda equina | Stochastic | 0.01–0.1 |
 
 **INTERFACE ZONE (Bottleneck) — Quasi-quantum**
 
@@ -61,41 +67,39 @@
 | **S2** | Digital Processing | Decoding, algorithms, classification | Deterministic | ~0 |
 | **S3** | Application | Clinical software, UI, data storage | Deterministic | 0 |
 
-### Key Anatomical Decisions (v3.1)
-- **Amygdala split:** BLA (basolateral, cortical-like, associative learning) → N3. CeA (central, subcortical, autonomic output) → N1.
-- **Cerebellum spans N1+N2:** Relay functions in N1, cerebellar-cortical motor loops in N2.
+### v3.1 → v4.0 Migration
+
+| v3.1 | v4.0 | Change |
+|------|------|--------|
+| N3 Integrative Association | **N7** Neocortex + **N6** Limbic | Split cortical cognition from emotional/memory |
+| N2 Sensorimotor Processing | **N7** (cortices) + **N5** Basal Ganglia + **N3** Cerebellum | Split cortical from subcortical motor |
+| N1 Subcortical Relay | **N4** Diencephalon + **N2** Brainstem + **N1** Spinal Cord | Full peripheral coverage |
+| I0, S1, S2, S3 | Unchanged | Silicon domain already granular |
+
+### Key Anatomical Decisions (v4.0)
+- **38 brain regions mapped** (was 17 in v3.1). Each region has a canonical band assignment and documented inter-region connections.
+- **Severity stratification:** Bands are ordered by clinical severity if compromised. N7 (neocortex) = highest cognitive impact. N1 (spinal cord) = reflex/motor only.
+- **BCI device mapping:** Each band lists which real-world devices interface with it (e.g., N5: Medtronic Percept STN DBS; N7: Neuralink N1).
 - **S1_cortex:** Primary somatosensory cortex renamed to avoid collision with S1 (Analog Front-End) band ID.
 
 ### Naming Convention
-- Format: `{Zone}{Number}` — N3, N2, N1, I0, S1, S2, S3
+- Format: `{Zone}{Number}` — N7, N6, N5, N4, N3, N2, N1, I0, S1, S2, S3
 - Numbers increase **away** from interface in both directions
 - No relation to OSI layer numbers
 
 ### Hourglass Geometry
 - **Width = state space / possibility space**
-- Widest at N3 (integrative association, max security-relevant indeterminacy) and S3 (max classical pathways)
+- Widest at N7 (neocortex, max security-relevant indeterminacy) and S3 (max classical pathways)
 - Narrowest at I0 (measurement collapses possibilities)
-- **3-1-3 symmetry:** 3 neural bands, 1 interface band, 3 silicon bands
+- **7-1-3 asymmetry:** 7 neural bands, 1 interface band, 3 silicon bands
+- Neural side is wider because the brain has 500M years of evolutionary complexity; silicon is human-designed with bounded complexity
 - The bottleneck has **real thickness** (quasi-quantum zone, not a line)
 
 ### Classical Ceiling
-The boundary between chaotic (N2) and quantum uncertain (N3) is the **classical ceiling** — below it, all unpredictability is in principle resolvable with better measurement; above it, the unpredictability is ontic (Bell's theorem). Classical security tools operate below the ceiling. QIF operates across the full spectrum.
+The boundary between N6 (chaotic → quantum uncertain) and N7 (quantum uncertain) is the **classical ceiling** — below it, all unpredictability is in principle resolvable with better measurement; above it, the unpredictability is ontic (Bell's theorem). Classical security tools operate below the ceiling. QIF operates across the full spectrum.
 
-### QI Range Philosophy (v3.1)
-QI ranges were lowered dramatically in v3.1 to avoid implying quantum dominance in the brain. QI measures **security-relevant indeterminacy**, not literal quantum effects. The highest band (N3) caps at 0.5, meaning "half the unpredictability at this band may be ontic." This is defensible without requiring proof of quantum cognition.
-
-### v2.0 → v3.0 Migration
-
-| v2.0 | v3.0/3.1 | Rationale |
-|------|------|-----------|
-| L1–L7 (OSI) | S3 | All classical networking collapses into Application band |
-| L8 (Neural Gateway) | I0 | Electrode-tissue boundary → Interface |
-| L9 (Signal Processing) | I0/N1 | Split between interface and subcortical relay |
-| L10 (Neural Protocol) | N1/N2 | Subcortical/sensorimotor |
-| L11 (Cognitive Transport) | N2 | Sensorimotor Processing |
-| L12 (Cognitive Session) | N3 | Integrative Association |
-| L13 (Semantic Layer) | N3 | Integrative Association |
-| L14 (Cognitive Sovereignty) | N3 | Integrative Association (merged from former N4) |
+### QI Range Philosophy (v4.0)
+QI ranges reflect security-relevant indeterminacy, not literal quantum effects. The highest band (N7) caps at 0.5, meaning "half the unpredictability at this band may be ontic." Ranges overlap between adjacent bands, reflecting that determinacy is a spectrum, not discrete levels. This is defensible without requiring proof of quantum cognition.
 
 ---
 
@@ -104,7 +108,7 @@ QI ranges were lowered dramatically in v3.1 to avoid implying quantum dominance 
 ### 3.1 Coherence Metric
 
 ```
-Cₛ = e^(−(σ²ᵩ + σ²τ + σ²ᵧ))
+Cₛ = e^(−(σ²ᵩ + Hτ + σ²ᵧ))
 ```
 
 | Component | Symbol | Definition | Formal |
@@ -151,7 +155,7 @@ Where v = axonal conduction velocity (NOT a universal constant k).
 
 **Empirically validated spatial extents:**
 
-| Band | Frequency | Coherent Spatial Extent | f × S (m·Hz) | Source |
+| Band | Frequency | Coherent Spatial Extent | f × S (m/s) | Source |
 |------|-----------|------------------------|--------------|--------|
 | High gamma | 60-100 Hz | 0.3-5 mm | ~0.08-0.4 | Jia et al. 2011 |
 | Low gamma | 30-60 Hz | 1-10 mm | ~0.04-0.4 | ECoG studies |
@@ -216,7 +220,7 @@ QI(b,t) = e^(-Σ(b,t))
 ```
 
 where:
-- b = band index (N3, N2, N1, I0, S1, S2, S3)
+- b = band index (N7, N6, N5, N4, N3, N2, N1, I0, S1, S2, S3)
 - t = time window
 - Σ(b,t) = Σc(b,t) + Σq(b,t) = total anomaly score
 - QI output: 0 to 1 (1 = perfectly normal, 0 = maximally anomalous)
@@ -228,15 +232,17 @@ The exponential form is NOT arbitrary — it is a Boltzmann factor. Σ plays the
 ### 4.2 Classical Terms (Σc)
 
 ```
-Σc = σ²φ + Hτ/ln(N) + σ²γ + Dsf
+Σc(b) = w₁·σ²φ(b) + w₂·Hτ(b)/ln(N) + w₃·σ²γ(b) + w₄·Dsf(b)
 ```
 
-| Term | Symbol | What it measures | Formula |
-|------|--------|-----------------|---------|
-| Phase coherence | σ²φ | Channel synchronization | (1-R)·π² where R = \|mean(e^(iφ))\| |
-| Transport entropy | Hτ/ln(N) | Pathway integrity (normalized) | -Σᵢ ln(pᵢ) / ln(N) |
-| Amplitude stability | σ²γ | Signal strength consistency | (1/n)Σᵢ((Aᵢ-Ā)/Ā)² |
-| Scale-frequency | Dsf | Physical plausibility | (ln(f·L/v_expected))² |
+| Term | Symbol | Weight | What it measures | Formula |
+|------|--------|--------|-----------------|---------|
+| Phase coherence | σ²φ | w₁ | Channel synchronization | (1-R)·π² where R = \|mean(e^(iφ))\| |
+| Transport entropy | Hτ/ln(N) | w₂ | Pathway integrity (normalized) | -Σᵢ ln(pᵢ) / ln(N) |
+| Amplitude stability | σ²γ | w₃ | Signal strength consistency | (1/n)Σᵢ((Aᵢ-Ā)/Ā)² |
+| Scale-frequency | Dsf | w₄ | Physical plausibility | (ln(f·L/v_expected))² |
+
+**Calibration weights** w₁ through w₄ are band-specific, calibratable parameters. Their values are not yet experimentally determined — this is an open calibration requirement. Default: w₁ = w₂ = w₃ = w₄ = 1.0 (equal weighting).
 
 **Normalization change:** Transport entropy Hτ is now divided by ln(N) where N = number of channels. This normalizes it to [0, ~1] regardless of channel count, preventing it from dominating in high-channel-count BCIs (Neuralink 1024 channels vs consumer 4 channels).
 
@@ -259,14 +265,18 @@ L = v / f
 ### 4.4 Quantum Terms (Σq)
 
 ```
-Σq = (1-ΓD(t))·Q̂i + Q̂t + (1-ΓD(t))·Q̂e
+Σq = (1-ΓD(t))·[ψ₁·Q̂i − ψ₃·Q̂e] + ψ₂·Q̂t
 ```
 
-| Term | Symbol | What it measures | Gated? |
-|------|--------|-----------------|--------|
-| Indeterminacy | Q̂i | Quantum uncertainty (SvN(ρ)/ln(d)) | Yes — decays with decoherence |
-| Tunneling | Q̂t | Barrier penetration (T = e^(-2κd)) | **No** — tunneling persists classically |
-| Entanglement | Q̂e | Non-classical correlations (E(ρAB)/ln(d)) | Yes — decays with decoherence |
+| Term | Symbol | Weight | What it measures | Gated? | Sign |
+|------|--------|--------|-----------------|--------|------|
+| Indeterminacy | Q̂i | ψ₁ | Quantum uncertainty (SvN(ρ)/ln(d)) | Yes — decays with decoherence | + (increases anomaly) |
+| Tunneling | Q̂t | ψ₂ | Barrier penetration (T = e^(-2κd)) | **No** — tunneling persists classically | + (increases anomaly) |
+| Entanglement | Q̂e | ψ₃ | Non-classical correlations (E(ρAB)/ln(d)) | Yes — decays with decoherence | **−** (protective: reduces anomaly) |
+
+**Weights** ψ₁, ψ₂, ψ₃ are calibratable parameters (default: ψ₁ = ψ₂ = ψ₃ = 1.0). Band-specific calibration pending experimental data.
+
+**Sign convention:** Q̂e is SUBTRACTED because entanglement is a protective factor — quantum entangled states are harder to clone (no-cloning theorem) and harder to spoof. More entanglement means LESS anomaly, HIGHER QI.
 
 **Critical change (Entry 26, Gemini correction):** Tunneling is UNGATED. Unlike indeterminacy and entanglement, tunneling does not require maintained quantum coherence — it is a single-particle phenomenon that persists even in thermally noisy environments. Gating it by decoherence was physically incorrect.
 
@@ -303,6 +313,10 @@ All quantum terms (ΓD, SvN, Q̂t, E(ρAB)) are derived from the system Hamilton
 | Tunneling gated by ΓD | Tunneling UNGATED (persists classically) | Gemini review |
 | Hτ raw sum | Hτ/ln(N) normalized | Session derivation |
 | Separate λ and S | Unified L = v/f | Entry 28 |
+| Cₛ equation uses σ²τ | Updated to Hτ (σ²τ deprecated) | QwQ-32B math review (2026-02-07) |
+| f × S column header "m·Hz" | Corrected to "m/s" (Hz = s⁻¹, so m·Hz = m/s) | QwQ-32B math review (2026-02-07) |
+| Σq missing weights, wrong sign | Added ψ₁,ψ₂,ψ₃ weights; Q̂e now subtracted (protective) | QwQ-32B math review (2026-02-07) |
+| §4.1 band index list (v3.1) | Updated to v4.0: N7–N1, I0, S1–S3 | Grok-3 consistency review (2026-02-07) |
 
 ### 4.8 Open Research Questions
 
@@ -398,7 +412,7 @@ All quantum terms (ΓD, SvN, Q̂t, E(ρAB)) are derived from the system Hamilton
 **Context:** Cross-validated all blog math against ONI repo and external literature.
 
 **Key corrections applied:**
-1. f×S constant: 10⁶ → 1-10 m·Hz
+1. f×S constant: 10⁶ → 1-10 m/s
 2. Spatial scales: physically impossible values → empirically measured extents
 3. Layer numbers: v1.0 → v2.0 across all blogs
 4. RSA estimates: "100 seconds" → Gidney peer-reviewed estimates
@@ -473,7 +487,7 @@ Full derivations: QIF-DERIVATION-LOG.md Entry 35
 
 ---
 
-*Document version: 4.0*
+*Document version: 4.1*
 *Created: 2026-02-02*
-*Last updated: 2026-02-06*
+*Last updated: 2026-02-07*
 *Maintainer: Kevin Qi*

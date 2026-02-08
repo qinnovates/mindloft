@@ -8,31 +8,31 @@
       "js_bytes": 0
     },
     "staves": {
-      "total_bytes": 856,
+      "total_bytes": 911,
       "valid": true,
       "header_bytes": 16,
       "string_pool_bytes": 427,
       "string_pool_entries": 59,
-      "style_table_bytes": 158,
-      "style_table_entries": 12,
-      "dom_bytecode_bytes": 255,
-      "dom_opcodes": 88,
-      "total_staves_bytes": 856
+      "style_table_bytes": 144,
+      "style_table_entries": 10,
+      "dom_bytecode_bytes": 324,
+      "dom_opcodes": 111,
+      "total_staves_bytes": 911
     },
     "compression": {
-      "ratio_percent": 64.2,
-      "bytes_saved": 1537,
-      "reduction_factor": 2.8
+      "ratio_percent": 61.9,
+      "bytes_saved": 1482,
+      "reduction_factor": 2.6
     },
     "pq_comparison": {
-      "pq_handshake_overhead_bytes": 23666,
-      "content_savings_bytes": 1537,
-      "net_savings_bytes": -22129,
+      "pq_handshake_overhead_bytes": 20278,
+      "content_savings_bytes": 1482,
+      "net_savings_bytes": -18796,
       "pq_offset": false,
-      "sessions_to_offset": 16,
-      "classical_total": 11905,
-      "pq_total": 35571,
-      "pq_plus_staves_total": 34034
+      "sessions_to_offset": 14,
+      "classical_total": 3232,
+      "pq_total": 23510,
+      "pq_plus_staves_total": 22028
     }
   },
   {
@@ -44,31 +44,31 @@
       "js_bytes": 1628
     },
     "staves": {
-      "total_bytes": 4353,
+      "total_bytes": 4784,
       "valid": true,
       "header_bytes": 16,
       "string_pool_bytes": 1933,
-      "string_pool_entries": 243,
-      "style_table_bytes": 559,
-      "style_table_entries": 47,
-      "dom_bytecode_bytes": 1845,
-      "dom_opcodes": 666,
-      "total_staves_bytes": 4353
+      "string_pool_entries": 215,
+      "style_table_bytes": 366,
+      "style_table_entries": 25,
+      "dom_bytecode_bytes": 2469,
+      "dom_opcodes": 874,
+      "total_staves_bytes": 4784
     },
     "compression": {
-      "ratio_percent": 78.9,
-      "bytes_saved": 16280,
-      "reduction_factor": 4.7
+      "ratio_percent": 76.8,
+      "bytes_saved": 15849,
+      "reduction_factor": 4.3
     },
     "pq_comparison": {
-      "pq_handshake_overhead_bytes": 23666,
-      "content_savings_bytes": 16280,
-      "net_savings_bytes": -7386,
+      "pq_handshake_overhead_bytes": 20278,
+      "content_savings_bytes": 15849,
+      "net_savings_bytes": -4429,
       "pq_offset": false,
       "sessions_to_offset": 2,
-      "classical_total": 30145,
-      "pq_total": 53811,
-      "pq_plus_staves_total": 37531
+      "classical_total": 21472,
+      "pq_total": 41750,
+      "pq_plus_staves_total": 25901
     }
   },
   {
@@ -80,31 +80,31 @@
       "js_bytes": 764
     },
     "staves": {
-      "total_bytes": 3355,
+      "total_bytes": 3509,
       "valid": true,
       "header_bytes": 16,
       "string_pool_bytes": 1874,
-      "string_pool_entries": 150,
-      "style_table_bytes": 266,
-      "style_table_entries": 24,
-      "dom_bytecode_bytes": 1199,
-      "dom_opcodes": 410,
-      "total_staves_bytes": 3355
+      "string_pool_entries": 132,
+      "style_table_bytes": 177,
+      "style_table_entries": 13,
+      "dom_bytecode_bytes": 1442,
+      "dom_opcodes": 491,
+      "total_staves_bytes": 3509
     },
     "compression": {
-      "ratio_percent": 68.0,
-      "bytes_saved": 7145,
-      "reduction_factor": 3.1
+      "ratio_percent": 66.6,
+      "bytes_saved": 6991,
+      "reduction_factor": 3.0
     },
     "pq_comparison": {
-      "pq_handshake_overhead_bytes": 23666,
-      "content_savings_bytes": 7145,
-      "net_savings_bytes": -16521,
+      "pq_handshake_overhead_bytes": 20278,
+      "content_savings_bytes": 6991,
+      "net_savings_bytes": -13287,
       "pq_offset": false,
-      "sessions_to_offset": 4,
-      "classical_total": 20012,
-      "pq_total": 43678,
-      "pq_plus_staves_total": 36533
+      "sessions_to_offset": 3,
+      "classical_total": 11339,
+      "pq_total": 31617,
+      "pq_plus_staves_total": 24626
     }
   }
 ]

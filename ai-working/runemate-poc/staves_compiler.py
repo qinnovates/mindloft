@@ -146,12 +146,43 @@ class StyleTable:
 
 
 class StavesHTMLParser(HTMLParser):
-    def __init__(self, string_pool: StringPool):
+    def __init__(self, string_pool: StringPool, style_table: StyleTable, css_rules: list[tuple[str, dict]]):
         super().__init__()
         self.pool = string_pool
+        self.style_table = style_table
+        self.css_rules = css_rules
         self.opcodes: list[bytes] = []
         self.skip_content = False
         self.skip_tags = {"style", "script", "meta", "link"}
+
+    def _match_css_selectors(self, tag: str, attrs: list[tuple[str, str | None]]) -> Optional[int]:
+        """Resolve CSS selectors to this element at compile time.
+        Returns style table index if a rule matches, None otherwise."""
+        attr_dict = {k: v for k, v in attrs}
+        classes = set(attr_dict.get("class", "").split())
+        elem_id = attr_dict.get("id", "")
+
+        for selector, properties in self.css_rules:
+            selector = selector.strip()
+            matched = False
+            # ID selector: #foo
+            if selector.startswith("#") and elem_id == selector[1:]:
+                matched = True
+            # Class selector: .foo
+            elif selector.startswith(".") and selector[1:] in classes:
+                matched = True
+            # Tag selector: div
+            elif selector == tag:
+                matched = True
+            # Tag.class: div.foo
+            elif "." in selector and not selector.startswith("."):
+                parts = selector.split(".", 1)
+                if parts[0] == tag and parts[1] in classes:
+                    matched = True
+
+            if matched:
+                return self.style_table.add(selector, properties)
+        return None
 
     def handle_starttag(self, tag, attrs):
         if tag in self.skip_tags:
@@ -167,10 +198,24 @@ class StavesHTMLParser(HTMLParser):
         else:
             self.opcodes.append(struct.pack("<BBB", OP_OPEN, tag_id, len(attrs)))
 
-        # Encode attributes
+        # Resolve CSS styles to this element (compile-time style resolution)
+        style_idx = self._match_css_selectors(tag, attrs)
+        if style_idx is not None:
+            self.opcodes.append(struct.pack("<BH", OP_STYLE_REF, style_idx))
+
+        # Encode inline style as a style table entry
+        for name, value in attrs:
+            if name == "style" and value:
+                inline_props = {}
+                for prop_match in re.finditer(r"([\w-]+)\s*:\s*([^;]+);?", value):
+                    inline_props[prop_match.group(1).strip()] = prop_match.group(2).strip()
+                if inline_props:
+                    inline_idx = self.style_table.add(f"__inline_{id(attrs)}", inline_props)
+                    self.opcodes.append(struct.pack("<BH", OP_STYLE_REF, inline_idx))
+
+        # Encode attributes (excluding style, which was handled above)
         for name, value in attrs:
             if name == "style":
-                # Inline styles: skip for now (handled by style table)
                 continue
             name_idx = self.pool.add(name)
             value_idx = self.pool.add(value or "")
@@ -225,14 +270,14 @@ def compile_html_to_staves(html_content: str) -> tuple[bytes, dict]:
     pool = StringPool()
     style_table = StyleTable(pool)
 
-    # Extract and compile CSS
+    # Extract and parse CSS rules
+    css_rules = []
     css_blocks = re.findall(r"<style[^>]*>(.*?)</style>", html_content, re.DOTALL)
     for css_text in css_blocks:
-        for selector, properties in parse_css(css_text):
-            style_table.add(selector, properties)
+        css_rules.extend(parse_css(css_text))
 
-    # Parse HTML to DOM opcodes
-    parser = StavesHTMLParser(pool)
+    # Parse HTML to DOM opcodes (with compile-time style resolution)
+    parser = StavesHTMLParser(pool, style_table, css_rules)
     parser.feed(html_content)
     dom_bytecode = parser.get_bytecode()
 
@@ -297,15 +342,15 @@ def verify_staves(staves_binary: bytes) -> bool:
 
 # ─── PQ Overhead Constants ────────────────────────────────────────────────────
 
+# Canonical values derived from NSP-PROTOCOL-SPEC.md Section 4.8 message structs.
+# NSP uses compact custom certificates (not X.509), so these are smaller than
+# generic TLS estimates. All values include ~20B extension padding per hello.
 PQ_OVERHEAD = {
-    "classical_handshake": 9_512,
-    "pq_level3_handshake": 33_178,
-    "pq_level5_handshake": 42_710,
-    "classical_cert_chain": 3_500,
-    "pq_hybrid_cert_chain": 19_223,
-    "classical_rekey": 64,
-    "pq_level3_rekey": 2_272,
-    "aes_gcm_per_frame": 41,  # nonce + tag + header (same for both)
+    "classical_handshake": 839,       # ECDH-P256 + ECDSA + NSP custom certs
+    "pq_level3_handshake": 21_117,    # ML-KEM-768 + ECDH + ML-DSA-65 + NSP certs
+    "classical_rekey": 134,           # ECDH key exchange only
+    "pq_level3_rekey": 2_276,         # ML-KEM-768 key exchange only
+    "aes_gcm_per_frame": 72,          # 24 header + 32 Merkle + 16 auth tag (same for both)
 }
 
 

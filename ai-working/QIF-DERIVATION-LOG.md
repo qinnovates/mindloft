@@ -23,6 +23,9 @@
 
 | Date | Event | Link |
 |------|-------|------|
+| 2026-02-07 | First Multi-Model Validation Cycle: QwQ-32B found 3 equation errors in QIF-TRUTH, Grok-3 found stale NSP terminology, Gemini confirmed 5 fixes + found 2 minor NSP issues, all fixed | [Entry 41](#entry-41-first-multi-model-validation-cycle--equation-fixes-and-cross-document-sync) |
+| 2026-02-07 | Unrestricted AI Validation Team: multi-model adversarial review protocol, v4.0 propagation to all docs, DeepSeek-R1 + QwQ-32B + WhiteRabbitNeo team | [Entry 40](#entry-40-unrestricted-ai-validation-team--multi-model-adversarial-review-protocol) |
+| 2026-02-07 | Project Runemate: 3-pass Gemini review, NSP number unification, cross-document consistency, AI transparency log | [Entry 39](#entry-39-project-runemate--three-pass-independent-review-and-nsp-number-unification) |
 | 2026-02-06 ~late night | Unified Neural Security Taxonomy: 60 techniques across 11 MITRE-compatible tactics, deduplication of 3 attack inventories, T2000+ ID range, extended schema with coupling/detection/status fields | [Entry 37](#entry-37-unified-neural-security-taxonomy-mitre-attck-compatible-bci-threat-registry) |
 | 2026-02-06 ~08:15 AM | Black Hole Security Principle: Hawking/Susskind/Maldacena applied to BCI, 4 derivations, scrambling bound, holographic I0, Page curve = key exchange | [Entry 35](#entry-35-the-black-hole-security-principle--hawkingsusskindmaldacena-applied-to-bci-security) |
 | 2026-02-06 ~09:00 AM | v4.0 IMPLEMENTED: 11 bands in config.py, quantum proof scenario, hourglass diagram as-code, JSON export, framework name validated | [Entry 34](#entry-34-v40-implemented--quantum-proof-scenario--hourglass-diagram--name-validation) |
@@ -4075,8 +4078,255 @@ All three downstream artifacts updated:
 
 ---
 
-*Document version: 3.1*
+## Entry 39: Project Runemate — Three-Pass Independent Review and NSP Number Unification
+
+**Date:** 2026-02-07
+**Context:** Runemate spec (RUNEMATE.md), staves_compiler.py PoC, QIF whitepaper (v5), and NSP protocol spec subjected to systematic independent AI peer review. Three passes through Gemini 2.5 Pro, with fixes applied between each pass. User explicitly requested AI transparency logging.
+
+### AI Systems Used (Transparency Log)
+
+| AI System | Role | When | What |
+|-----------|------|------|------|
+| **Claude Opus 4.6** (Anthropic) | Primary author, code implementation, coordination | 2026-02-07 all session | Wrote all spec additions, fixed code, computed NSP-derived numbers, orchestrated review cycle |
+| **Gemini 2.5 Pro** (Google) | Independent peer reviewer (3 passes) | 2026-02-07 | Pass 1: 8 gaps identified (layout engine, OP_STYLE_REF, interactivity, media, security, edge cases, no_std, CSS). Pass 2: 4 new gaps (delta updates, state management, error display, conformance testing). Pass 3: 6 cross-document inconsistencies (PQC numbers, band mapping, gateway, complexity, side channels, firmware) |
+| **Claude Opus 4.6** | Research agent (open model survey) | 2026-02-07 | Identified DeepSeek-R1-0528, QwQ-32B, WhiteRabbitNeo V3 as best open models for adversarial review |
+| **Gemini 2.5 Pro** | Cross-validated open model recommendation | 2026-02-07 | Confirmed DeepSeek-R1 for math/reasoning, WhiteRabbitNeo V3 for cybersecurity specialist review |
+
+### Pass 1 Findings and Fixes
+
+Gemini identified 8 gaps. All resolved:
+1. **Layout Engine gap** → Added Taffy crate (CSS Flexbox in Rust no_std) as layout strategy
+2. **OP_STYLE_REF missing** → Added `_match_css_selectors()` to staves_compiler.py (compile-time CSS resolution)
+3. **Interactivity model** → Added declarative event model (OP_EVENT opcodes)
+4. **Media/asset handling** → Added sprite sheet + icon font strategy
+5. **Security model incomplete** → Added interpreter threat model with fuzzing mandate
+6. **Compression edge cases** → Added worst-case analysis table
+7. **no_std challenges** → Added concrete implementation plan (alloc crate, heapless, defmt)
+8. **CSS parser simplistic** → Acknowledged as PoC limitation, production uses cssparser crate
+
+### Pass 2 Findings and Fixes
+
+Gemini upgraded to A-. 4 new gaps identified, all resolved:
+1. **Delta update mechanism** → Added DSTV header format with 7 patch operations + sequence counter
+2. **On-chip state management** → Added 3-tier model (DOM tree, local UI state, session state)
+3. **Error display strategy** → Added hardcoded error Stave with 5 error codes + safe mode
+4. **Compiler conformance testing** → Added staves-verify CLI spec + test matrix
+
+### Pass 3: Cross-Document Inconsistencies (Critical)
+
+With full ecosystem context (QIF + NSP + RUNEMATE + compiler), Gemini identified inconsistencies invisible from any single document:
+
+1. **PQC overhead numbers inconsistent across all three docs** (CRITICAL)
+   - RUNEMATE.md said ~32.4 KB handshake, PoC used 33,178 B, whitepaper said ~23.7 KB
+   - **Fix:** Computed canonical values from NSP-PROTOCOL-SPEC.md Section 4.8 message struct definitions:
+     - PQ handshake: 21,117 B (~20.6 KB) — ClientHello(41) + ServerHello(38) + ClientKE(1253) + ServerKE(1157) + 2×Auth(9246) + 2×Finished(48) + DeviceIdentityCert(40)
+     - Classical handshake: 839 B (~0.8 KB)
+     - Delta: 20,278 B (~20.3 KB)
+   - Updated: RUNEMATE.md Section 1 + Section 4, staves_compiler.py PQ_OVERHEAD constants, whitepaper Section 7.8, runemate-constants.ts
+
+2. **QIF band mapping wrong** (CRITICAL)
+   - RUNEMATE.md had S1→Forge (wrong). Per QIF-TRUTH.md: S1=Analog Front-End (implant)
+   - **Fix:** S3→Forge (gateway), S2→Scribe (implant), S1→unchanged
+   - Added QI Coherence Metric closed-loop verification subsection
+
+3. **Gateway unmodeled SPoF** (HIGH) → Added Gateway Threat Model section (5 threats, mitigations, residual risk)
+4. **Computational complexity attacks** (NEW) → Added formal bound: O(n×d×s), max 262,144 ops
+5. **Renderer side channels** (NEW) → Acknowledged, 3 mitigations deferred to Phase 2
+6. **Scribe firmware lifecycle** (NEW) → Added SPHINCS+ signed updates, dual-bank flash, E006 error code
+
+### Key Insight: Single Source of Truth Matters
+
+The PQC number inconsistency was invisible when reviewing each document in isolation. Only when Gemini received all three documents simultaneously did the cross-document drift become apparent. This validates the as-code principle: numbers should be computed from one source (NSP message struct definitions) and propagated, not manually synchronized.
+
+### Breakeven Improvement
+
+NSP-derived numbers are BETTER for Runemate's argument:
+- Old breakeven: ~30 KB (based on inflated handshake estimates)
+- New breakeven: ~23 KB (based on canonical NSP struct sizes)
+- This means more BCI interfaces cross into net-savings territory
+
+### Status
+
+- **Classification:** Cross-document validation + implementation. Advances Runemate from isolated spec to ecosystem-integrated component.
+- **Impact:** Critical. All three core documents (QIF Whitepaper, NSP Spec, RUNEMATE.md) now use consistent, NSP-derived PQC overhead numbers. Band mapping aligned with QIF-TRUTH.md.
+- **Gemini Grade:** B+ after Pass 3 (targeting A+ in re-review with fixes applied)
+- **Dependencies:** Entry 31 (NSP PQC), Entry 35 (Black Hole Principle), QIF-TRUTH.md (band definitions)
+- **Next:** Re-submit full package (including QIF-TRUTH.md + this derivation log) to Gemini for A+ re-review. Set up DeepSeek-R1-0528 via OpenRouter for adversarial math/reasoning review. Optional: WhiteRabbitNeo V3 for cybersecurity specialist review.
+
+---
+
+## Entry 40: Unrestricted AI Validation Team — Multi-Model Adversarial Review Protocol
+
+**Date:** 2026-02-07
+**Context:** Kevin directed the establishment of a multi-AI adversarial review protocol using unrestricted open-source models alongside commercial AI systems. The goal: subject the entire QIF ecosystem to maximum scrutiny before human expert review by academia and industry. Each model brings different strengths, and cross-referencing their critiques catches blind spots any single reviewer misses.
+**Status:** IMPLEMENTED — first round of multi-model review running
+**AI Systems:** See table below
+**Human Decision:** Kevin approved the 3-model unrestricted team, provided the OpenRouter API key, and directed that all AI usage be logged for transparency
+
+### The Validation Team
+
+| AI System | Role | Access | Strength | Limitation |
+|-----------|------|--------|----------|------------|
+| **Gemini 2.5 Pro** (Google) | Primary independent reviewer | CLI (`gemini`) | Cross-document consistency, architecture validation, academic framing | Conservative, grades based on documentation completeness |
+| **DeepSeek-R1-0528** (DeepSeek) | Adversarial security reviewer | OpenRouter API (free) | 671B MoE, SOTA reasoning, visible chain-of-thought, lighter safety filtering | Slower (large model), not cybersecurity-specialized |
+| **QwQ-32B** (Alibaba/Qwen) | Math/physics verifier | OpenRouter API (free) | Fast reasoning, 128K context, good at mathematical verification | 32B smaller than R1, general-purpose |
+| **WhiteRabbitNeo V3** (WhiteRabbitNeo) | Cybersecurity specialist | Local only (7B GGUF) | Trained on 1.7M security samples, truly uncensored for security analysis | Requires local setup, weak at math |
+| **Claude Opus 4.6** (Anthropic) | Primary author, coordinator | Direct | Implementation, code, orchestration, synthesis | Author bias (mitigated by independent reviewers) |
+
+### Why Unrestricted Models
+
+Commercial AI systems (Claude, Gemini, GPT-4) have safety guardrails that can prevent them from fully engaging with adversarial security scenarios. For a BCI security framework, we NEED models that will:
+- Generate realistic exploit chains without self-censoring
+- Reason adversarially about attack surfaces
+- Challenge security claims without diplomatic hedging
+- Identify vulnerabilities that safety-filtered models might gloss over
+
+DeepSeek-R1 and QwQ-32B are Chinese-origin models with lighter safety filtering. WhiteRabbitNeo V3 is purpose-built for offensive/defensive cybersecurity with no safety filters. Together, they complement the commercial models' strengths in consistency checking and academic framing.
+
+### Review Protocol
+
+1. **Architecture sync** — Update all documents to latest version (v4.0, NSP-derived PQC numbers)
+2. **Gemini review** — Cross-document consistency, attack taxonomy validation, scientific rigor
+3. **DeepSeek-R1 review** — Adversarial security analysis: find the weakest link, challenge assumptions
+4. **QwQ-32B review** — Mathematical verification: dimensional analysis, bounds checking, equation consistency
+5. **WhiteRabbitNeo review** (future) — Cybersecurity specialist: exploit chain feasibility, protocol weaknesses
+6. **Synthesis** — Merge findings, fix issues, iterate until all models agree on A/A+
+7. **Human review** — Submit to academia and industry experts for final validation
+
+### Architecture Update: v3.1 → v4.0 Propagated
+
+During this entry, the v4.0 architecture (11-band, 7-1-3) was propagated to ALL documents:
+- **QIF-TRUTH.md** — Updated from v3.1 to v4.0, 7 neural bands defined
+- **QIF-WHITEPAPER-v5.md** — Section 4 rewritten for 11-band model, abstract updated, §2.3 updated, §5.1 band index expanded
+- **NSP-PROTOCOL-SPEC.md** — Band ID field expanded (0x00-0x0A), Band-Specific Parameters table expanded to 11 bands, framework version updated
+- **RUNEMATE.md** — Section 9 QIF mapping expanded to all 7 neural bands
+
+### Gemini Review Results (Post-v4.0 Update)
+
+Grade: B+ (pending full v4.0 propagation verification)
+Key findings:
+- Architecture now consistent across most documents
+- Identified remaining stale v3.1 references (abstract tunneling gating, §2.3 "7-band") — FIXED
+- NSP Band ID field only went to N3 — FIXED (now goes to 0x0A=N7)
+- NSP Band-Specific Parameters only had 7 rows — FIXED (now 11 rows)
+- Requested calibration weights in QIF-TRUTH.md Sc equation — FIXED
+
+### Purpose: Pre-Human-Review Quality Gate
+
+This multi-model AI validation is explicitly a pre-screening step before submitting the ecosystem to human experts. The goal is to catch every consistency error, mathematical mistake, and logical gap BEFORE academia and industry security researchers review the work. By the time human reviewers see it, every issue that an AI can find should already be resolved. The remaining critiques should be genuinely novel insights that require human domain expertise.
+
+### Status
+
+- **Classification:** Methodology + infrastructure — establishing the AI validation pipeline
+- **Impact:** Major — defines how QIF will be validated going forward
+- **Dependencies:** Entry 39 (Runemate review), Entries 33-34 (v4.0 architecture)
+- **Next:** Collect DeepSeek-R1 and QwQ-32B results, synthesize findings, fix any new issues, re-run all three reviewers until convergence
+
+---
+
+## Entry 41: First Multi-Model Validation Cycle — Equation Fixes and Cross-Document Sync
+
+**Date:** 2026-02-07 (late evening)
+**Context:** The multi-model AI validation team (established in Entry 40) completed its first review cycle. Four models reviewed focused sections of the QIF ecosystem simultaneously: Grok-3 Mini on cross-document consistency, Gemini 2.5 Pro on previous fix verification, QwQ-32B on equation correctness, and DeepSeek-R1-0528 on adversarial security (timed out).
+**Status:** COMPLETED — all fixable issues resolved, QIF-TRUTH.md now v4.1
+**AI Systems:** Grok-3 Mini, Gemini 2.5 Pro, QwQ-32B, DeepSeek-R1-0528 (attempted), Claude Opus 4.6
+**Human Decision:** Kevin directed the multi-model review protocol and approved the focused-payload strategy after full-document approach timed out on free-tier APIs
+
+### Strategy: Focused Payloads
+
+The previous attempt to send all 218KB of ecosystem documents to each model via OpenRouter free tier timed out for every model. The solution: extract focused ~15-30KB sections relevant to each model's specialization:
+
+- **Grok-3 Mini:** Architecture sections from all 3 documents (band lists, layer definitions, version numbers)
+- **Gemini 2.5 Pro:** The 5 specific sections that were previously fixed, for confirmation
+- **QwQ-32B:** Equation sections only (§3.1, §3.2, §4.2, §4.4 from QIF-TRUTH + §5.5 from whitepaper)
+- **DeepSeek-R1:** NSP attack surface (handshake, key hierarchy, threat model sections)
+
+This is a key methodological insight: **match payload to model specialization**. A math verifier doesn't need the attack taxonomy. A consistency checker doesn't need the full equation derivations.
+
+### Findings by Model
+
+#### Grok-3 Mini (xAI) — Cross-Document Consistency
+
+**Grade: C** (1 real issue + 1 false positive)
+
+1. **REAL: NSP §1 Terminology stale band list.** The terminology table still said "seven QIF Hourglass bands: N3, N2, N1, I0, S1, S2, S3" — a v3.1 reference that was missed during the v4.0 propagation.
+   - **Fix:** Changed to "eleven QIF v4.0 Hourglass bands: N7, N6, N5, N4, N3, N2, N1, I0, S1, S2, S3"
+
+2. **FALSE POSITIVE: Whitepaper title "v5.0" vs architecture "v4.0".** These are intentionally different version numbers — v5.0 is the document version (fifth major revision), v4.0 is the architecture version (fourth layer model). No fix needed.
+
+#### Gemini 2.5 Pro (Google) — Fix Verification + New Issues
+
+**Grade: C** (confirmed 5/5 previous fixes, found 2 new minor issues, 1 false positive)
+
+**Confirmed fixes (all correct):**
+1. HelloRetryRequest in transcript hash — present and correct
+2. Separate client/server finished keys — present and correct
+3. Hard sequence number rekey trigger at 2^31 — present and correct
+4. Flat trust model documented — present and correct
+5. Group_size=1 SPHINCS+ omission rule — present and correct
+
+**New issues found:**
+1. **MINOR: Timestamp wrap at 49.7 days.** The 4-byte millisecond timestamp wraps at 2^32 ms (~49.7 days) with no documented wrap behavior.
+   - **Fix:** Added documentation specifying modulo-2^32 monotonic handling and that key rotation resets the session clock.
+2. **MINOR: QI Components field (2 bytes, 4×4-bit) has no quantum anomaly bits.** For Tier T3 devices that compute quantum terms, there's no way to encode which quantum term triggered an alert.
+   - **Fix:** Added note that v0.3 encodes classical terms only; future revisions MAY extend to 4 bytes for quantum indicators.
+
+**False positive:** "QIF-TRUTH §4.2 only defines Σc, missing Σq" — this was because the extraction script only sent §4.2 to Gemini, not §4.4 which defines Σq. The full document has both.
+
+#### QwQ-32B (Alibaba/Qwen) — Math/Physics Verification
+
+**Grade: C overall** (whitepaper equations correct, QIF-TRUTH had 3 errors)
+
+1. **CRITICAL: Coherence equation uses deprecated σ²τ.** QIF-TRUTH §3.1 equation still read `Cₛ = e^(−(σ²ᵩ + σ²τ + σ²ᵧ))` — despite the table below correctly defining Hτ and noting σ²τ is deprecated.
+   - **Fix:** Updated equation to `Cₛ = e^(−(σ²ᵩ + Hτ + σ²ᵧ))`
+
+2. **CRITICAL: f×S table column units "m·Hz" should be "m/s".** Since Hz = s⁻¹, the product m·Hz = m·s⁻¹ = m/s. The conventional notation for velocity is m/s.
+   - **Fix:** Changed column header from "f × S (m·Hz)" to "f × S (m/s)"
+
+3. **CRITICAL: Σq equation missing weights and wrong sign.** QIF-TRUTH §4.4 read `Σq = (1-ΓD(t))·Q̂i + Q̂t + (1-ΓD(t))·Q̂e` — missing calibration weights ψ₁,ψ₂,ψ₃ and Q̂e had the wrong sign (+, should be −). The whitepaper already had the correct form: `Sq = (1-ΓD)·[ψ₁Q̂i − ψ₃Q̂e] + ψ₂Q̂t`.
+   - **Fix:** Updated QIF-TRUTH to match whitepaper. Added weights, negative sign on Q̂e, and explanatory notes about sign convention (entanglement is protective, reduces anomaly).
+
+**Key insight from QwQ:** The whitepaper was AHEAD of QIF-TRUTH.md on the Σq equation. This means truth was NOT flowing outward (TRUTH → whitepaper) as mandated — it was flowing backward. This has now been corrected; QIF-TRUTH is again canonical.
+
+#### DeepSeek-R1-0528 (DeepSeek) — Adversarial Security
+
+**Status: TIMED OUT** — the free-tier OpenRouter API did not return a response within 300 seconds for the focused NSP security payload. This model requires either a paid API tier or a shorter/more focused prompt. To be retried.
+
+### Additional Fix: Band Index in §4.1
+
+While applying the QwQ fixes, spotted that QIF-TRUTH §4.1 still listed v3.1 band indices `(N3, N2, N1, I0, S1, S2, S3)` instead of v4.0 `(N7, N6, N5, N4, N3, N2, N1, I0, S1, S2, S3)`. Fixed.
+
+### Methodology Lessons Learned
+
+1. **Focused payloads work.** Sending 15-30KB per model based on specialization succeeds where 218KB times out on free APIs.
+2. **Truth can drift BEHIND dependent documents.** QIF-TRUTH.md is supposed to be the source of truth, but the whitepaper had newer equations. Validation cycles must check truth AGAINST its downstream documents, not just the other way around.
+3. **Free-tier APIs are unreliable for security review.** DeepSeek-R1 needs either paid access or a different strategy (maybe local deployment or shorter prompts).
+4. **False positives from partial payloads.** When sending focused sections, models may flag "missing X" when X is simply in a section they didn't see. This is expected and must be cross-checked against the full document.
+
+### Summary of All Fixes (Entry 41)
+
+| Document | Fix | Source |
+|----------|-----|--------|
+| QIF-TRUTH.md §3.1 | Coherence equation: σ²τ → Hτ | QwQ-32B |
+| QIF-TRUTH.md §3.2 | f×S units: "m·Hz" → "m/s" | QwQ-32B |
+| QIF-TRUTH.md §4.1 | Band index: v3.1 → v4.0 | Claude (spotted during QwQ fixes) |
+| QIF-TRUTH.md §4.4 | Σq: added ψ₁,ψ₂,ψ₃ weights + negative Q̂e | QwQ-32B |
+| QIF-TRUTH.md §4.7 | Corrections table: added 4 new entries | Claude |
+| NSP-PROTOCOL-SPEC.md §1 | Terminology: "seven bands" → "eleven bands" | Grok-3 Mini |
+| NSP-PROTOCOL-SPEC.md §3.2 | Timestamp: added wrap behavior documentation | Gemini 2.5 Pro |
+| NSP-PROTOCOL-SPEC.md §3.2 | QI Components: added quantum terms future note | Gemini 2.5 Pro |
+
+### Status
+
+- **Classification:** Validation + correction — first real multi-model review cycle with fixes
+- **Impact:** Major — 8 fixes across 2 core documents, QIF-TRUTH now v4.1
+- **Dependencies:** Entry 40 (validation team), Entries 33-34 (v4.0 architecture)
+- **Next:** Retry DeepSeek-R1 with shorter payload or paid tier. Set up WhiteRabbitNeo V3 locally for cybersecurity-specific review. Consider second validation cycle to verify convergence.
+
+---
+
+*Document version: 3.4*
 *Created: 2026-02-02*
-*Last entry: #38 (2026-02-06)*
+*Last entry: #41 (2026-02-07)*
 *Maintainer: Kevin Qi*
 *Location: qinnovates/mindloft/drafts/ai-working/QIF-DERIVATION-LOG.md*
