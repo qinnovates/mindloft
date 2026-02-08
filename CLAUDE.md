@@ -1,24 +1,28 @@
-# Claude AI Instructions for QIF Repository
+# Claude AI Instructions for Mindloft Repository
 
-> This file provides instructions for Claude to follow when assisting with the QIF (Quantum Indeterministic Framework for Neural Security) repository. Read this file at the start of any session involving content creation, publishing, or repository maintenance.
+> This file provides instructions for Claude when working in the Mindloft repo.
 >
 > **GitHub:** github.com/qinnovates/mindloft (local folder: `qinnovates/mindloft/main/`)
 
 ---
 
-## CRITICAL: ONI is Legacy — QIF is Active
+## CRITICAL: Mindloft vs Qinnovate — Know the Difference
 
-> **The ONI Framework (Open Neurosecurity Interoperability) is LEGACY.** Do not create new ONI content, do not update ONI-specific documents, do not reference ONI as the current framework. Leave existing ONI content as-is for historical preservation.
+> | | **Qinnovate** (qinnovate.com) | **Mindloft** (mindloft.org) — THIS REPO |
+> |---|---|---|
+> | **Role** | Standards body | Product company |
+> | **Repo** | `qinnovates/qinnovate` | `qinnovates/mindloft` |
+> | **Content** | QIF, NSP, Runemate, whitepapers, specs, blogs | Commercial products (Core, SDK, Subvoc BCI), CTF, product docs |
+> | **Analogy** | W3C / NIST / IEEE | Chrome / a product built on those standards |
 >
-> **QIF (Quantum Indeterministic Framework for Neural Security)** is the active framework. All new work — whitepaper, equations, visualizations, publications — should reference QIF, not ONI.
+> **Framework content (QIF, NSP, Runemate, whitepapers, specs) belongs on qinnovate.com — NEVER on mindloft.org.** Do NOT add framework whitepapers, specifications, or standards documents to this repo.
 >
-> **ONI content preserved at:** `docs/legacy/` (website versions), `docs/legacy/whitepaper-oni/` (ONI whitepaper), `MAIN/legacy-core/` (original research)
+> **ONI is LEGACY.** Do not create new ONI content or reference ONI as the current framework. Leave existing ONI content as-is for historical preservation.
 >
-> **QIF whitepaper:** The published whitepaper lives on **qinnovate.com** (the standards body site), NOT on mindloft.org. The `docs/whitepaper/` and `docs/qif-whitepaper/` folders on mindloft are **STALE (v3.0) and should NOT be updated.** All whitepaper updates go through the qinnovate repo.
->
-> **When in doubt:** If a task references "the framework," "the whitepaper," or "the model" — it means QIF, not ONI.
->
-> **ARCHIVED — DO NOT MODIFY:**
+> **When in doubt:** If a task references "the framework," "the whitepaper," or "the model" — it goes to `qinnovates/qinnovate`, not here.
+
+## ARCHIVED — DO NOT MODIFY
+
 > - `docs/whitepaper/` — Stale v3.0 whitepaper. Do NOT update. Redirects to `docs/qif-whitepaper/`.
 > - `docs/qif-whitepaper/` — Stale v3.0 immersive whitepaper. Do NOT update. Framework whitepapers are published on qinnovate.com.
 > - `docs/legacy/` — Archived ONI website versions and ONI whitepaper. Do NOT update.
